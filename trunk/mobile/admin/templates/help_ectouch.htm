@@ -1,0 +1,33 @@
+{if $full_page}
+{include file="pageheader.htm"}
+{insert_scripts files="../data/static/js/utils.js,./js/listtable.js"}
+<form method="post" action="" name="listForm">
+<div class="list-div" id="listDiv">
+{/if}
+<table cellspacing='1' cellpadding='3' id='list-table'>
+
+<iframe frameborder=0 width=100% height="750" marginheight=0  marginwidth=0 scrolling=auto src="http://115.29.242.82/help-ectouch/ectouch.htm"></iframe>
+
+</table>
+
+{if $full_page}
+</div>
+</form>
+<script type="Text/Javascript" language="JavaScript">
+<!--
+listTable.recordCount = {$record_count};
+listTable.pageCount = {$page_count};
+{foreach from=$filter item=item key=key}
+listTable.filter.{$key} = '{$item}';
+{/foreach}
+{literal}
+onload = function()
+{
+  // 开始检查订单
+  startCheckOrder();
+}
+{/literal}
+//-->
+</script>
+{include file="pagefooter.htm"}
+{/if}

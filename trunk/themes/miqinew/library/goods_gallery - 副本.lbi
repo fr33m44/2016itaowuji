@@ -1,0 +1,20 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="imgInfo">
+  <div class="imgInfo_img">
+    <!-- {if $pictures}-->
+    <ul>
+      <!-- {foreach from=$pictures item=picture name=no}-->
+      <li> <a href="{if $picture.img_url}{$picture.img_url}{else}{$picture.thumb_url}{/if}" target="_blank" id="zoom" class="MagicZoom MagicThumb"  rel="hint-text:; zoom-width:400; zoom-height: 400; zoom-position: right; zoom-align: center;"><img src="{if $picture.img_url}{$picture.img_url}{else}{$picture.thumb_url}{/if}" alt="{$goods.goods_name}" style="width:400px; height:400px;" /></a></li>
+      <!--{/foreach}-->
+    </ul>
+    <!-- {/if}-->
+  </div>
+  <!-- {if $pictures}-->
+  <div class="picture" id="imglist">
+    <!-- {foreach from=$pictures item=picture name=no}-->
+    <a href="javascript:void(0);" title="{$picture.img_desc|escape:html}"> <img src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" alt="{$goods.goods_name}"  /></a>
+    <!--{/foreach}-->
+  </div>
+  <!-- {/if}-->
+  <span id="goodsPicPrev" title="上一张" class="icon-slides icon-slides-prev" style="height: 390px;">上一张</span> <span id="goodsPicNext" title="下一张" class="icon-slides icon-slides-next" style="height: 390px;">下一张</span> </div>
+

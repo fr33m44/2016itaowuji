@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>EcTouch 安装向导</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="__TPL__/css/base.css" rel="stylesheet" type="text/css">
+<link href="__TPL__/css/install.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="install_main">
+  <div class="install_content">
+    <div class="title">欢迎使用EcTouch安装向导</div>
+    <div class="central">
+      <h1>服务器信息</h1>
+      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table">
+        <tr>
+          <th width="150" align="left"><strong>参数</strong></th>
+          <th align="left"><strong>值</strong></th>
+        </tr>
+        <tr>
+          <td>服务器域名/IP地址</td>
+          <td><?php echo $name."/".$host; ?></td>
+        </tr>
+        <tr>
+          <td>服务器操作系统</td>
+          <td><?php echo $os; ?></td>
+        </tr>
+        <tr>
+          <td>服务器解译引擎</td>
+          <td><?php echo $server; ?></td>
+        </tr>
+        <tr>
+          <td>PHP版本</td>
+          <td><?php echo $phpv; ?></td>
+        </tr>
+        <tr>
+          <td>安装路径</td>
+          <td><?php echo ROOT_PATH; ?></td>
+        </tr>
+        <tr>
+          <td>脚本超时时间</td>
+          <td><?php echo $max_execution_time; ?> 秒</td>
+        </tr>
+      </table>
+      <h1>系统环境要求</h1>
+      <table width="100%" border="0" align="center" cellpadding="2" cellspacing="0" class="table">
+        <tr>
+          <th width="150"><strong>变量函数</strong></th>
+          <th><strong>实际状态及建议</strong></th>
+        </tr>
+        <tr>
+          <td>GD 支持 </td>
+          <td><?php echo $gd; ?></td>
+        </tr>
+        <tr>
+          <td>MySQL 支持</td>
+          <td><?php echo $mysql; ?></td>
+        </tr>
+        <tr>
+          <td>upload</td>
+          <td><?php echo $uploadSize ?></td>
+        </tr>
+        <tr>
+          <td>session</td>
+          <td><?php echo $session ?></td>
+        </tr>
+      </table>
+      <h1>目录权限检测</h1>
+      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table">
+        <tr>
+          <th width="150"><strong>目录名</strong></th>
+          <th><strong>实际状态及建议</strong></th>
+        </tr>
+        <?php
+		foreach($dir_list as $dir)
+		{
+				$test_dir = ROOT_PATH.$dir;
+				if(is_writable($test_dir)){
+						$w = '<font color=green>[√]写</font>';
+				}else{
+						$w = '<font color=red>[×]写</font>';
+						$err++;
+				}
+				if(is_readable($test_dir)){
+						$r = '<font color=green>[√]读</font>' ;
+				}else{
+						$r = '<font color=red>[×]读</font>';
+						$err++;
+				}
+		?>
+        <tr>
+          <td><?php echo $dir; ?></td>
+          <td><?php echo $r." ".$w; ?></td>
+        </tr>
+        <?php } ?>
+      </table>
+    </div>
+    <div class="bottuns">
+    	<?php if($err>0){ ?>
+        环境不符合无法继续安装，请调试后<a href="javascript:;" onClick="window.location.reload()">刷新</a>
+<?php }else{ ?>
+      <button type="button"  onclick="window.location.href='__APP__?a=install'" > </button>
+        <?php } ?>
+    </div>
+  </div>
+</div>
+</body>
+</html>

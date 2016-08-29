@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title} 触屏版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="page" style="right: 0px; left: 0px; display: block;">
+  <header id="header" style="z-index:1">
+    <div class="header_l"> <a class="ico_10" href="cat_all.php"> 返回 </a> </div>
+    <div id="search_box2" >
+      <div class="search_box" >
+        <form method="post" action="search.php" name="searchForm" id="searchForm_id">
+          <input placeholder="请输入商品名称" name="keywords" type="text" id="keywordBox" />
+          <button class="ico_07" type="submit" onclick="return check('keywordBox')"> </button>
+        </form>
+      </div>
+    </div>
+    <div class="header_r header_search"> <a class="switchBtn switchBtn-album" href="javascript:void(0);"  onclick="changeCl(this)" style="opacity: 1;"> 切换 </a> </div>
+  </header>
+  <!-- #BeginLibraryItem "/library/goods_list_search.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</div>
+
+<!--筛选 S--->
+<div id="nav" class="nav" style="right:-275px;">
+  <form class="hold-height" action="category.php">
+    <div class="attrExtra">
+      <input type="hidden" name="category" value="{$category}"/>
+      <button class="attrExtra-submit" type="submit">确定</button>
+      <button class="attrExtra-cancel" type="button"  onclick="mtShowMenu()">取消</button>
+    </div>
+    <div class="attrs attr-fix" style="overflow: auto;height: 100%"> 
+      <!--组合搜索 开始--> 
+      <!--{if $brands.1 || $price_grade.1 || $filter_attr_list}--> 
+      
+      <!--{if $brands.1}-->
+      <div class="attr brandAttr">
+        <div class="attrKey">{$lang.brand}</div>
+        <div class="attrValues">
+          <ul class="av-collapse filter_list">
+            <!--{foreach from=$brands item=brand}--> 
+            <!-- {if $brand.selected} -->
+            <li class="av-selected"> 
+              <!-- {else} -->
+            <li> 
+              <!-- {/if} --> 
+              <a href="javascript:void(0);" data="{$brand.brand_id}">{$brand.brand_name}</a></li>
+            <!--{/foreach}-->
+            <input type="hidden" name="brand" value="{$brand_id}" />
+          </ul>
+          <div class="av-options"><a class="j_More avo-more avo-more-down" href="javascript:;">查看更多<i></i></a> </div>
+        </div>
+      </div>
+      <!--{/if}--> 
+      
+      <!--{if $price_grade.1}-->
+      <div class="attr brandAttr">
+        <div class="attrKey">{$lang.price}</div>
+        <div class="attrValues">
+          <ul class="av-collapse filter_list">
+            <!--{foreach from=$price_grade item=grade}--> 
+            <!-- {if $grade.selected} -->
+            <li class="av-selected"> 
+              <!-- {else} -->
+            <li> 
+              <!-- {/if} --> 
+              <a href="javascript:void(0);" data="{$grade.start}|{$grade.end}">{$grade.price_range}</a></li>
+            <!--{/foreach}-->
+            <input type="hidden" name="price_min" value="{$price_min}" />
+            <input type="hidden" name="price_max" value="{$price_max}" />
+          </ul>
+          <div class="av-options"><a class="j_More avo-more avo-more-down" href="javascript:;">查看更多<i></i></a> </div>
+        </div>
+      </div>
+      <!--{/if}--> 
+      
+      <!--{foreach from=$filter_attr_list item=filter_attr}-->
+      <div class="attr brandAttr">
+        <div class="attrKey">{$filter_attr.filter_attr_name|escape:html}</div>
+        <div class="attrValues">
+          <ul class="av-collapse filter_list">
+            <!--{foreach from=$filter_attr.attr_list item=attr}--> 
+            <!-- {if $attr.selected} -->
+            <li class="av-selected filter_attr"> 
+              <!-- {else} -->
+            <li class="filter_attr"> 
+              <!-- {/if} --> 
+              <a href="javascript:void(0);" data="{$attr.attr_id}">{$attr.attr_value}</a></li>
+            <!--{/foreach}-->
+          </ul>
+          <div class="av-options"><a class="j_More avo-more avo-more-down" href="javascript:void(0);">查看更多<i></i></a> </div>
+        </div>
+      </div>
+      <!--{/foreach}-->
+      <input type="hidden" name="filter_attr" value="{$filter_attr}"/>
+      <!-- {/if} --> 
+      <!--组合搜索 结束--> 
+    </div>
+  </form>
+</div>
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ectouch_themes}/js/ectouch.js"></script>
+<script type="text/javascript">
+jQuery(function($){
+	$('#J_ItemList').more({'address': 'category.php?act=asynclist&category={$category}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort={$pager.sort}&order={$pager.order}', 'spinner_code':'<div style="text-align:center; margin:10px;"><img src="{$ectouch_themes}/images/loader.gif" /></div>'})
+	$(window).scroll(function () {
+		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			$('.get_more').click();
+		}
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="filter" style="position:static; top:0px; width:100%;">
+  <form method="GET" class="sort" name="listform">
+    <ul class="filter-inner">
+      <li class="{if $pager.sort == 'goods_id' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=goods_id&order=DESC&keywords={$keywords}#goods_list&">综合</a> </li>
+      <li class="{if $pager.sort =='click_count' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=click_count&order=DESC&keywords={$keywords}#goods_list">人气<i class="f-ico-arrow-d"></i></a> </li>
+      <li class="{if $pager.sort =='sales_count' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=sales_count&order=DESC&keywords={$keywords}#goods_list">销量</a></li>
+      <li class="{if $pager.sort == 'shop_price'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=shop_price&order=<!-- {if $pager.sort == 'shop_price' && $pager.order == 'ASC'} -->DESC<!-- {else} -->ASC<!-- {/if} -->&keywords={$keywords}#goods_list">价格 <span> <i class="f-ico-triangle-mt {if $pager.sort == 'shop_price' && $pager.order == 'ASC'} f-ico-triangle-slctd{/if}"></i> <i class="f-ico-triangle-mb {if $pager.sort == 'shop_price' && $pager.order == 'DESC'}f-ico-triangle-slctd{/if}"></i> </span> </a> </li>
+      
+    </ul>
+    <input type="hidden" name="category" value="{$category}" />
+    <input type="hidden" name="display" value="{$pager.display}" id="display" />
+    <input type="hidden" name="brand" value="{$brand_id}" />
+    <input type="hidden" name="price_min" value="{$price_min}" />
+    <input type="hidden" name="price_max" value="{$price_max}" />
+    <input type="hidden" name="filter_attr" value="{$filter_attr}" />
+    <input type="hidden" name="page" value="{$pager.page}" />
+    <input type="hidden" name="sort" value="{$pager.sort}" />
+    <input type="hidden" name="order" value="{$pager.order}" />
+  </form>
+</div>
+   	<!--{if $goods_list}-->
+    <div id="J_ItemList" class="srp j_autoResponsive_container m-ks-autoResponsive-container m-animation list" style="opacity:1;">
+      <!--{foreach name=goods_list from=$goods_list item=goods}--> 
+      <!-- {if $goods.goods_id} -->
+      <div id="more_element_1" class="product flex_in single_item">
+        <div class="pro-inner">
+          <div class="proImg-wrap"> <a href="{$goods.url}" > <img src="{$site_url}{$goods.goods_thumb}" alt="{$goods.goods_name}"> </a> </div>
+          <div class="proInfo-wrap">
+            <div class="proTitle"> <a href="{$goods.url}" >{$goods.goods_name}</a> </div>
+            <div class="proSKU"></div>
+            <div class="proPrice"> 
+              <!--{if $goods.promote_price neq "" } --> 
+              <em>{$goods.promote_price}</em> 
+              <!--{else}--> 
+              <em>{$goods.shop_price}</em> 
+              <!--{/if}--> 
+            </div>
+            <div class="proService"> <del>{$goods.market_price}</del></div>
+            <div class="proSales">月销:<em>{$goods.sales_count}</em></div>
+            <div class="proIcons"> 
+			 <!-- {if $goods.watermark_img} --> 
+			<img width="55" height="16" src="{$ectouch_themes}/images/{$goods.watermark_img}.png" alt="{$goods.goods_name}" />
+			<!-- {/if} --> 
+			 </div>
+          </div>
+        </div>
+      </div>
+      <!--{/if}--> 
+      <!--{/foreach}--> 
+    </div>
+    <!---{else}-->
+    <div id="J_ItemList" class="srp album flex-f-row" style="opacity:1;">
+    <p>找不到匹配条件的商品哦~ ~</p>
+    </div>
+    <!--{/if}-->

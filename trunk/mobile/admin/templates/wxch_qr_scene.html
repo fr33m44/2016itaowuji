@@ -1,0 +1,66 @@
+<!-- $Id: wxch_qr_scene.html  17126 2013-12-23 10:30:26Z djks $ -->
+{include file="wxch_pageheader.htm"}
+{insert_scripts files="../data/static/js/utils.js,./js/selectzone.js,./js/colorselector.js"}
+<script type="text/javascript" src="../data/static/js/calendar.php?lang={$cfg_lang}"></script>
+<link href="../data/static/js/calendar/calendar.css" rel="stylesheet" type="text/css" />
+
+<!-- start goods form -->
+<div class="tab-div">
+    <!-- tab bar -->
+    <div class="tab-div">
+<div id="tabbar-div">
+    <p>
+        <span class="tab-front" id="one-table">临时二维码</span>
+    </p>
+</div>
+<div id="tabbody-div">
+<form enctype="multipart/form-data" action="" method="post" name="theForm" >
+<!-- 通用信息 -->
+<table width="90%" id="one-table" align="center">
+            <tr>
+                <td class="label">二维码类型：</td>
+                <td>
+                    <select name="action_name">
+                        <option value="QR_SCENE" >临时</option>
+                    </select>
+                    <span class="require-field">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">过期时间：</td>
+                <td>
+                    <input name="expire_seconds" type="text"  />
+                    <span class="require-field">*</span> 最大为1800秒
+                </td>
+            </tr>
+            <tr>
+              <td class="label">功能：</td>
+              <td>
+                  <input type="text" name="function" value="{$data.function}" style="float:left;" size="30" />
+                  <span class="require-field">*</span>
+              </td>
+          </tr>
+            <!-- 详细描述 -->
+          <tr>
+              <td class="label">二维码场景：</td>
+              <td>
+                  <input type="text" name="scene" value="{$data.scene}" style="float:left;" size="30" />
+                  <span class="require-field">*</span>
+              </td>
+          </tr>
+</table>
+</div>
+</div>      
+
+
+        <div class="button-div">
+          <input type="hidden" name="id" value="{$data.qid}" />
+          <input type="submit" value="保存" class="button" />
+          <input type="reset" value="重置" class="button" />
+        </div>
+      
+    
+</div>
+</form>
+<!-- end keywords form -->
+{include file="wxch_pagefooter.htm"}

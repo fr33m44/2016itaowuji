@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title} 触屏版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+<script src="{$ectouch_themes}/js/modernizr.js"></script>
+</head>
+<body>
+<div id="page" style="right: 0px; left: 0px; display: block;">
+  <header id="header" style="z-index:1">
+    <div class="header_l"> <a class="ico_10" href="cat_all.php"> 返回 </a> </div>
+    <h1> <!--{$lang.all_brand}--></h1>
+  </header>
+  <div class="waterfallCon">
+    <div class="sideCon">
+      <ul class="side grid effect-1" id="grid">
+        <!-- logol -->
+        <!-- {foreach from=$brand_list name="brand_list_foreach" item=brand_data} --> 
+        <li> <a href="{$brand_data.url}"> <img brandid="{$brand_data.brand_id}" class="banner" dataimg="data/brandlogo/{$brand_data.brand_banner}" src="{$site_url}/data/brandlogo/{$brand_data.brand_logo}" loaded="true" style="transition: all 360ms ease 0s; opacity: 1;">
+          <p class="box-logo"> <img dataimg="{$brand_data.brand_name|escape:html} ({$brand_data.goods_num})" src="{$site_url}/data/brandlogo/{$brand_data.brand_logo}" alt="{$brand_data.brand_name|escape:html} ({$brand_data.goods_num})"  style="width: 90px; height: 45px; transition: all 360ms ease 0s; opacity: 1;" loaded="true"> </p>
+          <div class="box-info">
+            <h4 class="box-title">{$brand_data.brand_name}</h4>
+            <p class="box-desc">{$brand_data.brand_desc}</p>
+          </div>
+          </a> </li>
+        <!-- {/foreach} -->
+      </ul>
+      <!-- logol -->  
+    </div>
+ 
+  </div>
+  <div class="blank2"> </div>
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> </div>
+<script src="{$ectouch_themes}/js/masonry.js"></script> 
+<script src="{$ectouch_themes}/js/imagesloaded.js"></script> 
+<script src="{$ectouch_themes}/js/classie.js"></script> 
+<script src="{$ectouch_themes}/js/AnimOnScroll.js"></script> 
+<script>
+new AnimOnScroll( document.getElementById( 'grid' ), {
+	minDuration : 0.4,
+	maxDuration : 0.7,
+	viewportFactor : 0.2
+} );
+</script>
+</body>
+</html>

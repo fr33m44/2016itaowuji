@@ -1,0 +1,18 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!--循环品牌下商品 begin-->
+<div class="blank2"></div>
+<section class="item_show_box1 box1 region">
+    <header>
+        <span>
+            网站公告
+        </span>
+    </header>
+ <div class="clearfix article-list" style="padding:0px 20px; padding-bottom:10px;">
+  <!--{foreach from=$articles item=goods name=brand_goods}--> 
+    <li><a href="{$goods.url}" title="{$goods.title}">{$goods.title}</a></li>
+	 <!--{/foreach}-->   
+    </div>
+          
+      
+</section>
+<!--循环分类下商品end-->

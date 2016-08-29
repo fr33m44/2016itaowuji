@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
+{* 包含脚本文件 *}
+{insert_scripts files='common.js'}
+</head>
+<body>
+<div class="body_user "> <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem --> </div>
+<!--当前位置 start-->
+<div class="block_s box">
+  <div id="ur_here"> <!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --> </div>
+</div>
+<!--当前位置 end-->
+<div class="block_s clearfix"> 
+  <script>
+$(function(){
+	$("#group_box1").slide({mainCell:".group_l ul",titCell:".deal_brief_trigger .trigger",titOnClassName:"current",trigger:"click"});
+
+
+	setInterval(function(){
+      $(".end_date").each(function(){
+        var obj = $(this);
+		
+        var endTime = new Date(parseInt(obj.attr('value')) * 1000);
+		var show_day =  obj.attr('showday');
+        var nowTime = new Date();
+        var nMS=endTime.getTime() - nowTime.getTime() + 28800000;
+        var myD=Math.floor(nMS/(1000 * 60 * 60 * 24));
+		var myH_show=Math.floor(nMS/(1000*60*60) % 24);
+        var myH=Math.floor(nMS/(1000*60*60));
+        var myM=Math.floor(nMS/(1000*60)) % 60;
+        var myS=Math.floor(nMS/1000) % 60;
+        var myMS=Math.floor(nMS/100) % 10;
+		
+		var myHZero = '';
+ 		var myMZero = '';
+		var mySZero = '';
+		if (myH < 10)
+		{
+			var myHZero = '0';
+		}
+		if (myM < 10)
+		{
+			var myMZero = '0';
+		}
+		if (myS < 10)
+		{
+			var mySZero = '0';
+		}
+			
+			
+        if(parseInt(myS+myM+myH+myD) > 0){
+			if(show_day == 'show')
+			{
+				var str = '还剩<strong class="tcd-d">'+myD+'</strong>天<strong class="tcd-h">'+myH_show+'</strong>小时<strong class="tcd-m">'+myM+'</strong>分<strong class="tcd-s">'+myS+'</strong>秒';
+				//var str = '还剩<strong class="tcd-d">'+myD+'</strong>天<strong class="tcd-h">'+myH_show+'</strong>小时<strong class="tcd-m">'+myM+'</strong>分<strong class="tcd-s">'+myS+'</strong>秒';
+			}
+			else
+			{
+				var str = '<span class="times">'+myHZero+myH+'</span><em>时</em><span class="times">'+myMZero+myM+'</span><em>分</em><span class="times">'+mySZero+myS+'</span><em>秒</em>';
+			}
+        }else{
+			var str = "已结束！";	
+		}
+		obj.html(str);
+      });
+    }, 100);	
+	
+})
+</script>
+  <div id="main">
+    <div  id="home_slides_deals">
+      <div id="group_box1">
+        <div class="group_l" >
+          <ul id="deal_brief" style="position:absolute;">
+            
+            <!-- {foreach from=$gb_list item=group_buy name=foo} 循环团购活动开始 --> 
+            <!-- {if $smarty.foreach.foo.iteration < 4}-->
+            <li class="big_list clearfix" >
+              <div id="deal-title" style="padding-bottom:20px;">
+                <h1><span>限时特卖: </span></h1>
+                <h1><a  href="{$group_buy.url}" style=" text-decoration:none;" target="_blank">{$group_buy.goods_name|escape:html}</a></h1>
+              </div>
+              <div id="deal_info" style="border-right:1px solid #e5e5e5; width:222px; height:350px;">
+                <div class="ribbon ribbon_1">
+                  <div class="bg ">&nbsp;</div>
+                  <div class="price">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th class="market_price">市场价</th>
+                          <th class="discount">折扣</th>
+                          <th>为您节省</th>
+                        </tr>
+                        <tr>
+                          <td class="market_price"><span class="arial">¥</span>{$group_buy.market_price}</td>
+                          <td class="ff4560">{$group_buy.zhekou}折</td>
+                          <td class="ff4560"><span class="arial">¥</span>{$group_buy.jiesheng}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="buyit"> <strong><em>¥</em>{$group_buy.price_ladder.0.price}</strong> <span><a href="{$group_buy.url}" onfocus="this.blur()" class="buybtn" onmousedown="this.className='buybtn btndown'" id="ToBuy" onmouseup="this.className='buybtn'" target="_blank"><img src="images/see_big.jpg" onmouseover="this.src='images/see_big_hover.jpg'" onmouseout="this.src='images/see_big.jpg'"></a></span> </div>
+                </div>
+                <div class=" countdown_1 countdown"> <span class="endtime">距离团购结束还有</span>
+                  <div class="deal_time deal-box deal-timeleft deal-on"></div>
+                  <div id="timer" class="main_timer end_date" value="{$group_buy.end_time}"></div>
+                </div>
+                <div class="deal_status deal_status_1">
+                  <div class="purhcase_number f20 "><span class="ff4560 f24 bold">{$group_buy.cur_amount}</span>人已购买</div>
+                  <div class="progress no_stock_soon"> 数量有限下手要快哦 </div>
+                </div>
+              </div>
+              <div class="deal_highlight">
+                <div id="deal_title_pic"><a href="{$group_buy.url}"><img height="350" src="{$group_buy.goods_thumb}" border="0" alt="{$group_buy.goods_name|escape:html}"></a></div>
+                <div class="left_top_title" style="position: absolute;top: 8px;left: 0px;">
+                  <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+	<span class="jiathis_txt">分享到：</span>
+	<a class="jiathis_button_qzone">QQ空间</a>
+	<a class="jiathis_button_tsina">新浪微博</a>
+	<a class="jiathis_button_tqq">腾讯微博</a>
+	<a class="jiathis_button_weixin">微信</a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+                </div>
+              </div>
+            </li>
+            <!-- {/if} --> 
+            <!-- {/foreach}-->
+          </ul>
+          <div class="deal_brief_trigger">
+            <!-- {foreach from=$gb_list item=group_buy name=foo} 循环团购活动开始 --> 
+            <!-- {if $smarty.foreach.foo.iteration < 4}-->
+				<div class="trigger  <!-- {if $smarty.foreach.foo.iteration eq 1}-->current <!-- {/if} --> " <!-- {if $smarty.foreach.foo.iteration eq 3}--> style="margin:0;"<!-- {/if} --> >{$group_buy.goods_name|escape:html}</div>
+            <!-- {/if} --> 
+            <!-- {/foreach}-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="banner_long">
+      <div class="banner_list_out">
+        <div class="banner_list">
+        
+        <!-- TemplateBeginEditable name="团购列表左侧广告一" -->
+<!-- #BeginLibraryItem "/library/ad_position.lbi" -->
+
+{insert name='ads' id=$ads_id num=$ads_num}
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+        
+        
+        </div>
+      </div>
+      <div class="banner_list_out">
+        <div class="banner_list">
+        <!-- TemplateBeginEditable name="团购列表左侧广告二" -->
+<!-- #BeginLibraryItem "/library/ad_position.lbi" -->
+
+{insert name='ads' id=$ads_id num=$ads_num}
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+        
+        
+        </div>
+      </div>
+      <div class="banner_list_out">
+        <div class="banner_list">
+        
+        <!-- TemplateBeginEditable name="团购列表左侧广告三" -->
+<!-- #BeginLibraryItem "/library/ad_position.lbi" -->
+
+{insert name='ads' id=$ads_id num=$ads_num}
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+        
+        </div>
+      </div>
+      <div class="banner_list_out">
+        <div class="banner_list">
+        <!-- TemplateBeginEditable name="团购列表左侧广告四" -->
+<!-- #BeginLibraryItem "/library/ad_position.lbi" -->
+
+{insert name='ads' id=$ads_id num=$ads_num}
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+        
+        
+        </div>
+      </div>
+    </div>
+   <div class="blank"></div>
+     <!-- TemplateBeginEditable name="右边通栏广告（宽750px）" -->
+<!-- TemplateEndEditable -->
+     
+        
+        <div class="multilist "> 
+          <!-- {if $gb_list} 如果有团购活动 --> 
+          <!-- {foreach from=$gb_list item=group_buy name=foo} 循环团购活动开始 --> 
+          <!-- {if $smarty.foreach.foo.iteration > 3}-->
+          <div class="box_d " style="float:left;  ">
+          <div class="multilbox">
+          <h2 class="multi_tit">
+            	<a href="{$group_buy.url}" target="_blank"><strong>{$group_buy.goods_name|escape:html}</strong></a></h2>
+                <div class="multi_img">
+                        	                       	
+           	            
+                <a href="{$group_buy.url}" target="_blank" class="buya">
+                                <img src="{$group_buy.goods_thumb}" border="0" alt="{$group_buy.goods_name|escape:html}" style="display: inline; width:200px;">
+                                </a>
+				<!--独家品牌标识-->
+				             </div>
+                             <div class="multi_pcbuy " id="btnstatus-id-149928">
+			  <table>
+                <tbody>
+				  <tr>
+                    <td>市场价</td>
+                    <td>折扣</td>
+                    <td>为您节省</td>
+                  </tr>
+                  <tr>
+                    <td style="text-decoration:line-through;font-size:15px;color:#999;"><span class="arial">¥</span>{$group_buy.market_price}</td>
+                    <td class="pcred">{$group_buy.zhekou}</td>
+                    <td class="pcred"><span class="arial">¥</span>{$group_buy.jiesheng}</td>
+                  </tr>
+                </tbody>
+		      </table>
+			  <a class="multi_btn" href="{$group_buy.url}" target="_blank"></a>
+			  <div class="multi_pc wei"><span class="arial f20">¥</span>{$group_buy.price_ladder.0.price}</div>
+			</div>
+          
+          </div>
+          <div class="mult_shade clear"></div>
+          </div>
+          <!-- {/if} --> 
+          <!--{/foreach}--> 
+          <!-- {else} --> 
+          <span style="margin:2px 10px; font-size:14px; line-height:36px;">{$lang.group_goods_empty}</span> 
+          <!-- {/if} --> 
+        </div>
+      
+      <div class="blank5"></div>
+      <div class="article">
+      <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+   </div>
+  </div>
+  
+  <div id="sidebar">
+  <p> <!-- TemplateBeginEditable name="团购列表页右侧广告一" -->
+<!-- #BeginLibraryItem "/library/ad_position.lbi" -->
+
+{insert name='ads' id=$ads_id num=$ads_num}
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable --></p>
+  <p><!-- TemplateBeginEditable name="团购列表页右侧广告二" -->
+<!-- #BeginLibraryItem "/library/ad_position.lbi" -->
+
+{insert name='ads' id=$ads_id num=$ads_num}
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable --></p>
+  <p><!-- TemplateBeginEditable name="团购列表页右侧广告三" -->
+<!-- #BeginLibraryItem "/library/ad_position.lbi" -->
+
+{insert name='ads' id=$ads_id num=$ads_num}
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable --></p>
+  
+  <!-- TemplateBeginEditable name="品牌专区" -->
+<!-- #BeginLibraryItem "/library/brands.lbi" -->
+
+<!-- {if $brand_list} -->
+<div class="side_brd">
+<div class="side_out">
+<div class="side_list">
+  <!-- {foreach from=$brand_list item=brand name="brand_foreach"} -->
+   {if $smarty.foreach.brand_foreach.index <= 17}
+    
+      <!-- {if $brand.brand_logo} -->
+        <a href="{$brand.url}"><img src="data/brandlogo/{$brand.brand_logo}" alt="{$brand.brand_name|escape:html} ({$brand.goods_num})" /></a>
+      <!-- {else} -->
+        <a href="{$brand.url}">{$brand.brand_name|escape:html} {if $brand.goods_num}({$brand.goods_num}){/if}</a>
+      <!-- {/if} -->
+    {/if}
+  <!-- {/foreach} -->
+</div>
+</div>
+<div class="side_all">
+    	<a href="../brand.php" target="_blank"><img src="../images/logo_more.gif" border="0"></a>
+    </div>
+</div>
+<!-- {/if} -->
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+<!-- #BeginLibraryItem "/library/wenjuandiaocha.lbi" --><!-- #EndLibraryItem -->
+  </div>
+</div>
+<div class="blank5"></div>
+
+<div class="flow">
+<div class="footer">
+<div class="footerBody">
+<Div class="block_s">
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+</Div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <Div class="shop_txt"> <a class="aa" href="flow.php">
+{$str}
+
+  <!-- {if $goods} -->
+  <a href="flow.php">
+<div class="shopBody" id="shopBody">
+<ul>
+ {foreach from=$goods item=goods name=goods}
+ <li class="shopWhite">
+
+ <div class="shopLi_img">
+ <a href="{$goods.url}"><img src="{$goods.goods_thumb}" style="width:43px; height:43px;" alt="{$goods.goods_name}"></a>
+  </div>
+  <div class="shopLi_txt">
+ <p><a  href="{$goods.url}">{$goods.short_name}</a></p>
+ 
+ 
+<p class="shopLi_pink"><span>{$goods.goods_price}</span><span style=" color:#999">×{$goods.goods_number}</span></p> 
+ </div>
+<div class="shopLi_del"><a  href="javascript:" onClick="deleteCartGoods({$goods.rec_id})">删除</a></div>
+
+
+</li>
+ {/foreach}
+ </ul>
+ <div class="shopSet">
+                    <div class="set_txt">
+                        <p>共计<span class="arial">¥</span><span class="set_gray">{$amount}</span></p>
+                    </div>
+                    <div class="set_btn">
+                        <a href="flow.php"></a>
+                    </div>
+                </div>
+ 
+</div>
+</a>
+<!-- {else} -->
+<div class="shopBody">
+
+<p class="shopNo">进货单内还没有商品，赶快选购吧！</p>
+
+</div>
+<!-- {/if} -->
+
+</a> </Div>
+<script type="text/javascript">
+function deleteCartGoods(rec_id)
+{
+Ajax.call('delete_cart_goods.php', 'id='+rec_id, deleteCartGoodsResponse, 'POST', 'JSON');
+}
+
+/**
+ * 接收返回的信息
+ */
+function deleteCartGoodsResponse(res)
+{
+  if (res.error)
+  {
+    alert(res.err_msg);
+  }
+  else
+  {
+      document.getElementById('ECS_CARTINFO').innerHTML = res.content;
+  }
+}
+</script>
+

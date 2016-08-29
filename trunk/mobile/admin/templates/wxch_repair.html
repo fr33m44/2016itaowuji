@@ -1,0 +1,52 @@
+<!-- $Id: wxch_repair.htm 20140328 djks $ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$wxch_lang.cp_home}{if $wxch_lang.ur_here} - {$wxch_lang.ur_here} {/if}</title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="styles/general.css" rel="stylesheet" type="text/css" />
+<link href="styles/main.css" rel="stylesheet" type="text/css" />
+{insert_scripts files="../data/static/js/transport.js,./js/common.js"}
+<script language="JavaScript">
+<!--
+// 这里把JS用到的所有语言都赋值到这里
+{foreach from=$lang.js_languages key=key item=item}
+var {$key} = "{$item}";
+{/foreach}
+//-->
+</script>
+</head>
+<body>
+
+<h1>
+{if $action_link}
+<span class="action-span"><a href="{$action_link.href}">{$action_link.text}</a></span>
+{/if}
+{if $action_link2}
+<span class="action-span"><a href="{$action_link2.href}">{$action_link2.text}</a>&nbsp;&nbsp;</span>
+{/if}
+<span class="action-span1"><a href="index.php?act=main">{$wxch_lang.cp_home}</a> </span><span id="search_id" class="action-span1"> -  {$wxch_lang.ur_here}</span>
+<div style="clear:both"></div>
+</h1>
+<div class="main-div">
+  <form name="theForm" method="post" action="wxch_repair.php" >
+  <table width="100%" >
+      <tr>
+          <td colspan="2" align="center">
+              <h3>没有手动修改或单独恢复过数据不需要进行此项操作。</h3>
+              <h3>此操作只会重新关联微信与会员之前的关系</h3>
+          </td>
+      </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <input type="hidden" name="act" value="{$form_act}" />
+      <input type="submit" value="开始修复" class="button" />
+    </td>
+  </tr>
+</table>
+  </form>
+
+</div>
+
+{include file="wxch_pagefooter.htm"}

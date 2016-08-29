@@ -1,0 +1,76 @@
+<!-- $Id: wxch_msg_info.htm 2014-01-06  djks $ -->
+{include file="wxch_pageheader.htm"}
+<div class="main-div">
+  <table width="98%">
+    {foreach from=$message item=message}
+    <tr>
+        <td style="padding: 0px 20px">{$w_user.nickname}<span>{$message.dateline}</span></td>
+    </tr>
+    <tr>
+      <td style="padding: 0px 20px">
+        <h3><!--{if empty($message.message)}-->{$message.w_message}<!--{else}-->{$message.message}<!--{/if}--></h3>
+        <hr size="1" />
+      </td>
+    </tr>
+    {/foreach}
+  </table>
+</div>
+
+
+<div class="main-div">
+<form method="post" action="wxch_users.php?act=action" name="theForm"  onsubmit="return validate()">
+<table border="0" width="98%">
+
+  <tr>
+    <td align="right">回复内容:</td>
+    <td><textarea name="msg_content" cols="50" rows="4" wrap="VIRTUAL" id="msg_content">{$msg.reply_content}</textarea></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+    <tr>
+        <td align="right">openid:</td>
+        <td>{$w_user.wxid}</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <input type="hidden" name="wxid" value="{$w_user.wxid}">
+      <input type="hidden" name="uid" value="{$uid}">
+      <input name="Submit" value="{$lang.button_submit}" type="submit" class="button">
+      <input type="reset" value="{$lang.button_reset}" class="button">
+    </td>
+  </tr>
+</table>
+</form>
+</div>
+{insert_scripts files="../js/utils.js,validator.js"}
+<script language="JavaScript">
+<!--
+{literal}
+document.forms['theForm'].elements['msg_content'].focus();
+
+/**
+ * 检查表单输入的数据
+ */
+function validate()
+{
+    validator = new Validator("theForm");
+    validator.required("msg_content",  no_reply_content);
+    return validator.passed();
+}
+
+onload = function()
+{
+    // 开始检查订单
+    startCheckOrder();
+}
+//-->
+{/literal}
+</script>
+{include file="wxch_pagefooter.htm"}

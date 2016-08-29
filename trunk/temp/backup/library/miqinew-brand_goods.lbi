@@ -1,0 +1,25 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="user_loves lshadow">
+ <h2 class="mall_leftTitle c333">同品牌产品推荐</h2>
+     <ul class="pro_list">
+  
+      <!--{foreach from=$brand_goods item=goods}-->
+     <li >
+           <a href="{$goods.url}" class="pro_pic"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}"  width="120" height="120" /></a><br />
+           <a href="{$goods.url}" title="{$goods.name|escape:html}" class="pro_title">{$goods.short_name|escape:html}</a>
+            <p class="already_sold">已售出 {$goods.sales_volume} 件</p>
+             <p class="pro_price">
+              <a  href="{$goods.url}" >
+            <!-- {if $goods.promote_price neq ""} -->
+            <font class="shop_s">{$goods.promote_price}</font>
+            <!-- {else}-->
+            <font class="shop_s">{$goods.shop_price}</font>
+            <!--{/if}-->
+            </a>
+            </p>
+        </li>
+      <!--{/foreach}-->
+      <div class="more"><a href="{$goods_brand.url}">更多</a></div>
+ </ul>
+</div>
+<div class="blank5"></div>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="utf-8" />
+<title>{$page_title} 触屏版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+{insert_scripts files='common.js'}
+</head>
+<body>
+<div id="page">
+  <header id="header">
+    <div class="header_l"> <a class="ico_10" onClick="javascript:history.back();"> 返回 </a> </div>
+    <h1>登录/注册</h1>
+  </header>
+</div>
+<section class="wrap" style="padding-bottom:5rem">
+  <div id="leftTabBox" class="loginBox">
+    <div class="hd"> <span>欢迎光临本店，登录后可体验更多服务</span>
+      
+    </div>
+    <div class="bd"<!--{if $action eq 'register'}--> style="display:none"<!--{/if}-->>
+      <ul>
+        <div class="table_box">
+        <form action="user.php" method="post" name="formUser" onsubmit="return register2();">
+           
+               <dl>
+                  <dd>
+                     <input value="{$user.name}"  name="username" type="text"  class="inputBg" id="username" />
+                  </dd>
+                </dl>
+                <dl>
+                  <dd>
+                     <input name="submit" type="submit" value="完成" class="c-btn3" />
+                     <input type="hidden" name="uid" value="{$uid}">
+                     <input name="act" type="hidden" value="third_reg" />
+                  </dd>
+                </dl>
+        </form> 
+        </div>
+      </ul>
+    </div>
+  </div>
+</section>
+<div class="blank"></div>
+<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+</body>
+</html>
