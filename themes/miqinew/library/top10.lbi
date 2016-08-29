@@ -1,0 +1,38 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="slideTxtBox1">
+  <div class="hd">
+    <div class="title_txt"> <img src="../images/title_txt08.jpg" border="0"> </div>
+    
+  </div>
+  <div class="title_body">
+    <div class="bd">
+      <ul>
+        <!-- {foreach name=top_goods from=$top_goods item=goods}-->
+        <li>
+        
+      
+          <div class="topimg"> <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" style="width:220px; height:220px;" /></a>
+          
+          <div class="top_num01"> <img src="../images/top_{$smarty.foreach.top_goods.iteration}.gif" class="iteration"  /> </div>
+          
+          
+           </div>
+         
+          <div class="top_txt"> <b><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_name}</a></b>
+            <p>{$lang.shop_price}<font class="f1">{$goods.price}</font></p>
+            <p>{$goods.goods_number}人已购买</p>
+          </div>
+        </li>
+        <!-- {/foreach} -->
+      </ul>
+      
+      
+       
+      
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+		jQuery(".slideTxtBox1").slide({trigger:"click"});
+		</script>
+<div class="blank5"></div>

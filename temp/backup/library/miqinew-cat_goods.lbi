@@ -1,0 +1,52 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<div class="title_list">
+  <div class="title_txt"><a href="{$goods_cat.url}" ><img src="../images/cat/{$goods_cat.id}.jpg"> </a> </div>
+  <div class="title_more"> <a href="{$goods_cat.url}" target="_blank">更多{$goods_cat.name|escape:html}</a> </div>
+  <div class="title_key">
+    <dl>
+      <!--{foreach from=$goods_cat.cat_clild item=cat name=foo}-->
+      <dd><a href="{$cat.url}" target="_blank" title="{$cat.name}">{$cat.name}</a></dd>
+      <!--{/foreach}-->     
+    </dl>
+  </div>
+</div>
+<div class="title_body">
+<div id="slideBox1" class="slideBox1"> {* ECSHOP 提醒您：动态载入position_get_adv_small.lbi，显示首页分类小广告 *}{insert name='get_adv_child' ad_arr=$adarr id=$cat_goods.id } 
+  <script type="text/javascript">
+		jQuery(".slideBox1").slide({mainCell:".bd ul",autoPlay:true});
+		</script>
+  <div class="brand_right" >
+    <div class="brand_list_out"> 
+      <!--{foreach from=$cat_goods item=goods name=nocat}--> 
+      {if !$smarty.foreach.nocat.last}
+      <div class="brand_list">
+        <div class="brand_img"> <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" width="170" height="170" /></a></div>
+        <div class="brand_txt"> <b><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_name|escape:html}</a></b>
+          <p> 
+            <!-- {if $goods.promote_price neq ""} --> 
+            <font class="shop_s">{$goods.promote_price}</font> 
+            <!-- {else}--> 
+            <font class="shop_s">{$goods.shop_price}</font> 
+            <!--{/if}--> 
+            <font class="marker_s">{$goods.market_price}</font> </p>
+        </div >
+      </div>
+      {/if} 
+      <!--{/foreach}--> 
+    </div>
+  </div>
+  <div class="brand_logo">
+    <dl>
+    
+    <!--{foreach from=$goods_cat.brands item=brands name=foo}-->
+    
+    
+     <dd> <a href="{$brands.url}" target="_blank" title="{$brands.brand_name}"> {if $brands.logo neq 'data/brandlogo/'}<img width="78" height="40" border="0" alt="{$brands.brand_name}" src="{$brands.logo}">{else}{$brands.brand_name}{/if}</a> </dd>
+     
+          <!--{/foreach}-->
+    
+     
+    </dl>
+  </div>
+</div>

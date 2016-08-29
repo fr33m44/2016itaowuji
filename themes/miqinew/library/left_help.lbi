@@ -1,0 +1,27 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<!--{if $helps}-->
+<div class="sideMenu" style="margin:0 auto">
+<!-- {foreach from=$helps item=help_cat name=cat key=key} -->
+			<h2 {if $key eq $cat_id} class="on"{else}class=''{/if}><em></em><a  href='{$help_cat.cat_id}' title="{$help_cat.cat_name}">{$help_cat.cat_name}</a></h2>
+			<ul {if $key eq $cat_id}style="display:block"{else}style="display:none"{/if}>
+            <!-- {foreach from=$help_cat.article item=item} -->
+				<li><a {if $id eq $item.article_id} class="sell" {/if} href="{$item.url}" title="{$item.title|escape:html}"> {$item.short_title}</a></li>
+                <!-- {/foreach} -->
+			</ul>
+<!-- {/foreach} -->
+		
+
+		</div>
+<!--{/if}-->
+		<script type="text/javascript">
+			jQuery(".sideMenu").slide({
+				titCell:"h2", //鼠标触发对象
+				targetCell:"ul", //与titCell一一对应，第n个titCell控制第n个targetCell的显示隐藏
+				effect:"slideDown", //targetCell下拉效果
+				defaultIndex:0,//默认是否执行效果（默认true）
+				delayTime:300,//鼠标从.sideMen移走后返回默认状态（默认false）
+				trigger:"click"
+				});
+		</script>
+        

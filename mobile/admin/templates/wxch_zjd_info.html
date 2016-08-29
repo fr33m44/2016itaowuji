@@ -1,0 +1,52 @@
+<!-- $Id: wxch_zjd_info.htm 20140314 djks $ -->
+{include file="wxch_pageheader.htm"}
+<div class="main-div">
+    <form method="post" action="wxch_zjd.php" name="theForm" onsubmit="return validate()">
+        <table width="100%" >
+            <tr>
+                <td class="label">微信昵称:</td>
+                <td>{$data.nickname}</td>
+            </tr>
+            <tr>
+                <td class="label">奖品名称:</td>
+                <td>{$data.prize_name}</td>
+            </tr>
+            <tr>
+                <td class="label">中奖姓名:</td>
+                <td>{$data.name}</td>
+            </tr>
+            <tr>
+                <td class="label">中奖联系电话:</td>
+                <td>{$data.phone}</td>
+            </tr>
+            <tr>
+                <td class="label">抽奖时间:</td>
+                <td>{$data.dateline}</td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+{insert_scripts files="../data/static/js/utils.js,./js/validator.js"}
+{literal}
+<script language="JavaScript">
+    <!--
+
+    if (document.forms['theForm'].elements['act'].value == "insert")
+    {
+        document.forms['theForm'].elements['username'].focus();
+    }
+    else
+    {
+        document.forms['theForm'].elements['email'].focus();
+    }
+
+    onload = function()
+    {
+        // 开始检查订单
+        startCheckOrder();
+    }
+
+</script>
+{/literal}
+{include file="wxch_pagefooter.htm"}

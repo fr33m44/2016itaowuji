@@ -1,0 +1,42 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="slideTxtBox3"   >
+  <div class="hd" >
+    <ul>
+      <li  ><img src="../images/advantage_btn_new01.jpg" border="0"></li>
+      <li  ><img src="../images/advantage_btn_new02.jpg" border="0"></li>
+      <li   ><img src="../images/advantage_btn_new03.jpg" border="0"></li>
+      <li   ><img src="../images/advantage_btn_new04.jpg" border="0"></li>
+      <li  ><img src="../images/advantage_btn_new05.jpg" border="0"></li>
+      <li   ><img src="../images/advantage_btn_new06.jpg" border="0"></li>
+      <li   ><img src="../images/advantage_btn_new07.jpg" border="0"></li>
+      <li  ><img src="../images/advantage_btn_new08.jpg" border="0"></li>
+    </ul>
+  </div>
+  <div class="bd">
+    <ul>
+      <div  class="inLeft_tabnav" > <img src="../images/mall_tab01.jpg" border="0"> <img src="../images/mall_tab01_01.jpg" border="0"> </div>
+    </ul>
+    <ul>
+      <div > <img src="../images/mall_tab02.jpg" border="0" usemap="#Map"> <img src="../images/mall_tab02_01.jpg" border="0" usemap="#Map"> </div>
+    </ul>
+    <ul>
+      <div > <img src="../images/mall_tab03.jpg" border="0"> </div>
+    </ul>
+    <ul>
+      <div > <img src="../images/mall_tab04.jpg" border="0"> </div>
+    </ul>
+    <ul>
+      <div > <img src="../images/mall_tab05.jpg" border="0"> </div>
+    </ul>
+    <ul>
+      <div  > <img src="../images/mall_tab06.jpg" border="0"> </div>
+    </ul>
+    <ul>
+      <div > <img src="../images/mall_tab07.jpg" border="0"> </div>
+    </ul>
+    <ul>
+      <div > <img src="../images/mall_tab08.jpg" border="0"> </div>
+    </ul>
+  </div>
+</div>
+<script type="text/javascript">jQuery(".slideTxtBox3").slide();</script> 

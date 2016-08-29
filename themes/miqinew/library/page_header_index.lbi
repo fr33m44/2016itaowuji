@@ -1,0 +1,117 @@
+﻿<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript">
+var process_request = "{$lang.process_request}";
+</script>
+<script type="text/javascript">
+//收藏本站 bbs.ecmoban.com
+function AddFavorite(title, url) {
+  try {
+      window.external.addFavorite(url, title);
+  }
+catch (e) {
+     try {
+       window.sidebar.addPanel(title, url, "");
+    }
+     catch (e) {
+         alert("抱歉，您所使用的浏览器无法完成此操作。\n\n加入收藏失败，请使用Ctrl+D进行添加");
+     }
+  }
+}
+</script>
+<div class="header ">
+  <div class="headBody">
+    <div class="heads">
+      <div class="bookmail">
+        <ul>
+          <li class="background_ico"><a href="#" target="_blank" rel="nofollow">手机版<span>淘五季</span></a></li>
+          <li class="background_line"><a href="#" target="_blank" rel="nofollow">邀请好友</a></li>
+          <li><a href="javascript:void(0);" onclick="AddFavorite('我的网站',location.href)">加入收藏</a></li>
+          <li class="background_pay">关注<span>淘五季</span><span class="arrow"></span>
+            <div class="bookmail_more">
+              <ul>
+                <li class="more03"><a href="#">微信公众号</a></li>
+                <li class="more01"><a href="#">新浪微博</a></li>
+                <li class="more02"><a href="#">腾讯微博</a></li>
+                
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="user_control">
+        <ul>
+          {insert_scripts files='jquery-1.9.1.min.js,jquery.json.js,jquery.SuperSlide.js'}
+          {insert_scripts files='transport.js,utils.js,ecmoban_common.js'} 
+          <font id="ECS_MEMBERZONE" style="display:block; float:left;">{* ECSHOP 提醒您：根据用户id来调用member_info.lbi显示不同的界面  *}{insert name='member_info'} </font>
+          <!--{if $navigator_list.top}-->
+          <li id="topNav" class="clearfix">
+            <!-- {foreach name=nav_top_list from=$navigator_list.top item=nav} -->
+            <a href="{$nav.url}" 
+            <!-- {if $nav.opennew eq 1} -->
+            target="_blank"
+            <!-- {/if} -->
+            >{$nav.name}</a>
+            <!-- {if !$smarty.foreach.nav_top_list.last} -->
+            |
+            <!-- {/if} -->
+            <!-- {/foreach} -->
+            <div class="topNavR"></div>
+          </li>
+          <!-- {/if} -->
+          <!-- 互联登录
+          <li><a class="head_blog" href="user.php?act=oath&type=weibo">微博登录</a></li>
+          <li><a class="head_qq" href="user.php?act=oath&type=qq"><span class="arial">QQ</span>登录</a></li>
+          <li style="background:none;"><a class="head_alipay " href="user.php?act=oath&type=alipay">支付宝登录</a></li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="headBox">
+      <div class="logo"><a href="../index.php" name="top"><img src="../images/logo.gif" /></a></div>
+      <!--search start-->
+      <div id="search"  class="headSearch">
+        <form id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()"  >
+          <div class="headSearch_input">
+            <input name="keywords" type="text" id="keyword" value="美体小铺" onclick="javascript:if(this.value=='美体小铺')this.value=''"  />
+          </div>
+          <div class="headSearch_btn">
+            <input name="imageField" type="submit" value=""  style="cursor:pointer;" />
+          </div>
+        </form>
+      </div>
+      <!--search end-->
+      <div class="shop_txt_out" id="ECS_CARTINFO" >
+       {insert name='cart_info'}
+      </div>
+    </div>
+    <div class="headNav">
+      <div class="classNav"> <a class="classNav_a" href="#">全部商品分类</a> </div>
+      <div class="subNav">
+        <ul>
+          <li {if $navigator_list.config.index eq 1} class="current"{/if}> <a href="../index.php">{$lang.home}</a></li>
+          <!-- {foreach name=nav_middle_list from=$navigator_list.middle item=nav} -->
+          <li {if $nav.active eq 1} class="current"{/if}><a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}>{$nav.name}</a>
+          <!-- {if $nav.cat_list}-->
+<div class='sub_nav'>
+<dl>
+<!--{foreach from=$nav.cat_list item=cat}-->
+<dd>
+<a class="t" href="{$cat.url}">{$cat.name|escape:html}</a>
+</dd>
+<!--{/foreach}-->
+</dl>
+</div>
+<!-- {/if}-->
+          
+          </li>
+          <!-- {/foreach} -->
+        </ul>
+      </div>
+      <div class="rightNav">
+        <ul>
+          <li><a href="#">正在购买</a></li>
+          <li><a href="#">帮助中心</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

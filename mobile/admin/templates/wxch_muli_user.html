@@ -1,0 +1,155 @@
+<!-- $Id: wxch_qr.html 2013-12-22 09:59:06Z djks $ -->
+{if $full_page}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$wxch_lang.cp_home}{if $wxch_lang.ur_here} - {$wxch_lang.ur_here} {/if}</title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="styles/general.css" rel="stylesheet" type="text/css" />
+<link href="styles/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../data/static/js/transport.js"></script><script type="text/javascript" src="js/common.js"></script>
+</head>
+<body>
+
+<h1>
+<span class="action-span"><a href="wxch_muli_user.php?act=add">添加公众号</a></span>
+
+<span class="action-span1"><a href="index.php?act=main">{$wxch_lang.cp_home}</a> </span><span id="search_id" class="action-span1"> - {$wxch_lang.ur_here}</span>
+<div style="clear:both"></div>
+</h1>
+<script type="text/javascript" src="../data/static/js/utils.js"></script><script type="text/javascript" src="js/listtable.js"></script>
+
+
+
+<form method="POST" action="wxch_qr.php?act=batch_remove" name="listForm">
+<!-- start cat list -->
+<div class="list-div" id="listDiv">
+{/if}
+<table cellspacing='1' cellpadding='3' id='list-table'>
+  <tr>
+   <th><a href="#">编号</a></th>
+    <th><a href="#">公众号名称</a></th>
+    <th><a href="#">Token</a></th>
+    <th><a href="#">AppId </a></th>
+    <th><a href="#">AppSecret </a></th>
+    <th><a href="#">原始ID</a></th>
+	<th><a href="#">所属会员ID</a></th>
+	<th><a href="#">所属会员名称</a></th>
+    <th>操作</th>
+  </tr>
+   {foreach from=$wxchdata item=list}
+    <tr>
+    <td align="center">
+    <span>{$list.id} </span></td>
+    <td align="center"><span>{$list.name}</span></td>
+    <td align="center"><span>{$list.token}</span></td>
+    <td align="center"><span>{$list.appid}</span></td>
+    <td align="center">{$list.appsecret}</td>
+	<td align="center">{$list.gh_id}</td>
+	<td align="center">{$list.user_id}</td>
+	<td align="center">{$list.user_name}</td>
+    <td align="center" nowrap="true"><span>
+      <a href="wxch_muli_user.php?act=diymen&id={$list.id}" title="查看">生成菜单</a>
+	  
+      <a href="wxch_muli_user.php?act=edit&id={$list.id}" title="编辑"><img src="images/icon_edit.gif" border="0" height="16" width="16" /></a>&nbsp;
+     <!--  --><a href="wxch_muli_user.php?act=remove&id={$list.id}"  title="移除"><img src="images/icon_drop.gif" border="0" height="16" width="16"></a><!--  --></span>
+    </td>
+   </tr>
+    {/foreach}
+     <tr>&nbsp;
+    <td align="right" nowrap="true" colspan="9"> 
+            <div id="turn-page">
+        总计  <span id="totalRecords">{$filter.record_count}</span>
+        个记录分为 <span id="totalPages">{$filter.page_count}</span>
+        页当前第 <span id="pageCurrent">{$filter.page}</span>
+        页，每页 <input type='text' size='3' name="page_size" id='pageSize' value="{$filter.page_size}" onkeypress="return listTable.changePageSize(event)" />
+        <span id="page-link">
+          <a href="javascript:listTable.gotoPageFirst()">第一页</a>
+          <a href="javascript:listTable.gotoPagePrev()">上一页</a>
+          <a href="javascript:listTable.gotoPageNext()">下一页</a>
+          <a href="javascript:listTable.gotoPageLast()">最末页</a>
+          <select id="gotoPage" onchange="listTable.gotoPage(this.value)">
+              {create_pages count=$filter.page_count page=$filter.page}
+          </select>
+      </div>
+</td>
+  </tr>
+</table>
+
+{if $full_page}
+</div>
+</form>
+<!-- end cat list -->
+<script type="text/javascript" language="JavaScript">
+    listTable.recordCount = {$filter.record_count};
+    listTable.pageCount = {$filter.page_count};
+    var page_size   = {$filter.page_size};
+
+    listTable.filter.type = '{$filter.type}';
+    listTable.filter.pagesize = '{$filter.page_size}';
+    listTable.filter.record_count = '{$filter.record_count}';
+    listTable.filter.page = '{$filter.page}';
+    listTable.filter.page_count = '{$filter.record_count}';
+    listTable.filter.start = '{$filter.start}';
+    
+
+  onload = function()
+  {
+    // 开始检查订单
+    startCheckOrder();
+  }
+	/**
+   * @param: bool ext 其他条件：用于转移分类
+   */
+  function confirmSubmit(frm, ext)
+  {
+      if (frm.elements['type'].value == 'button_remove')
+      {
+          return confirm(drop_confirm);
+      }
+      else if (frm.elements['type'].value == 'not_on_sale')
+      {
+          return confirm(batch_no_on_sale);
+      }
+      else if (frm.elements['type'].value == 'move_to')
+      {
+          ext = (ext == undefined) ? true : ext;
+          return ext && frm.elements['target_cat'].value != 0;
+      }
+      else if (frm.elements['type'].value == '')
+      {
+          return false;
+      }
+      else
+      {
+          return true;
+      }
+  }
+	 function changeAction()
+  {
+		
+      var frm = document.forms['listForm'];
+
+      // 切换分类列表的显示
+      frm.elements['target_cat'].style.display = frm.elements['type'].value == 'move_to' ? '' : 'none';
+
+      if (!document.getElementById('btnSubmit').disabled &&
+          confirmSubmit(frm, false))
+      {
+          frm.submit();
+      }
+  }
+
+ /* 搜索规则 */
+ function searchArticle()
+ {
+    listTable.filter.keyword = Utils.trim(document.forms['searchForm'].elements['keyword'].value);
+    listTable.filter.page = 1;
+    listTable.loadList();
+ }
+
+ 
+</script>
+{include file="wxch_pagefooter.htm"}
+{/if}

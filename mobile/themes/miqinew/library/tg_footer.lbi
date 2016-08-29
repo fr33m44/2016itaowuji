@@ -1,0 +1,68 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div id="content" class="footer mr-t20">
+  <p class="link region" style="height:1px;"> </p>
+  <p class="region"> {$copyright} </p>
+</div>
+
+<link href="{$ectouch_themes}/css/global_nav.css?v=20140408" type="text/css" rel="stylesheet"/>
+<!--全局导航-Start-->
+<div class="global-nav   global-nav--current">
+    <div class="global-nav__nav-wrap" style="background:#9c231b;">
+
+        <div style="width:50px; height:45px; padding:9px 0 0 5px;"><img src="{$n_c.headimgurl}"  border="0" style="width:2.5rem;height: 2.5rem;"/></div>
+        <div style="width:62%; float:; height:45px;color:#FFF; padding:10px 0;">
+        <p style=" color:#0F0;">{$n_c.nickname}</p><p>{$tianxin}</p>
+        </div>
+        <div style="width:70px; float:; height:45px;text-align:right; padding-right:5px; padding-top:2px;">
+        <!--{if $uidd eq 'ok' }-->
+	<a href="./?u={$u_idd}" class="global-nav__nav-link">
+                <span class="global-nav__nav-tit" style="border:1px solid #0F0; color:#FFF;">进入商城</span>
+       </a>
+	<!-- {/if} -->
+	   <!--{if $uidd eq 'goumai' }-->
+	  <a href="{$article.link}" class="global-nav__nav-link" style=" margin-top:10px; ">
+                <span class="global-nav__nav-tit" style="border:1px solid #0F0; color:#FFF;">立即购买</span>
+       </a>
+	<!-- {/if} -->
+		   <!--{if $uidd eq 'guanzhu' }-->
+	  <a href="{$tianxin_url}" class="global-nav__nav-link" style=" margin-top:10px; ">
+               <span class="global-nav__nav-tit" style="border:1px solid #0F0; color:#FFF;">马上关注</span>
+       </a>
+	<!-- {/if} -->
+        </div>
+    </div>
+    <div class="global-nav__operate-wrap">
+        <span class="global-nav__yhd-logo"></span>
+    </div>
+</div>
+<!--全局导航-End-->
+<script type="text/javascript" src="{$ectouch_themes}/js/zepto.min.js?v=20140408"></script>
+<script type="text/javascript">
+Zepto(function($){
+   var $nav = $('.global-nav'), $btnLogo = $('.global-nav__operate-wrap');
+   //点击箭头，显示隐藏导航
+   $btnLogo.on('click',function(){
+     if($btnLogo.parent().hasClass('global-nav--current')){
+       navHide();
+     }else{
+       navShow();
+     }
+   });
+
+   var navShow = function(){
+     $nav.addClass('global-nav--current');
+   }
+
+   var navHide = function(){
+     $nav.removeClass('global-nav--current');
+   }
+   
+})
+function get_search_box(){
+	try{
+		document.getElementById('get_search_box').click();
+	}catch(err){
+		document.getElementById('keywordfoot').focus();
+ 	}
+}
+</script>

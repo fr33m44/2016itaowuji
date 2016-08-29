@@ -1,0 +1,88 @@
+<!-- $Id: wxch_order.html 2014-1-5 Z djks $ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$wxch_lang.cp_home}{if $wxch_lang.ur_here} - {$wxch_lang.ur_here} {/if}</title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="styles/general.css" rel="stylesheet" type="text/css" />
+<link href="styles/main.css" rel="stylesheet" type="text/css" />
+{insert_scripts files="../data/static/js/transport.js,./js/common.js"}
+<script language="JavaScript">
+<!--
+// 这里把JS用到的所有语言都赋值到这里
+{foreach from=$lang.js_languages key=key item=item}
+var {$key} = "{$item}";
+{/foreach}
+//-->
+</script>
+</head>
+<body>
+<h1>
+{if $action_link}
+<span class="action-span"><a href="{$action_link.href}">{$action_link.text}</a></span>
+{/if}
+{if $action_link2}
+<span class="action-span"><a href="{$action_link2.href}">{$action_link2.text}</a>&nbsp;&nbsp;</span>
+{/if}
+<span class="action-span1"><a href="index.php?act=main">{$wxch_lang.cp_home}</a> </span><span id="search_id" class="action-span1"> - {$wxch_lang.ur_here}</span>
+<div style="clear:both"></div>
+</h1>
+{insert_scripts files="../data/static/js/utils.js,./js/selectzone.js,./js/colorselector.js"}
+<script type="text/javascript" src="../data/static/js/calendar.php?lang={$cfg_lang}"></script>
+<link href="../data/static/js/calendar/calendar.css" rel="stylesheet" type="text/css" />
+{if $warning}
+<ul style="padding:0; margin: 0; list-style-type:none; color: #CC0000;">
+<li style="border: 1px solid #CC0000; background: #FFFFCC; padding: 10px; margin-bottom: 5px;" >{$warning}</li>
+</ul>
+{/if}
+<!-- start goods form -->
+<div class="tab-div">
+<!-- tab bar -->
+<div id="tabbar-div">
+<p>
+<span class="tab-front" id="general-tab">设置</span>
+</p>
+</div>
+<!-- tab body -->
+<div id="tabbody-div">
+<form action="" method="post" name="form1" enctype="multipart/form-data" >
+<!-- 通用信息 -->
+<table width="100%" id="general-table" align="center">
+<tr>
+<td class="label">{$wxch_lang.ur_here}：</td>
+<td>
+<label><input type="radio" name="autoload" value="yes" {if $order.autoload eq yes}checked{/if}/>开启</label>
+<label><input type="radio" name="autoload" value="no" {if $order.autoload eq no}checked{/if}/>关闭</label>
+</td>
+</tr>
+<tr>
+<td class="label">标题：</td>
+<td>
+<input name="title" type="text" value="{$order.title}" />
+</td>
+</tr>
+<tr>
+<td class="label">图片：</td>
+<td>
+<input type="file" name="image" size="35" />
+{if $order.image}
+<a href="goods.php?act=show_image&img_url={$order.image}" target="_blank"><img src="images/yes.gif" border="0" /></a>
+{else}
+<img src="images/no.gif" />
+{/if}
+<br /><input type="text" size="40" value="{$order.image}" style="color:#aaa;" onfocus="if (this.value == '商品图片外部URL'){this.value='http://';this.style.color='#000';}" name="img_url"/>
+</td>
+</tr>
+</table>
+<div class="button-div">
+<input type="submit" value="{$lang.button_submit}" class="button" />
+<input type="reset" value="{$lang.button_reset}" class="button" />
+</div>
+<input type="hidden" name="act" value="{$form_act}" />
+</form>
+</div>
+</div>
+<!-- end goods form -->
+{insert_scripts files="./js/validator.js,./js/tab.js"}
+{include file="wxch_pagefooter.htm"} 
