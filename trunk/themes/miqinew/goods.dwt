@@ -206,6 +206,45 @@ $(function(){
                 <p> {$lang.goods_free_shipping} </p>
                 <!-- {/if} --> 
                 
+                 <!-- {foreach from=$specification item=spec key=spec_key} -->
+                
+                <p class="catt" >
+                <strong style="float:left; width:60px; font-size: 13px;color: #999; font-weight:normal; padding-top:10px;">{$spec.name}：</strong>
+              
+                    <!-- {* 判断属性是复选还是单选 *} --> 
+                    <!-- {if $spec.attr_type eq 1} --> 
+                    <!-- {if $cfg.goodsattr_style eq 1} -->
+                    
+                      <!-- {foreach from=$spec.values item=value key=key} --> 
+                       
+                      <a style=" text-decoration:none" {if $key eq 0}class="cattsel"{/if} onclick="changeAtt(this)" href="javascript:;" name="{$value.id}" title="[{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]">{$value.label}
+                      <input style="display:none" id="spec_value_{$value.id}" type="radio" name="spec_{$spec_key}" value="{$value.id}" {if $key eq 0}checked{/if} /></a> 
+                      
+                      <!-- {/foreach} --> 
+                   
+                    <input type="hidden" name="spec_list" value="{$key}" />
+                    <!-- {else} -->
+                    <select name="spec_{$spec_key}" onchange="changePrice()">
+                      <!-- {foreach from=$spec.values item=value key=key} -->
+                      <option label="{$value.label}" value="{$value.id}">{$value.label} {if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if}{if $value.price neq 0}{$value.format_price}{/if}</option>
+                      <!-- {/foreach} -->
+                    </select>
+                    <input type="hidden" name="spec_list" value="{$key}" />
+                    <!-- {/if} --> 
+                    <!-- {else} --> 
+                    <!-- {foreach from=$spec.values item=value key=key} -->
+                    <label for="spec_value_{$value.id}">
+                      <input type="checkbox" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
+                      {$value.label} [{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}] </label>
+                    <!-- {/foreach} -->
+                    <input type="hidden" name="spec_list" value="{$key}" />
+                    <!-- {/if} --> 
+                 
+                
+                 </p>
+                <!-- {/foreach} --> 
+               
+                <!-- {* 结束循环可选属性 *} -->
                  
                 <div class="center_add">
                   <div class="center_add_left"> <a onclick="buyNumber.minus()" href="javascript:;"><img src="images/jian.gif" /></a>
@@ -342,25 +381,19 @@ $(function(){
       </div>
       <div class="blank"></div>
     </div>
-  </div>
-  <div class="blank5"></div>
-  
-  
-  <div class="cart_table">
-                  
-
+      <div class="cart_table">
                 <!-- {* 开始循环所有可选属性 *} -->
                 <table>
                 <!-- {foreach from=$specification item=spec key=spec_key} -->
                     
                     
                     <!-- {if $spec_key eq 227} -->
-                    <tr><td></td>
+                    <tr><td class="bbk"></td>
                     
                         <!-- {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} -->
                             
                             <!-- {foreach from=$spec1.label item=spec2 key=spec_key2 name="spec2name"} -->
-                                <td>{$spec2}</td>
+                                <td class="bbk">{$spec2}</td>
                             <!-- {/foreach} --> 
                         <!-- {/foreach} -->
                     </tr>
@@ -392,9 +425,11 @@ $(function(){
                 </table>
                
                 <!-- {* 结束循环可选属性 *} -->
+                <div class="blank"></div>
+  </div>
   </div>
   <div class="blank5"></div>
-
+  
   <div class="detail_middle ">
     <div class="block clearfix"> 
       <!--left start-->

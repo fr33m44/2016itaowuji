@@ -1629,22 +1629,29 @@ background: #f5f5f5;
 .detail_logo_btn a:hover{background-position:0 -29px;text-decoration:none;color:#ff8888;-webkit-transition: color .2s;-moz-transition: color 0.4s ease 0s;-o-transition: color .2s;transition: clor .2s;}
 
 /*购物车规格属性列表*/
-.car_table{
+.cart_table{
     width:100%;
+    float:left;
 }
 .cart_table  table{
+     margin:0 auto;
      width:50%;
      border:0;
      border-spacing: 1px;
-     background-color:#aad6ff;
+     background-color:#fbe0f2;
 }
 .cart_table table td{
+    width:50px;
     background-color:#ffffff;
     border:0;
     text-align:center;
 }
+.cart_table .bbk{
+    background-color:#fbe0f2;
+}
 .cart_table input{
-    width:72px;
+    width:40px;
+    height:20px;
     text-align:center;
 }
 
