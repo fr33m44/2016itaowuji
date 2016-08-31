@@ -275,9 +275,6 @@ if (!defined('INIT_NO_USERS'))
         $smarty->assign('ecs_session', $_SESSION);
     }
 }
-if (real_ip()!='220.112.230.63') {
-	//header("Location:http://www.baidu.com");exit;		   
-}
 if ((DEBUG_MODE & 1) == 1)
 {
     error_reporting(E_ALL);
