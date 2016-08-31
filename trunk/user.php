@@ -92,7 +92,7 @@ if ($action == 'default')
     if ($rank = get_rank_info())
     {
         $smarty->assign('rank_name', sprintf($_LANG['your_level'], $rank['rank_name']));
-        if (!empty($rank['next_rank_name']))
+        if(!empty($rank['next_rank_name']))
         {
             $smarty->assign('next_rank_name', sprintf($_LANG['next_level'], $rank['next_rank'] ,$rank['next_rank_name']));
         }
@@ -100,8 +100,11 @@ if ($action == 'default')
     $smarty->assign('info',        get_user_default($user_id));
     $smarty->assign('user_notice', $_CFG['user_notice']);
     $smarty->assign('prompt',      get_user_prompt($user_id));
+
+     
     $smarty->display('user_clips.dwt');
 }
+    
 
 /* 显示会员注册界面 */
 if ($action == 'register')
@@ -149,7 +152,7 @@ elseif ($action == 'act_register')
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
         $email    = isset($_POST['email']) ? trim($_POST['email']) : '';
-        $user_type    = isset($_POST['user_type']) ? trim($_POST['user_type']) : '';
+        $user_rank    = isset($_POST['user_rank']) ? trim($_POST['user_rank']) : '';
         $storestype    = isset($_POST['storestype']) ? trim($_POST['storestype']) : '';
         $storename = isset($_POST['storename']) ? trim($_POST['storename']) : '';
 
@@ -212,7 +215,7 @@ elseif ($action == 'act_register')
             }
         }
 
-        if (register($username, $password, $email, $other, $user_type, $storename, $storeaddress, $extendcode, $storestype) !== false)
+        if (register($username, $password, $email, $other, $user_rank, $storename, $storeaddress, $extendcode, $storestype) !== false)
         {
             include_once(ROOT_PATH . 'includes/lib_transaction.php');
             include_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
@@ -233,6 +236,8 @@ elseif ($action == 'act_register')
             /*把新注册用户的扩展信息插入数据库*/
             $sql = 'SELECT id FROM ' . $ecs->table('reg_fields') . ' WHERE type = 0 AND display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
             $fields_arr = $db->getAll($sql);
+
+            
 
             $extend_field_str = '';    //生成扩展字段的内容字符串
             foreach ($fields_arr AS $val)

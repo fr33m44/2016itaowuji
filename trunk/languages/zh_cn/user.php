@@ -374,7 +374,7 @@ $_LANG['back_retry_answer'] = '返回重试';
 
 /* 登录 注册 */
 $_LANG['label_username'] = '用户名';
-$_LANG['label_user_type'] = '用户类型';
+$_LANG['label_user_rank'] = '用户类型';
 $_LANG['label_email'] = 'email';
 $_LANG['label_password'] = '密码';
 $_LANG['label_storename'] = '店铺名称';
@@ -444,7 +444,7 @@ $_LANG['your_bonus'] = '红包';
 $_LANG['your_message'] = '留言';
 $_LANG['your_order'] = '订单';
 $_LANG['your_integral'] = '积分';
-$_LANG['your_level'] = '您的等级是 %s ';
+$_LANG['your_level'] = '您的等级是: %s ';
 $_LANG['next_level'] = ',您还差 %s 积分达到 %s ';
 $_LANG['attention'] = '关注';
 $_LANG['no_attention'] = '取消关注';
