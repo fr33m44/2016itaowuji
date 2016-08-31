@@ -190,6 +190,50 @@ $(function(){
               <!-- 弹出框 s-->
               
                      <!-- 弹出框 e-->
+               
+              <div class="center_txt cart_table">
+                <!-- {* 开始循环所有可选属性 *} -->
+                <table>
+                <!-- {foreach from=$specification item=spec key=spec_key} -->
+                    
+                    
+                    <!-- {if $spec_key eq 227} -->
+                    <tr><td class="bbk"></td>
+                    
+                        <!-- {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} -->
+                             
+                                <td class="bbk">{$spec1.label}</td> 
+                        <!-- {/foreach} -->
+                    </tr>
+                    <!-- {/if} -->
+                    
+                    <!-- {if $spec_key eq 228} -->
+                    <!-- {foreach from=$spec.values item=spec3 key=spec_key3} -->
+                        
+    
+                        <tr><td>{$spec3.label}</td>
+                        
+                       <!-- {foreach from=$specification item=spec_inner key=spec_key_inner} -->
+                    <!-- {if $spec_key_inner eq 227} -->
+                    <!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
+                     
+                    <td><input type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}" onfocus="if (value =='0'){value =''}"  /></td>
+                     
+                    <!-- {/foreach} -->
+                    <!-- {/if} -->
+                     <!-- {/foreach} --> 
+                        
+                        </tr>
+                        
+                    <!-- {/foreach} -->
+                    <!-- {/if} -->
+                    
+                <!-- {/foreach} --> 
+                </table>
+                <!-- {* 结束循环可选属性 *} -->
+                <div class="blank"></div>
+                </div>
+               
                     
               <div class="center_txt clearfix"> 
                 
@@ -315,110 +359,14 @@ $(function(){
                         </div>
                 
               </div>
-              <div class="center_bottom">
-				<!--新增分享商品链接-->
-
-<div class="bdsharebuttonbox" data-tag="share_1">
-	<a class="bds_mshare" data-cmd="mshare"></a>
-	<a class="bds_qzone" data-cmd="qzone" href="#"></a>
-	<a class="bds_tsina" data-cmd="tsina"></a>
-	<a class="bds_baidu" data-cmd="baidu"></a>
-	<a class="bds_renren" data-cmd="renren"></a>
-	<a class="bds_tqq" data-cmd="tqq"></a>
-	<a class="bds_more" data-cmd="more">更多</a>
-	<a class="bds_count" data-cmd="count"></a>
-</div>
-<script>
-	window._bd_share_config = {
-		common : {
-			bdText : '{$userurl}',	
-			bdDesc : '{$userurl}',	
-			bdUrl : '{$userurl}', 	
-		},
-		share : [{
-			"bdSize" : 16
-		}],
-		slide : [{	   
-			bdImg : 0,
-			bdPos : "right",
-			bdTop : 100
-		}],
-		image : [{
-			viewType : 'list',
-			viewPos : 'top',
-			viewColor : 'black',
-			viewSize : '16',
-			viewList : ['qzone','tsina','huaban','tqq','renren']
-		}],
-		selectShare : [{
-			"bdselectMiniList" : ['qzone','tqq','kaixin001','bdxc','tqf']
-		}]
-	}
-	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-</script>
-
-
-					<!--新增分享商品链接-->
-					
-					
-              </div>
             </div>
 			
-            <div class="detail_logo">
-              <div class="detail_logo_img"> <a target="_blank" href="{$goods.goods_brand_url}">{if $goods.brand_logo}<img src="data/brandlogo/{$goods.brand_logo}" border="0" width="180" height="100" alt="{$goods.goods_brand}">{else}{$goods.goods_brand}{/if}</a> </div>
-              <div class="detail_logo_txt">
-                <p>{$goods.goods_brand}</p>
-              </div>
-              <div class="detail_logo_btn"> <a href="{$goods.goods_brand_url}" >进入品牌专柜</a> </div>
-            </div>
           </form>
         </div>
       </div>
       <div class="blank"></div>
     </div>
-      <div class="cart_table">
-                <!-- {* 开始循环所有可选属性 *} -->
-                <table>
-                <!-- {foreach from=$specification item=spec key=spec_key} -->
-                    
-                    
-                    <!-- {if $spec_key eq 227} -->
-                    <tr><td class="bbk"></td>
-                    
-                        <!-- {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} -->
-                             
-                                <td class="bbk">{$spec1.label}</td> 
-                        <!-- {/foreach} -->
-                    </tr>
-                    <!-- {/if} -->
-                    
-                    <!-- {if $spec_key eq 228} -->
-                    <!-- {foreach from=$spec.values item=spec3 key=spec_key3} -->
-                        
-    
-                        <tr><td>{$spec3.label}</td>
-                        
-                       <!-- {foreach from=$specification item=spec_inner key=spec_key_inner} -->
-                    <!-- {if $spec_key_inner eq 227} -->
-                    <!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
-                     
-                    <td><input type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}" /></td>
-                     
-                    <!-- {/foreach} -->
-                    <!-- {/if} -->
-                     <!-- {/foreach} --> 
-                        
-                        </tr>
-                        
-                    <!-- {/foreach} -->
-                    <!-- {/if} -->
-                    
-                <!-- {/foreach} --> 
-                </table>
-               
-                <!-- {* 结束循环可选属性 *} -->
-                <div class="blank"></div>
-  </div>
+
   </div>
   <div class="blank5"></div>
   
