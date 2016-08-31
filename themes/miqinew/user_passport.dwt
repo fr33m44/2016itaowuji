@@ -116,11 +116,11 @@
             <span id="username_notice" style="color:#FF0000"> (建议使用姓名)</span>
         </div>
         <div class="coLogin_one">
-          <p>{$lang.label_user_type}：</p>
+          <p>{$lang.label_user_rank}：</p>
           <div class="coLoginTxt" style="width:245px;">
            <div style="width:245px;line-height:35px">
-          <input name="user_type" type="radio" checked="checked" style="margin-left:20px" value="个人买家" />个人买家
-          <input name="user_type" type="radio" value="实体店买家" style="margin-left:40px" />实体店买家
+          <input name="user_rank" type="radio" checked="checked" style="margin-left:20px" value="101" />个人买家
+          <input name="user_rank" type="radio" value="102" style="margin-left:40px" />实体店买家
            </div>
           </div>
            <span id="user_type_notice" style="color:#FF0000"> *</span>

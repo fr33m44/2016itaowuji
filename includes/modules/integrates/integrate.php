@@ -177,7 +177,7 @@ class integrate
      *
      * @return int
      */
-    function add_user($username, $password, $email, $user_type, $storename, $storeaddress, $extendcode, $storestype, $gender = -1, $bday = 0, $reg_date=0, $md5password='')
+    function add_user($username, $password, $email, $user_rank, $storename, $storeaddress, $extendcode, $storestype, $gender = -1, $bday = 0, $reg_date=0, $md5password='')
     {
         /* 将用户添加到整合方 */
         if ($this->check_user($username) > 0)
@@ -208,8 +208,8 @@ class integrate
             $post_password = $this->compile_password(array('password'=>$password));
         }
 
-        $fields = array($this->field_name, $this->field_email, $this->field_pass, $this->field_user_type, $this->field_storename, $this->field_storeaddress, $this->field_extendcode, $this->field_storestype);
-        $values = array($post_username, $email, $post_password, $user_type, $storename, $storeaddress, $extendcode, $storestype);
+        $fields = array($this->field_name, $this->field_email, $this->field_pass, $this->field_user_rank, $this->field_storename, $this->field_storeaddress, $this->field_extendcode, $this->field_storestype);
+        $values = array($post_username, $email, $post_password, $user_rank, $storename, $storeaddress, $extendcode, $storestype);
 
         if ($gender > -1)
         {

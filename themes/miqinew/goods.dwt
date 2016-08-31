@@ -136,20 +136,15 @@ $(function(){
                   <b> 
                   <!--本店售价--> 
                   本店价格：<font  id="ECS_SHOPPRICE">￥{$goods.shop_price}</font> </b>
-
-                  <p> 
-                    {if $theuser_rank eq '实体店买家'}
-                    <!-- {foreach from=$rank_prices item=rank_price key=key} 会员等级对应的价格--> 
-                    {$rank_price.rank_name}：<font  id="ECS_RANKPRICE_{$key}">{$rank_price.price}</font>
-                    <!--{/foreach}--> 
-                    {else}
-                     <!-- {foreach from=$rank_prices item=rank_price key=key} 会员等级对应的价格--> 
-                     {if $rank_price.rank_name eq '个人买家'}
-                      {$rank_price.rank_name}：<font  id="ECS_RANKPRICE_{$key}">{$rank_price.price}</font>
-                    {/if}
+                  
+                  <!--吴铭 修改的不同的用户登录显示不同价格-->
+                   <!-- {foreach from=$rank_prices item=rank_price key=key} 会员等级对应的价格--> 
+                     <!--{if $user_rank eq $key}-->
+                        <!--{if $user_rank=='102'}-->
+                           <p>{$rank_price.rank_name}：{$rank_price.price}</p>
+                         <!--{/if}-->
+                    <!--{/if}-->
                     <!--{/foreach}-->
-                    {/if}
-                  </p>
                   <p>节&nbsp;&nbsp;&nbsp;省：¥{$goods.jiesheng}（{$goods.zhekou}折）</p>
                   
                   <p>已售出： <span style="color: #4c4c4c;">{$goods.sales_volume}件</span></p>

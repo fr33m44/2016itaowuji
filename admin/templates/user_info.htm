@@ -50,10 +50,10 @@
   </tr>
   {/if}
   <tr>
-    <td class="label">{$lang.user_type}:</td>
-    <td><select name="user_type">
-      <option value="个人买家" {if $user.user_type eq '个人买家'}selected{/if}>个人买家</option>
-      <option value="实体店买家" {if $user.user_type eq '实体店买家'}selected{/if}>实体店买家</option>
+    <td class="label">{$lang.user_rank}:</td>
+    <td><select name="user_rank">
+      <option value="101" {if $user.user_rank eq '101'}selected{/if}>个人买家</option>
+      <option value="102" {if $user.user_rank eq '102'}selected{/if}>实体店买家</option>
     </select></td>
   </tr>
   <tr>
