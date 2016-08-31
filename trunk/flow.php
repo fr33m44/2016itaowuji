@@ -167,7 +167,9 @@ elseif ($_REQUEST['step'] == 'add_to_cart_showDiv')
     $_POST['goods']=strip_tags(urldecode($_POST['goods']));
     $_POST['goods'] = json_str_iconv($_POST['goods']);
 
-
+    //print_r($_POST['goods']);
+    //die();
+    
     if (!empty($_REQUEST['goods_id']) && empty($_POST['goods']))
     {
         if (!is_numeric($_REQUEST['goods_id']) || intval($_REQUEST['goods_id']) <= 0)
@@ -247,7 +249,7 @@ elseif ($_REQUEST['step'] == 'add_to_cart_showDiv')
             $result['parent'] = $goods->parent;
             $result['message'] = $spe_array;
 			if(!empty($goods->script_name))
-			{		
+			{
 				$result['script_name'] = $goods->script_name;
 			}
 			else

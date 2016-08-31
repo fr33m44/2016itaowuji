@@ -1,6 +1,7 @@
 /* $Id : common.js 4865 2007-01-31 14:04:10Z paulgao $ */
 /* *
  * 添加商品到购物车 并且停留当前页 显示出DIV
+ * 20160831 hjq 点击进货后将各个型号颜色的产品加入到购物车
  */
 function addToCartShowDiv(goodsId, script_name,goods_recommend,parentId)
 {
@@ -261,19 +262,12 @@ function addToCart(goodsId, parentId)
   if (formBuy)
   {
     spec_arr = getSelectedAttributes(formBuy);
-
-    if (formBuy.elements['number'])
-    {
-      number = formBuy.elements['number'].value;
-    }
-
 	quick = 1;
   }
 
   goods.quick    = quick;
   goods.spec     = spec_arr;
   goods.goods_id = goodsId;
-  goods.number   = number;
   goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
 
   Ajax.call('flow.php?step=add_to_cart', 'goods=' + $.toJSON(goods), addToCartResponse, 'POST', 'JSON');
@@ -284,19 +278,18 @@ function addToCart(goodsId, parentId)
  */
 function getSelectedAttributes(formBuy)
 {
-  var spec_arr = new Array();
-  var j = 0;
+  var spec_arr = [];
+  
 
   for (i = 0; i < formBuy.elements.length; i ++ )
   {
     var prefix = formBuy.elements[i].name.substr(0, 5);
 
-    if (prefix == 'spec_' && (
-      ((formBuy.elements[i].type == 'radio' || formBuy.elements[i].type == 'checkbox') && formBuy.elements[i].checked) ||
-      formBuy.elements[i].tagName == 'SELECT'))
+    if (prefix == 'spec_' && formBuy.elements[i].type == 'text' && formBuy.elements[i].value > 0 )
     {
-      spec_arr[j] = formBuy.elements[i].value;
-      j++ ;
+      idarr = formBuy.elements[i].name.substr(5).split("_");
+      spec_arr.push({number:formBuy.elements[i].value, specs:idarr});
+     
     }
   }
 
