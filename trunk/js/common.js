@@ -22,26 +22,23 @@ function addToCartShowDiv(goodsId, script_name,goods_recommend,parentId)
   if (formBuy)
   {
     spec_arr = getSelectedAttributes(formBuy);
-
-    if (formBuy.elements['number'])
-    {
-      number = formBuy.elements['number'].value;
-    }
-
 	quick = 1;
   }
 
   goods.quick    = quick;
-  goods.spec     = spec_arr;
   goods.goods_id = goodsId;
-  goods.number   = number;
  
   goods.script_name   = (typeof(script_name) == "undefined") ? 0 : parseInt(script_name);
   goods.goods_recommend   = (typeof(goods_recommend) == "undefined") ? '' : goods_recommend;
   goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
 
-  Ajax.call('flow.php?step=add_to_cart_showDiv', 'goods=' + $.toJSON(goods), addToCartShowDivResponse, 'POST', 'JSON');
-  
+  for(i=0;i<spec_arr.length;i++)
+  {
+    
+    goods.spec     = spec_arr[i].specs;
+    goods.number   = spec_arr[i].number;
+    Ajax.call('flow.php?step=add_to_cart_showDiv', 'goods=' + $.toJSON(goods), addToCartShowDivResponse, 'POST', 'JSON');
+  }
 }
 
 /* *
