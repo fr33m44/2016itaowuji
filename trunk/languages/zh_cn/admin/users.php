@@ -25,6 +25,7 @@ $_LANG['mobile_phones'] = '手机号码';
 $_LANG['storestype'] = '店铺类型';
 $_LANG['storename'] = '店铺名称';
 $_LANG['storeaddress'] = '店铺地址';
+$_LANG['storestype'] = '店铺类型';
 $_LANG['extendcode'] = '推荐码';
 $_LANG['email'] = '邮件地址';
 $_LANG['is_validated'] = '是否已验证';

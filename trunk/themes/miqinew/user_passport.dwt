@@ -11,7 +11,32 @@
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
-{insert_scripts files='common.js,user.js,transport.js'}
+{insert_scripts files='common.js,user.js,transport.js,jquery-1.9.1.min.js'}
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#storename").hide();
+  $("#storetype").hide();
+  $("#province").hide();
+  $("#detailed_address").hide();
+  
+  if($("#user_rank_person").click(function(){
+	$("#storename").hide();
+	$("#storetype").hide();
+	$("#province").hide();
+	$("#detailed_address").hide();
+  }));
+  
+  if($("#user_rank_shop").click(function(){
+	$("#storename").show();
+	$("#storetype").show();
+	$("#province").show();
+	$("#detailed_address").show();
+  }));
+  
+  
+  });
+</script>
 
 <body>
 <div class="body_user ">
@@ -75,14 +100,8 @@
       </div>
    
     </form>
-    <!-- <div class="coLogin_bottom">
-                    <p>您也可以使用合作网站账号登录</p>
-                    <ul  style=" width:360px;">
-                        <li class="sina_ico"><a href="user.php?act=oath&type=weibo">新浪微博登录</a></li>
-					    <li class="qq_ico"><a href="user.php?act=oath&type=qq"><span class="arial">QQ</span>登录</a></li>
-                        <li class="alipay_ico"><a href="user.php?act=oath&type=alipay">支付宝登录</a></li>
-                    </ul>
-                </div> -->
+    <div class="coLogin_bottom">
+    </div>
 </div>
   
 </div>
@@ -119,8 +138,8 @@
           <p>{$lang.label_user_rank}：</p>
           <div class="coLoginTxt" style="width:245px;">
            <div style="width:245px;line-height:35px">
-          <input name="user_rank" type="radio" checked="checked" style="margin-left:20px" value="101" />个人买家
-          <input name="user_rank" type="radio" value="102" style="margin-left:40px" />实体店买家
+          <input id="user_rank_person" name="user_rank" type="radio" checked="checked" style="margin-left:20px" value="101" />个人买家
+          <input id="user_rank_shop" name="user_rank" type="radio" value="102" style="margin-left:40px" />实体店买家
            </div>
           </div>
            <span id="user_type_notice" style="color:#FF0000"> *</span>
@@ -161,7 +180,7 @@
           </div>
            <span style="color:#FF0000" id="conform_password_notice"> *</span>
         </div>
-        <div class="coLogin_one">
+        <div id="storename" class="coLogin_one">
           <p>{$lang.label_storename}：</p>
           <div class="coLoginTxt" style="width:245px;">
          <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
@@ -170,7 +189,7 @@
           </div>
             <span id="storename_notice" style="color:#FF0000"> *</span>
         </div>
-        <div class="coLogin_one">
+        <div  id="storetype" class="coLogin_one">
           <p>{$lang.label_storestype}：</p>
           <div class="coLoginTxt" style="width:245px;">
           <div class="coLogin_txt" style="width:245px;">
@@ -184,7 +203,7 @@
           </div>
             <span id="storestype_notice" style="color:#FF0000"> *</span>
         </div>
-        <div class="coLogin_one">
+        <div id="province" class="coLogin_one">
           <p>{$lang.country_province}：</p>
           <div class="coLoginTxt" style="width:245px;line-height:35px;">
            
@@ -196,7 +215,7 @@
            <span id="email_notice" style="color:#FF0000"> *</span>
         </div>
         {insert_scripts files='area_data.js'}
-        <div class="coLogin_one">
+        <div id="detailed_address" class="coLogin_one">
           <p>{$lang.detailed_address}：</p>
           <div class="coLoginTxt" style="width:245px;">
            <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">          
