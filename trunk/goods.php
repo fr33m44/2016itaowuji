@@ -20,7 +20,6 @@ $affiliate = unserialize($GLOBALS['_CFG']['affiliate']);
 $smarty->assign('affiliate', $affiliate);
 $factor = intval($_CFG['comment_factor']);
 $smarty->assign('factor',$factor);
-$smarty->assign('user_rank',$GLOBALS[_SESSION][user_rank]);
 
 /*------------------------------------------------------ */
 //-- INPUT
@@ -242,8 +241,8 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $smarty->assign('bought_goods',        get_also_bought($goods_id));                      // 购买了该商品的用户还购买了哪些商品
         $smarty->assign('goods_rank',          get_goods_rank($goods_id));                       // 商品的销售排名
 		$smarty->assign('comment_percent',     comment_percent($goods_id)); 
-
-        
+		$smarty->assign('user_rank',$_SESSION['user_rank']);
+		
          //by mike start
         //组合套餐名
         $comboTabIndex = array(' ','一', '二', '三','四','五','六','七','八','九','十');

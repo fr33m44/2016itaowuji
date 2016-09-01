@@ -117,6 +117,16 @@ $(function(){
                   <p> {$lang.goods_brand}<a href="{$goods.goods_brand_url}" >{$goods.goods_brand}</a> </p>
                   <!--{/if}--> 
                   
+                  <!-- {foreach from=$properties item=property_group key=key} -->
+                      <!-- {foreach from=$property_group item=property} -->
+                      <p> 
+                        {$property.name|escape:html}
+                        <span class="fit_people ">{$property.value}</span>
+                      </p>
+                      <!-- {/foreach}--> 
+                  <!-- {/foreach}-->
+                  
+                  
                   <!-- {if $cfg.show_goodsweight} 商品重量-->
                   <p> {$lang.goods_weight}{$goods.goods_weight}</p>
                   <!-- {/if} --> 
@@ -132,28 +142,65 @@ $(function(){
                     <!-- {if $cfg.show_marketprice} 市场价格--> 
                     {$lang.market_price}{$goods.market_price} 
                     <!-- {/if} --> 
-                  </p>
-                  <b> 
-                  <!--本店售价--> 
-                  本店价格：<font  id="ECS_SHOPPRICE">￥{$goods.shop_price}</font> </b>
-                  
-                  <!--吴铭 修改的不同的用户登录显示不同价格-->
-                   <!-- {foreach from=$rank_prices item=rank_price key=key} 会员等级对应的价格--> 
-                     <!--{if $user_rank eq $key}-->
-                        <!--{if $user_rank=='102'}-->
-                           <p>{$rank_price.rank_name}：{$rank_price.price}</p>
-                         <!--{/if}-->
-                    <!--{/if}-->
-                    <!--{/foreach}-->
-                  <p>节&nbsp;&nbsp;&nbsp;省：¥{$goods.jiesheng}（{$goods.zhekou}折）</p>
-                  
-                  <p>已售出： <span style="color: #4c4c4c;">{$goods.sales_volume}件</span></p>
-                  <p style="display:none"> {$lang.goods_rank} <img src="images/stars{$goods.comment_rank}.gif" alt="comment rank {$goods.comment_rank}" /> </p>
+                  </p> 
+                  <b>
+                <!--吴铭 / hjq 根据用户等级user_rank显示不同价格-->
+				<!--{if $user_rank eq 102} 102是实体店rankid -->
+					   <!-- {foreach from=$rank_prices item=item key=key} 会员等级对应的价格--> 
+							<!--{if $key eq 102} -->
+							进货价：<font  id="ECS_SHOPPRICE">{$item.price}</font>
+							<!--{/if}-->
+							<!--{if $key eq 101} -->
+							零售价：{$item.price}
+							<!--{/if}-->
+						<!--{/foreach}-->
+				<!--{/if}-->
+				
+				<!--{if $user_rank eq 101} 101是个人rankid -->
+					   <!-- {foreach from=$rank_prices item=item key=key} 会员等级对应的价格--> 
+							<!--{if $key eq 101} -->
+							零售价：<font  id="ECS_SHOPPRICE">{$item.price}</font>
+							<!--{/if}-->
+						<!--{/foreach}-->
+				<!--{/if}-->
+				
+                <!-- {foreach from=$specification item=spec key=spec_key} --> </b> 
+                <p class="catt" >
+                {$spec.name}：
+              
+                    <!-- {* 判断属性是复选还是单选 *} --> 
+                    <!-- {if $spec.attr_type eq 1} --> 
+                    <!-- {if $cfg.goodsattr_style eq 1} -->
+                    
+                      <!-- {foreach from=$spec.values item=value key=key} --> 
+                       
+                      <a style=" text-decoration:none" {if $key eq 0}class="cattsel"{/if} ref="javascript:;" name="{$value.id}" title="[{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]">{$value.label} 
+                      
+                      <!-- {/foreach} --> 
+                   
+                    <!-- {else} -->
+                    <span class="spec_value" name="spec_{$spec_key}" >
+                      <!-- {foreach from=$spec.values item=value key=key} -->
+                      {$value.label}
+                      <!-- {/foreach} -->
+                    </span>
+                    <!-- {/if} --> 
+                    <!-- {else} --> 
+                    <!-- {foreach from=$spec.values item=value key=key} -->
+                    <span class="spec_value" >{$value.label} </span>
+                    <!-- {/foreach} -->
+                    <!-- {/if} --> 
+                 
+                
+                 </p>
+                <!-- {/foreach} --> 
+               
+                <!-- {* 结束循环可选属性 *} -->
                   
                   <!--{if $volume_price_list } -->
-                  <p> <font class="f1">{$lang.volume_price}：</font><br />
+                  <font class="f1">{$lang.volume_price}：</font><br />
                   
-                  <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#aad6ff">
+                  <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#ccc">
                     <tr>
                       <td align="center" bgcolor="#FFFFFF"><strong>{$lang.number_to}</strong></td>
                       <td align="center" bgcolor="#FFFFFF"><strong>{$lang.preferences_price}</strong></td>
@@ -166,7 +213,6 @@ $(function(){
                     <!-- {/foreach} -->
                   </table>
      
-                  </p>
                   <!--{/if}--> 
       			<div class="clearfix"></div>
                   <!--{if $goods.is_promote and $goods.gmt_end_time } 促销--> 
@@ -192,45 +238,54 @@ $(function(){
                      <!-- 弹出框 e-->
                
               <div class="center_txt cart_table">
-                <!-- {* 开始循环所有可选属性 *} -->
-                <table>
-                <!-- {foreach from=$specification item=spec key=spec_key} -->
-                    
-                    
-                    <!-- {if $spec_key eq 227} -->
-                    <tr><td class="bbk"></td>
-                    
-                        <!-- {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} -->
-                             
-                                <td class="bbk">{$spec1.label}</td> 
-                        <!-- {/foreach} -->
-                    </tr>
-                    <!-- {/if} -->
-                    
-                    <!-- {if $spec_key eq 228} -->
-                    <!-- {foreach from=$spec.values item=spec3 key=spec_key3} -->
-                        
-    
-                        <tr><td>{$spec3.label}</td>
-                        
-                       <!-- {foreach from=$specification item=spec_inner key=spec_key_inner} -->
-                    <!-- {if $spec_key_inner eq 227} -->
-                    <!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
-                     
-                    <td><input type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}" onfocus="if (value =='0'){value =''}"  /></td>
-                     
-                    <!-- {/foreach} -->
-                    <!-- {/if} -->
-                     <!-- {/foreach} --> 
-                        
-                        </tr>
-                        
-                    <!-- {/foreach} -->
-                    <!-- {/if} -->
-                    
-                <!-- {/foreach} --> 
-                </table>
-                <!-- {* 结束循环可选属性 *} -->
+                
+				<!--按罩杯分多个表-->
+                <!-- {foreach from=$specification item=item_zb key=key_zb} -->
+					<!-- {if $key_zb eq 231} -->
+						<!-- {foreach from=$item_zb.values item=spec_zb key=spec_key_zb name="spec_zb"} -->
+								 
+						
+						<table>
+						<!-- {foreach from=$specification item=spec key=spec_key} -->
+							
+							
+							<!-- {if $spec_key eq 227} -->
+							<tr><td class="bbk"></td>
+							
+								<!-- {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} -->
+									 
+										<td class="bbk">{$spec1.label}{$spec_zb.label}</td> 
+								<!-- {/foreach} -->
+							</tr>
+							<!-- {/if} -->
+							
+							<!-- {if $spec_key eq 228} -->
+							<!-- {foreach from=$spec.values item=spec3 key=spec_key3} -->
+								
+			
+								<tr><td>{$spec3.label}</td>
+								
+							   <!-- {foreach from=$specification item=spec_inner key=spec_key_inner} -->
+							<!-- {if $spec_key_inner eq 227} -->
+							<!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
+							 
+							<td><input type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
+							 
+							<!-- {/foreach} -->
+							<!-- {/if} -->
+							 <!-- {/foreach} --> 
+								
+								</tr>
+								
+							<!-- {/foreach} -->
+							<!-- {/if} -->
+							
+						<!-- {/foreach} --> 
+						</table>
+						<!-- {/foreach} -->
+					<!-- {/if} -->
+				<!-- {/foreach} --> 
+				
                 <div class="blank"></div>
                 </div>
                
@@ -245,45 +300,7 @@ $(function(){
                 <p> {$lang.goods_free_shipping} </p>
                 <!-- {/if} --> 
                 
-                 <!-- {foreach from=$specification item=spec key=spec_key} -->
-                
-                <p class="catt" >
-                <strong style="float:left; width:60px; font-size: 13px;color: #999; font-weight:normal; padding-top:10px;">{$spec.name}：</strong>
-              
-                    <!-- {* 判断属性是复选还是单选 *} --> 
-                    <!-- {if $spec.attr_type eq 1} --> 
-                    <!-- {if $cfg.goodsattr_style eq 1} -->
-                    
-                      <!-- {foreach from=$spec.values item=value key=key} --> 
-                       
-                      <a style=" text-decoration:none" {if $key eq 0}class="cattsel"{/if} onclick="changeAtt(this)" href="javascript:;" name="{$value.id}" title="[{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]">{$value.label}
-                      <input style="display:none" id="spec_value_{$value.id}" type="radio" name="spec_{$spec_key}" value="{$value.id}" {if $key eq 0}checked{/if} /></a> 
-                      
-                      <!-- {/foreach} --> 
-                   
-                    <input type="hidden" name="spec_list" value="{$key}" />
-                    <!-- {else} -->
-                    <select name="spec_{$spec_key}" onchange="changePrice()">
-                      <!-- {foreach from=$spec.values item=value key=key} -->
-                      <option label="{$value.label}" value="{$value.id}">{$value.label} {if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if}{if $value.price neq 0}{$value.format_price}{/if}</option>
-                      <!-- {/foreach} -->
-                    </select>
-                    <input type="hidden" name="spec_list" value="{$key}" />
-                    <!-- {/if} --> 
-                    <!-- {else} --> 
-                    <!-- {foreach from=$spec.values item=value key=key} -->
-                    <label for="spec_value_{$value.id}">
-                      <input type="checkbox" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
-                      {$value.label} [{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}] </label>
-                    <!-- {/foreach} -->
-                    <input type="hidden" name="spec_list" value="{$key}" />
-                    <!-- {/if} --> 
-                 
-                
-                 </p>
-                <!-- {/foreach} --> 
-               
-                <!-- {* 结束循环可选属性 *} -->
+
                  
                 <div class="center_add">
                   <div class="center_add_left"> <a onclick="buyNumber.minus()" href="javascript:;"><img src="images/jian.gif" /></a>
@@ -519,31 +536,7 @@ return offset;
             <div class="inLeft_ensure"> <a href="#" target="_blank"></a> <a href="#" target="_blank"></a> <a href="#" target="_blank"></a> <a href="#" target="_blank"></a> </div>
             <div  id="no_try_record"> 
               
-              <!--商品属性-->
-              <div class="inLeft_title property_title" id="shangpsx"> <img border="0" src="../images/inLeft_title01.gif"> </div>
-              <div class="inLeft_attributes" style="margin:0;">
-                <div class="inLeft_attributes_1">
-                  <table border="0" cellspacing="0" cellpadding="0" >
-                    <tbody>
-                      <tr>
-                        <td>商品名称</td>
-                        <td><p class="fit_people "> {$goods.goods_style_name}</p></td>
-                        <td align="center" style="text-align:center;" rowspan="9"><img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"  /></td>
-                      </tr>
-                      
-                      <!-- {foreach from=$properties item=property_group key=key} --> 
-                      <!-- {foreach from=$property_group item=property} -->
-                      <tr >
-                        <td>{$property.name|escape:html}</td>
-                        <td><p class="fit_people ">{$property.value}</p></td>
-                      </tr>
-                      <!-- {/foreach}--> 
-                      <!-- {/foreach}-->
-                      
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              
               <!-- 本单详情-->
               <div class="inLeft_title " id="shangpjs"> <img border="0" src="../images/inLeft_title02.gif"> </div>
               <div class="inLeft_attributes inLeft_style">
