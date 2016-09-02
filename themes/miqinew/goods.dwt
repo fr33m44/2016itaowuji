@@ -69,7 +69,35 @@ $(function(){
 	$("#J_tabSlider ul li a").click(function(){
 		$("#J_tabSlider ul li").removeClass("cur");
 		$(this).parent().addClass("cur");
-	})	
+	})
+	
+	$("#qsqm_btn").click(function(){
+		var spec_arr = [];
+		var formBuy = document.forms['ECS_FORMBUY'];
+
+		for (i = 0; i < formBuy.elements.length; i ++ )
+		{
+			var prefix = formBuy.elements[i].name.substr(0, 5);
+
+			if (prefix == 'spec_' && formBuy.elements[i].type == 'text')
+			{
+			  document.forms['ECS_FORMBUY'].elements[i].value = $("#volume").html() * $("#qsqm").val();
+			}
+		}
+	});
+	$("#qsqm").keyup(function(){
+		this.value=this.value.replace(/[^\d]/g,'');
+		if(this.value>100){this.value=100;}
+		this.clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
+		 
+	});
+	
+	$(".spec_ele").keyup(function(){
+		this.value=this.value.replace(/[^\d]/g,'');
+		if(this.value>1000){this.value=1000;}
+		this.clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
+	});
+
 })
 </script>
 <!--当前位置 start-->
@@ -174,7 +202,7 @@ $(function(){
                     
                       <!-- {foreach from=$spec.values item=value key=key} --> 
                        
-                      <a style=" text-decoration:none" {if $key eq 0}class="cattsel"{/if} ref="javascript:;" name="{$value.id}" title="[{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]">{$value.label} 
+                      <a style="text-decoration:none" {if $key eq 0}class="cattsel"{/if} ref="javascript:;" name="{$value.id}" title="[{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]">{$value.label} 
                       
                       <!-- {/foreach} --> 
                    
@@ -269,7 +297,7 @@ $(function(){
 							<!-- {if $spec_key_inner eq 227} -->
 							<!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
 							 
-							<td><input type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
+							<td><input class="spec_ele" type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
 							 
 							<!-- {/foreach} -->
 							<!-- {/if} -->
@@ -358,10 +386,22 @@ $(function(){
                                 }
                             </script>
                 <div class="center_btn">
-                  <div class="center_shop_btn"> <a href="javascript:addToCartShowDiv({$goods.goods_id})"></a> </div>
-                  <div class="center_collect_btn"> <a href="javascript:collect({$goods.goods_id})">收藏该商品</a> </div>
-                   
+					
                   
+					<div class="qsqm_num" style="width: 129px;height: 43px;float:left">
+					<!-- {foreach from=$properties item=property_group key=key} -->
+						  <!-- {foreach from=$property_group item=property} -->
+						  <!-- {if $property.name eq "规格"}-->
+							每包<span id="volume">{$property.value|substr:2}</span>件 <input style="width: 78px;height: 35px;" type="text" name="qsqm" id="qsqm"  />
+						  <!-- {/if} -->
+						  <!-- {/foreach}-->
+					<!-- {/foreach}-->
+					</div>
+					<div class="center_qsqm_btn"> <a  id="qsqm_btn" href="javascript:;"></a> </div>
+					<div class="center_shop_btn"> <a href="javascript:addToCartShowDiv({$goods.goods_id})"></a> </div>
+					<div class="center_collect_btn"> <a href="javascript:collect({$goods.goods_id})">收藏该商品</a> </div>
+
+
                 </div>
                 <div class="center_pop" id="addtocartdialog" style="display:none;">
                <div class="center_pop_close"><a href="javascript:void(0)"></a></div>
@@ -656,6 +696,7 @@ onload = function(){
   try { onload_leftTime(); }
   catch (e) {}
 }
+
 
 /**
  * 点选可选属性或改变数量时修改商品价格的函数

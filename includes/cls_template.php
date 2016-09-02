@@ -626,6 +626,9 @@ class cls_template
                     case 'strip_tags':
                         $p = 'strip_tags(' . $p . ')';
                         break;
+                    case 'substr':
+                        $p = 'substr(' . $p . ",$s[1])";
+                        break;
 
                     default:
                         # code...
