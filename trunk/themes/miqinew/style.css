@@ -1581,13 +1581,22 @@ background: #f5f5f5;
 .catt a:focus {outline-style:none;}
 .catt .cattsel {border:#ff4560 2px solid; margin: -1px;margin-left:4px;margin-top:5px;}
 .catt .cattsel a:hover {border: #ff4560 2px solid;margin:-1px;background:}
+.qsqm_num {margin-right:10px; font-weight:bolder;text-align:center;max-length:3}
 /*加入购物车收藏按钮*/
 .center_btn{width:100%;margin:18px 0 0 0;  padding:0 0 10px 0;float:left; position:relative; }
-.center_shop_btn{width:129px;height:44px;float:left;}
-.center_shop_btn a{width:129px;height:44px;background:url(images/center_shop_btn.gif) 0 0 no-repeat;float:left;}
-.center_shop_btn a:hover{background-position:0 -44px;}
+.center_shop_btn{width:129px;height:43px;float:left; margin-right:10px;}
+.center_shop_btn a{width:129px;height:43px;background:url(images/center_shop_btn.gif) 0 0 no-repeat;float:left;}
 .center_shop_btn a.sold_out,
 .center_shop_btn a.sold_out:hover{ background-position:0 -88px; cursor:default;}
+
+.center_btn{width:100%;margin:18px 0 0 0;  padding:0 0 10px 0;float:left; position:relative; }
+.center_qsqm_btn{width:129px;height:43px;float:left; margin-right:10px;}
+.center_qsqm_btn a{width:129px;height:43px;background:url(images/qsqm.gif) 0 0 no-repeat;float:left;}
+.center_qsqm_btn a.sold_out,
+.center_qsqm_btn a.sold_out:hover{ background-position:0 -88px; cursor:default;}
+
+
+
 .center_collect_btn{width:127px;height:44px;margin:0 0 0 8px;display:inline;float:left;}
 .center_collect_btn a{width:100px;height:44px;line-height:42px;padding:0 0 0 27px;text-align:center;background:url(images/center_collect_btn.gif) 0 0 no-repeat;font-size:16px;font-weight:bold;color:#808080;float:left;}
 .center_collect_btn a:hover,

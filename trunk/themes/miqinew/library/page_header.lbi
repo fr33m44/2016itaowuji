@@ -23,10 +23,10 @@ catch (e) {
     <div class="heads">
       <div class="bookmail">
         <ul>
-          <li class="background_ico"><a href="#" target="_blank" rel="nofollow">手机版<span>淘五季</span></a></li>
+          <li class="background_ico"><a href="#" target="_blank" rel="nofollow">手机版淘五季</a></li>
           <li class="background_line"><a href="#" target="_blank" rel="nofollow">邀请好友</a></li>
           <li><a href="javascript:void(0);" onclick="AddFavorite('我的网站',location.href)">加入收藏</a></li>
-          <li class="background_pay">关注<span>淘五季</span><span class="arrow"></span>
+          <li class="background_pay">关注淘五季<span class="arrow"></span>
             <div class="bookmail_more">
               <ul>
                 <li class="more03"><a href="#" target="_blank" rel="nofollow">微信公众号</a></li>
