@@ -118,27 +118,14 @@ class alipay
         }
 
         $extend_param = 'isv^sh22';
-
+		
         $parameter = array(
-            'extend_param'      => $extend_param,
-            'service'           => $service,
-            'partner'           => $payment['alipay_partner'],
-            //'partner'           => ALIPAY_ID,
-            '_input_charset'    => $charset,
-            'notify_url'        => return_url(basename(__FILE__, '.php')),
-            'return_url'        => return_url(basename(__FILE__, '.php')),
             /* 业务参数 */
-            'subject'           => $order['order_sn'],
-            'out_trade_no'      => $order['order_sn'] . $order['log_id'],
-            'price'             => $order['order_amount'],
-            'quantity'          => 1,
-            'payment_type'      => 1,
-            /* 物流参数 */
-            'logistics_type'    => 'EXPRESS',
-            'logistics_fee'     => 0,
-            'logistics_payment' => 'BUYER_PAY_AFTER_RECEIVE',
-            /* 买卖双方信息 */
-            'seller_email'      => $payment['alipay_account']
+            'subject'           => '淘五季进货 订单号'.$order['order_sn'],
+            'out_trade_no'      => $order['order_sn'],
+            'total_fee'             => $order['order_amount'],
+			'body'             => ''
+          
         );
 
         ksort($parameter);
@@ -156,8 +143,9 @@ class alipay
         $param = substr($param, 0, -1);
         $sign  = substr($sign, 0, -1). $payment['alipay_key'];
         //$sign  = substr($sign, 0, -1). ALIPAY_AUTH;
-
-        $button = '<div style="text-align:center"><input type="button" onclick="window.open(\'https://mapi.alipay.com/gateway.do?'.$param. '&sign='.md5($sign).'&sign_type=MD5\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
+		
+		
+        $button = '<div style="text-align:center"><input type="button" onclick="window.open(\'http://itwj/includes/modules/payment/alipay/alipayapi.php?'.$param.'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 
         return $button;
     }
