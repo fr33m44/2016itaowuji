@@ -374,7 +374,6 @@ $_LANG['back_retry_answer'] = '返回重试';
 
 /* 登录 注册 */
 $_LANG['label_username'] = '用户名';
-$_LANG['label_user_rank'] = '用户类型';
 $_LANG['label_email'] = 'email';
 $_LANG['label_password'] = '密码';
 $_LANG['label_storename'] = '店铺名称';

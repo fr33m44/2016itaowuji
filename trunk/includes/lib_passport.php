@@ -23,7 +23,7 @@ if (!defined('IN_ECS'))
  *
  * @return  bool         $bool
  */
-function register($username, $password, $email, $other = array(), $user_rank, $storename, $storeaddress, $extendcode, $storestype)
+function register($username, $password, $email, $other = array(), $storename, $storeaddress, $extendcode, $storestype)
 {
     /* 检查注册是否关闭 */
     if (!empty($GLOBALS['_CFG']['shop_reg_closed']))
@@ -63,7 +63,7 @@ function register($username, $password, $email, $other = array(), $user_rank, $s
         $GLOBALS['err']->add(sprintf($GLOBALS['_LANG']['username_exist'], $username));
         return false;
     }
-    $newuserid = $GLOBALS['user']->add_user($username, $password, $email, $user_rank, $storename, $storeaddress, $extendcode, $storestype);
+    $newuserid = $GLOBALS['user']->add_user($username, $password, $email, $storename, $storeaddress, $extendcode, $storestype);
     if (!$newuserid)
     {
         if ($GLOBALS['user']->error == ERR_INVALID_USERNAME)
