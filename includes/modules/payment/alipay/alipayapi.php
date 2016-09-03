@@ -27,6 +27,12 @@
 require_once("alipay.config.php");
 require_once("lib/alipay_submit.class.php");
 
+
+define('IN_ECS', true);
+
+require_once(dirname(__FILE__) . '/../../../../includes/init.php');
+require_once(ROOT_PATH . 'includes/lib_order.php');
+
 /**************************请求参数**************************/
         //商户订单号，商户网站订单系统中唯一订单号，必填
         $out_trade_no = $_GET['out_trade_no'];

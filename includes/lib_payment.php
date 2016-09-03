@@ -51,7 +51,7 @@ function get_payment($code)
 }
 
 /**
- *  通过订单sn取得订单ID
+ *  通过订单sn取得pay log ID
  *  @param  string  $order_sn   订单sn
  *  @param  blob    $voucher    是否为会员充值
  */
@@ -79,6 +79,39 @@ function get_order_id_by_sn($order_sn, $voucher = 'false')
         {
             $pay_log_id = $GLOBALS['db']->getOne("SELECT log_id FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id='" . $order_id . "'");
             return $pay_log_id;
+        }
+        else
+        {
+            return "";
+        }
+    }
+}
+
+/**
+ *  通过订单sn取得order_id
+ *  @param  string  $order_sn   订单sn
+ *  @param  blob    $voucher    是否为会员充值
+ */
+function get_order_id_by_sn1($order_sn, $voucher = 'false')
+{
+    if ($voucher == 'true')
+    {
+        if(is_numeric($order_sn))
+        {
+              return $GLOBALS['db']->getOne("SELECT log_id FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id=" . $order_sn . ' AND order_type=1');
+        }
+        else
+        {
+            return "";
+        }
+    }
+    else
+    {
+        if(is_numeric($order_sn))
+        {
+            $sql = 'SELECT order_id FROM ' . $GLOBALS['ecs']->table('order_info'). " WHERE order_sn = '$order_sn'";
+            $order_id = $GLOBALS['db']->getOne($sql);
+			return $order_id;
         }
         else
         {
