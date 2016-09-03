@@ -29,16 +29,16 @@ require_once("lib/alipay_submit.class.php");
 
 /**************************请求参数**************************/
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        $out_trade_no = $_POST['WIDout_trade_no'];
+        $out_trade_no = $_GET['out_trade_no'];
 
         //订单名称，必填
-        $subject = $_POST['WIDsubject'];
+        $subject = $_GET['subject'];
 
         //付款金额，必填
-        $total_fee = $_POST['WIDtotal_fee'];
+        $total_fee = $_GET['total_fee'];
 
         //商品描述，可空
-        $body = $_POST['WIDbody'];
+        $body = $_GET['body'];
 
 
 
