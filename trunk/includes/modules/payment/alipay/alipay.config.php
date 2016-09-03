@@ -40,10 +40,10 @@ p1HQMOEwOn1XAD37aPQlSiSI0JDmYa43MtbubnnQI52YR1nmLDrRgNCjM2ELCGnK
 $alipay_config['alipay_public_key']= 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB';
 
 // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-$alipay_config['notify_url'] = "http://itwj/includes/modules/payment/alipay/notify_url.php";
+$alipay_config['notify_url'] = "http://".$_SERVER['SERVER_NAME']."/includes/modules/payment/alipay/notify_url.php";
 
 // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-$alipay_config['return_url'] = "http://itwj/includes/modules/payment/alipay/return_url.php";
+$alipay_config['return_url'] = "http://".$_SERVER['SERVER_NAME']."/includes/modules/payment/alipay/return_url.php";
 
 //签名方式
 $alipay_config['sign_type']    = strtoupper('RSA');

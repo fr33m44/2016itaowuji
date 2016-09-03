@@ -15,6 +15,15 @@
 
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
+require_once("lib/alipay_notify.class.php");
+
+
+define('IN_ECS', true);
+
+require_once(dirname(__FILE__) . '/../../../../includes/init.php');
+require_once(ROOT_PATH . 'includes/lib_order.php');
+require_once(ROOT_PATH . 'includes/lib_payment.php');
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -39,18 +48,38 @@ if($verify_result) {//验证成功
 
 	//交易状态
 	$trade_status = $_GET['trade_status'];
+	
+	//交易金额
+	
+	$total_fee = $_GET['total_fee'];
+	
+	//返回商户订单号
+	$order_sn = str_replace($_GET['subject'], '', $_GET['out_trade_no']);
+	$order_sn = trim(addslashes($order_sn));
+	print_r($order_sn);
+	$pay_log_id = get_order_id_by_sn($order_sn);
+	$order_id = get_order_id_by_sn1($order_sn);
 
-
-    if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS') {
-		//判断该笔订单是否在商户网站中已经做过处理
-			//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-			//如果有做过处理，不执行商户的业务程序
+    if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS')
+	{
+		
+        /* 检查支付的金额是否相符 */
+		if (check_money($pay_log_id, $total_fee))
+        {
+			echo 'check money passed';
+			order_paid($pay_log_id, 2);
+        }
+		else
+		{
+			echo 'check money return false';
+		}
     }
     else {
       echo "trade_status=".$_GET['trade_status'];
     }
-		
-	echo "验证成功<br />";
+	
+	ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_detail&order_id=21\n");
+	//echo "验证成功<br />";
 
 	//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 	
@@ -59,7 +88,7 @@ if($verify_result) {//验证成功
 else {
     //验证失败
     //如要调试，请看alipay_notify.php页面的verifyReturn函数
-    echo "验证失败";
+	//ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_list\n");
 }
 ?>
         <title>支付宝即时到账交易接口</title>
