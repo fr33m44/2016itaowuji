@@ -277,7 +277,7 @@ $(function(){
 						<!-- {foreach from=$specification item=spec key=spec_key} -->
 							
 							
-							<!-- {if $spec_key eq 227} -->
+							<!-- {if $spec.name eq '尺寸'} -->
 							<tr><td class="bbk"></td>
 							
 								<!-- {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} -->
@@ -287,14 +287,14 @@ $(function(){
 							</tr>
 							<!-- {/if} -->
 							
-							<!-- {if $spec_key eq 228} -->
+							<!-- {if $spec.name eq '颜色'} -->
 							<!-- {foreach from=$spec.values item=spec3 key=spec_key3} -->
 								
 			
 								<tr><td>{$spec3.label}</td>
 								
 							   <!-- {foreach from=$specification item=spec_inner key=spec_key_inner} -->
-							<!-- {if $spec_key_inner eq 227} -->
+							<!-- {if $spec_inner.name eq '尺寸'} -->
 							<!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
 							 
 							<td><input class="spec_ele" type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>

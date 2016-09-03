@@ -231,7 +231,10 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
 		$smarty->assign('best_goods',get_recommend_goods('best'));    // 推荐商品
         $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新商品
         $smarty->assign('properties',          $properties['pro']);                              // 商品属性
-        $smarty->assign('specification',       $properties['spe']);                              // 商品规格
+        $smarty->assign('specification',       $properties['spe']);   
+		//print_r($properties);die();
+	
+		// 商品规格
         $smarty->assign('attribute_linked',    get_same_attribute_goods($properties));           // 相同属性的关联商品
         $smarty->assign('related_goods',       $linked_goods);                                   // 关联商品
         $smarty->assign('goods_article_list',  get_linked_articles($goods_id));                  // 关联文章
