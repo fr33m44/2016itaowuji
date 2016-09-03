@@ -232,7 +232,6 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新商品
         $smarty->assign('properties',          $properties['pro']);                              // 商品属性
         $smarty->assign('specification',       $properties['spe']);   
-		//print_r($properties);die();
 	
 		// 商品规格
         $smarty->assign('attribute_linked',    get_same_attribute_goods($properties));           // 相同属性的关联商品
@@ -244,8 +243,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $smarty->assign('bought_goods',        get_also_bought($goods_id));                      // 购买了该商品的用户还购买了哪些商品
         $smarty->assign('goods_rank',          get_goods_rank($goods_id));                       // 商品的销售排名
 		$smarty->assign('comment_percent',     comment_percent($goods_id)); 
-		$smarty->assign('user_rank',$_SESSION['user_rank']);
-		
+        
          //by mike start
         //组合套餐名
         $comboTabIndex = array(' ','一', '二', '三','四','五','六','七','八','九','十');

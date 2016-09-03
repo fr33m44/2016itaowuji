@@ -173,24 +173,10 @@ $(function(){
                   </p> 
                   <b>
                 <!--吴铭 / hjq 根据用户等级user_rank显示不同价格-->
-				<!--{if $user_rank eq 102} 102是实体店rankid -->
-					   <!-- {foreach from=$rank_prices item=item key=key} 会员等级对应的价格--> 
-							<!--{if $key eq 102} -->
-							进货价：<font  id="ECS_SHOPPRICE">{$item.price}</font>
-							<!--{/if}-->
-							<!--{if $key eq 101} -->
-							零售价：{$item.price}
-							<!--{/if}-->
-						<!--{/foreach}-->
-				<!--{/if}-->
 				
-				<!--{if $user_rank eq 101} 101是个人rankid -->
 					   <!-- {foreach from=$rank_prices item=item key=key} 会员等级对应的价格--> 
-							<!--{if $key eq 101} -->
-							零售价：<font  id="ECS_SHOPPRICE">{$item.price}</font>
-							<!--{/if}-->
+							{$lang.rank_price}<font  id="ECS_SHOPPRICE">{$item.price}</font>
 						<!--{/foreach}-->
-				<!--{/if}-->
 				
                 <!-- {foreach from=$specification item=spec key=spec_key} --> </b> 
                 <p class="catt" >

@@ -11,32 +11,7 @@
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
-{insert_scripts files='common.js,user.js,transport.js,jquery-1.9.1.min.js'}
-
-<script type="text/javascript">
-$(document).ready(function(){
-  $("#storename").hide();
-  $("#storetype").hide();
-  $("#province").hide();
-  $("#detailed_address").hide();
-  
-  if($("#user_rank_person").click(function(){
-	$("#storename").hide();
-	$("#storetype").hide();
-	$("#province").hide();
-	$("#detailed_address").hide();
-  }));
-  
-  if($("#user_rank_shop").click(function(){
-	$("#storename").show();
-	$("#storetype").show();
-	$("#province").show();
-	$("#detailed_address").show();
-  }));
-  
-  
-  });
-</script>
+{insert_scripts files='common.js,user.js,transport.js'}
 
 <body>
 <div class="body_user ">
@@ -134,16 +109,6 @@ $(document).ready(function(){
           </div>
             <span id="username_notice" style="color:#FF0000"> (建议使用姓名)</span>
         </div>
-        <div class="coLogin_one">
-          <p>{$lang.label_user_rank}：</p>
-          <div class="coLoginTxt" style="width:245px;">
-           <div style="width:245px;line-height:35px">
-          <input id="user_rank_person" name="user_rank" type="radio" checked="checked" style="margin-left:20px" value="101" />个人买家
-          <input id="user_rank_shop" name="user_rank" type="radio" value="102" style="margin-left:40px" />实体店买家
-           </div>
-          </div>
-           <span id="user_type_notice" style="color:#FF0000"> *</span>
-        </div>
         <!-- <div class="coLogin_one">
           <p>{$lang.label_email}：</p>
           <div class="coLoginTxt" style="width:245px;">
@@ -180,7 +145,7 @@ $(document).ready(function(){
           </div>
            <span style="color:#FF0000" id="conform_password_notice"> *</span>
         </div>
-        <div id="storename" class="coLogin_one">
+        <div class="coLogin_one">
           <p>{$lang.label_storename}：</p>
           <div class="coLoginTxt" style="width:245px;">
          <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
@@ -189,7 +154,7 @@ $(document).ready(function(){
           </div>
             <span id="storename_notice" style="color:#FF0000"> *</span>
         </div>
-        <div  id="storetype" class="coLogin_one">
+        <div class="coLogin_one">
           <p>{$lang.label_storestype}：</p>
           <div class="coLoginTxt" style="width:245px;">
           <div class="coLogin_txt" style="width:245px;">
@@ -203,7 +168,7 @@ $(document).ready(function(){
           </div>
             <span id="storestype_notice" style="color:#FF0000"> *</span>
         </div>
-        <div id="province" class="coLogin_one">
+        <div class="coLogin_one">
           <p>{$lang.country_province}：</p>
           <div class="coLoginTxt" style="width:245px;line-height:35px;">
            
@@ -215,7 +180,7 @@ $(document).ready(function(){
            <span id="email_notice" style="color:#FF0000"> *</span>
         </div>
         {insert_scripts files='area_data.js'}
-        <div id="detailed_address" class="coLogin_one">
+        <div class="coLogin_one">
           <p>{$lang.detailed_address}：</p>
           <div class="coLoginTxt" style="width:245px;">
            <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">          

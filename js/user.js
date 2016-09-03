@@ -439,7 +439,6 @@ function register()
   var confirm_password = Utils.trim(frm.elements['confirm_password'].value);
   var checked_agreement = frm.elements['agreement'].checked;
 
-  var user_rank  = Utils.trim(frm.elements['user_rank'].value);
   var storestype  = Utils.trim(frm.elements['storestype'].value);
   var storename = Utils.trim(frm.elements['storename'].value);
   var storeaddress = Utils.trim(frm.elements['storeaddress'].value);

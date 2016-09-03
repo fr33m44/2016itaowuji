@@ -28,7 +28,6 @@
       <a href="javascript:listTable.sort('user_id'); ">{$lang.record_id}</a>{$sort_user_id}
     </th>
     <th><a href="javascript:listTable.sort('user_name'); ">{$lang.username}</a>{$sort_user_name}</th>
-    <th><a href="javascript:listTable.sort('user_type'); ">{$lang.user_type}</a>{$sort_user_type}</th>
     <th><a href="javascript:listTable.sort('extendcode'); ">{$lang.extendcode}</a>{$sort_extendcode}</th>
     <th>{$lang.mobile_phones}</th>
     <th>{$lang.storestype}</th>
@@ -46,7 +45,6 @@
   <tr>
     <td><input type="checkbox" name="checkboxes[]" value="{$user.user_id}" notice="{if $user.user_money ne 0}1{else}0{/if}"/>{$user.user_id}</td>
     <td class="first-cell">{$user.user_name|escape}</td>
-    <td class="first-cell">{$user.user_type|escape}</td>
     <td class="first-cell">{$user.extendcode|escape}</td>
     <td class="first-cell">{$user.mobile_phone|escape}</td>
     <td class="first-cell">{$user.storestype|escape}</td>
@@ -105,7 +103,6 @@ onload = function()
  */
 function searchUser()
 {
-    listTable.filter['user_type'] = Utils.trim(document.forms['searchForm'].elements['user_type'].value);
     listTable.filter['storestype'] = Utils.trim(document.forms['searchForm'].elements['storestype'].value);
     listTable.filter['extendcode'] = Utils.trim(document.forms['searchForm'].elements['extendcode'].value);
     listTable.filter['keywords'] = Utils.trim(document.forms['searchForm'].elements['keyword'].value);
