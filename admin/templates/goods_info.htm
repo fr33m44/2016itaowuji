@@ -17,9 +17,11 @@
       <p>
         <span class="tab-front" id="general-tab">{$lang.tab_general}</span><span
         class="tab-back" id="detail-tab">{$lang.tab_detail}</span><span
-        class="tab-back" id="mix-tab">{$lang.tab_mix}</span>{if $goods_type_list}<span
-        class="tab-back" id="properties-tab">{$lang.tab_properties}</span>{/if}<span
-        class="tab-back" id="gallery-tab">{$lang.tab_gallery}</span><span
+        class="tab-back" id="mix-tab">{$lang.tab_mix}</span>
+		{if $goods_type_list}<span class="tab-back" id="properties-tab">{$lang.tab_properties}</span>{/if}
+		{if $goods_type_list}<span class="tab-back" id="stock-tab">商品库存</span>{/if}
+		
+		<span class="tab-back" id="gallery-tab">{$lang.tab_gallery}</span><span
         class="tab-back" id="linkgoods-tab">{$lang.tab_linkgoods}</span>{if $code eq ''}<span
         class="tab-back" id="groupgoods-tab">{$lang.tab_groupgoods}</span>{/if}<span
         class="tab-back" id="article-tab">{$lang.tab_article}</span>
@@ -239,7 +241,6 @@
           {if $cfg.use_storage}
           <tr>
             <td class="label"><a href="javascript:showNotice('noticeStorage');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_goods_number}</td>
-<!--            <td><input type="text" name="goods_number" value="{$goods.goods_number}" size="20" {if $code neq '' || $goods._attribute neq ''}readonly="readonly"{/if} /><br />-->
             <td><input type="text" name="goods_number" value="{$goods.goods_number}" size="20" /><br />
             <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeStorage">{$lang.notice_storage}</span></td>
           </tr>
@@ -280,7 +281,7 @@
           </tr>
         </table>
 
-        <!-- 灞炴€т笌瑙勬牸 -->
+        <!-- 属性列表 -->
         {if $goods_type_list}
         <table width="90%" id="properties-table" style="display:none" align="center">
           <tr>
@@ -298,7 +299,91 @@
         </table>
         {/if}
 
-        <!-- 鍟嗗搧鐩稿唽 -->
+        <!-- 库存列表 -->
+        {if $goods_type_list}
+			{if $goods.goods_type eq 13}
+			 {foreach from=$specification item=item_zb key=key_zb} 
+				 {if $item_zb.name eq '罩杯'} 
+					 {foreach from=$item_zb.values item=spec_zb key=spec_key_zb name="spec_zb"} 
+					<table align="center" id="stock-table" style="display:none" >
+					 {foreach from=$specification item=spec key=spec_key} 
+						
+						
+						 {if $spec.name eq '尺码'} 
+						<tr><td class="bbk"></td>
+						
+							 {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} 
+								 
+									<td class="bbk">{$spec1.label}{$spec_zb.label}</td> 
+							 {/foreach} 
+						</tr>
+						 {/if} 
+						
+						 {if $spec.name eq '颜色'} 
+						 {foreach from=$spec.values item=spec3 key=spec_key3} 
+							<tr><td>{$spec3.label}</td>
+							
+							{foreach from=$specification item=spec_inner key=spec_key_inner} 
+						 {if $spec_inner.name eq '尺码'} 
+						 {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} 
+						 
+						<td><input class="spec_ele" type="text" value="{$spec5.stock}" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
+						 
+						 {/foreach} 
+						 {/if} 
+						  {/foreach}  
+							
+							</tr>
+							
+						 {/foreach} 
+						 {/if} 
+						
+					 {/foreach}  
+					</table>
+					 {/foreach} 
+				 {/if} 
+			 {/foreach} 
+			{else}
+					<table align="center" id="stock-table" style="display:none" >
+					 {foreach from=$specification item=spec key=spec_key} 
+						
+						
+						 {if $spec.name eq '尺码'} 
+						<tr><td class="bbk"></td>
+						
+							 {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} 
+								 
+									<td class="bbk">{$spec1.label}{$spec_zb.label}</td> 
+							 {/foreach} 
+						</tr>
+						 {/if} 
+						
+						 {if $spec.name eq '颜色'} 
+						 {foreach from=$spec.values item=spec3 key=spec_key3} 
+							
+		
+							<tr><td>{$spec3.label}</td>
+							
+							{foreach from=$specification item=spec_inner key=spec_key_inner} 
+						 {if $spec_inner.name eq '尺码'} 
+						 {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} 
+						 
+						<td><input class="spec_ele" type="text" value="{$spec5.stock}" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
+						 
+						 {/foreach} 
+						 {/if} 
+						  {/foreach}  
+							
+							</tr>
+							
+						 {/foreach} 
+						 {/if} 
+						
+					 {/foreach}  
+					</table>
+			{/if}
+		{/if}
+        <!-- 商品相册 -->
         <table width="90%" id="gallery-table" style="display:none" align="center">
           <!-- 鍥剧墖鍒楄〃 -->
           <tr>
@@ -387,13 +472,12 @@
           </tr>
           <tr>
             <td width="42%">
-              <select name="source_select2" size="20" style="width:100%" onchange="sz2.priceObj.value = this.options[this.selectedIndex].id" ondblclick="sz2.addItem(false, 'add_group_goods', goodsId, this.form.elements['price2'].value, this.form.elements['group2'].value)">
+              <select name="source_select2" size="20" style="width:100%" onchange="sz2.priceObj.value = this.options[this.selectedIndex].id" ondblclick="sz2.addItem(false, 'add_group_goods', goodsId, this.form.elements['price2'].value)">
               </select>
             </td>
             <td align="center">
               <p>{$lang.price}<br /><input name="price2" type="text" size="6" /></p>
-              <p>套餐<br /><select name="group2"><option value="1">套餐一</option><option value="2">套餐二</option><option value="3">套餐三</option></select></p>
-              <p><input type="button" value=">" onclick="sz2.addItem(false, 'add_group_goods', goodsId, this.form.elements['price2'].value, this.form.elements['group2'].value)" class="button" /></p>
+              <p><input type="button" value=">" onclick="sz2.addItem(false, 'add_group_goods', goodsId, this.form.elements['price2'].value)" class="button" /></p>
               <p><input type="button" value="<" onclick="sz2.dropItem(false, 'drop_group_goods', goodsId, elements['is_single'][0].checked)" class="button" /></p>
               <p><input type="button" value="<<" onclick="sz2.dropItem(true, 'drop_group_goods', goodsId, elements['is_single'][0].checked)" class="button" /></p>
             </td>
@@ -449,7 +533,7 @@
           {if $code neq ''}
           <input type="hidden" name="extension_code" value="{$code}" />
           {/if}
-		  <input type="submit" value="{$lang.button_submit}" class="button" onclick="validate('{$goods.goods_id}')" />
+          <input type="button" value="{$lang.button_submit}" class="button" onclick="validate('{$goods.goods_id}')" />
           <input type="reset" value="{$lang.button_reset}" class="button" />
         </div>
         <input type="hidden" name="act" value="{$form_act}" />
