@@ -16,6 +16,7 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
+require_once(ROOT_PATH . '/includes/lib_goods.php');
 require_once(ROOT_PATH . '/' . ADMIN_PATH . '/includes/lib_goods.php');
 include_once(ROOT_PATH . '/includes/cls_image.php');
 $image = new cls_image($_CFG['bgcolor']);
@@ -215,6 +216,8 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     else
     {
         /* 商品信息 */
+		$properties = get_goods_properties($_REQUEST[goods_id]);  // 获得商品的规格和属性
+    
         $sql = "SELECT * FROM " . $ecs->table('goods') . " WHERE goods_id = '$_REQUEST[goods_id]'";
         $goods = $db->getRow($sql);
 
@@ -463,7 +466,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     if (empty($volume_price_list))
     {
         $volume_price_list = array('0'=>array('number'=>'','price'=>''));
-    }
+    } 
+	$smarty->assign('properties',          $properties['pro']);                              // 商品属性
+    $smarty->assign('specification',       $properties['spe']);   
+		
     $smarty->assign('volume_price_list', $volume_price_list);
     /* 显示商品信息页面 */
     assign_query_info();
@@ -829,7 +835,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 
     $goods_thumb = (empty($goods_thumb) && !empty($_POST['goods_thumb_url']) && goods_parse_url($_POST['goods_thumb_url'])) ? htmlspecialchars(trim($_POST['goods_thumb_url'])) : $goods_thumb;
     $goods_thumb = (empty($goods_thumb) && isset($_POST['auto_thumb']))? $goods_img : $goods_thumb;
-
+	
     /* 入库 */
     if ($is_insert)
     {
@@ -861,6 +867,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', 0, '$is_on_sale', '$is_alone_sale', $is_shipping, ".
                     " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$code', '$rank_integral' , '$_POST[goods_shipai]','$_POST[mobile_desc]')";
         }
+		$db->query($sql);
     }
     else
     {
@@ -927,9 +934,40 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 "last_update = '". gmtime() ."', ".
                 "goods_type = '$goods_type' " .
                 "WHERE goods_id = '$_REQUEST[goods_id]' LIMIT 1";
+		
+		$db->query($sql);
+		
+		
+		
+		/*增加多级属性库存数据*/
+		$goods_id =  $_REQUEST[goods_id];
+		foreach($_POST as $key => $val)
+		{
+			
+			if( substr($key,0, 5) == 'spec_')
+			{
+				$key = substr($key, 5);
+				$attr_arr = explode('_', $key);
+				$size = $attr_arr[0];
+				$color = $attr_arr[1];
+				$cup = $attr_arr[2];
+				if($val =="")
+				{
+					$val = 0;
+				}
+				$stock_number = $val;
+				print_r($attr_arr);
+				$sql = "INSERT INTO ". $ecs->table("goods_stock") . "( goods_id, goods_type, barcode, cup, size, color, stock_number)" . 
+				"VALUES ('$goods_id', '$goods_type', '', '$cup', '$size', '$color', '$stock_number') ";
+				
+				print_r($sql.'<br />');
+				$db->query($sql);
+			}
+			
+			
+		}
     }
-    $db->query($sql);
-
+die();
     /* 商品编号 */
     $goods_id = $is_insert ? $db->insert_id() : $_REQUEST['goods_id'];
 
