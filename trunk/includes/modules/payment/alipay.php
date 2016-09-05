@@ -145,7 +145,7 @@ class alipay
         //$sign  = substr($sign, 0, -1). ALIPAY_AUTH;
 		
 		
-        $button = '<div style="text-align:center"><input id="paybtn" type="button" onclick="window.open(\'http://'.$_SERVER['SERVER_NAME'].'/includes/modules/payment/alipay/alipayapi.php?'.$param.'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
+        $button = '<div style="text-align:center"><input id="paybtn" type="button" onclick="window.location.href=\'http://'.$_SERVER['SERVER_NAME'].'/includes/modules/payment/alipay/alipayapi.php?'.$param.'\'" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 
         return $button;
     }
