@@ -252,13 +252,11 @@ $(function(){
                      <!-- 弹出框 e-->
                
               <div class="center_txt cart_table">
-                
+              <!--{if $goods.goods_type eq 13} 如果商品类型是文胸-->
 				<!--按罩杯分多个表-->
                 <!-- {foreach from=$specification item=item_zb key=key_zb} -->
-					<!-- {if $key_zb eq 231} -->
+					<!-- {if $item_zb.name eq '罩杯'} -->
 						<!-- {foreach from=$item_zb.values item=spec_zb key=spec_key_zb name="spec_zb"} -->
-								 
-						
 						<table>
 						<!-- {foreach from=$specification item=spec key=spec_key} -->
 							
@@ -298,8 +296,46 @@ $(function(){
 						</table>
 						<!-- {/foreach} -->
 					<!-- {/if} -->
-				<!-- {/foreach} --> 
-				
+				<!-- {/foreach} -->
+				<!--{else} 如果是非文胸类型就不区分多表格-->
+						<table>
+						<!-- {foreach from=$specification item=spec key=spec_key} -->
+							
+							
+							<!-- {if $spec.name eq '尺码'} -->
+							<tr><td class="bbk"></td>
+							
+								<!-- {foreach from=$spec.values item=spec1 key=spec_key1 name="spec1name"} -->
+									 
+										<td class="bbk">{$spec1.label}{$spec_zb.label}</td> 
+								<!-- {/foreach} -->
+							</tr>
+							<!-- {/if} -->
+							
+							<!-- {if $spec.name eq '颜色'} -->
+							<!-- {foreach from=$spec.values item=spec3 key=spec_key3} -->
+								
+			
+								<tr><td>{$spec3.label}</td>
+								
+							   <!-- {foreach from=$specification item=spec_inner key=spec_key_inner} -->
+							<!-- {if $spec_inner.name eq '尺码'} -->
+							<!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
+							 
+							<td><input class="spec_ele" type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
+							 
+							<!-- {/foreach} -->
+							<!-- {/if} -->
+							 <!-- {/foreach} --> 
+								
+								</tr>
+								
+							<!-- {/foreach} -->
+							<!-- {/if} -->
+							
+						<!-- {/foreach} --> 
+						</table>
+				<!--{/if}-->
                 <div class="blank"></div>
                 </div>
                
