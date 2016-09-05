@@ -232,7 +232,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新商品
         $smarty->assign('properties',          $properties['pro']);                              // 商品属性
         $smarty->assign('specification',       $properties['spe']);   
-	
+		
 		// 商品规格
         $smarty->assign('attribute_linked',    get_same_attribute_goods($properties));           // 相同属性的关联商品
         $smarty->assign('related_goods',       $linked_goods);                                   // 关联商品
@@ -270,6 +270,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         assign_dynamic('goods');
         $volume_price_list = get_volume_price_list($goods['goods_id'], '1');
         $smarty->assign('volume_price_list',$volume_price_list);    // 商品优惠价格区间
+		
     }
 }
 
