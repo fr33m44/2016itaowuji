@@ -78,7 +78,7 @@ if($verify_result) {//验证成功
       echo "trade_status=".$_GET['trade_status'];
     }
 	
-	ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_detail&order_id=21\n");
+	ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_detail&order_id=".$order_id."\n");
 	//echo "验证成功<br />";
 
 	//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
@@ -88,7 +88,7 @@ if($verify_result) {//验证成功
 else {
     //验证失败
     //如要调试，请看alipay_notify.php页面的verifyReturn函数
-	//ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_list\n");
+	ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_detail&order_id=".$order_id."\n");
 }
 ?>
         <title>支付宝即时到账交易接口</title>
