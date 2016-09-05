@@ -2109,6 +2109,7 @@ a.hpink:hover {text-decoration: underline;color: #ed145b;}
 .orderconfirmBtn:hover {background: url(images/nstep1_btn3.jpg) no-repeat 0 -38px;}
 .orderok {background: #fffbe1;border: 1px solid #ff9900;padding: 27px;width: 920px;height: 260px;}
 .orderok p {line-height: 30px;}
+#paybtn {width: 237px; font-size: 2em; height: 51px; cursor: pointer;}
 .ordertitle {font-size: 18px;font-family: "微软雅黑";border-bottom: 1px solid #fcdfbe;margin-bottom: 10px;padding-bottom: 10px;}
 .orderpayinfo{ margin:10px 0; padding-top:10px; border-top:1px solid #fcdfbe;}
 /* ====================

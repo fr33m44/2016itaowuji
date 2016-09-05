@@ -542,42 +542,10 @@
           </div>
       </div>
      <div class="blank"></div>
-    <!--{if $total.real_goods_count neq 0}-->
-    <h2 class="nstep1_tit3">{$lang.shipping_method}</h2>
-    <div class="nstep_products" style="margin-top:5px;padding-bottom:9px;">
+	 
+	<input name = "shipping" type="radio" value = "1" checked="checked"  style="display:none"/>
     
-    <table style="width:948px;border:1px #e5e5e5 solid;margin:5px auto;" id="shippingTable">
-            <tr>
-              <th style="background:#f5f5f5;font-weight:bold;" width="5%">&nbsp;</th>
-              <th style="background:#f5f5f5;font-weight:bold;" width="25%">{$lang.name}</th>
-              <th style="background:#f5f5f5;font-weight:bold;">{$lang.describe}</th>
-              <th style="background:#f5f5f5;font-weight:bold;" width="15%">{$lang.fee}</th>
-              <th style="background:#f5f5f5;font-weight:bold;" width="15%">{$lang.free_money}</th>
-              <th style="background:#f5f5f5;font-weight:bold;" width="15%">{$lang.insure_fee}</th>
-            </tr>
-            <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
-            <tr>
-              <td bgcolor="#ffffff" class="weiruan " valign="top"><input name="shipping" type="radio" value="{$shipping.shipping_id}" {if $order.shipping_id eq $shipping.shipping_id}checked="true"{/if} supportCod="{$shipping.support_cod}" insure="{$shipping.insure}" onclick="selectShipping(this)" />
-              </td>
-              <td bgcolor="#ffffff" class="weiruan " valign="top"><strong>{$shipping.shipping_name}</strong></td>
-              <td bgcolor="#ffffff"class="weiruan " style="text-align:left;" valign="top">{$shipping.shipping_desc}</td>
-              <td bgcolor="#ffffff" class="weiruan " align="right" valign="top">{$shipping.format_shipping_fee}</td>
-              <td bgcolor="#ffffff" class="weiruan " align="right" valign="top">{$shipping.free_money}</td>
-              <td bgcolor="#ffffff" class="weiruan " align="right" valign="top">{if $shipping.insure neq 0}{$shipping.insure_formated}{else}{$lang.not_support_insure}{/if}</td>
-            </tr>
-            <!-- {/foreach} 循环配送方式 -->
-            <tr>
-              <td colspan="6" bgcolor="#ffffff" class="weiruan " style="text-align:right;" ><label for="ECS_NEEDINSURE">
-                <input name="need_insure" id="ECS_NEEDINSURE" type="checkbox"  onclick="selectInsure(this.checked)" value="1" {if $order.need_insure}checked="true"{/if} {if $insure_disabled}disabled="true"{/if}  />
-                {$lang.need_insure} </label></td>
-            </tr>
-          </table>
-    </div>
-    <div class="blank"></div>
-        <!--{else}-->
-        <input name = "shipping" type="radio" value = "-1" checked="checked"  style="display:none"/>
-        <!--{/if}-->
-    <!--{if $is_exchange_goods neq 1 || $total.real_goods_count neq 0}-->
+	<!--{if $is_exchange_goods neq 1 || $total.real_goods_count neq 0}-->
     <h2 class="nstep1_tit3">{$lang.payment_method}</h2>
      <div class="nstep_products" style="margin-top:5px;padding-bottom:9px;">
    
@@ -699,7 +667,14 @@
         </DIV>
        
         <!-- {if $step eq "done"} -->
-        
+{insert_scripts files='jquery-1.9.1.min.js'}
+<script type="text/javascript">
+  $("document").ready(function(){
+	$("#paybtn").click(function(){
+		
+	});
+});
+</script>
         <!-- 订单提交成功 -->
         
          <div class="block_s">
@@ -714,7 +689,7 @@
             <p>  <!--{if $order.shipping_name}-->{$lang.select_shipping}: <span class="pink ">{$order.shipping_name}</span>，<!--{/if}-->{$lang.select_payment}: <span class="pink ">{$order.pay_name}</span>。{$lang.order_amount}: <span class="pink ">{$total.amount_formated}</span></p>
              <p class="orderpayinfo">
             {$order.pay_desc}
-           
+          
             <!-- {if $pay_online} -->
             <!-- 如果是线上支付则显示支付按钮 -->
             {$pay_online}
@@ -975,6 +950,11 @@
 </div>
 </div>
 </div>
+<div id="DialogDiv" style="display:none">
+   <h2>弹出层<a href="#" id="btnClose" onclick="closeDiv('DialogDiv')">关闭</a></h2>
+  <div class="form">我是弹出对话框111111！！</div>
+</div>
+ 
 </body>
 <script type="text/javascript">
 var process_request = "{$lang.process_request}";
