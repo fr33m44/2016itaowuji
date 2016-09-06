@@ -471,6 +471,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $smarty->assign('specification',       $properties['spe']);   
 		
     $smarty->assign('volume_price_list', $volume_price_list);
+	/*hjq stock */
+	$smarty->assign('stock', get_goods_stock($_REQUEST['goods_id']));
+	
+	
     /* 显示商品信息页面 */
     assign_query_info();
     $smarty->display('goods_info.htm');
@@ -939,35 +943,9 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 		
 		
 		
-		/*增加多级属性库存数据*/
-		$goods_id =  $_REQUEST[goods_id];
-		foreach($_POST as $key => $val)
-		{
-			
-			if( substr($key,0, 5) == 'spec_')
-			{
-				$key = substr($key, 5);
-				$attr_arr = explode('_', $key);
-				$size = $attr_arr[0];
-				$color = $attr_arr[1];
-				$cup = $attr_arr[2];
-				if($val =="")
-				{
-					$val = 0;
-				}
-				$stock_number = $val;
-				print_r($attr_arr);
-				$sql = "INSERT INTO ". $ecs->table("goods_stock") . "( goods_id, goods_type, barcode, cup, size, color, stock_number)" . 
-				"VALUES ('$goods_id', '$goods_type', '', '$cup', '$size', '$color', '$stock_number') ";
-				
-				print_r($sql.'<br />');
-				$db->query($sql);
-			}
-			
-			
-		}
+		
     }
-die();
+	
     /* 商品编号 */
     $goods_id = $is_insert ? $db->insert_id() : $_REQUEST['goods_id'];
 
@@ -1077,7 +1055,80 @@ die();
                 $db->query($sql);
             }
         }
+		//print_r($goods_attr_list);
+		/* 处理库存表 goods_stock 根据上面attr表来重构数据*/
+		$sql = "DELETE from ". $ecs->table('goods_stock')." WHERE goods_id =$goods_id";
+		$db->query($sql);
+		
+		$sql_cup = "select * from ". $ecs->table("goods_attr"). " where goods_id = $goods_id and attr_id = 231";
+		$sql_color = "select * from ". $ecs->table("goods_attr"). " where goods_id = $goods_id and attr_id = 228";
+		$sql_size = "select * from ". $ecs->table("goods_attr"). " where goods_id = $goods_id and attr_id = 227";
+		
+		$cup_arr = $db->getAll($sql_cup);
+		$color_arr = $db->getAll($sql_color);
+		$size_arr = $db->getAll($sql_size);
+		foreach($cup_arr as $cup_key => $cup_val)
+		{
+			foreach($color_arr as $color_key => $color_val)
+			{
+				foreach($size_arr as $size_key => $size_val)
+				{
+					$sql = "INSERT INTO ". $ecs->table("goods_stock") . "( goods_id, goods_type, barcode, cup, cup_val, size, size_val, color, color_val, stock_number)" . 
+				"VALUES ('$goods_id', '$goods_type', '', '$cup_val[goods_attr_id]', '$cup_val[attr_value]', '$size_val[goods_attr_id]', '$size_val[attr_value]', '$color_val[goods_attr_id]', '$color_val[attr_value]', '$stock_number') ";
+					print_r($sql);
+					$db->query($sql);
+				}
+			}
+		}
+		/*
+		foreach($_POST as $key => $val)
+		{
+			if( substr($key,0, 5) == 'spec_')
+			{
+				$key = substr($key, 5);
+				$attr_arr = explode('_', $key);
+				$size = $attr_arr[0];
+				$color = $attr_arr[1];
+				$cup = $attr_arr[2];
+				if($val =="")
+				{
+					$val = 0;
+				}
+				$stock_number = $val;
+				print_r($attr_arr);
+				$sql = "select count(1) from ". $ecs->table("goods_stock"). " where goods_id = ". $goods_id . " and cup = $cup and size = $size and color = $color";
+				$count = $db->getOne($sql);
+				print_r("count:$count");
+				
+				$sql_cup_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $cup";
+				$sql_size_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $size";
+				$sql_color_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $color";
+				
+				$cup_val = $db->getOne($sql_cup_val);
+				$size_val = $db->getOne($sql_size_val);
+				$cup_val = $db->getOne($sql_cup_val);
+				
+				
+				if($count == 0)
+				{
+					$sql = "INSERT INTO ". $ecs->table("goods_stock") . "( goods_id, goods_type, barcode, cup, cup_val, size, size_val, color, color_val, stock_number)" . 
+				"VALUES ('$goods_id', '$goods_type', '', '$cup', '$cup_val', '$size', '$size_val', '$color', '$color_val', '$stock_number') ";
+				}
+				else
+				{
+					$sql = "UPDATE ". $ecs->table("goods_stock"). " SET  
+						stock_number = $stock_number
+					where goods_id = $goods_id and cup = $cup and size = $size and color = $color";
+				}
+				
+				//print_r($sql.'<br />');
+				$db->query($sql);
+			}
+		}
+		*/
     }
+	
+	
 
     /* 处理会员价格 */
     if (isset($_POST['user_rank']) && isset($_POST['user_price']))
@@ -2757,5 +2808,31 @@ function update_goods_stock($goods_id, $value)
     {
         return false;
     }
+}
+/*hjq 返回stock多维表数据*/
+function get_goods_stock($goods_id)
+{
+	$sql = "select cup from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by cup";
+	$cup_arr = $GLOBALS['db']->getCol($sql);
+	
+	$sql = "select size from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by size";
+	$size_arr = $GLOBALS['db']->getCol($sql);
+	
+	$sql = "select color from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by color";
+	$color_arr = $GLOBALS['db']->getCol($sql);
+	
+	foreach($cup_arr as $cup_key=>$cup)
+	{
+		foreach($size_arr as $size_key=>$size)
+		{
+			foreach($color_arr as $color_key=>$color)
+			{
+				$sql = "select * from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id and cup=$cup and size=$size and color=$color";
+				$row = $GLOBALS['db']->getRow($sql);
+				$arr[$cup][$size][$color] =  $row;
+			}
+		}
+	}
+	return $arr;
 }
 ?>
