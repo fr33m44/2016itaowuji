@@ -1,6 +1,6 @@
 <!-- $Id: goods_info.htm 17126 2010-04-23 10:30:26Z liuhui $ -->
 {include file="pageheader.htm"}
-{insert_scripts files="../js/utils.js,selectzone.js,colorselector.js"}
+{insert_scripts files="../js/utils.js,selectzone.js,colorselector.js,../js/jquery-1.9.1.min.js"}
 <script type="text/javascript" src="../js/calendar.php?lang={$cfg_lang}"></script>
 <link href="../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
 
@@ -327,7 +327,7 @@
 						 {if $spec_inner.name eq '尺码'} 
 						 {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} 
 						 
-						<td><input class="spec_ele" type="text" value="{$spec5.stock}" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
+						<td><input class="spec_ele" type="text" value="{$spec5.stock}" id="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
 						 
 						 {/foreach} 
 						 {/if} 
@@ -553,27 +553,56 @@
   var integralPercent = {$cfg.integral_percent|default:0};
 
   {literal}
-  onload = function()
-  {
-      handlePromote(document.forms['theForm'].elements['is_promote'].checked);
+	onload = function()
+	{
+		
+		//Ajax.call('goods.php?is_ajax=1&act=check_goods_sn', "goods_sn=" + goods_sn + "&goods_id=" + goods_id, callback, "GET", "JSON");
+		//从数据库中获取库存表放入表单中
+		var callback_stock = function(res)
+		{
+			if (res.error > 0)
+			{
+				alert(res.error);
+			}
+			else
+			{
+				document.getElementById(res.content.name).value = res.content.value;
+			}
+		}
+		var spec_arr = [];
+		var theForm = document.forms['theForm'];
 
-      if (document.forms['theForm'].elements['auto_thumb'])
-      {
-          handleAutoThumb(document.forms['theForm'].elements['auto_thumb'].checked);
-      }
+		for (i = 0; i < theForm.elements.length; i ++ )
+		{
+			var prefix = theForm.elements[i].name.substr(0, 5);
 
-      // 妫€鏌ユ柊璁㈠崟
-      startCheckOrder();
-      {/literal}
-      {foreach from=$user_rank_list item=item}
-      set_price_note({$item.rank_id});
-      {/foreach}
-      {literal}
-      document.forms['theForm'].reset();
-  }
+			if (prefix == 'spec_' && theForm.elements[i].type == 'text')
+			{
+				Ajax.call('goods.php?is_ajax=1&act=get_stock', "goods_id="+goodsId+"&spec_str="+theForm.elements[i].name, callback_stock, "GET", "JSON");
+		
+			}
+		}
+		
+		
+		handlePromote(document.forms['theForm'].elements['is_promote'].checked);
 
-  function validate(goods_id)
-  {
+		if (document.forms['theForm'].elements['auto_thumb'])
+		{
+		  handleAutoThumb(document.forms['theForm'].elements['auto_thumb'].checked);
+		}
+
+		// 妫€鏌ユ柊璁㈠崟
+		startCheckOrder();
+		{/literal}
+		{foreach from=$user_rank_list item=item}
+		set_price_note({$item.rank_id});
+		{/foreach}
+		{literal}
+		document.forms['theForm'].reset();
+	}
+
+	function validate(goods_id)
+	{
       var validator = new Validator('theForm');
       var goods_sn  = document.forms['theForm'].elements['goods_sn'].value;
 
@@ -614,7 +643,7 @@
          document.forms['theForm'].submit();
          }
       }
-  }
+    }
     Ajax.call('goods.php?is_ajax=1&act=check_goods_sn', "goods_sn=" + goods_sn + "&goods_id=" + goods_id, callback, "GET", "JSON");
 }
 
