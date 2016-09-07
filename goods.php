@@ -141,14 +141,29 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'get_stock')
 	$color = $spec_arr[1];
 	$cup = $spec_arr[2];
 	
+	$sql = "select goods_type from ".$ecs->table("goods")." where goods_id=$goods_id";
+	$goods_type = $db->getOne($sql);
+	
     if(!empty($goods_id) && !empty($spec_str))
     {
-        $sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and cup=$cup and size=$size and color=$color";
-        $stock = $db->getOne($sql);
-		$res=array('err_msg'=>0, 'result'=>array(
-			'name' =>'spec_'.$size.'_'.$color.'_'.$cup,
-			'value'=> $stock
-		));
+		if($goods_type == 13)//文胸
+		{
+			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and cup=$cup and size=$size and color=$color";
+			$stock = $db->getOne($sql);
+			$res=array('err_msg'=>0, 'result'=>array(
+				'name' =>'spec_'.$size.'_'.$color.'_'.$cup,
+				'value'=> $stock
+			));
+		}
+		else
+		{	
+			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and size=$size and color=$color";
+			$stock = $db->getOne($sql);
+			$res=array('err_msg'=>0, 'result'=>array(
+				'name' =>'spec_'.$size.'_'.$color,
+				'value'=> $stock
+			));
+		}
     }
 	die($json->encode($res));
 }

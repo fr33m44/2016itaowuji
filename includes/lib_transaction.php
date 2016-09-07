@@ -428,12 +428,26 @@ function cancel_order($order_id, $user_id = 0)
 			$arr = $GLOBALS['db']->getAll($sql);
 			foreach($arr as $key => $val)
 			{
-				$spec_arr = explode(',', $val['goods_attr_id']);
-				$size = $spec_arr[0];
-				$color = $spec_arr[1];
-				$cup = $spec_arr[2];
-				$sql = "update ".$GLOBALS['ecs']->table("goods_stock"). " set stock_number = stock_number+".$val['goods_number']." where goods_id=".$val['goods_id']." and size=$size and color=$color and cup=$cup";
-				$result = $GLOBALS['db']->query($sql);
+				//goods_type
+				$sql = "select goods_type from ".$GLOBALS['ecs']->table("goods")." where goods_id=".$val['goods_id'];
+				$goods_type = $GLOBALS['db']->getOne($sql);
+				if($goods_type ==13)
+				{
+					$spec_arr = explode(',', $val['goods_attr_id']);
+					$size = $spec_arr[0];
+					$color = $spec_arr[1];
+					$cup = $spec_arr[2];
+					$sql = "update ".$GLOBALS['ecs']->table("goods_stock"). " set stock_number = stock_number+".$val['goods_number']." where goods_id=".$val['goods_id']." and size=$size and color=$color and cup=$cup";
+					$result = $GLOBALS['db']->query($sql);
+				}
+				else
+				{
+					$spec_arr = explode(',', $val['goods_attr_id']);
+					$size = $spec_arr[0];
+					$color = $spec_arr[1];
+					$sql = "update ".$GLOBALS['ecs']->table("goods_stock"). " set stock_number = stock_number+".$val['goods_number']." where goods_id=".$val['goods_id']." and size=$size and color=$color";
+					$result = $GLOBALS['db']->query($sql);
+				}
 			}
         }
 
