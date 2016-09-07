@@ -2073,6 +2073,20 @@ elseif ($_REQUEST['step'] == 'done')
     if ($_CFG['use_storage'] == '1' && $_CFG['stock_dec_time'] == SDT_PLACE)
     {
         change_order_goods_storage($order['order_id'], true, SDT_PLACE);
+		//hjq 下单的时候减少商品库存
+		//查询此订单下的所有产品信息oder_info->order_goods
+		$sql = "SELECT goods_id,goods_attr_id,goods_number from ". $ecs->table("order_goods")." where order_id=".$order['order_id'];
+		$arr = $db->getAll($sql);
+		foreach($arr as $key => $val)
+		{
+			$spec_arr = explode(',', $val['goods_attr_id']);
+			$size = $spec_arr[0];
+			$color = $spec_arr[1];
+			$cup = $spec_arr[2];
+			$sql = "update ".$ecs->table("goods_stock"). " set stock_number = stock_number-".$val['goods_number']." where goods_id=".$val['goods_id']." and "."size=$size and color=$color and cup=$cup";
+			$result = $db->query($sql);
+		}
+		
     }
 
     /* 给商家发邮件 */

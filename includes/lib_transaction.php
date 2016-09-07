@@ -422,6 +422,19 @@ function cancel_order($order_id, $user_id = 0)
         if ($GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_PLACE)
         {
             change_order_goods_storage($order['order_id'], false, 1);
+			//hjq 取消订单的时候恢复这个订单的库存
+			//查询此订单下的所有产品信息oder_info->order_goods
+			$sql = "SELECT goods_id,goods_attr_id,goods_number from ". $GLOBALS['ecs']->table("order_goods")." where order_id=".$order['order_id'];
+			$arr = $GLOBALS['db']->getAll($sql);
+			foreach($arr as $key => $val)
+			{
+				$spec_arr = explode(',', $val['goods_attr_id']);
+				$size = $spec_arr[0];
+				$color = $spec_arr[1];
+				$cup = $spec_arr[2];
+				$sql = "update ".$GLOBALS['ecs']->table("goods_stock"). " set stock_number = stock_number+".$val['goods_number']." where goods_id=".$val['goods_id']." and size=$size and color=$color and cup=$cup";
+				$result = $GLOBALS['db']->query($sql);
+			}
         }
 
         /* 修改订单 */
