@@ -1104,31 +1104,56 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 					}
 					$stock_number = $val;
 					print_r($attr_arr);
-					$sql = "select count(1) from ". $ecs->table("goods_stock"). " where goods_id = ". $goods_id . " and cup = $cup and size = $size and color = $color";
+					if($goods_type == 13)//文胸 特殊类型
+						$sql = "select count(1) from ". $ecs->table("goods_stock"). " where goods_id = ". $goods_id . " and cup = $cup and size = $size and color = $color";
+					else
+						$sql = "select count(1) from ". $ecs->table("goods_stock"). " where goods_id = ". $goods_id . " and size = $size and color = $color";
 					$count = $db->getOne($sql);
-					print_r($count);
 					
-					$sql_cup_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $cup";
-					$sql_size_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $size";
-					$sql_color_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $color";
-					
-					$cup_val = $db->getOne($sql_cup_val);
-					$size_val = $db->getOne($sql_size_val);
-					$color_val = $db->getOne($sql_color_val);
-					
+					if($cup != "") 
+					{
+						$sql_cup_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $cup";
+						$cup_val = $db->getOne($sql_cup_val);
+					}
+					if($size != "")
+					{
+						$sql_size_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $size";
+						$size_val = $db->getOne($sql_size_val);	
+					}
+					if($color != "") 
+					{
+						$sql_color_val = "select attr_value from ". $ecs->table("goods_attr"). " where goods_attr_id = $color";
+						$color_val = $db->getOne($sql_color_val);
+					}
 					
 					if($count == 0)
 					{
-						$sql = "INSERT INTO ". $ecs->table("goods_stock") . "( goods_id, goods_type, barcode, cup, cup_val, size, size_val, color, color_val, stock_number)" . 
+						if($goods_type == 13)
+						{
+							$sql = "INSERT INTO ". $ecs->table("goods_stock") . "( goods_id, goods_type, barcode, cup, cup_val, size, size_val, color, color_val, stock_number)" . 
 					"VALUES ('$goods_id', '$goods_type', '', '$cup', '$cup_val', '$size', '$size_val', '$color', '$color_val', '$stock_number') ";
+						}
+						else
+						{
+							$sql = "INSERT INTO ". $ecs->table("goods_stock") . "( goods_id, goods_type, barcode, size, size_val, color, color_val, stock_number)" . 
+					"VALUES ('$goods_id', '$goods_type', '', '$size', '$size_val', '$color', '$color_val', '$stock_number') ";
+						}
 					}
 					else
 					{
-						$sql = "UPDATE ". $ecs->table("goods_stock"). " SET  
+						if($goods_type == 13)
+						{
+							$sql = "UPDATE ". $ecs->table("goods_stock"). " SET  
 							stock_number = $stock_number
 						where goods_id = $goods_id and cup = $cup and size = $size and color = $color";
+						}
+						else
+						{
+							$sql = "UPDATE ". $ecs->table("goods_stock"). " SET  
+							stock_number = $stock_number
+						where goods_id = $goods_id and size = $size and color = $color";
+						}
 					}
-					
 					$db->query($sql);
 				}
 			}
@@ -1516,14 +1541,29 @@ elseif ($_REQUEST['act'] == 'get_stock')
 	$color = $spec_arr[1];
 	$cup = $spec_arr[2];
 	
+	$sql = "select goods_type from ".$ecs->table("goods")." where goods_id=$goods_id";
+	$goods_type = $db->getOne($sql);
+	
+	
     if(!empty($goods_id) && !empty($spec_str))
-    {
-        $sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and cup=$cup and size=$size and color=$color";
-        $stock = $db->getOne($sql);
-		make_json_result(array(
-			'name'=>"spec_".$size."_".$color."_".$cup,
-			'value'=>$stock
-		));
+    {	if($goods_type == 13)
+		{
+			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and cup=$cup and size=$size and color=$color";
+			$stock = $db->getOne($sql);
+			make_json_result(array(
+				'name'=>"spec_".$size."_".$color."_".$cup,
+				'value'=>$stock
+			));
+		}
+		else
+		{
+			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and  size=$size and color=$color";
+			$stock = $db->getOne($sql);
+			make_json_result(array(
+				'name'=>"spec_".$size."_".$color,
+				'value'=>$stock
+			));
+		}
     }
 }
 elseif ($_REQUEST['act'] == 'check_products_goods_sn')
@@ -2839,22 +2879,45 @@ function update_goods_stock($goods_id, $value)
 /*hjq 返回stock多维表数据*/
 function get_goods_stock($goods_id)
 {
-	$sql = "select cup from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by cup";
-	$cup_arr = $GLOBALS['db']->getCol($sql);
-	
-	$sql = "select size from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by size";
-	$size_arr = $GLOBALS['db']->getCol($sql);
-	
-	$sql = "select color from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by color";
-	$color_arr = $GLOBALS['db']->getCol($sql);
-	
-	foreach($cup_arr as $cup_key=>$cup)
+	$sql ="select goods_type from ". $GLOBALS['ecs']->table("goods")." where goods_id=".$goods_id;
+	$goods_type = $GLOBALS['db']->getOne($sql);
+	if($goods_type == 13)//文胸
 	{
+		$sql = "select cup from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by cup";
+		$cup_arr = $GLOBALS['db']->getCol($sql);
+		
+		$sql = "select size from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by size";
+		$size_arr = $GLOBALS['db']->getCol($sql);
+		
+		$sql = "select color from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by color";
+		$color_arr = $GLOBALS['db']->getCol($sql);
+		
+		foreach($cup_arr as $cup_key=>$cup)
+		{
+			foreach($size_arr as $size_key=>$size)
+			{
+				foreach($color_arr as $color_key=>$color)
+				{
+					$sql = "select * from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id and cup=$cup and size=$size and color=$color";
+					$row = $GLOBALS['db']->getRow($sql);
+					$arr[$cup][$size][$color] =  $row;
+				}
+			}
+		}
+	}
+	else
+	{
+		$sql = "select size from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by size";
+		$size_arr = $GLOBALS['db']->getCol($sql);
+		
+		$sql = "select color from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id group by color";
+		$color_arr = $GLOBALS['db']->getCol($sql);
+		
 		foreach($size_arr as $size_key=>$size)
 		{
 			foreach($color_arr as $color_key=>$color)
 			{
-				$sql = "select * from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id and cup=$cup and size=$size and color=$color";
+				$sql = "select * from ". $GLOBALS['ecs']->table("goods_stock"). " where goods_id = $goods_id and size=$size and color=$color";
 				$row = $GLOBALS['db']->getRow($sql);
 				$arr[$cup][$size][$color] =  $row;
 			}
