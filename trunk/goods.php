@@ -127,7 +127,31 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'gotopage')
 
     die($json->encode($res));
 }
+if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'get_stock')
+{
+	include('includes/cls_json.php');
+	$json   = new JSON;
+	$res    = array('err_msg' => '', 'result' => '');
 
+    $goods_id = intval($_REQUEST['goods_id']);
+	$spec_str = $_REQUEST["spec_str"];
+	$spec_str = substr($spec_str, 5);
+	$spec_arr = explode("_", $spec_str);
+	$size = $spec_arr[0];
+	$color = $spec_arr[1];
+	$cup = $spec_arr[2];
+	
+    if(!empty($goods_id) && !empty($spec_str))
+    {
+        $sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and cup=$cup and size=$size and color=$color";
+        $stock = $db->getOne($sql);
+		$res=array('err_msg'=>0, 'result'=>array(
+			'name' =>'spec_'.$size.'_'.$color.'_'.$cup,
+			'value'=> $stock
+		));
+    }
+	die($json->encode($res));
+}
 
 /*------------------------------------------------------ */
 //-- PROCESSOR
