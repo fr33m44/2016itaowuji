@@ -81,23 +81,38 @@ $(function(){
 
 			if (prefix == 'spec_' && formBuy.elements[i].type == 'text')
 			{
-			  document.forms['ECS_FORMBUY'].elements[i].value = $("#volume").html() * $("#qsqm").val();
+				document.forms['ECS_FORMBUY'].elements[i].value = $("#volume").html() * $("#qsqm").val();
+				Ajax.call('goods.php', 'act=get_stock&goods_id=' + goods_id + '&spec_str=' + formBuy.elements[i].name, getStockCallback, 'GET', 'JSON');
+				
 			}
 		}
 	});
 	$("#qsqm").keyup(function(){
 		this.value=this.value.replace(/[^\d]/g,'');
-		if(this.value>100){this.value=100;}
 		this.clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
 		 
 	});
 	
-	$(".spec_ele").keyup(function(){
+	$(".spec_ele").on('keyup', function(){
 		this.value=this.value.replace(/[^\d]/g,'');
-		if(this.value>1000){this.value=1000;}
-		this.clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
 	});
+	$(".spec_ele").on('blur', function(){
+		  Ajax.call('goods.php', 'act=get_stock&goods_id=' + goods_id + '&spec_str=' + this.name, getStockCallback, 'GET', 'JSON');
 
+	});
+	function getStockCallback(res)
+	{
+		if (res.err_msg.length > 0)
+		{
+			alert(res.err_msg);
+		}
+		else
+		{
+			//如果输入的数量大于库存量，修改数量为库存量
+			if(parseInt(document.forms['ECS_FORMBUY'].elements[res.result.name].value) > parseInt(res.result.value))
+				document.forms['ECS_FORMBUY'].elements[res.result.name].value = res.result.value;
+		}
+	}
 })
 </script>
 <!--当前位置 start-->
