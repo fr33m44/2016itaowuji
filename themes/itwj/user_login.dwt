@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<title>欢迎登录淘五季内衣电子订货平台</title>
+<link href="http://image.98neiyi.cn/css/global.css" rel="stylesheet"
+	type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="http://image.98neiyi.cn/css/login_css.css"
+	type="text/css"></link>
+<link rel="stylesheet" href="http://image.98neiyi.cn/css/smart.css"
+	type="text/css"></link>
+{insert_scripts files='jquery-1.9.1.min.js'}
+<script type="text/javascript">
+	function sub() {
+
+		var username = $('#username').val();
+
+		var password = $('#password').val();
+
+		if (username == "" || password == "") {
+			$("#errorMsg").text("用户名或者密码不能为空");
+			$("#errorMsg").show();
+			setTimeout("$('#errorMsg').css('display','none')", 2000);
+			return;
+		}else {
+			$(".overlay").css({
+				'display' : 'block',
+				'opacity' : '0.8'
+			});
+			$(".showbox").stop(true).animate({
+				'margin-top' : '300px',
+				'opacity' : '1'
+			}, 200);
+			var url = "user.php";
+
+			var params = {
+				username : $('#username').val(),
+				password : $('#password').val(),
+				act:'act_login',
+				back_act:'./index.php',
+				remember:'1'
+				
+			};
+			jQuery.post(url, params,
+					function(data) {
+						if (data.bool) {
+							location.href = "index.php";
+						} else {
+							$(".showbox").stop(true).animate({
+								'margin-top' : '250px',
+								'opacity' : '0'
+							}, 400);
+							$(".overlay").css({
+								'display' : 'none',
+								'opacity' : '0'
+							});
+							
+							$("#errorMsg").text(data.error);
+							$("#errorMsg").show();
+							$('#username').val("");
+							$('#password').val("");
+							setTimeout("$('#errorMsg').css('display','none')",20000000);
+							return;
+						}
+
+					}, 'json');
+
+		}
+	}
+	$(document).ready(function() {
+
+		document.onkeydown = function(e) {
+			var ev = document.all ? window.event : e;
+			if (ev.keyCode == 13) {
+				sub();
+			}
+		}
+		$('#errorMsg').hide();
+
+		$("#btnLogin").click(sub);
+		
+		//setTimeout('$("#showOrHide").hide()',5000);
+		
+
+	});
+</script>
+
+</head>
+<body>
+	<div class="overlay"></div>
+	<div id="AjaxLoading" class="showbox">
+		<div class="loadingWord">
+			<img src="images/waiting.gif">正在登录,请稍候...
+		</div>
+	</div>
+	<div class="log_inhead"></div>
+	<div class="boxWidth">
+		<div class="longinlogo">
+			<img src="images/logo.gif">
+		</div>
+		<div class="yyzawj"></div>
+	</div>
+	<div class="dahaibaoul">
+		<ul class="dahaibaouloo">
+			<li class="color_li_change_remember_01">
+				<dl>
+					<img src="images/banner.jpg" />
+				</dl></li>
+		</ul>
+	</div>
+	<div class="longhzhangyan ">
+
+		<div class="yyzawj23 ai6changqiyinyin">
+			<div class="header_return" id="WC_AccountDisplay_div_3">
+
+
+				<div class="content" id="WC_AccountDisplay_div_6">
+					<form method="post" name="Logon" action="user.php" id="Logon">
+						<div id="WC_AccountDisplay_div_7">
+							<div class="shurukuang ai6changqiyinyinsecond">
+								<p class="yonghudeng">用户登录</p>
+								<p class="pbiaoqianchanger" id="dslrdengluchaoshierror">
+									<span class="yonghum aie6changer">用户名</span> <input class="diddto" size="35" type="text" id="username" />
+								</p>
+								<p class="pbiaoqianchanger">
+									<span class="yonghum">登录密码</span> <input class="diddto"
+										size="35" id="password" type="password" />
+								</p>
+
+								<p>
+									
+									<a id="btnLogin" type="submit" class="dengluanniu" /></a>
+								</p>
+								<p>还没有账号？赶紧<a href="user.php?act=register" style="color:red;font-weight:bold;">注册</a>吧</p>
+								<p class="eerrasd" id="errorMsg"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 导入登录Form结束 -->
+
+		</div>
+	</div>
+
+
+</body>
+</html>
