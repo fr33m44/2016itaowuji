@@ -151,7 +151,7 @@
   </div>
 </div>
 <div id="topcontrol" style="width:60px;">
-  <div class="nreturn"> <a target="_blank" id="sider_talkonline" href="http://www.miqi.cn/order-shoppingcart" class="ntel buy" style="display: block;">进货单</a> <a target="_blank" id="sider_talkonline" href="http://chat32.live800.com/live800/chatClient/chatbox.jsp?companyID=128742&amp;configID=34167&amp;jid=6712194369" class="ntel kf " style="display: block;">客服</a> <a id="sider_addmark" href="javascript:void(0);" class="ntel sider_addmark" style="display: block;">收藏</a> <a id="sider_returntop" href="javascript:void(0);" class="ntel sider_returntop" style="display: block;">回顶部</a> </div>
+  <div class="nreturn"> <a id="sider_talkonline" href="flow.php" class="ntel buy" style="display: block;">进货单</a> <a target="_blank" id="sider_talkonline" href="#" class="ntel kf " style="display: block;">客服</a> <a id="sider_addmark" href="javascript:collect({$goods.goods_id});" class="ntel sider_addmark" style="display: block;">收藏</a> <a id="sider_returntop" href="javascript:void(0);" class="ntel sider_returntop" style="display: block;">回顶部</a> </div>
 </div>
 <script>
 $(function(){

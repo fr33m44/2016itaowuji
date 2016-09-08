@@ -165,7 +165,7 @@ return offset;
                 <div class="inLeft_img">
                   <ul>
                     <li> <b><a href="#" target="_blank">假一赔三</a></b>
-                      <p><a href="#" target="_blank">米奇网承诺所有售出产品皆为正品。支持所有产品专柜验货，并为用户提供假一赔三的消费保证。</a></p>
+                      <p><a href="#" target="_blank">淘五季承诺所有售出产品皆为正品。支持所有产品专柜验货，并为用户提供假一赔三的消费保证。</a></p>
                     </li>
                     <li> <b><a href="#" target="_blank">当日发货</a></b>
                       <p><a href="#" target="_blank">每天下午16:00之前购买的全部订单我们将会当日闪电发出！</a></p>
@@ -174,7 +174,7 @@ return offset;
                       <p><a href="#" target="_blank">您购买的所有商品均可享受30天无条件退货服务，且返回运费由我们负责。(请在退货前与客服联系。)</a></p>
                     </li>
                     <li class="border_none"> <b><a href="#" target="_blank">全程保障</a></b>
-                      <p><a href="#" target="_blank">米奇网对进货渠道、合作伙伴都经过精心挑选并严格审核，您的利益有我们全程保障。</a></p>
+                      <p><a href="#" target="_blank">淘五季对进货渠道、合作伙伴都经过精心挑选并严格审核，您的利益有我们全程保障。</a></p>
                     </li>
                   </ul>
                 </div>
@@ -272,7 +272,7 @@ return offset;
                     </div>
                   </div>
                   
-                  <!--米奇网优势-->
+                  <!--优势-->
                   <div class="inLeft_title1 " id="miqfw" style="margin: 22px 0 0 15px;" > <img border="0" src="../images/inLeft_titli_08.gif"> </div>
                   <!-- #BeginLibraryItem "/library/benwangyoushi_group.lbi" --><!-- #EndLibraryItem --> </DIV>
               </div>
