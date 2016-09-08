@@ -425,11 +425,11 @@ $(function(){
                 <div class="center_btn">
 					
                   
-					<div class="qsqm_num" style="width: 129px;height: 43px;float:left">
+					<div class="qsqm_num">
 					<!-- {foreach from=$properties item=property_group key=key} -->
 						  <!-- {foreach from=$property_group item=property} -->
 						  <!-- {if $property.name eq "规格"}-->
-							每包<span id="volume">{$property.value|substr:2}</span>件 <input style="width: 46px;height: 35px;" type="text" name="qsqm" id="qsqm"  value="0" onfocus="if(this.value=='0')this.value=''"/>
+							每包<span id="volume">{$property.value|substr:2}</span>件 <input type="text" name="qsqm" id="qsqm"  value="0" onfocus="if(this.value=='0')this.value=''"/>
 						  <!-- {/if} -->
 						  <!-- {/foreach}-->
 					<!-- {/foreach}-->

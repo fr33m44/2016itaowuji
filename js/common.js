@@ -45,7 +45,7 @@ function addToCartShowDiv(goodsId, script_name,goods_recommend,parentId)
 		if(spec_arr[i].number % volume != 0)
 		{
 			alert("订购数量必须是"+volume+"的整数倍!");
-			return false;
+			return;
 		}
 	}
   
