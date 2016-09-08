@@ -16,6 +16,13 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
+/* 检查是否登录 */
+if ($_SESSION['user_id'] <= 0)
+{
+	ecs_header("Location: user.php\n");
+	exit;
+}
+
 if (empty($_SESSION['user_id'])||$_CFG['integrate_code']=='ecshop')
 {
     ecs_header('Location:./');

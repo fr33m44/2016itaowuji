@@ -73,7 +73,12 @@ else
 }
 
 require(dirname(__FILE__) . '/includes/init.php');
-
+/* 检查是否登录 */
+if ($_SESSION['user_id'] <= 0)
+{
+	ecs_header("Location: user.php\n");
+	exit;
+}
 $_REQUEST = array_merge($_REQUEST, addslashes_deep($string));
 
 $_REQUEST['act'] = !empty($_REQUEST['act']) ? trim($_REQUEST['act']) : '';

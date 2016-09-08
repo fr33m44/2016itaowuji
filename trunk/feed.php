@@ -19,7 +19,12 @@ define('INIT_NO_SMARTY', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require(ROOT_PATH . 'includes/cls_rss.php');
-
+/* 检查是否登录 */
+if ($_SESSION['user_id'] <= 0)
+{
+	ecs_header("Location: user.php\n");
+	exit;
+}
 header('Content-Type: application/xml; charset=' . EC_CHARSET);
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Fri, 14 Mar 1980 20:53:00 GMT');
