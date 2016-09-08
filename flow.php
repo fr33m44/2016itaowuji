@@ -2679,6 +2679,24 @@ else
 
     /* 取得商品列表，计算合计 */
     $cart_goods = get_cart_goods();
+	
+	foreach($cart_goods['goods_list'] as $key =>$goods)
+	{
+		$properties = get_goods_properties($goods['goods_id']);
+		foreach($properties['pro'] as $key1 => $prop)
+		{
+			foreach($prop as $key2=>$prop2)
+			{
+				if($prop2['name'] == '规格')
+				{
+					$pkg_num = substr($prop2['value'],2);
+					break;
+				}
+			}
+		}
+		$cart_goods['goods_list'][$key]['pkg_num'] = $pkg_num;
+	}
+	
     $smarty->assign('goods_list', $cart_goods['goods_list']);
     $smarty->assign('total', $cart_goods['total']);
 
