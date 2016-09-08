@@ -6,44 +6,55 @@
 function addToCartShowDiv(goodsId, script_name,goods_recommend,parentId)
 {
  
-  if(!script_name)
-  {
-	script_name = 0;	  
-  }
-  var goods        = new Object();
-  var spec_arr     = new Array();
-  var fittings_arr = new Array();
-  var number       = 1;
-  var formBuy      = document.forms['ECS_FORMBUY'];
-  var quick		   = 0;
- 
-
-  // 检查是否有商品规格 
-  if (formBuy)
-  {
-    spec_arr = getSelectedAttributes(formBuy);
-	if(spec_arr.length == 0)
+	if(!script_name)
 	{
-		alert("未填写商品数量或填写错误。");
-		return false;
+		script_name = 0;	  
 	}
-	quick = 1;
-  }
+	var goods        = new Object();
+	var spec_arr     = new Array();
+	var fittings_arr = new Array();
+	var number       = 1;
+	var formBuy      = document.forms['ECS_FORMBUY'];
+	var quick		   = 0;
 
-  goods.quick    = quick;
-  goods.goods_id = goodsId;
- 
-  goods.script_name   = (typeof(script_name) == "undefined") ? 0 : parseInt(script_name);
-  goods.goods_recommend   = (typeof(goods_recommend) == "undefined") ? '' : goods_recommend;
-  goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
+	var volume = parseInt(document.getElementById("volume").innerHTML);
 
-  for(i=0;i<spec_arr.length;i++)
-  {
-    
-    goods.spec     = spec_arr[i].specs;
-    goods.number   = spec_arr[i].number;
-    Ajax.call('flow.php?step=add_to_cart_showDiv', 'goods=' + $.toJSON(goods), addToCartShowDivResponse, 'POST', 'JSON');
-  }
+
+	// 检查是否有商品规格 
+	if (formBuy)
+	{
+
+		spec_arr = getSelectedAttributes(formBuy);
+		if(spec_arr.length == 0)
+		{
+			alert("未填写商品数量或填写错误。");
+			return false;
+		}
+		quick = 1;
+	}
+
+	goods.quick    = quick;
+	goods.goods_id = goodsId;
+
+	goods.script_name   = (typeof(script_name) == "undefined") ? 0 : parseInt(script_name);
+	goods.goods_recommend   = (typeof(goods_recommend) == "undefined") ? '' : goods_recommend;
+	goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
+
+	for(i=0;i<spec_arr.length;i++)
+	{
+		if(spec_arr[i].number % volume != 0)
+		{
+			alert("订购数量必须是"+volume+"的整数倍!");
+			return false;
+		}
+	}
+  
+	for(i=0;i<spec_arr.length;i++)
+	{
+		goods.spec     = spec_arr[i].specs;
+		goods.number   = spec_arr[i].number;
+		Ajax.call('flow.php?step=add_to_cart_showDiv', 'goods=' + $.toJSON(goods), addToCartShowDivResponse, 'POST', 'JSON');
+	}
 }
 
 /* *

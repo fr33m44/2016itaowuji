@@ -3,7 +3,6 @@
 var process_request = "{$lang.process_request}";
 </script>
 <script type="text/javascript">
-//收藏本站 bbs.ecmoban.com
 function AddFavorite(title, url) {
   try {
       window.external.addFavorite(url, title);
