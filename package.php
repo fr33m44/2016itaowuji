@@ -16,6 +16,12 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
+/* 检查是否登录 */
+if ($_SESSION['user_id'] <= 0)
+{
+	ecs_header("Location: user.php\n");
+	exit;
+}
 require_once(ROOT_PATH . 'includes/lib_order.php');
 include_once(ROOT_PATH . 'includes/lib_transaction.php');
 

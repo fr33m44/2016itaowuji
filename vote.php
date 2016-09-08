@@ -17,7 +17,12 @@ define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require(ROOT_PATH . 'includes/cls_json.php');
-
+/* 检查是否登录 */
+if ($_SESSION['user_id'] <= 0)
+{
+	ecs_header("Location: user.php\n");
+	exit;
+}
 if (!isset($_REQUEST['vote']) || !isset($_REQUEST['options']) || !isset($_REQUEST['type']))
 {
     ecs_header("Location: ./\n");

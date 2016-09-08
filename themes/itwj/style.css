@@ -1524,9 +1524,8 @@ background: #f5f5f5;
 .mod_picfold .imgtab .imgtab_con li a:hover, .mod_picfold .imgtab .imgtab_con li.cur a {border-color: #c8c7cc;background-color: #efeff4;}
 
 
-/**********详情页放大镜 开始************/
 .MagicZoomPlus img{
-	width:450px; height:450px;
+	width:463px; height:450px;
 }
 .mod_picfold .imgbox .prodimg .MagicZoomPup{
 	width:200px;height:200px;position:absolute;left:0;top:0;background-color:#000;opacity:.3;filter:alpha(opacity=30);display:none;z-index:1;
@@ -1535,7 +1534,6 @@ background: #f5f5f5;
 	border-color:#c8c7cc;
 	background-color:#efeff4;
 }
-/**********详情页放大镜 结束************/
 
 /*商品相册*/
 .picture{margin-top:10px;text-align: center;}

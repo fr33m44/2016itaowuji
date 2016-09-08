@@ -2,7 +2,7 @@
 <div class="mod_picfold clearfix">
   <div id="detail_main_img" class="imgbox">
     <div class="layout_wrap">
-      <div class="prodimg"  title="{$goods.goods_name|escape:html}">  <a href="{$pictures.0.img_url}" class="MagicZoomPlus" id="Zoomer" rel="hint-text: ; selectors-effect: false; selectors-class: on; zoom-distance: 22;zoom-width: 450; zoom-height: 450;" onclick="window.open('gallery.php?id={$goods.goods_id}'); return false;"><img id="J_prodImg" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}" /></a></div>
+      <div class="prodimg"  title="{$goods.goods_name|escape:html}">  <a href="{$pictures.0.img_url}" class="MagicZoomPlus" id="Zoomer" rel="hint-text:;selectors-class: on; zoom-distance: 100;opacity:20;zoom-width:70%; zoom-height: 90%;thumb-change:mouseover"><img id="J_prodImg" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}" /></a></div>
       <div class="tabbox clearfix">
         <div id="detail_img_slider" class="imgtab">
           <div class="imgtab_clip" id="J_tabSlider">

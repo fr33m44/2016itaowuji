@@ -16,6 +16,12 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
+/* 检查是否登录 */
+if ($_SESSION['user_id'] <= 0)
+{
+	ecs_header("Location: user.php\n");
+	exit;
+}
     assign_template();
     $position = assign_ur_here(0, $_LANG['tag_cloud']);
     $smarty->assign('page_title', $position['title']);    // 页面标题

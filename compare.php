@@ -16,7 +16,12 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-
+/* 检查是否登录 */
+if ($_SESSION['user_id'] <= 0)
+{
+	ecs_header("Location: user.php\n");
+	exit;
+}
 if (!empty($_REQUEST['goods']) && is_array($_REQUEST['goods']) && count($_REQUEST['goods']) > 1)
 {
     $where = db_create_in($_REQUEST['goods'], 'id_value');

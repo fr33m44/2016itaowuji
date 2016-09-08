@@ -539,12 +539,14 @@ elseif ($action == 'login')
     }
 
     $smarty->assign('back_act', $back_act);
-    $smarty->display('user_passport.dwt');
+    $smarty->display('user_login.dwt');
 }
 
 /* 处理会员的登录 */
 elseif ($action == 'act_login')
 {
+	include('includes/cls_json.php');
+	
     $username = isset($_POST['username']) ? trim($_POST['username']) : '';
     $password = isset($_POST['password']) ? trim($_POST['password']) : '';
     $back_act = isset($_POST['back_act']) ? trim($_POST['back_act']) : '';
@@ -575,12 +577,19 @@ elseif ($action == 'act_login')
         recalculate_price();
 
         $ucdata = isset($user->ucdata)? $user->ucdata : '';
-        show_message($_LANG['login_success'] . $ucdata , array($_LANG['back_up_page'], $_LANG['profile_lnk']), array($back_act,'user.php'), 'info');
+        //show_message($_LANG['login_success'] . $ucdata , array($_LANG['back_up_page'], $_LANG['profile_lnk']), array($back_act,'user.php'), 'info');
+		$json   = new JSON;
+		$res    = array( 'bool' => 1);
+		die($json->encode($res));
+
     }
     else
     {
         $_SESSION['login_fail'] ++ ;
-        show_message($_LANG['login_failure'], $_LANG['relogin_lnk'], 'user.php', 'error');
+		$json   = new JSON;
+		$res    = array( 'bool' => 0, 'error' => $_LANG['login_failure']);
+		die($json->encode($res));
+        //show_message($_LANG['login_failure'], $_LANG['relogin_lnk'], 'user.php', 'error');
     }
 }
 

@@ -19,7 +19,12 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-
+/* 检查是否登录 */
+if ($_SESSION['user_id'] <= 0)
+{
+	ecs_header("Location: user.php\n");
+	exit;
+}
 /* 如果没登录，提示登录 */
 if ($_SESSION['user_rank'] <= 0)
 {
