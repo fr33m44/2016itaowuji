@@ -7,9 +7,9 @@
               <p class="leftNav_p0{$smarty.foreach.categories_pro.iteration}"><a class="a1" href="{$cat.url}" title="{$cat.name|escape:html}">{$cat.name|escape:html}</a></p>
               <div class="childer_hide" >
                 <!--{foreach from=$cat.cat_id item=child}-->
-                <!--{foreach from=$child.cat_id item=childer}-->
-                <a href="{$childer.url}" target="_blank">{$childer.name|escape:html}</a>
-                <!--{/foreach}-->
+                
+                <a href="{$child.url}" target="_blank">{$child.name|escape:html}</a>
+                
                 <!--{/foreach}-->
               </div>
 			  <div class="J_arrowBtn" style="top: 19px; display: block;"></div>

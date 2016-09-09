@@ -120,6 +120,7 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
     $smarty->assign('categories',      get_categories_tree()); // 分类树
 	
 	$smarty->assign('categories_pro',  get_categories_tree_pro()); // 分类树加强版
+	
      /**小图 start**/
 	/*打开页面即可执行，仅执行一次，随即删掉*/
 		
