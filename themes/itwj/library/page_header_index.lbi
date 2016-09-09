@@ -22,8 +22,8 @@ catch (e) {
     <div class="heads">
       <div class="bookmail">
         <ul>
-          <li class="background_ico"><a href="#" target="_blank" rel="nofollow">手机版淘五季</a></li>
-          <li class="background_line"><a href="#" target="_blank" rel="nofollow">邀请好友</a></li>
+          <li class="background_ico"><a href="#"  rel="nofollow">手机版淘五季</a></li>
+          <li class="background_line"><a href="#"  rel="nofollow">邀请好友</a></li>
           <li><a href="javascript:void(0);" onclick="AddFavorite('我的网站',location.href)">加入收藏</a></li>
           <li class="background_pay">关注淘五季
             <div class="bookmail_more">
@@ -88,7 +88,7 @@ catch (e) {
         <ul>
           <li {if $navigator_list.config.index eq 1} class="current"{/if}> <a href="../index.php">{$lang.home}</a></li>
           <!-- {foreach name=nav_middle_list from=$navigator_list.middle item=nav} -->
-          <li {if $nav.active eq 1} class="current"{/if}><a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}>{$nav.name}</a>
+          <li {if $nav.active eq 1} class="current"{/if}><a href="{$nav.url}" {if $nav.opennew eq 1} {/if}>{$nav.name}</a>
           <!-- {if $nav.cat_list}-->
 <div class='sub_nav'>
 <dl>

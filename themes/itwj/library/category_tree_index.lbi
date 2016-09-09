@@ -8,7 +8,7 @@
               <div class="childer_hide" >
                 <!--{foreach from=$cat.cat_id item=child}-->
                 
-                <a href="{$child.url}" target="_blank">{$child.name|escape:html}</a>
+                <a href="{$child.url}">{$child.name|escape:html}</a>
                 
                 <!--{/foreach}-->
               </div>
@@ -20,10 +20,10 @@
             <div class="leftSubNav_left">
 			          <!--{foreach from=$cat.cat_id item=child}-->
               <div class="leftSubNav_left_txt none">
-                <p class="p1" style=" background:none;"><a href="{$child.url}" target="_blank">{$child.name|escape:html}</a></p>
+                <p class="p1" style=" background:none;"><a href="{$child.url}">{$child.name|escape:html}</a></p>
                 <dl>
                   <!--{foreach from=$child.cat_id item=childer}-->
-                  <dd><a href="{$childer.url}" target="_blank">{$childer.name|escape:html}</a></dd>
+                  <dd><a href="{$childer.url}">{$childer.name|escape:html}</a></dd>
                   <!--{/foreach}-->
 				  <div class="blank"></div>
                 </dl>
@@ -36,14 +36,14 @@
                 <!--{foreach from=$cat.brands item=brand}-->
                 <dd>
                   <!-- {if $brand.brand_logo} -->
-                  <a href="{$brand.url}" target="_blank" ><img border="0" width="78" height="38" src="data/brandlogo/{$brand.brand_logo}" alt="{$brand.brand_name|escape:html} ({$brand.goods_num})" /></a>
+                  <a href="{$brand.url}" ><img border="0" width="78" height="38" src="data/brandlogo/{$brand.brand_logo}" alt="{$brand.brand_name|escape:html} ({$brand.goods_num})" /></a>
                   <!-- {else} -->
                   <a href="{$brand.url}">{$brand.brand_name|escape:html}</a>
                   <!-- {/if} -->
                 </dd>
                 <!-- {/foreach} -->
               </dl>
-              <div class="leftSubNav_list_img"> <a href="#" target="_blank"><img src="" border="0" width="296"></a> </div>
+              <div class="leftSubNav_list_img"> <a href="#"><img src="" border="0" width="296"></a> </div>
             </div>
           </div>
        
