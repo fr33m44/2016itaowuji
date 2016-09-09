@@ -91,9 +91,10 @@
               <td align="center" bgcolor="#ffffff">
               
                 <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
-      <a href="javascript:void(0)" onclick="changenum({$goods.rec_id},-{$goods.pkg_num},{$goods.pkg_num})" class="sub"><img src="images/sub.png" style="vertical-align:middle;margin-bottom: 7px;" /></a>
-                 <input type="text" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="1"class="shuliang" style="text-align:center "    onchange="change_goods_number({$goods.rec_id},this.value,{$goods.pkg_num})"/>
-      <a  href="javascript:void(0)" onclick="changenum({$goods.rec_id},{$goods.pkg_num},{$goods.pkg_num})" class="add"><img src="images/add.png" style="vertical-align:middle;margin-bottom: 7px;"/></a>
+      <a href="javascript:void(0)" onclick="changenum({$goods.rec_id},{$goods.stock},-{$goods.pkg_num},{$goods.pkg_num})" class="sub"><img src="images/sub.png" style="vertical-align:middle;margin-bottom: 7px;" /></a>
+                 <input type="text" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="1"class="shuliang" style="text-align:center "    onkeyup="change_goods_number(this,{$goods.rec_id},this.value,{$goods.pkg_num})" pkg="{$goods.pkg_num}" spec="{$goods.attr}" />
+				 
+      <a  href="javascript:void(0)" onclick="changenum({$goods.rec_id},{$goods.stock},{$goods.pkg_num},{$goods.pkg_num})" class="add"><img src="images/add.png" style="vertical-align:middle;margin-bottom: 7px;"/></a>
                 <!-- {else} -->
                 {$goods.goods_number}
                 <!-- {/if} -->
@@ -131,43 +132,78 @@
             <td colspan="3" width="60%"></td>
             <td bgcolor="#ffffff" align="right" class="nstep1_btn" >
             <div class="orderaction">
-            <a class="cartsubmit" href="flow.php?step=checkout"></a> <a class="continueFind" href="./"></a>
+            <a class="cartsubmit" onclick="check_cart()" href="javascript:;"></a> <a class="continueFind" href="./"></a>
             </div>
             
             </td>
           </tr>
         </table>
         <script type="text/javascript">
-            function changenum(rec_id, diff,pkg_num)
+			//检查规格
+			function check_cart(e)
+			{
+				var formCart = document.forms['formCart'];
+				for(i=0;i<formCart.elements.length;i++)
+				{
+					if(formCart.elements[i].id.substr(0,13) == 'goods_number_')
+					{
+						console.log(parseInt(formCart.elements[i].value) % parseInt(formCart.elements[i].getAttribute('pkg')));
+						if( parseInt(formCart.elements[i].value) % parseInt(formCart.elements[i].getAttribute('pkg')) != 0)
+						{
+							alert("订购数量必须是"+formCart.elements[i].getAttribute('pkg')+"的整数倍!");
+							return;
+						}
+					}
+				}
+				window.location = 'flow.php?step=checkout';
+			}
+			
+            function changenum(rec_id, stock,diff, pkg_num)
             {
                 var goods_number =Number($('#goods_number_' + rec_id).val()) + Number(diff);    
+				if(goods_number > stock)
+				{
+					alert("购买数量不能超过库存量");
+					return;
+				}
 				if(goods_number < 1)
 				{
 					alert("购买数量不能少于1件");	
 				}
 				else
 				{
-					change_goods_number(rec_id,goods_number,pkg_num);
+					change_goods_number(a,rec_id,goods_number,pkg_num);
 				}
             }
-            function change_goods_number(rec_id, goods_number,pkg_num)
+            function change_goods_number(a, rec_id, goods_number,pkg_num)
             {
+				//检查库存
+				a.value=a.value.replace(/[^\d]/g,'');
+				Ajax.call('flow.php', 'step=get_stock&rec_id=' + rec_id + '&spec_str=' + a.getAttribute('spec'), getStockCallback, 'GET', 'JSON');
 				
-				if(goods_number%pkg_num != 0)
-				{
-					
-					document.getElementById('goods_number_' + rec_id).value = pkg_num;
-					alert("订购数量必须是"+pkg_num+"的整数倍!");
-					return false;
-				}
-               	Ajax.call('flow.php?step=ajax_update_cart', 'rec_id=' + rec_id +'&goods_number=' + goods_number, change_goods_number_response, 'POST','JSON');                
+				
+				//获取库存
+				Ajax.call('flow.php?step=ajax_update_cart', 'rec_id=' + rec_id +'&goods_number=' + goods_number, change_goods_number_response, 'POST','JSON');                
             }
+			function getStockCallback(res)
+			{
+				if (res.err_msg.length > 0)
+				{
+					alert(res.err_msg);
+				}
+				else
+				{
+					//如果输入的数量大于库存量，修改数量为库存量
+					if(parseInt(document.forms['formCart'].elements[res.result.name].value) > parseInt(res.result.value))
+						document.forms['formCart'].elements[res.result.name].value = res.result.value;
+				}
+			}
             function change_goods_number_response(result)
-            {               
+            {
                 if (result.error == 0)
                 {
                     var rec_id = result.rec_id;
-                    $('#goods_number_' +rec_id).val(result.goods_number);//更新数量
+                    //$('#goods_number_' +rec_id).val(result.goods_number);//更新数量
                     $('#goods_subtotal_' +rec_id).html(result.goods_subtotal);//更新小计
                     if (result.goods_number <= 0)
                     {// 数量为零则隐藏所在行
@@ -182,7 +218,7 @@
                 }
                 else if (result.message != '')
                 {
-                    alert(result.message);
+                    //alert(result.message);
                 }                
             }
         </script>

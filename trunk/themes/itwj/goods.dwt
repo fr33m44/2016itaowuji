@@ -95,11 +95,8 @@ $(function(){
 	
 	$(".spec_ele").on('keyup', function(){
 		this.value=this.value.replace(/[^\d]/g,'');
-	});
-	$(".spec_ele").on('blur', function(){
-		  Ajax.call('goods.php', 'act=get_stock&goods_id=' + goods_id + '&spec_str=' + this.name, getStockCallback, 'GET', 'JSON');
-
-	});
+		Ajax.call('goods.php', 'act=get_stock&goods_id=' + goods_id + '&spec_str=' + this.name, getStockCallback, 'GET', 'JSON');
+	}); 
 	function getStockCallback(res)
 	{
 		if (res.err_msg.length > 0)
