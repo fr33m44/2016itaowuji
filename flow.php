@@ -2398,7 +2398,50 @@ elseif ($_REQUEST['step'] == 'update_cart')
     show_message($_LANG['update_cart_notice'], $_LANG['back_to_cart'], 'flow.php');
     exit;
 }
+//获取库存
+elseif($_REQUEST['step'] == 'get_stock')
+{
+	include('includes/cls_json.php');
+	$json   = new JSON;
+	$res    = array('err_msg' => '', 'result' => '');
 
+    $rec_id = intval($_REQUEST['rec_id']);
+	$sql = "select goods_id from ".$ecs->table("cart")." where rec_id=$rec_id";
+	$goods_id = $db->getOne($sql);
+	
+	$spec_str = $_REQUEST["spec_str"];
+	$spec_arr = explode("_", $spec_str);
+	$size = $spec_arr[0];
+	$color = $spec_arr[1];
+	$cup = $spec_arr[2];
+	
+	$sql = "select goods_type from ".$ecs->table("goods")." where goods_id=$goods_id";
+	$goods_type = $db->getOne($sql);
+	
+	
+    if(!empty($goods_id) && !empty($spec_str))
+    {
+		if($goods_type == 13)//文胸
+		{
+			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and cup=$cup and size=$size and color=$color";
+			$stock = $db->getOne($sql);
+			$res=array('err_msg'=>0, 'result'=>array(
+				'name' =>'goods_number_'.$rec_id,
+				'value'=> $stock
+			));
+		}
+		else
+		{	
+			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and size=$size and color=$color";
+			$stock = $db->getOne($sql);
+			$res=array('err_msg'=>0, 'result'=>array(
+				'name' =>'goods_number_'.$rec_id,
+				'value'=> $stock
+			));
+		}
+    }
+	die($json->encode($res));
+}
 /*------------------------------------------------------ */
 //-- 删除购物车中的商品
 /*------------------------------------------------------ */
@@ -2681,7 +2724,7 @@ else
 
     /* 取得商品列表，计算合计 */
     $cart_goods = get_cart_goods();
-	
+
 	foreach($cart_goods['goods_list'] as $key =>$goods)
 	{
 		$properties = get_goods_properties($goods['goods_id']);
@@ -2696,12 +2739,20 @@ else
 				}
 			}
 		}
+		$spec = explode(',',$cart_goods['goods_list'][$key]['goods_attr_id']);
+		
+		$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=".$goods['goods_id']." and cup=$spec[2] and size=$spec[0] and color=$spec[1]";
+		$stock = $db->getOne($sql);
 		$cart_goods['goods_list'][$key]['pkg_num'] = $pkg_num;
+		$cart_goods['goods_list'][$key]['stock'] = $stock;
+		$cart_goods['goods_list'][$key]['attr'] = str_replace(',','_', $cart_goods['goods_list'][$key]['goods_attr_id']);
+		
 	}
-	
     $smarty->assign('goods_list', $cart_goods['goods_list']);
     $smarty->assign('total', $cart_goods['total']);
 
+	//print_r($cart_goods['goods_list']);die();
+	
     //购物车的描述的格式化
     $smarty->assign('shopping_money',         sprintf($_LANG['shopping_money'], $cart_goods['total']['goods_price']));
     $smarty->assign('market_price_desc',      sprintf($_LANG['than_market_price'],
@@ -2755,6 +2806,7 @@ $smarty->assign('step',            $_REQUEST['step']);
 assign_dynamic('shopping_flow');
 
 $smarty->display('flow.dwt');
+
 
 /*------------------------------------------------------ */
 //-- PRIVATE FUNCTION
