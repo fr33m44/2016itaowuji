@@ -1058,7 +1058,6 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 		if($is_insert)
 		{
 			//新建商品插入goods_stock数据，stock_number只能在后续添加
-			//print_r($goods_attr_list);
 			// 处理库存表 goods_stock 根据上面attr表来重构数据
 			$sql = "DELETE from ". $ecs->table('goods_stock')." WHERE goods_id =$goods_id";
 			$db->query($sql);
@@ -1078,7 +1077,6 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 					{
 						$sql = "INSERT INTO ". $ecs->table("goods_stock") . "( goods_id, goods_type, barcode, cup, cup_val, size, size_val, color, color_val, stock_number)" . 
 					"VALUES ('$goods_id', '$goods_type', '', '$cup_val[goods_attr_id]', '$cup_val[attr_value]', '$size_val[goods_attr_id]', '$size_val[attr_value]', '$color_val[goods_attr_id]', '$color_val[attr_value]', '$stock_number') ";
-						print_r($sql);
 						$db->query($sql);
 					}
 				}

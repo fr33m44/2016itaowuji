@@ -136,7 +136,6 @@ while ($row = $db->fetchRow($res))
     $list[] = $row;
 }
 
-//print_r($list);
 $smarty->assign('list',             $list);
 
 $smarty->assign('helps',            get_shop_help());       // 网店帮助
