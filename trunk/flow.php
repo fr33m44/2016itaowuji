@@ -171,9 +171,6 @@ elseif ($_REQUEST['step'] == 'add_to_cart_showDiv')
     include_once('includes/cls_json.php');
     $_POST['goods']=strip_tags(urldecode($_POST['goods']));
     $_POST['goods'] = json_str_iconv($_POST['goods']);
-
-    //print_r($_POST['goods']);
-    //die();
     
     if (!empty($_REQUEST['goods_id']) && empty($_POST['goods']))
     {
