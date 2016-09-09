@@ -70,7 +70,7 @@ catch (e) {
       <div id="search"  class="headSearch">
         <form id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()"  >
           <div class="headSearch_input">
-            <input name="keywords" type="text" id="keyword" value="美体小铺" onclick="javascript:if(this.value=='美体小铺')this.value=''"  />
+            <input name="keywords" type="text" id="keyword" value="文胸" onclick="javascript:if(this.value=='文胸')this.value=''"  />
           </div>
           <div class="headSearch_btn">
             <input name="imageField" type="submit" value=""  style="cursor:pointer;" />
@@ -106,10 +106,12 @@ catch (e) {
         </ul>
       </div>
       <div class="rightNav">
+		<!--
         <ul>
           <li><a href="#">正在购买</a></li>
           <li><a href="#">帮助中心</a></li>
         </ul>
+		-->
       </div>
     </div>
   </div>

@@ -69,7 +69,7 @@ catch (e) {
       <div id="search"  class="headSearch">
         <form id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()"  >
           <div class="headSearch_input">
-            <input name="keywords" type="text" id="keyword" value="美体小铺" onclick="javascript:if(this.value=='美体小铺')this.value=''"  />
+            <input name="keywords" type="text" id="keyword" value="文胸" onclick="javascript:if(this.value=='文胸')this.value=''"  />
           </div>
           <div class="headSearch_btn">
             <input name="imageField" type="submit" value=""  style="cursor:pointer;" />
@@ -93,9 +93,8 @@ catch (e) {
               <p class="leftNav_p0{$smarty.foreach.categories_pro.iteration}"><a class="a1" href="{$cat.url}" title="{$cat.name|escape:html}">{$cat.name|escape:html}</a></p>
               <div class="childer_hide" >
                 <!--{foreach from=$cat.cat_id item=child}-->
-                <!--{foreach from=$child.cat_id item=childer}-->
-                <a href="{$childer.url}" target="_blank">{$childer.name|escape:html}</a>
-                <!--{/foreach}-->
+                
+                <a href="{$child.url}">{$child.name|escape:html}</a>
                 <!--{/foreach}-->
               </div>
 			  <div class="J_arrowBtn" style="top: 19px; display: block;"></div>
@@ -171,10 +170,12 @@ catch (e) {
         </ul>
       </div>
       <div class="rightNav">
-        <ul>
+        <!--
+		<ul>
           <li><a href="#">正在购买</a></li>
           <li><a href="#">帮助中心</a></li>
         </ul>
+		-->
       </div>
     </div>
   </div>
