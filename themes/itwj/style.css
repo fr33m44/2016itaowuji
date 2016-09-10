@@ -2012,7 +2012,7 @@ transition: background-color .2s;}
 .y_searchList{ width:1020px;}
 .y_searchList .li{ position:relative; z-index:1; float:left; margin:0 17px 18px 0;width:242px; height:292px; }
 .y_searchList .li_hover {z-index: 2;}
-.y_searchList .li_hover  .item{ height:369px; box-shadow: 0 0 5px rgba(0,0,0,0.1);-moz-box-shadow: 0 0 5px rgba(0,0,0,0.1);-webkit-box-shadow: 0 0 5px rgba(0,0,0,0.1);}
+.y_searchList .li_hover  .item{ height:319px; box-shadow: 0 0 5px rgba(0,0,0,0.1);-moz-box-shadow: 0 0 5px rgba(0,0,0,0.1);-webkit-box-shadow: 0 0 5px rgba(0,0,0,0.1);}
 .y_searchList .item{ position:absolute; left:0; top:0; width:240px; border:1px solid #e8e8e8; background:#fff; box-shadow:0 0 5px rgba(0,0,0,0.07); -moz-box-shadow:0 0 5px rgba(0,0,0,0.07); -webkit-box-shadow:0 0 5px rgba(0,0,0,0.07); height:285px;}
 .p_img{ padding:10px 0 0 10px; height:210px; }
 .p_img a:hover{ text-decoration:none;}
