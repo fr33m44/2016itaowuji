@@ -94,12 +94,11 @@
     <!-- {else} -->
     {insert_scripts files='utils.js'}
 <div class="coLoginBody">
-  <div class="coLogin_title">
-                        <p><span>欢迎加入淘五季</span>如果您已有淘五季账号，<a href="user.php?act=login">立即登录</a></p>
-                    </div>
-                    <div class="coLogin_box" style="width: 582px;margin: 0 0 0 73px;">
+	<div class="coLogin_title">
+		<p><span>欢迎加入淘五季</span>如果您已有淘五季账号，<a href="user.php?act=login">立即登录</a></p>
+	</div>
+	<div class="coLogin_box" style="width: 582px;margin: 0 0 0 73px;">
     <form action="user.php" method="post" name="formUser" onsubmit="return register();">
-     
         <div class="coLogin_one">
           <p>{$lang.label_username}：</p>
           <div class="coLoginTxt" style="width:245px;">
@@ -109,20 +108,11 @@
           </div>
             <span id="username_notice" style="color:#FF0000"> (建议使用姓名)</span>
         </div>
-        <!-- <div class="coLogin_one">
-          <p>{$lang.label_email}：</p>
-          <div class="coLoginTxt" style="width:245px;">
-           <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-          <input name="email" type="text" size="17" id="email" onblur="checkEmail(this.value);" class="coLogin_txt"  style="width:245px;"/>
-           </div>
-          </div>
-           <span id="email_notice" style="color:#FF0000"> *</span>
-        </div> -->
          <div class="coLogin_one">
           <p>{$lang.label_password}：</p>
            <div class="coLoginTxt" style="width:245px;">
            <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-          <input name="password" type="password" id="password1" onblur="check_password(this.value);" onkeyup="checkIntensity(this.value)" class="coLogin_txt"  style="width:225px;" />
+          <input name="password" type="password" id="password" onblur="check_password(this.value);" onkeyup="checkIntensity(this.value)" class="coLogin_txt"  style="width:225px;" />
            
           </div>
             </div>
@@ -149,21 +139,21 @@
           <p>{$lang.label_storename}：</p>
           <div class="coLoginTxt" style="width:245px;">
          <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-          <input name="storename" type="text" size="17" id="username" onblur="is_registered(this.value);" class="coLogin_txt"  style="width:225px;"/>
+          <input name="shop_name" type="text" size="17" id="shop_name" onblur="is_registered(this.value);" class="coLogin_txt"  style="width:225px;"/>
           </div>
           </div>
-            <span id="storename_notice" style="color:#FF0000"> *</span>
+            <span id="shop_name_notice" style="color:#FF0000"> *</span>
         </div>
         <div class="coLogin_one">
           <p>{$lang.label_storestype}：</p>
           <div class="coLoginTxt" style="width:245px;">
           <div class="coLogin_txt" style="width:245px;">
-            <input name="storestype" type="radio" value="内衣店" checked/>内衣店
-            <input name="storestype" type="radio" value="超市" />超&nbsp; &nbsp; 市
-            <input name="storestype" type="radio" value="化妆品店" />化妆品店<br/>
-            <input name="storestype" type="radio" value="童装店" />童装店
-            <input name="storestype" type="radio" value="文具店" />文具店
-            <input name="storestype" type="radio" value="鞋店" />鞋店
+            <input name="shop_type" type="radio" value="内衣店" checked/>内衣店
+            <input name="shop_type" type="radio" value="超市" />超&nbsp; &nbsp; 市
+            <input name="shop_type" type="radio" value="化妆品店" />化妆品店<br/>
+            <input name="shop_type" type="radio" value="童装店" />童装店
+            <input name="shop_type" type="radio" value="文具店" />文具店
+            <input name="shop_type" type="radio" value="鞋店" />鞋店
           </div>
           </div>
             <span id="storestype_notice" style="color:#FF0000"> *</span>
@@ -177,7 +167,7 @@
             <SELECT name="district" id="s_county"></SELECT>
 
           </div>
-           <span id="email_notice" style="color:#FF0000"> *</span>
+           <span id="pcd_notice" style="color:#FF0000"> *</span>
         </div>
         {insert_scripts files='area_data.js'}
         <div class="coLogin_one">
@@ -191,49 +181,27 @@
           <span id="address_notice" style="color:#FF0000"> *</span>
         </div>
 
-        <!-- {foreach from=$extend_info_list item=field} -->
-	<!-- {if $field.id eq 6} -->
+
        <div class="coLogin_one">
-          <p>{$lang.passwd_question}：&nbsp;</p>
-         <div class="coLoginTxt" style="width:245px;">
-          <select name='sel_question'>
-	  <option value='0'>{$lang.sel_question}</option>
-	  {html_options options=$passwd_questions}
-	  </select>
-          </div>
-        </div>
-        <div class="coLogin_one">
-          <p <!-- {if $field.is_need} -->id="passwd_quesetion"<!--{/if}-->>{$lang.passwd_answer}：</p>
-          <div class="coLoginTxt" style="width:245px;">
-           <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-	  <input name="passwd_answer" type="text" size="17"  class="coLogin_txt"  style="width:225px;" maxlengt='20'/>
-          </div>
-          </div>
-          <!-- {if $field.is_need} --><span style="color:#FF0000"> *</span><!-- {/if} -->
-        </div>
-	<!-- {else} -->
-       <div class="coLogin_one">
-          <p <!-- {if $field.is_need} -->id="extend_field{$field.id}i"<!--{/if}-->>{$field.reg_field_name}：</p>
+          <p>QQ：</p>
            <div class="coLoginTxt" style="width:245px;">
            <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-          <input name="extend_field{$field.id}" type="text" size="17"  class="coLogin_txt"  style="width:225px;" />
-          
+          <input name="qq" type="text" size="17"  class="coLogin_txt"  style="width:225px;" />
           </div>
           </div>
-          <!-- {if $field.is_need} --><span style="color:#FF0000"> *</span><!-- {/if} -->
+          <span style="color:#FF0000"> *</span>
         </div>
-      <!-- {if $field.reg_field_name eq '手机'}-->
-   <div class="coLogin_one">
-    <p>{$lang.mobile_code}：</p>
-    <div class="coLoginTxt" style="width:245px;">
-     <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">          
-      <input type="text" style="width:70%;" name="moblie_code" class="coLogin_txt" />
-      <input type="button" value="发送" id="send_moblie_code" />
-    </div>
-    </div>
-    <span id="email_notice" style="color:#FF0000"> *</span>
-  </div>
-  <!-- 判断是否启用验证码{if $enabled_captcha} -->
+		
+		<div class="coLogin_one">
+		<p>手机号：</p>
+		<div class="coLoginTxt" style="width:245px;">
+		<div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">          
+		<input type="text"  size="17" name="mobile" class="coLogin_txt" />
+		</div>
+		</div>
+		<span id="mobile_notice" style="color:#FF0000"> *</span>
+		</div>
+		
       <div class="coLogin_one">
       <p>{$lang.comment_captcha}：</p>
       <div class="coLoginTxt_2">
@@ -242,12 +210,25 @@
             </div>
             <div class="coLoginTxt_2_img"> <img src="captcha.php?{$rand}" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='captcha.php?'+Math.random()" /> </div>
             </div>
-
       </div>
-      <!--{/if}-->
-  <!--{/if}-->    
-	<!-- {/if} -->
-	<!-- {/foreach} -->
+	  
+		<div class="coLogin_one">
+          <p></p>
+          <div class="coLoginTxt" style="width:245px;">
+          <div class="coLogin_txt_all" style="width:245px;height:35px"> 
+            <input name="get_qrm_btn" type="button" class=" " value="获取手机确认码" size="25" style="width:225px;height:35px" />
+          </div>
+          </div>
+        </div>
+	
+	    <div class="coLogin_one">
+          <p>手机确认码：</p>
+          <div class="coLoginTxt" style="width:245px;">
+          <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;"> 
+            <input name="qrm" type="text" class="coLogin_txt" value="" size="25" style="width:225px;" />
+          </div>
+          </div>
+        </div>	
         <div class="coLogin_one">
           <p>{$lang.extendcode}：</p>
           <div class="coLoginTxt" style="width:245px;">

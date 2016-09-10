@@ -248,7 +248,7 @@ elseif ($_REQUEST['act'] == 'insert')
 
     $users =& init_users();
 
-    if (!$users->add_user($username, $password, $email,$storename,$storeaddress,$extendcode,$storestype))
+    if (!$users->add_user($username, $password, $email,$storename,$storeaddress,$extendcode))
     {
         /* 插入会员数据失败 */
         if ($users->error == ERR_INVALID_USERNAME)
