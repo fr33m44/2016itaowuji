@@ -54,7 +54,7 @@ function reg(str){
 
 </head>
 <body>
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem --> {insert_scripts files='magiczoom.js,miqi_goods.js,magiczoomplus.js'} 
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem --> {insert_scripts files='magiczoom.js,magiczoomplus.js'} 
 <script>
 $(function(){
 	/*放大镜缩略图左右切换效果*/
