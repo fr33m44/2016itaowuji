@@ -3,13 +3,15 @@
 <div id="slideBox" class="slideBox" style="margin-left: 6px; margin-top: 6px;background: #cccccc; width: 974px;height: 522px;">
   <div class="hd" style=" width: 974px;height: 6px;">
     <ul>
-      <li class="first" style=" width: 324px;height: 10px;"> </li>
-      <li style=" width: 324px;height: 10px;"> </li>
-      <li style=" width: 324px;height: 10px;"> </li>
+      <li class="first" style="width: 194px;height: 10px;"> </li>
+      <li style="width: 194px;height: 10px;"> </li>
+      <li style="width: 194px;height: 10px;"> </li>
+      <li style="width: 194px;height: 10px;"> </li>
+      <li style="width: 194px;height: 10px;"> </li>
     </ul>
   </div>
   <div class="bd"  style="background: #cccccc; width: 974px;height: 522px;">
-    <ul >
+    <ul>
     <!--{foreach from=$flash name=myflash item=flash}-->
   <li><A href="{$flash.url}" target=_blank><IMG height="522px" alt="" src="{$flash.src}" width="974px" style="width: 974px;height: 522px;"></A> </li>
    <!--{/foreach}-->
@@ -23,16 +25,12 @@
 </div>
 
 <script type="text/javascript">
-		jQuery(".slideBox").slide({mainCell:".bd ul",effect:"left",trigger:"click"});
-               
-                $(
-                       function(){
-                               setInterval("next()", 5000);
-                             }
-                );
-
-
-                 function next(){
-                          $("#next").click(); 
-                           }    
-		</script> 
+jQuery(".slideBox").slide({mainCell:".bd ul",effect:"leftLoop",trigger:"mouseover"});
+	$(function(){
+			setInterval("next()", 5000);
+		}
+	);
+	function next(){
+	$("#next").click(); 
+	}    
+</script> 
