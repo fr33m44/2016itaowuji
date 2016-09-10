@@ -2741,7 +2741,26 @@ else
 		}
 		$spec = explode(',',$cart_goods['goods_list'][$key]['goods_attr_id']);
 		
-		$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=".$goods['goods_id']." and cup=$spec[2] and size=$spec[0] and color=$spec[1]";
+		$rec_id = intval($goods['rec_id']);
+		$sql = "select goods_id from ".$ecs->table("cart")." where rec_id=$rec_id";
+		$goods_id = $db->getOne($sql);
+		
+		$spec_str = $_REQUEST["spec_str"];
+		$spec_arr = explode("_", $spec_str);
+		$size = $spec_arr[0];
+		$color = $spec_arr[1];
+		$cup = $spec_arr[2];
+		
+		$sql = "select goods_type from ".$ecs->table("goods")." where goods_id=$goods_id";
+		$goods_type = $db->getOne($sql);
+		if($goods_type == 13)
+		{ 
+			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=".$goods['goods_id']." and cup=$spec[2] and size=$spec[0] and color=$spec[1]";
+		}
+		else
+		{
+			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=".$goods['goods_id']." and size=$spec[0] and color=$spec[1]";
+		}
 		$stock = $db->getOne($sql);
 		$cart_goods['goods_list'][$key]['pkg_num'] = $pkg_num;
 		$cart_goods['goods_list'][$key]['stock'] = $stock;

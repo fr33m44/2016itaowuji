@@ -60,24 +60,7 @@ function reg(str)
 </script>
 </head>
 <body>
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->{insert_scripts files='magiczoom.js,magiczoomplus.js'} 
-<script>
-$(function(){
-	/*放大镜缩略图左右切换效果*/
-	$("#detail_img_slider").slide({
-			mainCell:"#J_tabSlider ul",
-			vis:5,
-			prevCell:".pre_btn",
-			nextCell:".next_btn",
-			effect:"leftLoop"
-	})
-	/*放大镜缩略图点击选中效果*/
-	$("#J_tabSlider ul li a").click(function(){
-		$("#J_tabSlider ul li").removeClass("cur");
-		$(this).parent().addClass("cur");
-	})	
-})
-</script>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <!--当前位置 start-->
 <div class="content_title">
   <div class="block">
