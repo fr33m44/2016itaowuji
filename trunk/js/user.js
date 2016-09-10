@@ -432,25 +432,18 @@ function check_email_callback(result)
  */
 function register()
 {
-  var frm  = document.forms['formUser'];
-  var username  = Utils.trim(frm.elements['username'].value);
-  var email  = frm.elements['email'].value;
-  var password  = Utils.trim(frm.elements['password'].value);
-  var confirm_password = Utils.trim(frm.elements['confirm_password'].value);
-  var checked_agreement = frm.elements['agreement'].checked;
+	var frm  = document.forms['formUser'];
+	var username  = Utils.trim(frm.elements['username'].value);
+	var password  = Utils.trim(frm.elements['password'].value);
+	var confirm_password = Utils.trim(frm.elements['confirm_password'].value);
+	var checked_agreement = frm.elements['agreement'].checked;
 
-  var storestype  = Utils.trim(frm.elements['storestype'].value);
-  var storename = Utils.trim(frm.elements['storename'].value);
-  var storeaddress = Utils.trim(frm.elements['storeaddress'].value);
-  var extendcode = Utils.trim(frm.elements['extendcode'].value);
-
-  var msn = frm.elements['extend_field1'] ? Utils.trim(frm.elements['extend_field1'].value) : '';
-  var qq = frm.elements['extend_field2'] ? Utils.trim(frm.elements['extend_field2'].value) : '';
-  var home_phone = frm.elements['extend_field4'] ? Utils.trim(frm.elements['extend_field4'].value) : '';
-  var office_phone = frm.elements['extend_field3'] ? Utils.trim(frm.elements['extend_field3'].value) : '';
-  var mobile_phone = frm.elements['extend_field5'] ? Utils.trim(frm.elements['extend_field5'].value) : '';
-  var passwd_answer = frm.elements['passwd_answer'] ? Utils.trim(frm.elements['passwd_answer'].value) : '';
-  var sel_question =  frm.elements['sel_question'] ? Utils.trim(frm.elements['sel_question'].value) : '';
+	var shop_type  = Utils.trim(frm.elements['shop_type'].value);
+	var shop_name = Utils.trim(frm.elements['shop_name'].value);
+	var shop_addr = Utils.trim(frm.elements['shop_addr'].value);
+	var extendcode = Utils.trim(frm.elements['extendcode'].value);
+	var qq = Utils.trim(frm.elements['qq'].value);
+	var mobile = Utils.trim(frm.elements['mobile'].value);
 
 
   var msg = "";
@@ -466,25 +459,14 @@ function register()
   }
   else if (username.length < 3)
   {
-    //msg += username_shorter + '\n';
+    msg += username_shorter + '\n';
   }
-  if (address.length == 0) {
+  if (shop_addr.length == 0) {
     msg += address_empty + '\n';
   }
-  if (storename.length == 0) {
-    msg += storename_empty + '\n';
+  if (shop_name.length == 0) {
+    msg += shop_name_empty + '\n';
   }
-  // if (email.length == 0)
-  // {
-  //   msg += email_empty + '\n';
-  // }
-  // else
-  // {
-  //   if ( ! (Utils.isEmail(email)))
-  //   {
-  //     msg += email_invalid + '\n';
-  //   }
-  // }
   if (password.length == 0)
   {
     msg += password_empty + '\n';
@@ -541,11 +523,6 @@ function register()
       msg += mobile_phone_invalid + '\n';
     }
   }
-  if (passwd_answer.length > 0 && sel_question == 0 || document.getElementById('passwd_quesetion') && passwd_answer.length == 0)
-  {
-    msg += no_select_question + '\n';
-  }
-
   for (i = 4; i < frm.elements.length - 4; i++)	// 从第五项开始循环检查是否为必填项
   {
 	needinput = document.getElementById(frm.elements[i].name + 'i') ? document.getElementById(frm.elements[i].name + 'i') : '';

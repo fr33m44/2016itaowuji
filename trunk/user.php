@@ -152,8 +152,6 @@ elseif ($action == 'act_register')
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
         $email    = isset($_POST['email']) ? trim($_POST['email']) : '';
-        $storestype    = isset($_POST['storestype']) ? trim($_POST['storestype']) : '';
-        $storename = isset($_POST['storename']) ? trim($_POST['storename']) : '';
 
         $province    = isset($_POST['province']) ? trim($_POST['province']) : '';
         $city    = isset($_POST['city']) ? trim($_POST['city']) : '';
@@ -214,7 +212,7 @@ elseif ($action == 'act_register')
             }
         }
 
-        if (register($username, $password, $email, $other, $storename, $storeaddress, $extendcode, $storestype) !== false)
+        if (register($username, $password, $email, $other, $extendcode) !== false)
         {
             include_once(ROOT_PATH . 'includes/lib_transaction.php');
             include_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');

@@ -2118,16 +2118,15 @@ a.hpink:hover {text-decoration: underline;color: #ed145b;}
 .coLogin_title p{font-size:14px;}
 .coLogin_title p span{margin:0 10px 0 0;display:inline;font-size:30px;font-family:"微软雅黑";}
 .coLogin_title p a{margin:0 0 0 5px;display:inline;font-weight:bold;text-decoration:underline;color:#f63860;}
-.coLogin_box{width:518px;margin:12px 0 0 32px;display:inline;float:left;}
-.coLogin_one{width:518px;height:35px;margin:22px 0 0 0;display:inline;float:left;}
-.coLogin_one p{width:70px;height:35px;line-height:35px;padding:0 3px 0 0;color:#333;font-size:14px;text-align:right;float:left;}
+.coLogin_box{width:541px;margin:12px 0 0 32px;display:inline;float:left;}
+.coLogin_one{width:541px;height:35px;margin:22px 0 0 0;display:inline;float:left;}
+.coLogin_one p{width:90px;height:35px;line-height:35px;padding:0 3px 0 0;color:#333;font-size:14px;text-align:right;float:left;}
 .coLoginTxt{width:200px;height:35px;font-size:14px;float:left;position:relative;z-index:100;}
 .coLogin_txt_all{width:200px;height:35px;background:url(images/shopping_Login_bg.gif) 0 0 no-repeat;z-index:10;}
 .coLogin_txt{width:190px;height:19px;font-size:14px;line-height:19px;padding:8px 0 8px 10px;border:none;background:none;z-index:10;}
 .coLogin_one span{padding:0 0 0 15px;height:35px;line-height:35px;float:left;}
 .coLoginTxt_2{width:200px;height:35px;font-size:14px;float:left;}
 .coLoginTxt_2_img{width:110px;height:35px;overflow:hidden;float:right;}
-.coLoginTxt_2_img img{ padding:8px 0 0 10px;}
 .coLogin_txt_2_all{width:90px;height:35px;background:url(images/coLogin_txt_bg2.gif) 0 0 no-repeat;border:none;z-index:10;float:left;}
 .coLogin_txt_2{width:80px;height:19px;line-height:19px;font-size:14px;padding:8px 0 8px 10px;background:none;border:none;z-index:10;float:left;}
 .coLogin_three{width:443px;height:35px;padding:22px 0 0 75px;float:left;}
