@@ -43,7 +43,8 @@
                 </dd>
                 <!-- {/foreach} -->
               </dl>
-              <div class="leftSubNav_list_img"> <a href="#"><img src="" border="0" width="296"></a> </div>
+			  <!--
+              <div class="leftSubNav_list_img"> <a href="#"><img src="" border="0" width="296"></a> </div>-->
             </div>
           </div>
        

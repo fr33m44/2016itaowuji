@@ -22,22 +22,6 @@
   <!-- {/foreach} --> 
 </div>
 <!--{/if}-->
-<!--<div class="footBottom_blog clearfix">
-  <div class="footBlog_01"> </div>
-  <div class="footBlog_02"> <a href="http://itunes.apple.com/cn/app/id522502776" target="_blank"></a> </div>
-  <div class="footBlog_03"> <a href="http://t.sina.com.cn/miqimm" target="_blank"></a> </div>
-  <div class="footBlog_04"> </div>
-</div>
-<div class="footBottom_line">
-  <div class="footLine_list"> <img src="../images/foot_01.gif" border="0"> </div>
-  <div class="footLine_list"> <img src="../images/foot_02.gif" border="0"> </div>
-  <div class="footLine_list"> <img src="../images/foot_03.gif" border="0"> </div>
-  <div class="footLine_list"> <img src="../images/foot_04.gif" border="0"> </div>
-  <div class="footLine_list"> <img src="../images/foot_05.gif" border="0"> </div>
-  <div class="footLine_list"> <img src="../images/foot_06.gif" border="0"> </div>
-  <div class="footLine_list"> <img src="../images/foot_07.gif" border="0"> </div>
-  <div class="footLine_list"> <img src="../images/foot_08.gif" border="0"> </div>
-</div>-->
 <div class="footer_txt">
   <p><span class="arial">© </span><span class="weiruan">2016 itaowuji.com</span> 所有设计和内容保留一切权利 <a href="http://www.miibeian.gov.cn/" target="_blank" style="color:#FBFAD1;">渝ICP备15007703-2号</a>   淘五季客服热线：023-68813252(每天09:00-18:00)</p>
   <p class="lightGrey">CEO邮箱 228207632@qq.com   投诉邮箱 228207632@qq.com</p>
@@ -150,8 +134,15 @@
     <div align="left"  id="rss"><a href="{$feed_url}"><img src="../images/xml_rss2.gif" alt="rss" /></a></div>
   </div>
 </div>
-<div id="topcontrol" style="width:60px;">
-  <div class="nreturn"> <a id="sider_talkonline" href="flow.php" class="ntel buy" style="display: block;">进货单</a> <a target="_blank" id="sider_talkonline" href="#" class="ntel kf " style="display: block;">客服</a> <a id="sider_addmark" href="javascript:collect({$goods.goods_id});" class="ntel sider_addmark" style="display: block;">收藏</a> <a id="sider_returntop" href="javascript:void(0);" class="ntel sider_returntop" style="display: block;">回顶部</a> </div>
+<div id="topcontrol" style="width:95px;">
+  <div class="nreturn">
+  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2033604296&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2033604296:53" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+	<a id="sider_talkonline" href="flow.php" class="ntel buy" style="display: block;">进货单</a> 
+	<!--<a target="_blank" id="sider_talkonline" href="javascript:;" onclick="javascript:window.open('http://bizapp.qq.com/webc.htm?new=0&sid=2033604296&o=b.qq.com&q=7', '_blank', 'height=544, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');" class="ntel kf " style="display: block;">客服</a>-->
+	<a id="sider_addmark" href="javascript:collect({$goods.goods_id});" class="ntel sider_addmark" style="display: block;">收藏</a>
+	<a id="sider_returntop" href="javascript:void(0);" class="ntel sider_returntop" style="display: block;">回顶部</a>
+	
+	</div>
 </div>
 <script>
 $(function(){

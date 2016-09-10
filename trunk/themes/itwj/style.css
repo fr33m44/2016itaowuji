@@ -2292,7 +2292,7 @@ border: 1px #383838 solid;font-weight: bold;}
 /*返回顶部*/
 
 #scrolltopcontrol, #topcontrol {z-index: 100;}
-.nreturn {font-family:"宋体";width: 56px;}
+.nreturn {font-family:"宋体";width: 95px;}
 .nreturn .buy {background-position: center top;}
 .nreturn .ntel { background-color: #FFFFFF;background-image: url("images/topcontrol_icon.png"); background-repeat: no-repeat; border: 1px solid #F2F2F2;box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);color: #4C4C4C;font-size: 11px;
  height: 20px;margin: 1px 0 0; padding-top: 35px; text-align: center;width: 56px;}
