@@ -160,7 +160,7 @@
 			
             function changenum(rec_id, stock,diff, pkg_num)
             {
-                var goods_number =Number($('#goods_number_' + rec_id).val()) + Number(diff);    
+                var goods_number =Number($('#goods_number_' + rec_id).val()) + Number(diff);  
 				if(goods_number > stock)
 				{
 					alert("购买数量不能超过库存量");
@@ -172,14 +172,16 @@
 				}
 				else
 				{
-					change_goods_number(a,rec_id,goods_number,pkg_num);
+					document.getElementById("goods_number_"+rec_id).value = goods_number;
+					change_goods_number(rec_id,goods_number,pkg_num);
 				}
             }
-            function change_goods_number(a, rec_id, goods_number,pkg_num)
-            {
+            function change_goods_number(rec_id, goods_number,pkg_num)
+			{
 				//检查库存
-				a.value=a.value.replace(/[^\d]/g,'');
-				Ajax.call('flow.php', 'step=get_stock&rec_id=' + rec_id + '&spec_str=' + a.getAttribute('spec'), getStockCallback, 'GET', 'JSON');
+				var ele = document.getElementById("goods_number_"+rec_id);
+				ele.value=ele.value.replace(/[^\d]/g,'');
+				Ajax.call('flow.php', 'step=get_stock&rec_id=' + rec_id + '&spec_str=' + ele.getAttribute('spec'), getStockCallback, 'GET', 'JSON');
 				
 				
 				//获取库存
