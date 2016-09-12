@@ -639,7 +639,8 @@
       {
          if(validator.passed())
          {
-         document.forms['theForm'].submit();
+			editor.sync();
+			document.forms['theForm'].submit();
          }
       }
     }
