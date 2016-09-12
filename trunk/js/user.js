@@ -400,12 +400,18 @@ function check_shop_addr(shop_addr)
 function check_mobile(mobile)
 {
 	var submit_disabled = false;
+	var regex = /^1[3|4|5|8][0-9]\d{4,8}$/;
 	
 	if (Utils.trim(mobile) == '' )
     {
         document.getElementById('mobile_notice').innerHTML = '手机号不能为空';
         var submit_disabled = true;
     }
+	else if(!regex.test(mobile))
+	{
+        document.getElementById('mobile_notice').innerHTML = '手机号格式不对';
+        var submit_disabled = true;
+	}
 	else
 	{
 		document.getElementById('mobile_notice').innerHTML = '可以注册';
