@@ -161,25 +161,15 @@ elseif ($action == 'act_register')
         $province    = isset($_POST['province']) ? trim($_POST['province']) : '';
         $city    = isset($_POST['city']) ? trim($_POST['city']) : '';
         $district    = isset($_POST['district']) ? trim($_POST['district']) : '';
-        $addres    = isset($_POST['address']) ? trim($_POST['address']) : '';
-        if (!empty($district)) {
-            $storeaddress = $province.$city.$district.$addres;
-        }else{
-            $storeaddress = $addres;
-        } 
-        $extendcode = isset($_POST['extendcode']) ? trim($_POST['extendcode']) : '';    
-        
-        $other['msn'] = isset($_POST['extend_field1']) ? $_POST['extend_field1'] : '';
-        $other['qq'] = isset($_POST['extend_field2']) ? $_POST['extend_field2'] : '';
-        $other['office_phone'] = isset($_POST['extend_field3']) ? $_POST['extend_field3'] : '';
-        $other['home_phone'] = isset($_POST['extend_field4']) ? $_POST['extend_field4'] : '';
-        $other['mobile_phone'] = isset($_POST['extend_field5']) ? $_POST['extend_field5'] : '';
-        $sel_question = empty($_POST['sel_question']) ? '' : compile_str($_POST['sel_question']);
-        $passwd_answer = isset($_POST['passwd_answer']) ? compile_str(trim($_POST['passwd_answer'])) : '';
-
-
+        $addres    = isset($_POST['shop_addr']) ? trim($_POST['shop_addr']) : '';
+		$qq  = isset($_POST['qq']) ? $_POST['qq'] : '';
+		$mobile = isset($_POST['mobile']) ? $_POST['mobile'] : '';
+		$shop_type = isset($_POST['shop_type']) ? $_POST['shop_type'] : '';
         $back_act = isset($_POST['back_act']) ? trim($_POST['back_act']) : '';
+		$parent_id = isset($_POST['extendcode']) ? trim($_POST['extendcode']) : '';
 
+		
+		
         if(empty($_POST['agreement']))
         {
             show_message($_LANG['passport_js']['agreement']);
