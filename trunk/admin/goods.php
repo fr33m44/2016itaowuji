@@ -935,9 +935,10 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 "goods_desc = '$_POST[goods_desc]', " .
                 "last_update = '". gmtime() ."', ".
                 "goods_type = '$goods_type' " .
-                "WHERE goods_id = '$_REQUEST[goods_id]' LIMIT 1";
+                "WHERE goods_id = '$_REQUEST[goods_id]' LIMIT 1";    
+		$db->query($sql);
     }
-    $db->query($sql);
+
 
     /* 商品编号 */
     $goods_id = $is_insert ? $db->insert_id() : $_REQUEST['goods_id'];
