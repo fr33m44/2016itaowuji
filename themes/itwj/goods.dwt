@@ -552,7 +552,6 @@ $(function(){
             <div class="fixed_out ">
               <div  id="inner" class="fixed" >
                 <ul class="inLeft_btn">
-                  <li><a id="detail-id" href="#detail">本单详情</a></li>
                   <li><a id="shot-id" href="#shot">产品实拍</a></li>
                   <li><a id="coms1-id" href="#cmt">买家评论</a></li>
                   <li class="advantage"><a id="good-id" href="#advantage">淘五季优势</a></li>
@@ -582,8 +581,7 @@ return offset;
             <div  id="no_try_record"> 
               
               
-              <!-- 本单详情-->
-              <div class="inLeft_title " id="detail"> <img border="0" src="../images/inLeft_title02.gif"> </div>
+              <div class="inLeft_title " id="shot"> <img border="0" src="../images/inLeft_title04.gif"> </div>
               <div class="inLeft_attributes inLeft_style">
                 <div class="inLeft_orderDetail" >
                   <div class="inLeft_orderDetail_in" > {$goods.goods_desc} </div>
@@ -591,22 +589,12 @@ return offset;
               </div>
               
               
-              <!--产品实拍-->
-              
-              <div class="inLeft_title " id="shot">
-                                <img border="0" src="../images/inLeft_title04.gif">
-                            </div>
-                            
-                  {$goods.goods_shipai}          
-                           
                                            
                                            
                     <!--收货评论-->                                       
-                     <div class="inLeft_title " id="cmt">
+                    <div class="inLeft_title " id="cmt">
                                 <img border="0" src="../images/inLeft_title06.gif">
-                            </div>   
-                                 
-                                 
+					</div>   
                     <!--zhou start-->
                              <div class="inLeft_comment" > 
                              

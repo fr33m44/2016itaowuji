@@ -1837,8 +1837,8 @@ background-image: url("images/rank_num_icon.gif");background-position: 0 -66px;b
 .inLeft_attributes_1 td img{ width: 280px; height: 280px; }
 .inLeft_photos p{ font-size: 14px; color:#4c4c4c; text-align: center; line-height: 24px; padding-bottom: 10px; border-bottom: 1px solid #e6e6e6;}
 /*本单详情*/
-.inLeft_orderDetail{ width:666px; padding:0 90px 0 89px; background:url(images/detailPicBg.gif);}
-.inLeft_orderDetail_in{ width:666px; background:#fff;}
+.inLeft_orderDetail{ width:666px; padding:0 90px 0 89px;}
+.inLeft_orderDetail_in{ width:666px; background:#fff;text-align:center}
 .inLeft_use{ width:660px; margin:0 auto;}
 .inLeft_photos{ text-align:center;}
 .inLeft_voices{ padding:0px 0 0 31px; width: 845px;}
