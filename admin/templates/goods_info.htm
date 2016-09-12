@@ -639,7 +639,7 @@
       {
          if(validator.passed())
          {
-			editor.sync();
+			editor.sync();//解决无法上传的问题
 			document.forms['theForm'].submit();
          }
       }
