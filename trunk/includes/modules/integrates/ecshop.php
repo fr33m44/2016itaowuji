@@ -62,10 +62,6 @@ class ecshop extends integrate
         $this->field_name = 'user_name';
         $this->field_pass = 'password';
         $this->field_email = 'email';
-        $this->field_storestype = 'storestype';
-        $this->field_storeaddress = 'storeaddress';
-        $this->field_storename = 'storename';
-        $this->field_extendcode = 'extendcode';
         $this->field_gender = 'sex';
         $this->field_bday = 'birthday';
         $this->field_reg_date = 'reg_time';

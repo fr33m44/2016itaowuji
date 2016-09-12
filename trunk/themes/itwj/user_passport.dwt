@@ -11,7 +11,7 @@
 <link rel="icon" href="animated_favicon.gif" type="image/gif" />
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
-{insert_scripts files='common.js,user.js,transport.js'}
+{insert_scripts files='common.js,user.js,transport.js,region.js,shopping_flow.js'}
 
 <body>
 <div class="body_user ">
@@ -20,68 +20,6 @@
 <div class="content">
 <div class="contentLogin">
 <div class="content_login">
-<!--#登录界面 start-->
-<!-- {if $action eq 'login'} -->
-<Div class="coLoginBody">
-<div class="coLogin_title">
-                        <p><span>欢迎您，请登录</span>还没有淘五季账户？ <a href="user.php?act=register">立即注册</a></p>
-                    </div>
-<div class="coLogin_box"  style="width: 582px;margin: 0 0 0 73px;">
-   <form name="formLogin" action="user.php" method="post" onSubmit="return userLogin()">
-       
-          <div class="coLogin_one">
-            <p>{$lang.label_username}：</p>
-            <div class="coLoginTxt" style="width:245px;">
-            <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-            <input name="username" placeholder="手机号/用户名" type="text" size="17" class="coLogin_txt"  style="width:245px;"/>
-            </div>
-            </div>
-          </div>
-        <div class="coLogin_one">
-           <p>{$lang.label_password}：</p>
-            <div class="coLoginTxt" style="width:245px;">
-            <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-            <input name="password" type="password" size="17" class="coLogin_txt"  style="width:245px;"/>
-            </div>
-            </div>
-          </div>
-          <!-- 判断是否启用验证码{if $enabled_captcha} -->
-          <div class="coLogin_one">
-            <p>{$lang.comment_captcha}：</p>
-            <div class="coLoginTxt_2">
-            <div class="coLogin_txt_2_all">
-           <input type="text" size="17" name="captcha" class="coLogin_txt_2"  />
-           </div>
-           <div class="coLoginTxt_2_img"> <img src="captcha.php?is_login=1&{$rand}" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='captcha.php?is_login=1&'+Math.random()" /></div>
-           </div>
-           
-           
-          </div>
-          <!--{/if}-->
-          <div class="coLogin_two">
-          <p></p>
-          <input type="checkbox" value="1" name="remember" id="remember" class="checkbox_txt" /><label for="remember">{$lang.remember}</label>
-          </div>
-          <div class="coLogin_three">
-           
-            <input type="hidden" name="act" value="act_login" />
-            <input type="hidden" name="back_act" value="{$back_act}" />
-            <input type="submit" name="submit" value="登录" class="smLogin_btn" />
-           
-          </div>
-	  <div class="coLogin_one">
-      <p></p>
-      <a href="user.php?act=qpassword_name" >{$lang.get_password_by_question}</a>&nbsp;&nbsp;&nbsp;<a href="user.php?act=get_password" >{$lang.get_password_by_mail}</a>
-      </div>
-   
-    </form>
-    <div class="coLogin_bottom">
-    </div>
-</div>
-  
-</div>
-<!--{/if}-->
-<!--#登录界面 end-->
 
 <!--*会员注册界面 start-->
     <!--{if $action eq 'register'}-->
@@ -116,7 +54,7 @@
            
           </div>
             </div>
-             <span style="color:#FF0000" id="password_notice"> *</span>
+             <span style="color:#FF0000" id="password_notice"></span>
         </div>
        <div class="coLogin_one">
           <p>{$lang.label_password_intensity}：</p>
@@ -133,22 +71,22 @@
           <input name="confirm_password" type="password" id="conform_password" onblur="check_conform_password(this.value);"  class="coLogin_txt"  style="width:225px;"/>           
           </div>
           </div>
-           <span style="color:#FF0000" id="conform_password_notice"> *</span>
+           <span style="color:#FF0000" id="conform_password_notice"></span>
         </div>
         <div class="coLogin_one">
           <p>{$lang.label_storename}：</p>
           <div class="coLoginTxt" style="width:245px;">
          <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-          <input name="shop_name" type="text" size="17" id="shop_name" onblur="is_registered(this.value);" class="coLogin_txt"  style="width:225px;"/>
+          <input name="shop_name" type="text" size="17" id="shop_name" onblur="check_shop_name(this.value);" class="coLogin_txt"  style="width:225px;"/>
           </div>
           </div>
-            <span id="shop_name_notice" style="color:#FF0000"> *</span>
+            <span id="shop_name_notice" style="color:#FF0000"></span>
         </div>
         <div class="coLogin_one">
           <p>{$lang.label_storestype}：</p>
           <div class="coLoginTxt" style="width:245px;">
           <div class="coLogin_txt" style="width:245px;">
-            <input name="shop_type" type="radio" value="内衣店" checked/>内衣店
+            <input name="shop_type" type="radio" value="内衣店" checked="checked"/>内衣店
             <input name="shop_type" type="radio" value="超市" />超&nbsp; &nbsp; 市
             <input name="shop_type" type="radio" value="化妆品店" />化妆品店<br/>
             <input name="shop_type" type="radio" value="童装店" />童装店
@@ -156,29 +94,47 @@
             <input name="shop_type" type="radio" value="鞋店" />鞋店
           </div>
           </div>
-            <span id="storestype_notice" style="color:#FF0000"> *</span>
+            <span id="shop_type_notice" style="color:#FF0000"></span>
         </div>
         <div class="coLogin_one">
           <p>{$lang.country_province}：</p>
-          <div class="coLoginTxt" style="width:245px;line-height:35px;">
-           
-            <SELECT name="province" id="s_province"></SELECT>
-            <SELECT name="city" id="s_city"></SELECT>
-            <SELECT name="district" id="s_county"></SELECT>
-
+          <div class="coLoginTxt" style="width:340px;line-height:35px;">
+		<select name="country" id="selCountries_1" onchange="region.changed(this, 1, 'selProvinces_1')">
+			<option value="0">{$lang.please_select}{$name_of_region[0]}</option>
+			<!-- {foreach from=$country_list item=country} -->
+			<option value="{$country.region_id}" {if $consignee.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
+			<!-- {/foreach} -->
+		  </select>
+		  <select name="province" id="selProvinces_1" onchange="region.changed(this, 2, 'selCities_1')">
+			<option value="0">{$lang.please_select}{$name_of_region[1]}</option>
+			<!-- {foreach from=$province_list.$sn item=province} -->
+			<option value="{$province.region_id}" {if $consignee.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
+			<!-- {/foreach} -->
+		  </select>
+		  <select name="city" id="selCities_1" onchange="region.changed(this, 3, 'selDistricts_1')">
+			<option value="0">{$lang.please_select}{$name_of_region[2]}</option>
+			<!-- {foreach from=$city_list.$sn item=city} -->
+			<option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
+			<!-- {/foreach} -->
+		  </select>
+		  <select name="district" id="selDistricts_1" {if !$district_list.$sn}style="display:none"{/if}>
+			<option value="0">{$lang.please_select}{$name_of_region[3]}</option>
+			<!-- {foreach from=$district_list.$sn item=district} -->
+			<option value="{$district.region_id}" {if $consignee.district eq $district.region_id}selected{/if}>{$district.region_name}</option>
+			<!-- {/foreach} -->
+		</select>
           </div>
-           <span id="pcd_notice" style="color:#FF0000"> *</span>
+           <span id="region_notice" style="color:#FF0000"></span>
         </div>
-        {insert_scripts files='area_data.js'}
         <div class="coLogin_one">
           <p>{$lang.detailed_address}：</p>
           <div class="coLoginTxt" style="width:245px;">
            <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">          
-            <input name="address" type="text" class="coLogin_txt" value="" size="25" style="width:225px;" />
+            <input name="shop_addr" type="text" class="coLogin_txt" onblur="check_shop_addr(this.value)" size="25" style="width:225px;" />
 
           </div>
           </div>
-          <span id="address_notice" style="color:#FF0000"> *</span>
+          <span id="shop_addr_notice" style="color:#FF0000"></span>
         </div>
 
 
@@ -186,37 +142,38 @@
           <p>QQ：</p>
            <div class="coLoginTxt" style="width:245px;">
            <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-          <input name="qq" type="text" size="17"  class="coLogin_txt"  style="width:225px;" />
+          <input name="qq" type="text" size="17"  class="coLogin_txt" onblur="check_qq(this.value)" style="width:225px;" />
           </div>
           </div>
-          <span style="color:#FF0000"> *</span>
+          <span id="qq_notice" style="color:#FF0000"></span>
         </div>
 		
 		<div class="coLogin_one">
 		<p>手机号：</p>
-		<div class="coLoginTxt" style="width:245px;">
-		<div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">          
-		<input type="text"  size="17" name="mobile" class="coLogin_txt" />
-		</div>
-		</div>
-		<span id="mobile_notice" style="color:#FF0000"> *</span>
+			<div class="coLoginTxt" style="width:245px;">
+				<div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">          
+				<input type="text"  size="17" name="mobile" onblur="check_mobile(this.value)" class="coLogin_txt" />
+				</div>
+			</div>
+			<span id="mobile_notice" style="color:#FF0000"></span>
 		</div>
 		
       <div class="coLogin_one">
       <p>{$lang.comment_captcha}：</p>
       <div class="coLoginTxt_2">
             <div class="coLogin_txt_2_all">
-            <input type="text" size="8" name="captcha" class="coLogin_txt_2" />
+            <input type="text" size="8" name="captcha" onblur="check_captcha(this.value)" class="coLogin_txt_2" />
             </div>
             <div class="coLoginTxt_2_img"> <img src="captcha.php?{$rand}" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='captcha.php?'+Math.random()" /> </div>
-            </div>
+            <span id="captcha_notice" style="color:#FF0000"></span>
+			</div>
       </div>
 	  
 		<div class="coLogin_one">
           <p></p>
           <div class="coLoginTxt" style="width:245px;">
-          <div class="coLogin_txt_all" style="width:245px;height:35px"> 
-            <input name="get_qrm_btn" type="button" class=" " value="获取手机确认码" size="25" style="width:225px;height:35px" />
+          <div class="coLogin_txt_all1" style="width:245px;height:35px"> 
+            <input name="get_qrm_btn" type="button" value="获取手机确认码" size="25" style="width:225px;height:35px;margin-top:18px" />
           </div>
           </div>
         </div>
@@ -225,15 +182,16 @@
           <p>手机确认码：</p>
           <div class="coLoginTxt" style="width:245px;">
           <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;"> 
-            <input name="qrm" type="text" class="coLogin_txt" value="" size="25" style="width:225px;" />
+            <input name="qrm" type="text" class="coLogin_txt" onblur="check_qrm(this.value)" size="25" style="width:225px;" />
           </div>
           </div>
-        </div>	
+		<span id="qrm_notice" style="color:#FF0000"></span>
+        </div>
         <div class="coLogin_one">
           <p>{$lang.extendcode}：</p>
           <div class="coLoginTxt" style="width:245px;">
           <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;"> 
-            <input name="extendcode" type="text" class="coLogin_txt" value="" size="25" style="width:225px;" />
+            <input name="extendcode" type="text" class="coLogin_txt"  size="25" style="width:225px;" />
           </div>
           </div>
         </div>

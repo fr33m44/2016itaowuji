@@ -1,5 +1,7 @@
 /* $Id : user.js 4865 2007-01-31 14:04:10Z paulgao $ */
 
+
+
 /* *
  * 修改会员信息
  */
@@ -320,19 +322,169 @@ function check_password( password )
         document.getElementById('password_notice').innerHTML = msg_can_rg;
     }
 }
+function check_shop_name(shopname)
+{
+	var submit_disabled = false;
+	
+	if (Utils.trim(shopname) == '' )
+    {
+        document.getElementById('shop_name_notice').innerHTML = '店铺名称不能为空';
+        var submit_disabled = true;
+    }
+	else
+	{
+		document.getElementById('shop_name_notice').innerHTML = '可以注册';
+        var submit_disabled = false;
+	}
 
+	if ( submit_disabled )
+    {
+        document.forms['formUser'].elements['Submit'].disabled = 'disabled';
+        return false;
+    }
+	else
+	{
+		document.forms['formUser'].elements['Submit'].disabled = '';
+	}
+}
+function check_captcha(captcha)
+{
+	var submit_disabled = false;
+	
+	if (Utils.trim(captcha) == '' )
+    {
+        document.getElementById('captcha_notice').innerHTML = '验证码不能为空';
+        var submit_disabled = true;
+    }
+	else
+	{
+		document.getElementById('captcha_notice').innerHTML = '可以注册';
+        var submit_disabled = false;
+	}
+
+	if ( submit_disabled )
+    {
+        document.forms['formUser'].elements['Submit'].disabled = 'disabled';
+        return false;
+    }
+	else
+	{
+		document.forms['formUser'].elements['Submit'].disabled = '';
+	}
+}
+function check_shop_addr(shop_addr)
+{
+	var submit_disabled = false;
+	
+	if (Utils.trim(shop_addr) == '' )
+    {
+        document.getElementById('shop_addr_notice').innerHTML = '详细地址不能为空';
+        var submit_disabled = true;
+    }
+	else
+	{
+		document.getElementById('shop_addr_notice').innerHTML = '可以注册';
+        var submit_disabled = false;
+	}
+
+	if ( submit_disabled )
+    {
+        document.forms['formUser'].elements['Submit'].disabled = 'disabled';
+        return false;
+    }
+	else
+	{
+		document.forms['formUser'].elements['Submit'].disabled = '';
+	}
+}
+function check_mobile(mobile)
+{
+	var submit_disabled = false;
+	
+	if (Utils.trim(mobile) == '' )
+    {
+        document.getElementById('mobile_notice').innerHTML = '手机号不能为空';
+        var submit_disabled = true;
+    }
+	else
+	{
+		document.getElementById('mobile_notice').innerHTML = '可以注册';
+        var submit_disabled = false;
+	}
+
+	if ( submit_disabled )
+    {
+        document.forms['formUser'].elements['Submit'].disabled = 'disabled';
+        return false;
+    }
+	else
+	{
+		document.forms['formUser'].elements['Submit'].disabled = '';
+	}
+}
+function check_qrm(qrm)
+{
+	var submit_disabled = false;
+	
+	if (Utils.trim(qrm) == '' )
+    {
+        document.getElementById('qrm_notice').innerHTML = '确认码不能为空';
+        var submit_disabled = true;
+    }
+	else
+	{
+		document.getElementById('qrm_notice').innerHTML= '可以注册';
+        var submit_disabled = false;
+	}
+
+	if ( submit_disabled )
+    {
+        document.forms['formUser'].elements['Submit'].disabled = 'disabled';
+        return false;
+    }
+	else
+	{
+		document.forms['formUser'].elements['Submit'].disabled = '';
+	}
+}
+function check_qq(qq)
+{
+	var submit_disabled = false;
+	
+	if (Utils.trim(qq) == '' )
+    {
+        document.getElementById('qq_notice').innerHTML = 'QQ不能为空';
+        var submit_disabled = true;
+    }
+	else
+	{
+		document.getElementById('qq_notice').innerHTML= '可以注册';
+        var submit_disabled = false;
+	}
+
+	if ( submit_disabled )
+    {
+        document.forms['formUser'].elements['Submit'].disabled = 'disabled';
+        return false;
+    }
+	else
+	{
+		document.forms['formUser'].elements['Submit'].disabled = '';
+	}
+}
 function check_conform_password( conform_password )
 {
-    password = document.getElementById('password1').value;
+    password = document.getElementById('password').value;
     
     if ( conform_password.length < 6 )
     {
         document.getElementById('conform_password_notice').innerHTML = password_shorter;
         return false;
     }
-    if ( conform_password != password )
+    else if ( conform_password != password )
     {
         document.getElementById('conform_password_notice').innerHTML = confirm_password_invalid;
+		return false;
     }
     else
     {
@@ -342,7 +494,7 @@ function check_conform_password( conform_password )
 
 function is_registered( username )
 {
-  var submit_disabled = false;
+	var submit_disabled = false;
 	var unlen = username.replace(/[^\x00-\xff]/g, "**").length;
 
     if ( username == '' )
@@ -351,22 +503,23 @@ function is_registered( username )
         var submit_disabled = true;
     }
 
-    if ( !chkstr( username ) )
+    else if ( !chkstr( username ) )
     {
         document.getElementById('username_notice').innerHTML = msg_un_format;
         var submit_disabled = true;
     }
-    if ( unlen < 3 )
+    else if ( unlen < 3 )
     { 
         document.getElementById('username_notice').innerHTML = username_shorter;
         var submit_disabled = true;
     }
-    if ( unlen > 14 )
+    else if ( unlen > 14 )
     {
         document.getElementById('username_notice').innerHTML = msg_un_length;
         var submit_disabled = true;
     }
-    if ( submit_disabled )
+    
+	if ( submit_disabled )
     {
         document.forms['formUser'].elements['Submit'].disabled = 'disabled';
         return false;
@@ -440,10 +593,16 @@ function register()
 
 	var shop_type  = Utils.trim(frm.elements['shop_type'].value);
 	var shop_name = Utils.trim(frm.elements['shop_name'].value);
+	var country = Utils.trim(frm.elements['country'].value);
+	var province = Utils.trim(frm.elements['province'].value);
+	var city = Utils.trim(frm.elements['city'].value);
+	var district = Utils.trim(frm.elements['district'].value);
+	
 	var shop_addr = Utils.trim(frm.elements['shop_addr'].value);
-	var extendcode = Utils.trim(frm.elements['extendcode'].value);
 	var qq = Utils.trim(frm.elements['qq'].value);
 	var mobile = Utils.trim(frm.elements['mobile'].value);
+	var qrm = Utils.trim(frm.elements['qrm'].value);
+	var captcha = Utils.trim(frm.elements['captcha'].value);
 
 
   var msg = "";
@@ -462,11 +621,23 @@ function register()
     msg += username_shorter + '\n';
   }
   if (shop_addr.length == 0) {
-    msg += address_empty + '\n';
+    msg += '详细地址不能为空' + '\n';
   }
   if (shop_name.length == 0) {
-    msg += shop_name_empty + '\n';
+    msg += '店铺名称不能为空' + '\n';
   }
+  if (qq.length == 0) {
+    msg += 'QQ不能为空' + '\n';
+  }
+  if (mobile.length == 0) {
+    msg += '手机号不能为空' + '\n';
+  }
+  if (qrm.length == 0) {
+    msg += '手机确认码号不能为空' + '\n';
+  }
+  if (captcha.length == 0) {
+    msg += '验证码不能为空' + '\n';
+  }    
   if (password.length == 0)
   {
     msg += password_empty + '\n';
@@ -488,51 +659,23 @@ function register()
     msg += agreement + '\n';
   }
 
-  if (msn.length > 0 && (!Utils.isEmail(msn)))
-  {
-    msg += msn_invalid + '\n';
-  }
-
   if (qq.length > 0 && (!Utils.isNumber(qq)))
   {
     msg += qq_invalid + '\n';
   }
-
-  if (office_phone.length>0)
+  if (mobile.length>0)
   {
     var reg = /^[\d|\-|\s]+$/;
-    if (!reg.test(office_phone))
-    {
-      msg += office_phone_invalid + '\n';
-    }
-  }
-  if (home_phone.length>0)
-  {
-    var reg = /^[\d|\-|\s]+$/;
-
-    if (!reg.test(home_phone))
-    {
-      msg += home_phone_invalid + '\n';
-    }
-  }
-  if (mobile_phone.length>0)
-  {
-    var reg = /^[\d|\-|\s]+$/;
-    if (!reg.test(mobile_phone))
+    if (!reg.test(mobile))
     {
       msg += mobile_phone_invalid + '\n';
     }
   }
-  for (i = 4; i < frm.elements.length - 4; i++)	// 从第五项开始循环检查是否为必填项
+  if(country == "0"|| province == "0"|| city == "0" || district == "0")
   {
-	needinput = document.getElementById(frm.elements[i].name + 'i') ? document.getElementById(frm.elements[i].name + 'i') : '';
-
-	if (needinput != '' && frm.elements[i].value.length == 0)
-	{
-	  msg += '- ' + needinput.innerHTML + msg_blank + '\n';
-	}
+	msg += '店铺地址未填写完整' + '\n';
   }
-
+  
   if (msg.length > 0)
   {
     alert(msg);
