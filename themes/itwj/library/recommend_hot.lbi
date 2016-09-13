@@ -20,7 +20,7 @@
             </font> <font class="bb">{$goods.market_price}</font> </p>
         </div>
       </div>
-      <div class="hot_btn"> <a href="javascript:addToCartShowDiv({$goods.id},1,'hot')"></a> </div>
+      <!--删除加入进货单按钮-->
       <div class="hot_line" > </div>
       <div class="sucess_joinCart" id="addtocartdialog_retui_{$goods.id}_hot"></div>
     </dd>
