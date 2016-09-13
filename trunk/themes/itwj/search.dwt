@@ -254,7 +254,7 @@
                         </p>
                       
                        <div class="y_hide">
-						  <p class="y_addCart"> <a  href="javascript:addToCartShowDiv({$goods.goods_id},1,'best')"  class="join_cart">加入进货单</a> </p>
+						 <!--删除加入进货单按钮-->
 						  <div class="y_userOpera">
 							<p class="y_collectLeft"> <a href="javascript:collect({$goods.goods_id});" class="y_collect"> <span class="y_collectIcon"></span>收藏宝贝 </a> </p>
 						  </div>

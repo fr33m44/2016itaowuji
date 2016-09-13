@@ -17,7 +17,7 @@
     </div>
     <div class="pic"> <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></a></div>
   </div>
-   <div class="hot_btn"> <a href="javascript:addToCartShowDiv({$goods.id},1,'new')"  ></a> </div>
+     <!--删除加入进货单按钮-->
       <div class="hot_line" > </div>
       <div class="sucess_joinCart" id="addtocartdialog_retui_{$goods.id}_new">
 
