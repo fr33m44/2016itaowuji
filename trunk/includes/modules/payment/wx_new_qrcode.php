@@ -32,7 +32,7 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['is_online']  = '1';
 
     /* 作者 */
-    $modules[$i]['author']  = 'QQ:3487658996';
+    $modules[$i]['author']  = 'HJQ QQ 383434167';
 
     /* 网址 */
     $modules[$i]['website'] = 'http://wx.qq.com';
@@ -78,8 +78,7 @@ class wx_new_qrcode
 	function get_code($order, $payment)
 	{
 
-
-        $unifiedOrder = new UnifiedOrder_pub();
+		$unifiedOrder = new UnifiedOrder_pub();
 
         $unifiedOrder->setParameter("body",$order['order_sn']);//商品描述
         $out_trade_no = $order['order_sn'];
@@ -109,17 +108,22 @@ class wx_new_qrcode
 	}
     function respond()
     {
+		$this->log(ROOT_PATH.'/data/wx_new_log.txt',"respond()\r\n".var_export('respond',true));
+		
         $payment  = get_payment('wx_new_qrcode');
 
         $notify = new Notify_pub();
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        
+		print_r($xml);die();
         if($payment['logs'])
         {
             $this->log(ROOT_PATH.'/data/wx_new_log.txt',"传递过来的XML\r\n".var_export($xml,true));
         }
         $notify->saveData($xml);
-        if($notify->checkSign() == TRUE)
+		$checkSign = $notify->checkSign();
+		print_r("checkSign:$checkSign");
+		print_r("notify data:$notify->data");
+        if($checkSign == TRUE)
         {
             if ($notify->data["return_code"] == "FAIL") {
                 //此处应该更新一下订单状态，商户自行增删操作
@@ -160,7 +164,6 @@ class wx_new_qrcode
                     return;
                 }
 				
-			/*甜  心  100  修复付 款提醒 */
 		 $this->log(ROOT_PATH.'/data/wx_new_log.txt',$log_id."\r\n");
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('pay_log') .
                 " WHERE log_id = '$log_id'";
@@ -168,7 +171,7 @@ class wx_new_qrcode
 		$sql ="select autoload from `wxch_order` where order_name='reorder'";
 		$autoload=$GLOBALS['db']->getOne($sql);
 		
-		/*店   铺   地  址：         http://           we10.taobao.     com*/
+		
 		if($pay_log['is_paid'] == 0){
 			if($autoload == "yes"){
 			        /* 取得订单信息 */
@@ -180,10 +183,9 @@ class wx_new_qrcode
 				include(ROOT_PATH . 'wxch_order.php');
 				}
 		}
-		/*店   铺   地  址：         http://           we10.taobao.     com*/
+		
 		order_paid($log_id, 2);
-			/*甜  心  1 00  修复付 款   提   醒*/
-                return true;
+		        return true;
             }
 
         }
@@ -215,7 +217,7 @@ class wx_new_qrcode
     
     function log($file,$txt)
     {
-       $fp =  fopen($file,'ab+');
+       $fp =  fopen($file,'a+');
        fwrite($fp,'-----------'.local_date('Y-m-d H:i:s').'-----------------');
        fwrite($fp,$txt);
        fwrite($fp,"\r\n\r\n\r\n");

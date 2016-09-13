@@ -2176,7 +2176,7 @@ a.hpink:hover {text-decoration: underline;color: #ed145b;}
 .nstep1_count {padding: 10px 16px 0 16px;height: 29px;line-height: 29px;text-align: left;font-size: 14px;color: #000; font-weight:normal;}
 .orderconfirmBtn {background: url(images/nstep1_btn3.jpg) no-repeat 0 0;border: 0;width: 171px;height: 38px;margin: 0 10px;display: block;cursor: pointer;text-indent: -9999px;}
 .orderconfirmBtn:hover {background: url(images/nstep1_btn3.jpg) no-repeat 0 -38px;}
-.orderok {background: #fffbe1;border: 1px solid #ff9900;padding: 27px;width: 920px;height: 260px;}
+.orderok {background: #fffbe1;border: 1px solid #ff9900;padding: 27px;width: 920px;height: 375px;}
 .orderok p {line-height: 30px;}
 #paybtn {width: 237px; font-size: 2em; height: 51px; cursor: pointer;}
 .ordertitle {font-size: 18px;font-family: "微软雅黑";border-bottom: 1px solid #fcdfbe;margin-bottom: 10px;padding-bottom: 10px;}
