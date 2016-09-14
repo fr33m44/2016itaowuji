@@ -2604,3 +2604,285 @@ border: 1px #383838 solid;font-weight: bold;}
 .zixun-list dl { background: url(images/wenbg.jpg) 0px 7px no-repeat; }
 #boxOverlay{width:100%; height:100%; background:#000; filter:alpha(opacity=70); -moz-opacity:0.7;  -khtml-opacity: 0.7;  opacity: 0.7; position:fixed; left:0; top:0; z-index:9994; display:none;}
 #flashContent { width:100%; height:100%; }
+
+/* login page*/
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 998;
+    width: 100%;
+    height: 100%;
+    _padding: 0 20px 0 0;
+    background: #f6f4f5;
+    display: none;
+}
+#AjaxLoading {
+    border: 1px solid #8CBEDA;
+    color: #37a;
+    font-size: 12px;
+    font-weight: bold;
+}
+.showbox {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 9999;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    margin-left: -80px;
+}
+.yyzawj {
+    background: url(images/login_header_bg.png);
+    background-repeat: no-repeat;
+    width: 350px;
+    height: 80px;
+    float: right;
+    position: relative;
+}
+
+.yyzawj23 {
+    width: 280px;
+    _width: 350px;
+    height: 350px;
+    position: absolute;
+    right: 40px;
+    _right: -50px;
+    bottom: 2px;
+}
+
+.log_inhead {
+    background: url(images/topbg.png) repeat-x;
+    width: 100 % ;
+    height: 26px;
+}
+.boxWidth {
+    margin: 0 auto;
+    width: 980px;
+    overflow: hidden;
+}
+.longinlogo {
+    width: 245px;
+    height: 67px;
+    float: left;
+}
+
+.shouye1 {
+    background: url(images/thirdBg.png) scroll no-repeat-172px-122px;
+
+}
+
+.shouye1: hover {
+
+    background: url(images/thirdBg.png) scroll no-repeat-172px-99px;
+}
+
+
+.shouye2 {
+
+    background: url(images/thirdBg.png) scroll no-repeat-172px-150px;
+}
+
+.shouye2: hover {
+
+    background: url(images/thirdBg.png) scroll no-repeat-172px-73px;
+}
+
+
+
+.shouye3 {
+
+    background: url(images/thirdBg.png) scroll no-repeat-172px-196px;
+}
+
+.shouye3: hover {
+
+    background: url(images/thirdBg.png) scroll no-repeat-172px-175px;
+}
+
+
+.shouyeni {
+    width: 48px;
+    height: 15px;
+    float: left;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-left: 50px;
+    _margin-left: 33px;
+    display: block;
+    text-indent: -99999px;
+}
+
+.dahaibaoul {
+    width: 100 % ;
+    height: 350px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+.dahaibaouloo {
+    width: 100 % ;
+    height: 350px;
+    overflow: hidden;
+}
+
+.color_li_change_remember_01 {
+    background-color: #ff8d9d;
+}
+
+
+.color_li_change_remember_02 {
+    background-color: #833340;}
+.color_li_change_remember_03{background-color:#833340;
+}
+.color_li_change_remember_04 {
+    background-color: #833340;}
+
+
+.dahaibaoul li{
+width:100%;
+height:350px;}
+
+.dahaibaoul li dl{
+width:980px;
+height:350px;
+margin:0 auto;}
+
+.longhzhangyan{
+position:relative;
+width:980px;
+margin:0 auto;
+height:2px;}
+.sodk{
+right:495px!important;}
+
+
+.diddto{
+	background:url(images/username.png) no-repeat transparent;
+	border: 1px solid #E1E1E1;
+	padding: 5px;
+	width: 220px;
+	margin-left: 3px;
+}
+
+.shurukuang {
+    margin-left: 21px;
+    margin-top: 40px;
+}
+
+.yonghum {
+    display: block;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+    color: #666;
+}
+
+.rentoujs{
+position:absolute;
+background:url(images/gifImage.gif) no-repeat scroll -123px -37px transparent;
+width:16px;
+height:16px;
+}
+
+
+.eerrasd{
+ border: 1px solid #dabfc8;
+    color: #ab4d72;
+    background-color: #fbe4ec;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    width: 236px;
+}
+
+
+.pbiaoqianchanger {
+    padding-top: 10px;
+    position: relative;
+}
+
+.dengluanniu {
+    background: url(images/login21.png) no-repeat scroll 0px 0px transparent;
+    width: 220px;
+    height: 35px;
+    margin-left: 5px;
+    display: block;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.dengluanniu: hover {
+    background: url(images/login21.png) no-repeat scroll 0px-35px transparent;
+}
+
+.youbiande {
+    background: url(images/login_content_bg.png) no-repeat scroll center top transparent;
+    display: block;
+    height: 220px;
+    width: 350px;
+    margin-right: 4px;
+    _margin-right: 2px;
+    float: right;
+}
+
+
+.he2lpList {
+
+
+    margin-left: 90px;
+    margin-top: 30px;
+    width: 200px;
+}
+
+
+.he2lpList li {
+    font-size: 14px;
+    padding: 3px;
+}
+
+.login_footer {
+    border-top: 1px solid #E2E5E8;
+    clear: both;
+    color: #666666;
+    display: block;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.yaoshufy{
+float:left;
+font-size:16px;
+line-height:38px;
+text-indent:20px;
+color:#666666;
+}
+.qiekebox {
+    line-height: 20px;
+    vertical-align: -3px;
+}
+.yonghudeng {
+    line-height: 28px;
+    border-bottom: 1px dotted #666666;
+margin-bottom:10px;
+width:240px;
+font-weight:700;}
+
+.ai6changqiyinyin{
+_FILTER:alpha(opacity= 90);
+_ZOOM: 1;
+_opacity: 0.9;
+}
+
+.aie6changer {
+    margin-right: 15px;
+}
+
+.daquanquanforie6 {
+    font-size: 6px;
+    margin-right: 5px;
+    color: #000000;}

@@ -533,8 +533,6 @@ function is_registered( username )
     Ajax.call( 'user.php?act=is_registered', 'username=' + username, registed_callback , 'GET', 'TEXT', true, true );
 }
 
-
-
 function registed_callback(result)
 {
   if ( result == "true" )
@@ -549,6 +547,38 @@ function registed_callback(result)
   }
 }
 
+function get_qrm(mobile)
+{
+	/* 检查验证码 */
+	var captcha = Utils.trim(document.forms['formUser'].elements['captcha'].value);
+	if(captcha == "")
+	{
+		alert('验证码不能为空');
+		return;
+	}
+	
+	var sec = 500;
+	document.getElementById("get_qrm_btn").disabled="disabled";
+	
+	
+	var id = setInterval(function(){
+		document.getElementById("get_qrm_btn").value="("+ sec +")秒重新获取";
+		sec--;
+		if(sec == 0)
+		{
+			clearInterval(id);
+			
+			document.getElementById("get_qrm_btn").disabled="";
+			document.getElementById("get_qrm_btn").value="获取手机确认码";
+		}
+	}, 1000);
+
+	Ajax.call( 'user.php?act=getqrm', 'mobile=' + mobile + '&captcha=' + captcha, qrm_callback , 'GET', 'TEXT', true, true );
+}
+function qrm_callback(result)
+{
+	console.log(result);
+}
 function checkEmail(email)
 {
   var submit_disabled = false;

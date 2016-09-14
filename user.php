@@ -24,7 +24,7 @@ $back_act='';
 
 // 不需要登录的操作或自己验证是否登录（如ajax处理）的act
 $not_login_arr =
-array('login','act_login','register','act_register','act_edit_password','get_password','send_pwd_email','password', 'signin', 'add_tag', 'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email','clear_history','qpassword_name', 'get_passwd_question', 'check_answer', 'oath' , 'oath_login', 'other_login');
+array('login','act_login','getqrm','register','act_register','act_edit_password','get_password','send_pwd_email','password', 'signin', 'add_tag', 'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email','clear_history','qpassword_name', 'get_passwd_question', 'check_answer', 'oath' , 'oath_login', 'other_login');
 
 /* 显示页面的action列表 */
 $ui_arr = array('register', 'login', 'profile', 'order_list', 'order_detail', 'address_list', 'collection_list',
@@ -585,7 +585,36 @@ elseif ($action == 'act_login')
         //show_message($_LANG['login_failure'], $_LANG['relogin_lnk'], 'user.php', 'error');
     }
 }
+/* 处理 ajax 的登录请求 */
+elseif ($action == 'getqrm')
+{
+	/* 检查验证码 */
+	include_once('includes/cls_captcha.php');
+	require_once('includes/sms/TopSdk.php');
+    include_once('includes/cls_json.php');
 
+	$validator = new captcha();
+	$validator->session_word = 'captcha_login';
+	if (!$validator->check_word($_POST['captcha']))
+	{
+		show_message($_LANG['invalid_captcha'], $_LANG['relogin_lnk'], 'user.php', 'error');
+	}
+    $json = new JSON;
+	$mobile = $_GET['mobile'];
+	$c = new TopClient;
+	$c->appkey = '23453610';
+	$c->secretKey = '8c021a3095cab696fada8e6bcfa4eb37';
+	$req = new AlibabaAliqinFcSmsNumSendRequest;
+	$req->setExtend("123456");
+	$req->setSmsType("normal");
+	$req->setSmsFreeSignName("淘五季");
+	$req->setSmsParam("{\"name\":\"123123\"}");
+	$req->setRecNum($mobile);
+	$req->setSmsTemplateCode("SMS_14900132");
+	//$resp = $c->execute($req);
+	print_r($resp);
+	
+}
 /* 处理 ajax 的登录请求 */
 elseif ($action == 'signin')
 {

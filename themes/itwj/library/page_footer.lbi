@@ -136,9 +136,8 @@
 </div>
 <div id="topcontrol" style="width:95px;">
   <div class="nreturn">
-  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2033604296&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2033604296:53" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
-	<a id="sider_talkonline" href="flow.php" class="ntel buy" style="display: block;">进货单</a> 
-	<!--<a target="_blank" id="sider_talkonline" href="javascript:;" onclick="javascript:window.open('http://bizapp.qq.com/webc.htm?new=0&sid=2033604296&o=b.qq.com&q=7', '_blank', 'height=544, width=644,toolbar=no,scrollbars=no,menubar=no,status=no');" class="ntel kf " style="display: block;">客服</a>-->
+  <a  id="sider_qq" target="_blank"  style="display: block;height: 20px;margin: 1px 0 0;padding-top: 35px;text-align: center;width: 56px;" href="http://wpa.qq.com/msgrd?v=3&uin=2033604296&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2033604296:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+	<a id="sider_flow" href="flow.php" class="ntel buy" style="display: block;">进货单</a> 
 	<a id="sider_addmark" href="javascript:collect({$goods.goods_id});" class="ntel sider_addmark" style="display: block;">收藏</a>
 	<a id="sider_returntop" href="javascript:void(0);" class="ntel sider_returntop" style="display: block;">回顶部</a>
 	
