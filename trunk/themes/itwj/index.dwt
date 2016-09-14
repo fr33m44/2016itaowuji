@@ -40,6 +40,29 @@
           </dl>
         </div>
       </div>
+
+      <div class="mainBody"> <!-- #BeginLibraryItem "/library/group_buy.lbi" --><!-- #EndLibraryItem -->
+        <div class="title_list">
+          <div class="title_txt"> <img src="../images/title_txt03.jpg" border="0"> </div>
+        </div>
+       <div class="title_body ">
+          <dl class="hot_list02">
+           <!-- #BeginLibraryItem "/library/recommend_best.lbi" --> <!-- #EndLibraryItem -->
+           </dl>
+        </div>
+      </div>
+
+      <div class="mainBody"> <!-- #BeginLibraryItem "/library/group_buy.lbi" --><!-- #EndLibraryItem -->
+        <div class="title_list">
+          <div class="title_txt"><img src="../images/title_txt04.jpg" border="0"> </div>
+        </div>
+       <div class="title_body ">
+          <dl class="hot_list02">
+            <!-- #BeginLibraryItem "/library/recommend_new.lbi" --> <!-- #EndLibraryItem -->
+          </dl>
+        </div>
+      </div>
+
       <div class="blank"></div>
       <!-- TemplateBeginEditable name="商品区域一" -->
 <!-- TemplateEndEditable -->

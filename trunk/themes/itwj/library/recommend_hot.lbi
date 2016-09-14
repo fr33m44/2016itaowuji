@@ -9,7 +9,7 @@
         <div class="pic"><a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></a></div>
         <div class="text">
           <p class="name"><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a></p>
-          <p class="brife"> {$goods.brief}</p>
+          
           <p class="price" > <font class="aa"> 
             <!-- {if $goods.promote_price neq ""} --> 
             {$goods.promote_price} 
@@ -17,7 +17,7 @@
             {$goods.shop_price} 
             <!--{/if}--> 
             
-            </font> <font class="bb">{$goods.market_price}</font> </p>
+            </font> <br /><font class="bb">{$goods.market_price}</font> </p>
         </div>
       </div>
       <!--删除加入进货单按钮-->
