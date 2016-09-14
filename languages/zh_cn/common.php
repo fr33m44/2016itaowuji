@@ -52,7 +52,7 @@ $_LANG['later_bought_amounts'] = '近期成交数量';
 $_LANG['bought_time'] = '购买时间';
 $_LANG['turnover'] = '成交';
 $_LANG['no_notes'] = '还没有人购买过此商品';
-$_LANG['shop_price'] = "本店价：";
+$_LANG['shop_price'] = "配送价：";
 $_LANG['market_price'] = "吊牌价：";
 $_LANG['goods_brief'] = '商品描述：';
 $_LANG['goods_album'] = '商品相册';
@@ -722,5 +722,4 @@ $_LANG['label_collection'] = '我的收藏';
 $_LANG['article_list'] = '文章列表';
 $_LANG['preferences_price'] = '优惠价格';
 $_LANG['divided_into'] = '分成规则';
-$_LANG['rank_price'] = '配送价：';
 ?>
