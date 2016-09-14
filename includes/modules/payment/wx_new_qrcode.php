@@ -6,6 +6,11 @@ if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }
+
+require_once "/includes/modules/payment/wxpay/lib/WxPay.Api.php";
+require_once "/includes/modules/payment/wxpay/example/WxPay.NativePay.php";
+require_once '/includes/modules/payment/wxpay/example/log.php';
+
 $payment_lang = ROOT_PATH . 'languages/' .$GLOBALS['_CFG']['lang']. '/payment/wx_new_qrcode.php';
 if (file_exists($payment_lang))
 {
@@ -78,21 +83,28 @@ class wx_new_qrcode
 	function get_code($order, $payment)
 	{
 
-		$unifiedOrder = new UnifiedOrder_pub();
+		$notify = new NativePay();
+		
+		$unifiedOrder = new WxPayUnifiedOrder();
 
-        $unifiedOrder->setParameter("body",$order['order_sn']);//商品描述
+        $unifiedOrder->SetBody($order['order_sn']);//商品描述
         $out_trade_no = $order['order_sn'];
-        $unifiedOrder->setParameter("out_trade_no","$out_trade_no");//商户订单号 
-        $unifiedOrder->setParameter("attach",strval($order['log_id']));//商户支付日志
-        $unifiedOrder->setParameter("total_fee",strval(intval($order['order_amount']*100)));//总金额
-        $unifiedOrder->setParameter("notify_url",WXNOTIFY_URL);//通知地址 
-        $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
-
-        $unifiedOrderResult = $unifiedOrder->getResult();
+        $unifiedOrder->SetOut_trade_no($out_trade_no);//商户订单号 
+        $unifiedOrder->SetAttach(strval($order['log_id']));//商户支付日志
+        $unifiedOrder->SetTotal_fee(strval(intval($order['order_amount']*100)));//总金额
+		//$unifiedOrder->SetTime_start(date("YmdHis"));
+		//$unifiedOrder->SetTime_expire(date("YmdHis", time() + 600));
+		$unifiedOrder->SetNotify_url("http://itwj/includes/modules/payment/wxpay/example/notify.php");
+		$unifiedOrder->SetTrade_type("NATIVE");
+		$unifiedOrder->SetProduct_id($out_trade_no);
+        //$unifiedOrderResult = $unifiedOrder->getResult();
+		$result = $notify->GetPayUrl($unifiedOrder);
+		
+		$code_url = $result["code_url"];
 
         $html = '<button type="button" onclick="javascript:alert(\'出错了\')">微信支付</button>';
 
-        if($unifiedOrderResult["code_url"] != NULL)
+        if($result["code_url"] != NULL)
         {
             $code_url = $unifiedOrderResult["code_url"];
             $html = '<div class="wx_qrcode" style="text-align:center">';
@@ -114,7 +126,7 @@ class wx_new_qrcode
 
         $notify = new Notify_pub();
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-		print_r($xml);die();
+		
         if($payment['logs'])
         {
             $this->log(ROOT_PATH.'/data/wx_new_log.txt',"传递过来的XML\r\n".var_export($xml,true));
