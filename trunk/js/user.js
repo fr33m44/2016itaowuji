@@ -549,35 +549,61 @@ function registed_callback(result)
 
 function get_qrm(mobile)
 {
-	/* 检查验证码 */
+	/* 检查验证码和手机号 */
+	var regex = /^1[3|4|5|8][0-9]\d{4,8}$/;
+	var regex_captcha = /\w{4}$/;
+	
 	var captcha = Utils.trim(document.forms['formUser'].elements['captcha'].value);
+	var mobile = Utils.trim(document.forms['formUser'].elements['mobile'].value);
 	if(captcha == "")
 	{
 		alert('验证码不能为空');
 		return;
 	}
+	if (Utils.trim(mobile) == '' )
+    {
+		alert('手机号不能为空');
+		return;
+    }
+	if(!regex_captcha.test(captcha))
+	{
+		alert('验证码格式不对');
+		return;
+	}
+	if(!regex.test(mobile))
+	{
+		alert('手机号格式不对');
+		return;
+	}
 	
-	var sec = 500;
-	document.getElementById("get_qrm_btn").disabled="disabled";
+	Ajax.call( 'user.php?act=getqrm', 'mobile=' + mobile + '&captcha=' + captcha, qrm_callback , 'GET', 'JSON', true, true );
 	
-	
-	var id = setInterval(function(){
-		document.getElementById("get_qrm_btn").value="("+ sec +")秒重新获取";
-		sec--;
-		if(sec == 0)
-		{
-			clearInterval(id);
-			
-			document.getElementById("get_qrm_btn").disabled="";
-			document.getElementById("get_qrm_btn").value="获取手机确认码";
-		}
-	}, 1000);
 
-	Ajax.call( 'user.php?act=getqrm', 'mobile=' + mobile + '&captcha=' + captcha, qrm_callback , 'GET', 'TEXT', true, true );
+	
 }
 function qrm_callback(result)
 {
-	console.log(result);
+
+	if(parseInt(result.error) > 0)
+	{
+		document.getElementById('captcha_notice').innerHTML = result.content;
+	}
+	else
+	{
+		var sec = 500;
+		document.getElementById("get_qrm_btn").disabled="disabled";
+		var id = setInterval(function(){
+			document.getElementById("get_qrm_btn").value="("+ sec +")秒重新获取";
+			sec--;
+			if(sec == 0)
+			{
+				clearInterval(id);
+				
+				document.getElementById("get_qrm_btn").disabled="";
+				document.getElementById("get_qrm_btn").value="获取手机确认码";
+			}
+		}, 1000);
+	}
 }
 function checkEmail(email)
 {
