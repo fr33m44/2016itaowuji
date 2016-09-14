@@ -588,32 +588,44 @@ elseif ($action == 'act_login')
 /* 处理 ajax 的登录请求 */
 elseif ($action == 'getqrm')
 {
-	/* 检查验证码 */
 	include_once('includes/cls_captcha.php');
 	require_once('includes/sms/TopSdk.php');
     include_once('includes/cls_json.php');
-
-	$validator = new captcha();
-	$validator->session_word = 'captcha_login';
-	if (!$validator->check_word($_POST['captcha']))
-	{
-		show_message($_LANG['invalid_captcha'], $_LANG['relogin_lnk'], 'user.php', 'error');
-	}
-    $json = new JSON;
-	$mobile = $_GET['mobile'];
-	$c = new TopClient;
-	$c->appkey = '23453610';
-	$c->secretKey = '8c021a3095cab696fada8e6bcfa4eb37';
-	$req = new AlibabaAliqinFcSmsNumSendRequest;
-	$req->setExtend("123456");
-	$req->setSmsType("normal");
-	$req->setSmsFreeSignName("淘五季");
-	$req->setSmsParam("{\"name\":\"123123\"}");
-	$req->setRecNum($mobile);
-	$req->setSmsTemplateCode("SMS_14900132");
-	//$resp = $c->execute($req);
-	print_r($resp);
 	
+	$json = new JSON;
+	$result = array();
+	do{
+		/* 检查验证码 */
+		$validator = new captcha();
+		$validator->session_word = 'captcha_word';
+		if (!$validator->check_word($_GET['captcha']))
+		{
+			$result = array(
+				'error'=>1,
+				'content'=> '您输入的验证码不正确'
+			);
+			break;
+		}
+		
+		$mobile = $_GET['mobile'];
+		$c = new TopClient;
+		$c->appkey = '23453610';
+		$c->secretKey = '8c021a3095cab696fada8e6bcfa4eb37';
+		$req = new AlibabaAliqinFcSmsNumSendRequest;
+		$req->setExtend("123456");
+		$req->setSmsType("normal");
+		$req->setSmsFreeSignName("淘五季");
+		$req->setSmsParam("{\"name\":\"123123\"}");
+		$req->setRecNum($mobile);
+		$req->setSmsTemplateCode("SMS_14900132");
+		//$resp = $c->execute($req);
+		//print_r($resp);
+		$result['error']   = 0;
+		$result['content'] = '';
+		break;
+	}while(1);
+
+	die($json->encode($result));
 }
 /* 处理 ajax 的登录请求 */
 elseif ($action == 'signin')
