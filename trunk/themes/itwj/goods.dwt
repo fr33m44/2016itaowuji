@@ -169,17 +169,15 @@ $(function(){
                   <!--点击数-->
                   <p style="display:none" > {$lang.goods_click_count}：{$goods.click_count} </p>
                   <p> 
-                    
-                    <!-- {if $cfg.show_marketprice} 市场价格--> 
+                    <!-- {if $cfg.show_marketprice} 市场价格 为吊牌价--> 
                     {$lang.market_price}{$goods.market_price} 
                     <!-- {/if} --> 
-                  </p> 
+                  </p>
+                  <p>
+                    <!--wuming删除会员等级价格修改 本店价格为 配送价-->
+                    {$lang.shop_price}{$goods.shop_price}
+                  </p>
                   <b>
-                <!--吴铭 / hjq 根据用户等级user_rank显示不同价格-->
-				
-					   <!-- {foreach from=$rank_prices item=item key=key} 会员等级对应的价格--> 
-							{$lang.rank_price}<font  id="ECS_SHOPPRICE">{$item.price}</font>
-						<!--{/foreach}-->
 				
                 <!-- {foreach from=$specification item=spec key=spec_key} --> </b> 
                 <p class="catt" >

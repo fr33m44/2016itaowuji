@@ -35,8 +35,6 @@
         <div class="title_body ">
           <dl class="hot_list02">
             <!-- #BeginLibraryItem "/library/recommend_promotion.lbi" --> <!-- #EndLibraryItem -->
-             <!-- #BeginLibraryItem "/library/recommend_new.lbi" --> <!-- #EndLibraryItem -->
-              <!-- #BeginLibraryItem "/library/recommend_best.lbi" --> <!-- #EndLibraryItem -->
           </dl>
         </div>
       </div>
@@ -65,9 +63,119 @@
 
       <div class="blank"></div>
       <!-- TemplateBeginEditable name="商品区域一" -->
+<!-- #BeginLibraryItem "/library/cat_goods.lbi" -->
+
+
+<div class="title_list">
+  <div class="title_txt"><a href="{$goods_cat.url}" ><img src="../images/cat/{$goods_cat.id}.jpg"> </a> </div>
+  <div class="title_more"> <a href="{$goods_cat.url}" target="_blank">更多{$goods_cat.name|escape:html}</a> </div>
+  <div class="title_key">
+    <dl>
+      <!--{foreach from=$goods_cat.cat_clild item=cat name=foo}-->
+      <dd><a href="{$cat.url}" target="_blank" title="{$cat.name}">{$cat.name}</a></dd>
+      <!--{/foreach}-->     
+    </dl>
+  </div>
+</div>
+<div class="title_body">
+<div id="slideBox1" class="slideBox1"> {* ECSHOP 提醒您：动态载入position_get_adv_small.lbi，显示首页分类小广告 *}{insert name='get_adv_child' ad_arr=$adarr id=$cat_goods.id } 
+  <script type="text/javascript">
+		jQuery(".slideBox1").slide({mainCell:".bd ul",autoPlay:true});
+		</script>
+  <div class="brand_right" >
+    <div class="brand_list_out"> 
+      <!--{foreach from=$cat_goods item=goods name=nocat}--> 
+      {if !$smarty.foreach.nocat.last}
+      <div class="brand_list">
+        <div class="brand_img"> <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" width="170" height="170" /></a></div>
+        <div class="brand_txt"> <b><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_name|escape:html}</a></b>
+          <p> 
+            <!-- {if $goods.promote_price neq ""} --> 
+            <font class="shop_s">{$goods.promote_}</font> 
+            <!-- {else}--> 
+            <font class="shop_s">{$goods.shop_price}</font> 
+            <!--{/if}--> 
+            <font class="marker_s">{$goods.market_price}</font> </p>
+        </div >
+      </div>
+      {/if} 
+      <!--{/foreach}--> 
+    </div>
+  </div>
+  <div class="brand_logo">
+    <dl>
+    
+    <!--{foreach from=$goods_cat.brands item=brands name=foo}-->
+    
+    
+     <dd> <a href="{$brands.url}" target="_blank" title="{$brands.brand_name}"> {if $brands.logo neq 'data/brandlogo/'}<img width="78" height="40" border="0" alt="{$brands.brand_name}" src="{$brands.logo}">{else}{$brands.brand_name}{/if}</a> </dd>
+     
+          <!--{/foreach}-->
+    
+     
+    </dl>
+  </div>
+</div>
+
+ <!-- #EndLibraryItem -->
 <!-- TemplateEndEditable -->
       <div class="blank" style="height:0"></div>
       <!-- TemplateBeginEditable name="商品区域二" -->
+<!-- #BeginLibraryItem "/library/cat_goods.lbi" -->
+
+
+<div class="title_list">
+  <div class="title_txt"><a href="{$goods_cat.url}" ><img src="../images/cat/{$goods_cat.id}.jpg"> </a> </div>
+  <div class="title_more"> <a href="{$goods_cat.url}" target="_blank">更多{$goods_cat.name|escape:html}</a> </div>
+  <div class="title_key">
+    <dl>
+      <!--{foreach from=$goods_cat.cat_clild item=cat name=foo}-->
+      <dd><a href="{$cat.url}" target="_blank" title="{$cat.name}">{$cat.name}</a></dd>
+      <!--{/foreach}-->     
+    </dl>
+  </div>
+</div>
+<div class="title_body">
+<div id="slideBox1" class="slideBox1"> {* ECSHOP 提醒您：动态载入position_get_adv_small.lbi，显示首页分类小广告 *}{insert name='get_adv_child' ad_arr=$adarr id=$cat_goods.id } 
+  <script type="text/javascript">
+		jQuery(".slideBox1").slide({mainCell:".bd ul",autoPlay:true});
+		</script>
+  <div class="brand_right" >
+    <div class="brand_list_out"> 
+      <!--{foreach from=$cat_goods item=goods name=nocat}--> 
+      {if !$smarty.foreach.nocat.last}
+      <div class="brand_list">
+        <div class="brand_img"> <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" width="170" height="170" /></a></div>
+        <div class="brand_txt"> <b><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_name|escape:html}</a></b>
+          <p> 
+            <!-- {if $goods.promote_price neq ""} --> 
+            <font class="shop_s">{$goods.promote_}</font> 
+            <!-- {else}--> 
+            <font class="shop_s">{$goods.shop_price}</font> 
+            <!--{/if}--> 
+            <font class="marker_s">{$goods.market_price}</font> </p>
+        </div >
+      </div>
+      {/if} 
+      <!--{/foreach}--> 
+    </div>
+  </div>
+  <div class="brand_logo">
+    <dl>
+    
+    <!--{foreach from=$goods_cat.brands item=brands name=foo}-->
+    
+    
+     <dd> <a href="{$brands.url}" target="_blank" title="{$brands.brand_name}"> {if $brands.logo neq 'data/brandlogo/'}<img width="78" height="40" border="0" alt="{$brands.brand_name}" src="{$brands.logo}">{else}{$brands.brand_name}{/if}</a> </dd>
+     
+          <!--{/foreach}-->
+    
+     
+    </dl>
+  </div>
+</div>
+
+ <!-- #EndLibraryItem -->
 <!-- TemplateEndEditable -->
       <div class="blank" style="height:0"></div>
       <!-- TemplateBeginEditable name="商品区域三" -->
@@ -83,28 +191,6 @@
 <!-- TemplateEndEditable -->
 <div class="batch_left">
        <!-- TemplateBeginEditable name="邮件订阅" -->
-<!-- #BeginLibraryItem "/library/invoice_query.lbi" -->
-
-<!--{if $invoice_list}-->
-<style type="text/css">
-.boxCenterList form{display:inline;}
-.boxCenterList form a{color:#404040; text-decoration:underline;}
-</style>
-<div class="box">
- <div class="box_1">
-  <h3><span>{$lang.shipping_query}</span></h3>
-  <div class="boxCenterList">
-    <!-- 发货单查询{foreach from=$invoice_list item=invoice} -->
-   {$lang.order_number} {$invoice.order_sn}<br />
-   {$lang.consignment} {$invoice.invoice_no}
-   <div class="blank"></div>
-   <!-- 结束发货单查询{/foreach}-->
-  </div>
- </div>
-</div>
-<div class="blank5"></div>
-<!-- {/if} -->
- <!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/order_query.lbi" -->
 
 <!--{if empty($order_query)}-->
