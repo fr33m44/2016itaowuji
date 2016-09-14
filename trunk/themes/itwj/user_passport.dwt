@@ -173,7 +173,7 @@
           <p></p>
           <div class="coLoginTxt" style="width:245px;">
           <div class="coLogin_txt_all1" style="width:245px;height:35px"> 
-            <input name="get_qrm_btn" type="button" value="获取手机确认码" size="25" style="width:225px;height:35px;margin-top:18px" />
+            <input name="get_qrm_btn" id="get_qrm_btn" onclick="get_qrm(document.forms['formUser'].elements['mobile'].value)" type="button" value="获取手机确认码" size="25" style="width:225px;height:35px;margin-top:18px;cursor:pointer" />
           </div>
           </div>
         </div>

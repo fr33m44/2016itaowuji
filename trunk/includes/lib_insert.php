@@ -471,7 +471,6 @@ function insert_get_adv_child($arr)
 	$in_ad_arr = substr($str_ad,0,strlen($str_ad)-1);
 
 	$GLOBALS['smarty']->assign('ad_child', get_ad_posti_child($in_ad_arr));
-	  
 	$val = $GLOBALS['smarty']->fetch('library/position_get_adv_small.lbi');  
 	  
 	$GLOBALS['smarty']->caching = $need_cache;
