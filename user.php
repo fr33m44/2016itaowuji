@@ -154,17 +154,20 @@ elseif ($action == 'act_register')
     {
         include_once(ROOT_PATH . 'includes/lib_passport.php');
 
+        $qrm = isset($_POST['qrm']) ? trim($_POST['qrm']) : '';
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
         $email    = isset($_POST['email']) ? trim($_POST['email']) : '';
-
         $province    = isset($_POST['province']) ? trim($_POST['province']) : '';
         $city    = isset($_POST['city']) ? trim($_POST['city']) : '';
         $district    = isset($_POST['district']) ? trim($_POST['district']) : '';
         $addres    = isset($_POST['shop_addr']) ? trim($_POST['shop_addr']) : '';
-		$qq  = isset($_POST['qq']) ? $_POST['qq'] : '';
-		$mobile = isset($_POST['mobile']) ? $_POST['mobile'] : '';
+		$other['qq']  = isset($_POST['qq']) ? $_POST['qq'] : '';
+		$other['mobile'] = isset($_POST['mobile']) ? $_POST['mobile'] : '';
+		$qq  = $other['qq'];
+		$mobile = $other['mobile'];
 		$shop_type = isset($_POST['shop_type']) ? $_POST['shop_type'] : '';
+		$shop_name = isset($_POST['shop_name']) ? $_POST['shop_name'] : '';
         $back_act = isset($_POST['back_act']) ? trim($_POST['back_act']) : '';
 		$parent_id = isset($_POST['extendcode']) ? trim($_POST['extendcode']) : '';
 
@@ -174,7 +177,11 @@ elseif ($action == 'act_register')
         {
             show_message($_LANG['passport_js']['agreement']);
         }
-        if (strlen($username) < 3)
+        if(empty($qrm))
+        {
+            show_message('确认码不能为空');
+        }
+        if (mb_strlen($username) < 3)//支持中文
         {
             show_message($_LANG['passport_js']['username_shorter']);
         }
@@ -206,7 +213,15 @@ elseif ($action == 'act_register')
                 show_message($_LANG['invalid_captcha'], $_LANG['sign_up'], 'user.php?act=register', 'error');
             }
         }
-
+		/*手机确认码检查*/
+		$sql = "select qrm from ". $ecs->table('sms'). " where mobile = '$mobile' and action = 1";
+		$qrm_db = $db->getOne($sql);
+		if($qrm != $qrm_db)
+		{
+            show_message('确认码不正确');
+		}
+		
+		
         if (register($username, $password, $email, $other, $extendcode) !== false)
         {
             include_once(ROOT_PATH . 'includes/lib_transaction.php');
@@ -215,14 +230,17 @@ elseif ($action == 'act_register')
             $cit = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$city."%'");
             $distric = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$district."%'");
             $address = array(
+			'default'    =>	1,//default>0的时候将user_address.address_id赋值到users.address_id 默认地址为店铺地址
             'user_id'    => $_SESSION['user_id'],
             'country'    => 1,
             'province'   => $provinc,
             'city'       => $cit,
             'district'   => $distric,
             'address'    => $addres,
-            'consignee'  => $username,
-            'tel'        => $other['mobile_phone'],
+            'consignee'  => $shop_name,
+			'sign_building' => $shop_type,//店铺类型
+            'mobile'        => $other['mobile_phone'],
+            'qq'        => $other['qq'],
             );
             update_address($address);
             /*把新注册用户的扩展信息插入数据库*/
@@ -594,6 +612,8 @@ elseif ($action == 'getqrm')
 	
 	$json = new JSON;
 	$result = array();
+	$mobile = $_GET['mobile'];
+	
 	do{
 		/* 检查验证码 */
 		$validator = new captcha();
@@ -606,22 +626,45 @@ elseif ($action == 'getqrm')
 			);
 			break;
 		}
-		
-		$mobile = $_GET['mobile'];
-		$c = new TopClient;
-		$c->appkey = '23453610';
-		$c->secretKey = '8c021a3095cab696fada8e6bcfa4eb37';
-		$req = new AlibabaAliqinFcSmsNumSendRequest;
-		$req->setExtend("123456");
-		$req->setSmsType("normal");
-		$req->setSmsFreeSignName("淘五季");
-		$req->setSmsParam("{\"name\":\"123123\"}");
-		$req->setRecNum($mobile);
-		$req->setSmsTemplateCode("SMS_14900132");
-		//$resp = $c->execute($req);
-		//print_r($resp);
-		$result['error']   = 0;
-		$result['content'] = '';
+		//查询该手机号5分钟内是否已经获取过
+		$sql = "SELECT req_time from ". $ecs->table('sms')." where mobile='$mobile' and action=1"; //1:signup
+		$req_time = $db->getOne($sql);
+		//5分钟以内或者没有发送记录就发送给用户确认码，否则提示
+		if($req_time == '' || $req_time + 300 < gmtime())
+		{
+			$qrm = str_pad(strval(rand(0,999999)), 6, "0", STR_PAD_LEFT);
+			
+			$c = new TopClient;
+			$c->appkey = '23453610';
+			$c->secretKey = '8c021a3095cab696fada8e6bcfa4eb37';
+			$req = new AlibabaAliqinFcSmsNumSendRequest;
+			$req->setExtend("123456");
+			$req->setSmsType("normal");
+			$req->setSmsFreeSignName("淘五季");
+			$req->setSmsParam("{\"name\":\"$qrm\"}");
+			$req->setRecNum($mobile);
+			$req->setSmsTemplateCode("SMS_14900132");
+			$resp = $c->execute($req);
+			$result['error']   = 0;
+			$result['content'] = '成功';
+			if($req_time == '')
+			{
+				$sql = "INSERT INTO " . $GLOBALS['ecs']->table('sms') . " (mobile, qrm, req_time, action ) VALUES('$mobile', '$qrm', ".gmtime().", 1)";
+				$db->query($sql);
+			}
+			if($req_time + 300 < gmtime())
+			{
+				$sql = "UPDATE " . $GLOBALS['ecs']->table('sms') . " set req_time = ".gmtime().", qrm = '$qrm' where mobile='$mobile'";
+				$db->query($sql);
+			}
+			break;
+		}
+		else
+		{
+			$result['error']   = 2;
+			$result['content'] = '五分钟内不能重复获取确认码';
+			break;
+		}
 		break;
 	}while(1);
 

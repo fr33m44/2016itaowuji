@@ -678,7 +678,7 @@ function register()
   {
     msg += username_invalid + '\n';
   }
-  else if (username.length < 3)
+  else if (username.replace(/[^\x00-\xff]/g, "**").length < 3)
   {
     msg += username_shorter + '\n';
   }
