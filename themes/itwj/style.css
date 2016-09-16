@@ -2759,13 +2759,25 @@ height:2px;}
 .sodk{
 right:495px!important;}
 
+.diddto_name{
+  background:url(images/username.png) no-repeat transparent 1px center;
+  border: 1px solid #E1E1E1;
+  padding: 5px;
+  width: 220px;
+  margin-left: 3px;
+}
 
+.diddto_pass{
+  background:url(images/password.png) no-repeat transparent 1px center;
+  border: 1px solid #E1E1E1;
+  padding: 5px;
+  width: 220px;
+  margin-left: 3px;
+}
 .diddto{
-	background:url(images/username.png) no-repeat transparent;
-	border: 1px solid #E1E1E1;
-	padding: 5px;
-	width: 220px;
-	margin-left: 3px;
+	width: 200px;
+  border:0px;
+  margin-left: 16px;
 }
 
 .shurukuang {
