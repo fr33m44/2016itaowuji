@@ -528,13 +528,7 @@
               <h5><span>{$lang.other_info}</span></h5>
               <div class="blank"></div>
               <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
-                <!-- {if $order.shipping_id > 0} -->
-                <tr>
-                  <td width="15%" align="right" bgcolor="#ffffff">{$lang.shipping}：</td>
-                  <td colspan="3" width="85%" align="left" bgcolor="#ffffff">{$order.shipping_name}</td>
-                </tr>
-                <!-- {/if} -->
-                
+                <!--删除用户的快递方式-->
                 <tr>
                   <td width="15%" align="right" bgcolor="#ffffff">{$lang.payment}：</td>
                   <td colspan="3" align="left" bgcolor="#ffffff">{$order.pay_name}</td>
