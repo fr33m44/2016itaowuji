@@ -184,7 +184,7 @@ function get_profile($user_id)
 function get_consignee_list($user_id)
 {
     $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('user_address') .
-            " WHERE user_id = '$user_id' LIMIT 5";
+            " WHERE user_id = '$user_id'  order by address_id LIMIT 5 ";
 
     return $GLOBALS['db']->getAll($sql);
 }
@@ -609,10 +609,10 @@ function update_address($address)
         $address_id = $GLOBALS['db']->insert_id();
     }
 
-    if (isset($address['defalut']) && $address['default'] > 0 && isset($address['user_id']))
+    if (isset($address['default']) && $address['default'] > 0 && isset($address['user_id']))
     {
         $sql = "UPDATE ".$GLOBALS['ecs']->table('users') .
-                " SET address_id = '".$address_id."' ".
+                " SET shop_address_id = '".$address_id."' ".
                 " WHERE user_id = '" .$address['user_id']. "'";
         $GLOBALS['db'] ->query($sql);
     }

@@ -14,17 +14,6 @@ function userEdit()
   var passwd_answer = frm.elements['passwd_answer'] ? Utils.trim(frm.elements['passwd_answer'].value) : '';
   var sel_question =  frm.elements['sel_question'] ? Utils.trim(frm.elements['sel_question'].value) : '';
 
-  if (email.length == 0)
-  {
-    msg += email_empty + '\n';
-  }
-  else
-  {
-    if ( ! (Utils.isEmail(email)))
-    {
-      msg += email_error + '\n';
-    }
-  }
 
   if (passwd_answer.length > 0 && sel_question == 0 || document.getElementById('passwd_quesetion') && passwd_answer.length == 0)
   {
@@ -400,7 +389,7 @@ function check_shop_addr(shop_addr)
 function check_mobile(mobile)
 {
 	var submit_disabled = false;
-	var regex = /^1[3|4|5|8][0-9]\d{4,8}$/;
+	var regex = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
 	
 	if (Utils.trim(mobile) == '' )
     {

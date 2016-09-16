@@ -713,7 +713,7 @@ elseif ($_REQUEST['step'] == 'consignee')
         if ($_SESSION['user_id'] > 0)
         {
             $consignee_list = get_consignee_list($_SESSION['user_id']);
-
+			unset($consignee_list[0]);//去掉店铺信息的显示
 
             if (count($consignee_list) < 5)
             {
@@ -786,10 +786,9 @@ elseif ($_REQUEST['step'] == 'consignee')
 
             save_consignee($consignee, true);
         }
-
+		
         /* 保存到session */
         $_SESSION['flow_consignee'] = stripslashes_deep($consignee);
-
         ecs_header("Location: flow.php?step=checkout\n");
         exit;
     }

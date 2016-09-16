@@ -139,7 +139,7 @@ function register($username, $password, $email, $other = array())
         }
 
         //定义other合法的变量数组
-        $other_key_array = array('msn', 'qq', 'office_phone', 'home_phone', 'mobile_phone');
+        $other_key_array = array('parent_id', 'msn', 'qq', 'office_phone', 'home_phone', 'mobile_phone');
         $update_data['reg_time'] = local_strtotime(local_date('Y-m-d H:i:s'));
         if ($other)
         {
