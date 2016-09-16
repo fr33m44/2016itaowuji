@@ -28,7 +28,7 @@ function addToCartShowDiv(goodsId, script_name,goods_recommend,parentId)
 		if(spec_arr.length == 0)
 		{
 			alert("未填写商品数量或填写错误。");
-			return false;
+			return;
 		}
 		quick = 1;
 	}

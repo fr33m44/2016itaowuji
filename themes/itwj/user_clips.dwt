@@ -119,7 +119,7 @@
           <!-- {/foreach} -->
           <!-- {if $message_list}-->
           <div class="f_r">
-          <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+          <!-- #BeginLibraryItem "/library/pages_user_message_list.lbi" --><!-- #EndLibraryItem -->
           </div>
           <!-- {/if}-->
           <div class="blank"></div>

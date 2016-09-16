@@ -1095,7 +1095,6 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 						$val = 0;
 					}
 					$stock_number = $val;
-					print_r($attr_arr);
 					if($goods_type == 13)//文胸 特殊类型
 						$sql = "select count(1) from ". $ecs->table("goods_stock"). " where goods_id = ". $goods_id . " and cup = $cup and size = $size and color = $color";
 					else

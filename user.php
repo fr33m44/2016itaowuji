@@ -161,16 +161,19 @@ elseif ($action == 'act_register')
         $province    = isset($_POST['province']) ? trim($_POST['province']) : '';
         $city    = isset($_POST['city']) ? trim($_POST['city']) : '';
         $district    = isset($_POST['district']) ? trim($_POST['district']) : '';
-        $addres    = isset($_POST['shop_addr']) ? trim($_POST['shop_addr']) : '';
+        $address    = isset($_POST['shop_addr']) ? trim($_POST['shop_addr']) : '';
 		$other['qq']  = isset($_POST['qq']) ? $_POST['qq'] : '';
-		$other['mobile'] = isset($_POST['mobile']) ? $_POST['mobile'] : '';
+		$other['mobile_phone'] = isset($_POST['mobile']) ? $_POST['mobile'] : '';
 		$qq  = $other['qq'];
-		$mobile = $other['mobile'];
+		$mobile = $other['mobile_phone'];
 		$shop_type = isset($_POST['shop_type']) ? $_POST['shop_type'] : '';
 		$shop_name = isset($_POST['shop_name']) ? $_POST['shop_name'] : '';
         $back_act = isset($_POST['back_act']) ? trim($_POST['back_act']) : '';
-		$parent_id = isset($_POST['extendcode']) ? trim($_POST['extendcode']) : '';
-
+		$other['parent_id'] = isset($_POST['extendcode']) ? trim($_POST['extendcode']) : '';
+		if(empty($other['parent_id'])) 
+		{
+			$other['parent_id']=0;
+		}
 		
 		
         if(empty($_POST['agreement']))
@@ -216,27 +219,28 @@ elseif ($action == 'act_register')
 		/*手机确认码检查*/
 		$sql = "select qrm from ". $ecs->table('sms'). " where mobile = '$mobile' and action = 1";
 		$qrm_db = $db->getOne($sql);
+		
 		if($qrm != $qrm_db)
 		{
             show_message('确认码不正确');
 		}
 		
 		
-        if (register($username, $password, $email, $other, $extendcode) !== false)
+        if (register($username, $password, $email, $other) !== false)
         {
             include_once(ROOT_PATH . 'includes/lib_transaction.php');
             include_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
-            $provinc = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$province."%'");
-            $cit = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$city."%'");
-            $distric = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$district."%'");
+            //$provinc = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$province."%'");
+            //$cit = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$city."%'");
+            //$distric = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$district."%'");
             $address = array(
 			'default'    =>	1,//default>0的时候将user_address.address_id赋值到users.address_id 默认地址为店铺地址
             'user_id'    => $_SESSION['user_id'],
             'country'    => 1,
-            'province'   => $provinc,
-            'city'       => $cit,
-            'district'   => $distric,
-            'address'    => $addres,
+            'province'   => $province,
+            'city'       => $city,
+            'district'   => $district,
+            'address'    => $address,
             'consignee'  => $shop_name,
 			'sign_building' => $shop_type,//店铺类型
             'mobile'        => $other['mobile_phone'],
@@ -629,7 +633,7 @@ elseif ($action == 'getqrm')
 		//查询该手机号5分钟内是否已经获取过
 		$sql = "SELECT req_time from ". $ecs->table('sms')." where mobile='$mobile' and action=1"; //1:signup
 		$req_time = $db->getOne($sql);
-		//5分钟以内或者没有发送记录就发送给用户确认码，否则提示
+		//5分钟以后或者没有发送记录就发送给用户确认码，否则提示
 		if($req_time == '' || $req_time + 300 < gmtime())
 		{
 			$qrm = str_pad(strval(rand(0,999999)), 6, "0", STR_PAD_LEFT);
@@ -745,9 +749,48 @@ elseif ($action == 'logout')
 elseif ($action == 'profile')
 {
     include_once(ROOT_PATH . 'includes/lib_transaction.php');
+	include_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
+	$smarty->assign('lang',  $_LANG);
 
     $user_info = get_profile($user_id);
+	/* 取得国家列表、商店所在国家、商店所在国家的省列表 */
+	$smarty->assign('country_list',       get_regions());
+	$smarty->assign('province_list', get_regions(1, $_CFG['shop_country']));
 
+	/* 获得用户所有的店铺信息 */
+	$consignee_list = get_consignee_list($_SESSION['user_id']);
+	$smarty->assign('consignee_list', $consignee_list);
+
+	//取得国家列表，如果有店铺列表，取得省市区列表
+	foreach ($consignee_list AS $region_id => $consignee)
+	{
+		$consignee['country']  = isset($consignee['country'])  ? intval($consignee['country'])  : 0;
+		$consignee['province'] = isset($consignee['province']) ? intval($consignee['province']) : 0;
+		$consignee['city']     = isset($consignee['city'])     ? intval($consignee['city'])     : 0;
+
+		$province_list[$region_id] = get_regions(1, $consignee['country']);
+		$city_list[$region_id]     = get_regions(2, $consignee['province']);
+		$district_list[$region_id] = get_regions(3, $consignee['city']);
+	}
+	
+	/* shop_addr_id */
+	$address_id  = $db->getOne("SELECT shop_address_id FROM " .$ecs->table('users'). " WHERE user_id='$user_id'");
+	
+	//赋值于模板
+	$smarty->assign('real_goods_count', 1);
+	$smarty->assign('consignee', $consignee_list[0]);//id最小的addr为shop_addr
+	$smarty->assign('country',     $_CFG['country']);
+	$smarty->assign('province',    get_regions(1, $_CFG['country']));
+	$smarty->assign('province_list',    $province_list);
+	$smarty->assign('address',          $address_id);
+	$smarty->assign('city_list',        $city_list);
+	$smarty->assign('district_list',    $district_list);
+	$smarty->assign('currency_format',  $_CFG['currency_format']);
+	$smarty->assign('integral_scale',   $_CFG['integral_scale']);
+	$smarty->assign('name_of_region',   array($_CFG['name_of_region_1'], $_CFG['name_of_region_2'], $_CFG['name_of_region_3'], $_CFG['name_of_region_4']));
+
+		
+	
     /* 取出注册扩展字段 */
     $sql = 'SELECT * FROM ' . $ecs->table('reg_fields') . ' WHERE type < 2 AND display = 1 ORDER BY dis_order, id';
     $extend_info_list = $db->getAll($sql);
@@ -843,10 +886,7 @@ elseif ($action == 'act_edit_profile')
     {
          show_message($_LANG['passport_js']['home_phone_invalid']);
     }
-    if (!is_email($email))
-    {
-        show_message($_LANG['msg_email_format']);
-    }
+
     if (!empty($msn) && !is_email($msn))
     {
          show_message($_LANG['passport_js']['msn_invalid']);
@@ -1273,6 +1313,7 @@ elseif ($action == 'act_edit_address')
     include_once(ROOT_PATH . 'includes/lib_transaction.php');
     include_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
     $smarty->assign('lang', $_LANG);
+	$from = $_POST['from'];
 
     $address = array(
         'user_id'    => $user_id,
@@ -1293,7 +1334,14 @@ elseif ($action == 'act_edit_address')
 
     if (update_address($address))
     {
-        show_message($_LANG['edit_address_success'], $_LANG['address_list_lnk'], 'user.php?act=address_list');
+		if($from = 'profile')//如果是从个人信息profile页面登陆
+		{
+			show_message($_LANG['edit_profile_success'], $_LANG['profile_lnk'], 'user.php?act=profile');
+		}
+		else
+		{
+			show_message($_LANG['edit_profile_success'], $_LANG['address_list_lnk'], 'user.php?act=address_list');
+		}
     }
 }
 

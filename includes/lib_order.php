@@ -2106,8 +2106,7 @@ function check_consignee_info($consignee, $flow_type)
         /* 如果存在实体商品 */
         $res = !empty($consignee['consignee']) &&
             !empty($consignee['country']) &&
-            !empty($consignee['email']) &&
-            !empty($consignee['tel']);
+            !empty($consignee['mobile']);
 
         if ($res)
         {
@@ -2135,9 +2134,7 @@ function check_consignee_info($consignee, $flow_type)
     else
     {
         /* 如果不存在实体商品 */
-        return !empty($consignee['consignee']) &&
-            !empty($consignee['email']) &&
-            !empty($consignee['tel']);
+        return !empty($consignee['consignee']) && !empty($consignee['mobile']);
     }
 }
 

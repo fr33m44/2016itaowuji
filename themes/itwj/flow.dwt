@@ -547,20 +547,16 @@
             <tr   class="nstepn_opt optbg" >
              <td bgcolor="#ffeddd" width="14%" class="txt_r">{$lang.consignee_name}&nbsp;：</td>
               <td bgcolor="#ffeddd">&nbsp;{$consignee.consignee|escape}</td>
-              <!-- <td bgcolor="#ffeddd" width="14%" class="txt_r">{$lang.email_address}&nbsp;：</td>
-              <td bgcolor="#ffeddd">&nbsp;{$consignee.email|escape}</td> -->
             </tr>
             <!-- {if $total.real_goods_count gt 0} -->
            <tr  class="nstepn_opt optbg">
              <td bgcolor="#ffeddd" width="14%" class="txt_r">{$lang.detailed_address}&nbsp;：</td>
               <td bgcolor="#ffeddd">&nbsp;{$consignee.address|escape} </td>
-              <!-- <td bgcolor="#ffeddd" width="14%" class="txt_r">{$lang.postalcode}&nbsp;：</td>
-              <td bgcolor="#ffeddd">&nbsp;{$consignee.zipcode|escape}</td> -->
             </tr>
             <!-- {/if} -->
           <tr  class="nstepn_opt optbg">
-             <td bgcolor="#ffeddd" width="14%" class="txt_r">{$lang.phone}&nbsp;：</td>
-              <td bgcolor="#ffeddd">&nbsp;{$consignee.tel} </td>
+             <td bgcolor="#ffeddd" width="14%" class="txt_r">{$lang.mobile}&nbsp;：</td>
+              <td bgcolor="#ffeddd">&nbsp;{$consignee.mobile} </td>
               <!-- <td bgcolor="#ffeddd" width="14%" class="txt_r">{$lang.backup_phone}:</td>
               <td bgcolor="#ffeddd">{$consignee.mobile|escape}</td> -->
             </tr>

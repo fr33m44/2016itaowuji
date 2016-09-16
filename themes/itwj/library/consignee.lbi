@@ -45,11 +45,7 @@
     <td bgcolor="#ffffff"><input name="consignee" type="text" class="ipt" id="consignee_{$sn}" value="{$consignee.consignee|escape}" />
     {$lang.require_field} </td>
     </tr>
-     <tr height="45">
-    <td  class="txt_r">{$lang.email_address}<span class="pink">*</span>&nbsp;&nbsp;</td>
-    <td bgcolor="#ffffff"><input name="email" type="text" class="ipt"  id="email_{$sn}" value="{$consignee.email|escape}" />
-    {$lang.require_field}</td>
-  </tr>
+     
   <!-- {if $real_goods_count gt 0} -->
   <!-- 购物车中存在实体商品显示详细地址以及邮政编码 -->
   <tr height="45">
@@ -57,19 +53,13 @@
     <td bgcolor="#ffffff"><input name="address" type="text" size="60" class="ipt"  id="address_{$sn}" value="{$consignee.address|escape}" />
     {$lang.require_field}</td>
     </tr>
-     <tr height="45">
-    <td class="txt_r">{$lang.postalcode}<span class="pink">*</span>&nbsp;&nbsp;</td>
-    <td bgcolor="#ffffff"><input name="zipcode" type="text" class="ipt"  id="zipcode_{$sn}" value="{$consignee.zipcode|escape}" /></td>
+     
   </tr>
   <!-- {/if} -->
-  <tr height="45">
-    <td class="txt_r">{$lang.phone}<span class="pink">*</span>&nbsp;&nbsp;</td>
-    <td bgcolor="#ffffff"><input name="tel" type="text" class="ipt"  id="tel_{$sn}" value="{$consignee.tel|escape}" />
-    {$lang.require_field}</td>
-    </tr>
     <tr height="45">
-    <td class="txt_r">{$lang.backup_phone}&nbsp;&nbsp;</td>
-    <td bgcolor="#ffffff"><input name="mobile" type="text" class="ipt"  id="mobile_{$sn}" value="{$consignee.mobile|escape}" /></td>
+    <td class="txt_r">{$lang.backup_phone}<span class="pink">*</span>&nbsp;&nbsp;</td>
+    <td bgcolor="#ffffff"><input name="mobile" type="text" class="ipt"  id="mobile_{$sn}" value="{$consignee.mobile|escape}" />
+	{$lang.require_field}</td>
   </tr>
   <!-- {if $real_goods_count gt 0} -->
   <!-- 购物车中存在实体商品显示最佳送货时间及标志行建筑 -->
