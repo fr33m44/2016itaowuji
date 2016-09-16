@@ -111,10 +111,11 @@
 							<div class="shurukuang ai6changqiyinyinsecond">
 								<p class="yonghudeng">用户登录</p>
 								<p class="pbiaoqianchanger" id="dslrdengluchaoshierror">
-									<span class="yonghum aie6changer">用户名</span> <input class="diddto" size="35" type="text" id="username" />
+									<span class="yonghum aie6changer">用户名</span> <div class="diddto_name "><input class="diddto" size="35" type="text" id="username" /></div>
 								</p>
 								<p class="pbiaoqianchanger">
-									<span class="yonghum">登录密码</span> <input class="diddto" size="35" id="password" type="password" />
+									<span class="yonghum">登录密码</span>
+									  <div class="diddto_pass"><input class="diddto" size="35" id="password" type="password" /></div>
 								</p>
 								<p style="margin-top:10px;">
 								<input type="checkbox" name="autologin" id="autologin" />
