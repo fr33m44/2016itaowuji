@@ -720,7 +720,7 @@
         <div class="nstep2_con orderok">
          <p class="ordertitle">{$lang.remember_order_number}: <font style="color:red">{$order.order_sn}</font></p>
          
-            <p>  <!--{if $order.shipping_name}-->{$lang.select_shipping}: <span class="pink ">{$order.shipping_name}</span>，<!--{/if}-->{$lang.select_payment}: <span class="pink ">{$order.pay_name}</span>。{$lang.order_amount}: <span class="pink ">{$total.amount_formated}</span></p>
+            <p> {$lang.select_payment}: <span class="pink ">{$order.pay_name}</span>。{$lang.order_amount}: <span class="pink ">{$total.amount_formated}</span></p>
              <p class="orderpayinfo">
             {$order.pay_desc}
           
