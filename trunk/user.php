@@ -759,9 +759,13 @@ elseif ($action == 'profile')
 
 	/* 获得用户所有的店铺信息 */
 	$consignee_list = get_consignee_list($_SESSION['user_id']);
-	$smarty->assign('consignee_list', $consignee_list);
 
 	//取得国家列表，如果有店铺列表，取得省市区列表
+	foreach($consignee_list as $key=>$val)
+	{
+		if($key != 0)
+			unset($consignee_list[$key]);
+	}
 	foreach ($consignee_list AS $region_id => $consignee)
 	{
 		$consignee['country']  = isset($consignee['country'])  ? intval($consignee['country'])  : 0;
@@ -778,7 +782,8 @@ elseif ($action == 'profile')
 	
 	//赋值于模板
 	$smarty->assign('real_goods_count', 1);
-	$smarty->assign('consignee', $consignee_list[0]);//id最小的addr为shop_addr
+	$smarty->assign('consignee_list', $consignee_list);
+	
 	$smarty->assign('country',     $_CFG['country']);
 	$smarty->assign('province',    get_regions(1, $_CFG['country']));
 	$smarty->assign('province_list',    $province_list);
@@ -1274,7 +1279,8 @@ elseif ($action == 'address_list')
         /* 如果用户收货人信息的总数小于5 则增加一个新的收货人信息 */
         $consignee_list[] = array('country' => $_CFG['shop_country'], 'email' => isset($_SESSION['email']) ? $_SESSION['email'] : '');
     }
-
+	
+	unset($consignee_list[0]);//收货地址列表里面去掉店铺信息
     $smarty->assign('consignee_list', $consignee_list);
 
     //取得国家列表，如果有收货人列表，取得省市区列表
