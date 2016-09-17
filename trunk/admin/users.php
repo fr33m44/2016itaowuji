@@ -146,9 +146,9 @@ elseif ($_REQUEST['act'] == 'export') {
         $PHPExcel->getActiveSheet()->setCellValue('B' . ($k+4), $v['user_name']);
         $PHPExcel->getActiveSheet()->setCellValue('D' . ($k+4), $v['extendcode']);
         $PHPExcel->getActiveSheet()->setCellValue('E' . ($k+4), $v['mobile_phone']);
-        $PHPExcel->getActiveSheet()->setCellValue('F' . ($k+4), $v['storestype']);
-        $PHPExcel->getActiveSheet()->setCellValue('G' . ($k+4), $v['storename']);
-        $PHPExcel->getActiveSheet()->setCellValue('H' . ($k+4), $v['storeaddress']);
+        //$PHPExcel->getActiveSheet()->setCellValue('F' . ($k+4), $v['storestype']);
+        //$PHPExcel->getActiveSheet()->setCellValue('G' . ($k+4), $v['storename']);
+        //$PHPExcel->getActiveSheet()->setCellValue('H' . ($k+4), $v['storeaddress']);
         $PHPExcel->getActiveSheet()->setCellValue('I' . ($k+4), $v['user_money'].'元');
         $PHPExcel->getActiveSheet()->setCellValue('J' . ($k+4), $v['frozen_money'].'元');
         $PHPExcel->getActiveSheet()->setCellValue('K' . ($k+4), date('Y-m-d H:i:s',$v['reg_time']));
@@ -235,9 +235,9 @@ elseif ($_REQUEST['act'] == 'insert')
     $password = empty($_POST['password']) ? '' : trim($_POST['password']);
     $email = empty($_POST['email']) ? '' : trim($_POST['email']);
 
-    $storename = empty($_POST['storename']) ? '' : trim($_POST['storename']);
-    $storeaddress = empty($_POST['storeaddress']) ? '' : trim($_POST['storeaddress']);
-    $storestype = empty($_POST['storestype']) ? '' : trim($_POST['storestype']);
+    //$storename = empty($_POST['storename']) ? '' : trim($_POST['storename']);
+    //$storeaddress = empty($_POST['storeaddress']) ? '' : trim($_POST['storeaddress']);
+    //$storestype = empty($_POST['storestype']) ? '' : trim($_POST['storestype']);
     $extendcode = empty($_POST['extendcode']) ? '' : trim($_POST['extendcode']);
 
     $sex = empty($_POST['sex']) ? 0 : intval($_POST['sex']);
@@ -248,7 +248,7 @@ elseif ($_REQUEST['act'] == 'insert')
 
     $users =& init_users();
 
-    if (!$users->add_user($username, $password, $email,$storename,$storeaddress,$extendcode))
+    if (!$users->add_user($username, $password, $email))
     {
         /* 插入会员数据失败 */
         if ($users->error == ERR_INVALID_USERNAME)
@@ -345,7 +345,7 @@ elseif ($_REQUEST['act'] == 'edit')
     /* 检查权限 */
     admin_priv('users_manage');
 
-    $sql = "SELECT u.user_name, u.sex, u.birthday, u.storeaddress, u.storename, u.extendcode, u.storestype, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn, u.office_phone, u.home_phone, u.mobile_phone".
+    $sql = "SELECT u.user_name, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn, u.office_phone, u.home_phone, u.mobile_phone".
         " FROM " .$ecs->table('users'). " u LEFT JOIN " . $ecs->table('users') . " u2 ON u.parent_id = u2.user_id WHERE u.user_id='$_GET[id]'";
 
     $row = $db->GetRow($sql);
@@ -353,7 +353,7 @@ elseif ($_REQUEST['act'] == 'edit')
     $users  =& init_users();
     $user   = $users->get_user_info($row['user_name']);
 
-    $sql = "SELECT u.user_id, u.storeaddress, u.storename, u.extendcode, u.storestype, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn,
+    $sql = "SELECT u.user_id, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn,
     u.office_phone, u.home_phone, u.mobile_phone".
         " FROM " .$ecs->table('users'). " u LEFT JOIN " . $ecs->table('users') . " u2 ON u.parent_id = u2.user_id WHERE u.user_id='$_GET[id]'";
 
@@ -362,9 +362,9 @@ elseif ($_REQUEST['act'] == 'edit')
     if ($row)
     {
         $user['user_id']        = $row['user_id'];
-        $user['storename']      = $row['storename'];
-        $user['storeaddress']      = $row['storeaddress'];
-        $user['storestype']      = $row['storestype'];
+        //$user['storename']      = $row['storename'];
+        //$user['storeaddress']      = $row['storeaddress'];
+        //$user['storestype']      = $row['storestype'];
         $user['sex']            = $row['sex'];
         $user['birthday']       = date($row['birthday']);
         $user['pay_points']     = $row['pay_points'];
@@ -865,7 +865,7 @@ function user_list()
 
         /* 分页大小 */
         $filter = page_and_size($filter);
-        $sql = "SELECT user_id, user_name, email, storename, storeaddress, extendcode, storestype, is_validated, user_money, mobile_phone, frozen_money, rank_points, pay_points, reg_time ".
+        $sql = "SELECT user_id, user_name, email, is_validated, user_money, mobile_phone, frozen_money, rank_points, pay_points, reg_time ".
                 " FROM " . $GLOBALS['ecs']->table('users') . $ex_where .
                 " ORDER by " . $filter['sort_by'] . ' ' . $filter['sort_order'] .
                 " LIMIT " . $filter['start'] . ',' . $filter['page_size'];

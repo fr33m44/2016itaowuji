@@ -480,8 +480,8 @@ box-shadow: -2px 0 2px rgba(0, 0, 0, 0.05),2px 2px 2px rgba(0, 0, 0, 0.05);}
 .slideBox1{ width:248px;height:465px;border:1px #f0f0f0 solid;background:#fafafa;float:left; position:relative ;margin: 10px 0 0 10px;}
 .slideBox1 .hd{  overflow:hidden; z-index:1; width: 63px;height: 21px;position: absolute;left: 95px;bottom: 28px; }
 .slideBox1 .hd ul{ overflow:hidden; zoom:1; float:left;  }
-.slideBox1 .hd ul li{width: 21px;height: 21px;float: left;cursor: pointer; background: url(images/brandTab.gif) 0 0 no-repeat; }
-.slideBox1 .hd ul li.on{background: url(images/brandTab.gif) 0 -21px no-repeat;}
+.slideBox1 .hd ul li{width: 21px;height: 21px;float: left;cursor: pointer; background: url(images/brandTab.png) 0 0 no-repeat; }
+.slideBox1 .hd ul li.on{background: url(images/brandTab.png) 0 -21px no-repeat;}
 .slideBox1 .bd{ position:relative; height:100%; z-index:0;   }
 .slideBox1 .bd li{ zoom:1; vertical-align:middle; }
 .slideBox1 .bd img{ width:248px; height:465px; display:block;  }
