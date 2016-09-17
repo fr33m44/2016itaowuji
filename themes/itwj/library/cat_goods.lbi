@@ -2,11 +2,11 @@
 
 <div class="title_list">
   <div class="title_txt"><a href="{$goods_cat.url}" ><img src="../images/cat/{$goods_cat.id}.jpg"> </a> </div>
-  <div class="title_more"> <a href="{$goods_cat.url}" target="_blank">更多{$goods_cat.name|escape:html}</a> </div>
+  <div class="title_more"> <a href="{$goods_cat.url}">更多{$goods_cat.name|escape:html}</a> </div>
   <div class="title_key">
     <dl>
       <!--{foreach from=$goods_cat.cat_clild item=cat name=foo}-->
-      <dd><a href="{$cat.url}" target="_blank" title="{$cat.name}">{$cat.name}</a></dd>
+      <dd><a href="{$cat.url}" title="{$cat.name}">{$cat.name}</a></dd>
       <!--{/foreach}-->     
     </dl>
   </div>

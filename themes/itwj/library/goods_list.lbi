@@ -23,7 +23,7 @@
   </div>
   <div class="rightTitle_right">
     <dl>
-      <dd>共发现{$pager.record_count}件</dd>
+      <dd>共发现 {$pager.record_count} 件</dd>
       
       <!-- {if $pager.page_prev} -->
       <dt class="rightTitle_prev"><a   class="activity_prev" href="{$pager.page_prev}">上一页</a></dt>
