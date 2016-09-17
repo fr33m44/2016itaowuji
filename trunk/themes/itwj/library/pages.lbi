@@ -20,7 +20,7 @@
 <!--翻页 start-->
 <div class="searchRight_paging">
  <div id="pager" class="pagebar">
-  <p>共发现 {$pager.record_count}件</p>
+  <p>共发现 {$pager.record_count} 个记录</p>
   <div class="activity_all">
   <!-- {if $pager.page_first} --><a href="{$pager.page_first}">{$lang.page_first} ...</a><!-- {/if} -->
   <!-- {if $pager.page_prev} --><a class="activity_prev " href="{$pager.page_prev}">{$lang.page_prev}</a><!-- {/if} -->
