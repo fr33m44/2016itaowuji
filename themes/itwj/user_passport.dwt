@@ -246,11 +246,15 @@
         <br />
         <table width="70%" border="0" align="center">
           <tr>
-            <td colspan="2" align="center"><strong>{$lang.username_and_email}</strong></td>
+            <td colspan="2" align="center"><strong>通过手机号找回密码：</strong></td>
           </tr>
           <tr>
-            <td width="35%" align="right">{$lang.username}</td>
-            <td width="61%"><input name="user_name" type="text" size="30" class="inputBg" /></td>
+            <td width="35%" align="right">手机号：</td>
+            <td width="61%"><input name="mobile" type="text" size="30" class="inputBg" /></td>
+          </tr>
+          <tr>
+            <td width="35%" align="right">验证码：</td>
+            <td width="61%"><input name="captcha" type="text" size="15" class="inputBg" /></td>
           </tr>
           <tr>
             <td align="right">{$lang.email}</td>
@@ -262,7 +266,7 @@
               <input type="submit" name="submit" value="{$lang.submit}" class="bnt_blue" style="border:none;" />
               <input name="button" type="button" onclick="history.back()" value="{$lang.back_page_up}" style="border:none;" class="bnt_blue_1" />
 	    </td>
-          </tr>
+		</tr>
         </table>
         <br />
       </form>
