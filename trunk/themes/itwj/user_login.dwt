@@ -8,9 +8,9 @@
 	function sub() {
 
 		var username = $('#username').val();
-
 		var password = $('#password').val();
-
+		var rem = document.getElementById('remember').checked;
+		var rem1=0;
 		if (username == "" || password == "") {
 			$("#errorMsg").text("用户名或者密码不能为空");
 			$("#errorMsg").show();
@@ -26,13 +26,18 @@
 				'opacity' : '1'
 			}, 200);
 			var url = "user.php";
+			
+			if(rem)
+			{
+				var rem1 = 1
+			}
 
 			var params = {
 				username : $('#username').val(),
 				password : $('#password').val(),
 				act:'act_login',
 				back_act:'./index.php',
-				remember:'1'
+				remember:rem1
 				
 			};
 			jQuery.post(url, params,
@@ -118,8 +123,8 @@
 									  <div class="diddto_pass"><input class="diddto" size="35" id="password" type="password" /></div>
 								</p>
 								<p style="margin-top:10px;">
-								<input type="checkbox" name="autologin" id="autologin" />
-								<label for="autologin">自动登录</label>
+								<input type="checkbox" name="remember" id="remember" />
+								<label for="remember">自动登录</label>
 								<a href="user.php?act=get_password" style="float:right;margin-right:24px" >忘记密码</a>
 								</p>
 								<p>
