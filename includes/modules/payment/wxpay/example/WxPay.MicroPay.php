@@ -1,5 +1,5 @@
 <?php
-require_once "/includes/modules/payment/wxpay/lib/WxPay.Api.php";
+require_once ROOT_PATH."/includes/modules/payment/wxpay/lib/WxPay.Api.php";
 /**
  * 
  * 刷卡支付实现类

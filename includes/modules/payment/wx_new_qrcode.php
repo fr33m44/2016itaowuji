@@ -7,9 +7,9 @@ if (!defined('IN_ECS'))
     die('Hacking attempt');
 }
 
-require_once "/includes/modules/payment/wxpay/lib/WxPay.Api.php";
-require_once "/includes/modules/payment/wxpay/example/WxPay.NativePay.php";
-require_once '/includes/modules/payment/wxpay/example/log.php';
+require_once ROOT_PATH."/includes/modules/payment/wxpay/lib/WxPay.Api.php";
+require_once ROOT_PATH."/includes/modules/payment/wxpay/example/WxPay.NativePay.php";
+require_once ROOT_PATH.'/includes/modules/payment/wxpay/example/log.php';
 
 $payment_lang = ROOT_PATH . 'languages/' .$GLOBALS['_CFG']['lang']. '/payment/wx_new_qrcode.php';
 if (file_exists($payment_lang))

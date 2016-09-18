@@ -13,7 +13,7 @@
   <div class="bd"  style="background: #cccccc; width: 974px;height: 522px;">
     <ul>
     <!--{foreach from=$flash name=myflash item=flash}-->
-  <li><A href="{$flash.url}" target=_blank><IMG height="522px" alt="" src="{$flash.src}" width="974px" style="width: 974px;height: 522px;"></A> </li>
+  <li><A href="{$flash.url}"><IMG height="522px" alt="" src="{$flash.src}" width="974px" style="width: 974px;height: 522px;"></A> </li>
    <!--{/foreach}-->
       
     </ul>

@@ -24,7 +24,7 @@ $back_act='';
 
 // 不需要登录的操作或自己验证是否登录（如ajax处理）的act
 $not_login_arr =
-array('login','act_login','getqrm','register','act_register','act_edit_password','get_password','send_pwd_email','password', 'signin', 'add_tag', 'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email','clear_history','qpassword_name', 'get_passwd_question', 'check_answer', 'oath' , 'oath_login', 'other_login');
+array('login','act_login','getqrm','register','act_register','act_edit_password','get_password','send_pwd_mobile','password', 'signin', 'add_tag', 'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email','clear_history','qpassword_name', 'get_passwd_question', 'check_answer', 'oath' , 'oath_login', 'other_login');
 
 /* 显示页面的action列表 */
 $ui_arr = array('register', 'login', 'profile', 'order_list', 'order_detail', 'address_list', 'collection_list',
@@ -617,6 +617,7 @@ elseif ($action == 'getqrm')
 	$json = new JSON;
 	$result = array();
 	$mobile = $_GET['mobile'];
+	$action = intval($_GET['action']);
 	
 	do{
 		/* 检查验证码 */
@@ -631,10 +632,10 @@ elseif ($action == 'getqrm')
 			break;
 		}
 		//查询该手机号5分钟内是否已经获取过
-		$sql = "SELECT req_time from ". $ecs->table('sms')." where mobile='$mobile' and action=1"; //1:signup
+		$sql = "SELECT req_time from ". $ecs->table('sms')." where mobile='$mobile' and action=$action"; //1:signup
 		$req_time = $db->getOne($sql);
 		//5分钟以后或者没有发送记录就发送给用户确认码，否则提示
-		if($req_time == '' || $req_time + 300 < gmtime())
+		if($req_time == '' || ($req_time + 300) < gmtime())
 		{
 			$qrm = str_pad(strval(rand(0,999999)), 6, "0", STR_PAD_LEFT);
 			
@@ -642,7 +643,7 @@ elseif ($action == 'getqrm')
 			$c->appkey = '23453610';
 			$c->secretKey = '8c021a3095cab696fada8e6bcfa4eb37';
 			$req = new AlibabaAliqinFcSmsNumSendRequest;
-			$req->setExtend("123456");
+			$req->setExtend("1");
 			$req->setSmsType("normal");
 			$req->setSmsFreeSignName("淘五季");
 			$req->setSmsParam("{\"name\":\"$qrm\"}");
@@ -653,12 +654,12 @@ elseif ($action == 'getqrm')
 			$result['content'] = '成功';
 			if($req_time == '')
 			{
-				$sql = "INSERT INTO " . $GLOBALS['ecs']->table('sms') . " (mobile, qrm, req_time, action ) VALUES('$mobile', '$qrm', ".gmtime().", 1)";
+				$sql = "INSERT INTO " . $GLOBALS['ecs']->table('sms') . " (mobile, qrm, req_time, action ) VALUES('$mobile', '$qrm', ".gmtime().", $action)";
 				$db->query($sql);
 			}
-			if($req_time + 300 < gmtime())
+			if(($req_time + 300) < gmtime())
 			{
-				$sql = "UPDATE " . $GLOBALS['ecs']->table('sms') . " set req_time = ".gmtime().", qrm = '$qrm' where mobile='$mobile'";
+				$sql = "UPDATE " . $GLOBALS['ecs']->table('sms') . " set req_time = ".gmtime().", qrm = '$qrm' where mobile='$mobile' and action=$action";
 				$db->query($sql);
 			}
 			break;
@@ -669,8 +670,7 @@ elseif ($action == 'getqrm')
 			$result['content'] = '五分钟内不能重复获取确认码';
 			break;
 		}
-		break;
-	}while(1);
+	}while(0);
 
 	die($json->encode($result));
 }
@@ -936,30 +936,8 @@ elseif ($action == 'act_edit_profile')
 /* 密码找回-->修改密码界面 */
 elseif ($action == 'get_password')
 {
-    include_once(ROOT_PATH . 'includes/lib_passport.php');
-
-    if (isset($_GET['code']) && isset($_GET['uid'])) //从邮件处获得的act
-    {
-        $code = trim($_GET['code']);
-        $uid  = intval($_GET['uid']);
-
-        /* 判断链接的合法性 */
-        $user_info = $user->get_profile_by_id($uid);
-        if (empty($user_info) || ($user_info && md5($user_info['user_id'] . $_CFG['hash_code'] . $user_info['reg_time']) != $code))
-        {
-            show_message($_LANG['parm_error'], $_LANG['back_home_lnk'], './', 'info');
-        }
-
-        $smarty->assign('uid',    $uid);
-        $smarty->assign('code',   $code);
-        $smarty->assign('action', 'reset_password');
-        $smarty->display('user_passport.dwt');
-    }
-    else
-    {
-        //显示用户名和email表单
-        $smarty->display('user_passport.dwt');
-    }
+	//显示用户名和email表单
+	$smarty->display('user_passport.dwt');
 }
 
 /* 密码找回-->输入用户名界面 */
@@ -1045,39 +1023,118 @@ elseif ($action == 'check_answer')
 }
 
 /* 发送密码修改确认邮件 */
-elseif ($action == 'send_pwd_email')
+elseif ($action == 'send_pwd_mobile')
 {
     include_once(ROOT_PATH . 'includes/lib_passport.php');
+	include_once('includes/cls_captcha.php');
+	require_once('includes/sms/TopSdk.php');
+    include_once('includes/cls_json.php');
 
     /* 初始化会员用户名和邮件地址 */
-    $user_name = !empty($_POST['user_name']) ? trim($_POST['user_name']) : '';
-    $email     = !empty($_POST['email'])     ? trim($_POST['email'])     : '';
+    $mobile = !empty($_POST['mobile']) ? trim($_POST['mobile']) : '';
+    $captcha     = !empty($_POST['captcha'])     ? trim($_POST['captcha'])     : '';
+	$qrm = !empty($_POST['qrm']) ? trim($_POST['qrm']) : '';
+	$action = !empty($_POST['action']) ? trim($_POST['action']) : '';
+    
+	//验证确认码和验证码是否正确
+	
+	$json = new JSON;
+	$result = array();
+	
+	/* 检查手机号格式 */
+	$reg = "/^1[34578]{1}\d{9}$/";
+	
+	if(!preg_match($reg, $mobile))
+	{
+		show_message('您输入的手机号格式不正确，请返回重试。', $_LANG['back_page_up'], '', 'info');
+	}
 
-    //用户名和邮件地址是否匹配
-    $user_info = $user->get_user_info($user_name);
+	/* 检查验证码 */
+	$validator = new captcha();
+	$validator->session_word = 'captcha_word';
+	if (!$validator->check_word($captcha))
+	{
+		show_message('您输入的手机验证码有误，请返回重试。', $_LANG['back_page_up'], '', 'info');
+	}
+	/*检查手机确认码*/
+	/*手机确认码检查*/
+	$sql = "select qrm from ". $ecs->table('sms'). " where mobile = '$mobile' and action = 2";
+	$qrm_db = $db->getOne($sql);
+	if($qrm != $qrm_db)
+	{
+		show_message('您输入的手机确认码有误，请返回重试。');
+	}
+	
+	
+	//查询该手机号5分钟内是否已经获取过
+	$sql = "SELECT req_time from ". $ecs->table('sms')." where mobile='$mobile' and action=2"; //1:signup
+	$req_time = $db->getOne($sql);
+	
+	//5分钟以后或者没有发送记录把密码发送给用户
+	if($req_time == '' || ($req_time + 300) < gmtime())
+	{
+		
+		//生成随机密码
+		$alphabet = "abcdefghijkmnpqrstuwxyz0123456789";
+		$pass = array(); //remember to declare $pass as an array
+		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+		for ($i = 0; $i < 8; $i++)
+		{
+			$n = rand(0, $alphaLength);
+			$pass[] = $alphabet[$n];
+		}
+		$pass_str = implode($pass); //turn the array into a string
+		//get user_id from DB
+		$user_id = $db->getOne("select user_id from ". $ecs->table("users") ." where mobile_phone = '$mobile' ");
+		//密码更新到数据库
+		$user_info = $user->get_profile_by_id($user_id); //论坛记录
 
-    if ($user_info && $user_info['email'] == $email)
-    {
-        //生成code
-         //$code = md5($user_info[0] . $user_info[1]);
+		if ($user->edit_user(array('username'=> $user_info['user_name'], 'password'=>$pass_str), 1))
+		{
+			$sql="UPDATE ".$ecs->table('users'). "SET `ec_salt`='0' WHERE user_id= '".$user_id."'";
+			$db->query($sql);
+			$user->logout();
+		}
+		else
+		{
+			show_message('找回密码出现错误，请重试或联系客服。', $_LANG['back_page_up'], '', 'info');
+		}
+		
 
-        $code = md5($user_info['user_id'] . $_CFG['hash_code'] . $user_info['reg_time']);
-        //发送邮件的函数
-        if (send_pwd_email($user_info['user_id'], $user_name, $email, $code))
-        {
-            show_message($_LANG['send_success'] . $email, $_LANG['back_home_lnk'], './', 'info');
-        }
-        else
-        {
-            //发送邮件出错
-            show_message($_LANG['fail_send_password'], $_LANG['back_page_up'], './', 'info');
-        }
-    }
-    else
-    {
-        //用户名与邮件地址不匹配
-        show_message($_LANG['username_no_email'], $_LANG['back_page_up'], '', 'info');
-    }
+		$qrm = str_pad(strval(rand(0,999999)), 6, "0", STR_PAD_LEFT);
+		
+		$c = new TopClient;
+		$c->appkey = '23453610';
+		$c->secretKey = '8c021a3095cab696fada8e6bcfa4eb37';
+		$req = new AlibabaAliqinFcSmsNumSendRequest;
+		$req->setExtend("2");
+		$req->setSmsType("normal");
+		$req->setSmsFreeSignName("淘五季");
+		$req->setSmsParam("{\"name\":\"".$user_info['user_name']."\",\"pass\":\"$pass_str\"}");
+		$req->setRecNum($mobile);
+		$req->setSmsTemplateCode("SMS_14950842");
+		$resp = $c->execute($req);
+		$result['error']   = 0;
+		$result['content'] = '成功';
+		if($req_time == '')
+		{
+			$sql = "INSERT INTO " . $GLOBALS['ecs']->table('sms') . " (mobile, qrm, req_time, action ) VALUES('$mobile', '$qrm', ".gmtime().", 2)";
+			$db->query($sql);
+		}
+		if(($req_time + 300) < gmtime())
+		{
+			$sql = "UPDATE " . $GLOBALS['ecs']->table('sms') . " set req_time = ".gmtime().", qrm = '$qrm' where mobile='$mobile' and action = 2";
+			$db->query($sql);
+		}
+		show_message('您的密码已经重置并发送到您的手机，请注意查收。', '重新登陆', 'user.php', 'info');
+	}
+	else
+	{
+		show_message('请5分钟后重新获取确认码', $_LANG['back_page_up'], '', 'info');
+	}
+
+
+   
 }
 
 /* 重置新密码 */
@@ -1106,7 +1163,6 @@ elseif ($action == 'act_edit_password')
 
     if (($user_info && (!empty($code) && md5($user_info['user_id'] . $_CFG['hash_code'] . $user_info['reg_time']) == $code)) || ($_SESSION['user_id']>0 && $_SESSION['user_id'] == $user_id && $user->check_user($_SESSION['user_name'], $old_password)))
     {
-		
         if ($user->edit_user(array('username'=> (empty($code) ? $_SESSION['user_name'] : $user_info['user_name']), 'old_password'=>$old_password, 'password'=>$new_password), empty($code) ? 0 : 1))
         {
 			$sql="UPDATE ".$ecs->table('users'). "SET `ec_salt`='0' WHERE user_id= '".$user_id."'";
