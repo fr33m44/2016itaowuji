@@ -143,18 +143,6 @@
 		  <span style="color:red;font-size:large">*&nbsp;</span>
           <span id="shop_addr_notice" style="color:#FF0000"></span>
         </div>
-
-
-       <div class="coLogin_one">
-          <p>QQ：</p>
-           <div class="coLoginTxt" style="width:245px;">
-           <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-          <input name="qq" type="text" size="17"  class="coLogin_txt" onblur="check_qq(this.value)" style="width:225px;" />
-          </div>
-          </div>
-		  <span style="color:red;font-size:large">*&nbsp;</span>
-          <span id="qq_notice" style="color:#FF0000"></span>
-        </div>
 		
 		<div class="coLogin_one">
 		<p>手机号：</p>

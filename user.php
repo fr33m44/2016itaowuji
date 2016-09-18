@@ -162,9 +162,7 @@ elseif ($action == 'act_register')
         $city    = isset($_POST['city']) ? trim($_POST['city']) : '';
         $district    = isset($_POST['district']) ? trim($_POST['district']) : '';
         $address    = isset($_POST['shop_addr']) ? trim($_POST['shop_addr']) : '';
-		$other['qq']  = isset($_POST['qq']) ? $_POST['qq'] : '';
 		$other['mobile_phone'] = isset($_POST['mobile']) ? $_POST['mobile'] : '';
-		$qq  = $other['qq'];
 		$mobile = $other['mobile_phone'];
 		$shop_type = isset($_POST['shop_type']) ? $_POST['shop_type'] : '';
 		$shop_name = isset($_POST['shop_name']) ? $_POST['shop_name'] : '';
@@ -243,8 +241,7 @@ elseif ($action == 'act_register')
             'address'    => $address,
             'consignee'  => $shop_name,
 			'sign_building' => $shop_type,//店铺类型
-            'mobile'        => $other['mobile_phone'],
-            'qq'        => $other['qq'],
+            'mobile'        => $other['mobile_phone']
             );
             update_address($address);
             /*把新注册用户的扩展信息插入数据库*/
