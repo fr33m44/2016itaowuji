@@ -369,27 +369,6 @@ function check_qrm(qrm) {
 	}
 }
 
-function check_qq(qq) {
-	var submit_disabled = false;
-
-	if (Utils.trim(qq) == '') {
-		document.getElementById('qq_notice').innerHTML = 'QQ不能为空';
-		var submit_disabled = true;
-	}
-	else {
-		document.getElementById('qq_notice').innerHTML = '可以注册';
-		var submit_disabled = false;
-	}
-
-	if (submit_disabled) {
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-		return false;
-	}
-	else {
-		document.forms['formUser'].elements['Submit'].disabled = '';
-	}
-}
-
 function check_conform_password(conform_password) {
 	password = document.getElementById('password').value;
 
@@ -544,7 +523,6 @@ function register() {
 	var district = Utils.trim(frm.elements['district'].value);
 
 	var shop_addr = Utils.trim(frm.elements['shop_addr'].value);
-	var qq = Utils.trim(frm.elements['qq'].value);
 	var mobile = Utils.trim(frm.elements['mobile'].value);
 	var qrm = Utils.trim(frm.elements['qrm'].value);
 	var captcha = Utils.trim(frm.elements['captcha'].value);
@@ -567,9 +545,6 @@ function register() {
 	}
 	if (shop_name.length == 0) {
 		msg += '店铺名称不能为空' + '\n';
-	}
-	if (qq.length == 0) {
-		msg += 'QQ不能为空' + '\n';
 	}
 	if (mobile.length == 0) {
 		msg += '手机号不能为空' + '\n';
@@ -596,9 +571,6 @@ function register() {
 		msg += agreement + '\n';
 	}
 
-	if (qq.length > 0 && (!Utils.isNumber(qq))) {
-		msg += qq_invalid + '\n';
-	}
 	if (mobile.length > 0) {
 		var reg = /^[\d|\-|\s]+$/;
 		if (!reg.test(mobile)) {
