@@ -1639,9 +1639,12 @@ background: #f5f5f5;
 .center_pop_close a:hover{background-position:0 -18px;}
 .center_pop_txt{width:390px;padding:0 0 0 70px;background:url(images/center_pop_txt.gif) 20px 5px no-repeat;float:left;}
 .center_pop_txt b{width:100%;line-height:25px;font-size:14px;color:#333;float:left;}
-.center_pop_btn{width:134px;height:32px;margin:16px 0 0 70px;display:inline;float:left;}
-.center_pop_btn a{width:134px;height:32px;background:url(images/center_pop_btn.gif) 0 0 no-repeat;float:left;}
-.center_pop_btn a:hover{background-position:0 -32px;}
+.center_pop_btn{width:134px;height:34px;margin:16px 0 0 10px;display:inline;float:left;}
+.center_pop_btn a{width:134px;height:34px;background:url(images/center_pop_btn.gif) 0 0 no-repeat;float:left;}
+.center_pop_btn a:hover{background-position:0 -34px;}
+.center_continue_btn{width:134px;height:34px;margin:16px 0 0 70px;display:inline;float:left;}
+.center_continue_btn a{width:134px;height:34px;background:url(images/center_pop_btn.jpg) 0 0 no-repeat;float:left;}
+.center_continue_btn a:hover{background-position:0 -34px;}
 /*商品单选属性*/
 .catt{width:100%;height:auto;overflow:hidden;padding-bottom:5px;}
 .catt a{border: #e0e0e0 1px solid;text-align: center; background-color: #f4f4f4; margin-left:5px;margin-top:6px; padding:3px 15px;display: block; white-space: nowrap; color: #999; text-decoration: none;float:left;}
