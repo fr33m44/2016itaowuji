@@ -412,6 +412,9 @@ $(function(){
               <div class="center_pop_txt">
     
               </div>
+<div class="center_continue_btn">
+  <a href="javascript:window.history.back();"></a>
+</div>
 <div class="center_pop_btn">
     <a href="flow.php"></a>
 </div>
