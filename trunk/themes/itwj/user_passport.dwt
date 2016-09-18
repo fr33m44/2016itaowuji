@@ -173,7 +173,7 @@
           <p></p>
           <div class="coLoginTxt" style="width:245px;">
           <div class="coLogin_txt_all1" style="width:245px;height:35px"> 
-            <input name="get_qrm_btn" id="get_qrm_btn" onclick="get_qrm(document.forms['formUser'].elements['mobile'].value)" type="button" value="获取手机确认码" size="25" style="width:225px;height:35px;margin-top:18px;cursor:pointer" />
+            <input name="get_qrm_btn" id="get_qrm_btn" onclick="get_qrm(document.forms['formUser'].elements['mobile'].value,1)" type="button" value="获取手机确认码" size="25" style="width:225px;height:35px;margin-top:18px;cursor:pointer" />
           </div>
           </div>
         </div>
@@ -239,14 +239,17 @@
     {foreach from=$lang.password_js item=item key=key}
       var {$key} = "{$item}";
     {/foreach}
+	window.onload=function(){
+		document.getElementById("captchaimg").src = 'captcha.php?'+Math.random();
+	};
     </script>
 <div class="usBox">
   <div class="usBox_2 clearfix">
-    <form action="user.php" method="post" name="getPassword" onsubmit="return submitPwdInfo();">
+    <form action="user.php" method="post" name="formUser" onsubmit="return submitPwdInfo();">
         <br />
         <table width="70%" border="0" align="center">
           <tr>
-            <td colspan="2" align="center"><strong>通过手机号找回密码：</strong></td>
+            <td colspan="2" align="center"><h2>通过手机号找回密码：</h2></td>
           </tr>
           <tr>
             <td width="35%" align="right">手机号：</td>
@@ -254,15 +257,23 @@
           </tr>
           <tr>
             <td width="35%" align="right">验证码：</td>
-            <td width="61%"><input name="captcha" type="text" size="15" class="inputBg" /></td>
-          </tr>
-          <tr>
-            <td align="right">{$lang.email}</td>
-            <td><input name="email" type="text" size="30" class="inputBg" /></td>
+            <td width="61%"><input name="captcha" type="text" size="15" class="inputBg" />
+			<img src="captcha.php?{$rand}" id="captchaimg" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='captcha.php?'+Math.random()" /></td>
           </tr>
           <tr>
             <td></td>
-            <td><input type="hidden" name="act" value="send_pwd_email" />
+            <td><input name="get_qrm_btn" id="get_qrm_btn" type="button" value="获取手机确认码" onclick="get_qrm(document.forms['formUser'].elements['mobile'].value,2)" style="cursor:pointer"/>
+			<span id="captcha_notice" style="color:red"></span>
+			</td>
+          </tr>
+          <tr>
+          <tr>
+            <td align="right">手机确认码：</td>
+            <td><input name="qrm" type="text" size="30" class="inputBg" /></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><input type="hidden" name="act" value="send_pwd_mobile" />
               <input type="submit" name="submit" value="{$lang.submit}" class="bnt_blue" style="border:none;" />
               <input name="button" type="button" onclick="history.back()" value="{$lang.back_page_up}" style="border:none;" class="bnt_blue_1" />
 	    </td>
