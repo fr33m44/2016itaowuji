@@ -42,8 +42,10 @@
           <div class="coLoginTxt" style="width:245px;">
          <div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
           <input name="username" type="text" size="17" id="username" onblur="is_registered(this.value);" class="coLogin_txt"  style="width:225px;"/>
+          
+		  </div>
           </div>
-          </div>
+		  <span style="color:red;font-size:large">*&nbsp;</span>
             <span id="username_notice" style="color:#FF0000"> (建议使用姓名)</span>
         </div>
          <div class="coLogin_one">
@@ -54,6 +56,7 @@
            
           </div>
             </div>
+			<span style="color:red;font-size:large">*&nbsp;</span>
              <span style="color:#FF0000" id="password_notice"></span>
         </div>
        <div class="coLogin_one">
@@ -71,6 +74,7 @@
           <input name="confirm_password" type="password" id="conform_password" onblur="check_conform_password(this.value);"  class="coLogin_txt"  style="width:225px;"/>           
           </div>
           </div>
+		  <span style="color:red;font-size:large">*&nbsp;</span>
            <span style="color:#FF0000" id="conform_password_notice"></span>
         </div>
         <div class="coLogin_one">
@@ -80,6 +84,7 @@
           <input name="shop_name" type="text" size="17" id="shop_name" onblur="check_shop_name(this.value);" class="coLogin_txt"  style="width:225px;"/>
           </div>
           </div>
+		  <span style="color:red;font-size:large">*&nbsp;</span>
             <span id="shop_name_notice" style="color:#FF0000"></span>
         </div>
         <div class="coLogin_one">
@@ -124,6 +129,7 @@
 			<!-- {/foreach} -->
 		</select>
           </div>
+		  <span style="color:red;font-size:large">*&nbsp;</span>
            <span id="region_notice" style="color:#FF0000"></span>
         </div>
         <div class="coLogin_one">
@@ -134,6 +140,7 @@
 
           </div>
           </div>
+		  <span style="color:red;font-size:large">*&nbsp;</span>
           <span id="shop_addr_notice" style="color:#FF0000"></span>
         </div>
 
@@ -145,6 +152,7 @@
           <input name="qq" type="text" size="17"  class="coLogin_txt" onblur="check_qq(this.value)" style="width:225px;" />
           </div>
           </div>
+		  <span style="color:red;font-size:large">*&nbsp;</span>
           <span id="qq_notice" style="color:#FF0000"></span>
         </div>
 		
@@ -155,6 +163,7 @@
 				<input type="text"  size="17" name="mobile" onblur="check_mobile(this.value)" class="coLogin_txt" />
 				</div>
 			</div>
+			<span style="color:red;font-size:large">*&nbsp;</span>
 			<span id="mobile_notice" style="color:#FF0000"></span>
 		</div>
 		
@@ -165,7 +174,8 @@
             <input type="text" size="8" name="captcha" onblur="check_captcha(this.value)" class="coLogin_txt_2" />
             </div>
             <div class="coLoginTxt_2_img"> <img src="captcha.php?{$rand}" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='captcha.php?'+Math.random()" /> </div>
-            <span id="captcha_notice" style="color:#FF0000"></span>
+            <span style="color:red;font-size:large">*&nbsp;</span>
+			<span id="captcha_notice" style="color:#FF0000"></span>
 			</div>
       </div>
 	  
@@ -185,6 +195,7 @@
             <input name="qrm" type="text" class="coLogin_txt" onblur="check_qrm(this.value)" size="25" style="width:225px;" />
           </div>
           </div>
+		  <span style="color:red;font-size:large">*&nbsp;</span>
 		<span id="qrm_notice" style="color:#FF0000"></span>
         </div>
         <div class="coLogin_one">
