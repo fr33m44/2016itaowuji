@@ -1066,12 +1066,12 @@ elseif ($action == 'send_pwd_mobile')
 	}
 	
 	
-	//查询该手机号5分钟内是否已经获取过
-	$sql = "SELECT req_time from ". $ecs->table('sms')." where mobile='$mobile' and action=2"; //1:signup
-	$req_time = $db->getOne($sql);
+	//限制重置密码的间隔事件为5分钟
+	$sql = "SELECT repass_time from ". $ecs->table('sms')." where mobile='$mobile' and action=2"; //1:signup
+	$repass_time = $db->getOne($sql);
 	
 	//5分钟以后或者没有发送记录把密码发送给用户
-	if($req_time == '' || ($req_time + 300) < gmtime())
+	if(empty($repass_time) || ($repass_time + 300) < gmtime())
 	{
 		
 		//生成随机密码
@@ -1116,21 +1116,16 @@ elseif ($action == 'send_pwd_mobile')
 		$resp = $c->execute($req);
 		$result['error']   = 0;
 		$result['content'] = '成功';
-		if($req_time == '')
-		{
-			$sql = "INSERT INTO " . $GLOBALS['ecs']->table('sms') . " (mobile, qrm, req_time, action ) VALUES('$mobile', '$qrm', ".gmtime().", 2)";
-			$db->query($sql);
-		}
-		if(($req_time + 300) < gmtime())
-		{
-			$sql = "UPDATE " . $GLOBALS['ecs']->table('sms') . " set req_time = ".gmtime().", qrm = '$qrm' where mobile='$mobile' and action = 2";
-			$db->query($sql);
-		}
+		
+		$sql = "UPDATE " . $GLOBALS['ecs']->table('sms') . " set repass_time = ".gmtime().", qrm = '$qrm' where mobile='$mobile' and action = 2";
+		$db->query($sql);
+		
+		
 		show_message('您的密码已经重置并发送到您的手机，请注意查收。', '重新登陆', 'user.php', 'info');
 	}
 	else
 	{
-		show_message('请5分钟后重新获取确认码', $_LANG['back_page_up'], '', 'info');
+		show_message('您的操作太频繁，请在5分钟后再重置密码。', $_LANG['back_page_up'], '', 'info');
 	}
 
 
