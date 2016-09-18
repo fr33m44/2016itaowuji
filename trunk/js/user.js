@@ -448,7 +448,6 @@ function registed_callback(result) {
 
 function get_qrm(mobile, action) {
 	/* 检查验证码和手机号 */
-	var regex = /^1[3|4|5|8][0-9]\d{4,8}$/;
 	var regex_captcha = /\w{4}$/;
 
 	var captcha = Utils.trim(document.forms['formUser'].elements['captcha'].value);
@@ -465,7 +464,7 @@ function get_qrm(mobile, action) {
 		alert('验证码格式不对');
 		return;
 	}
-	if (!regex.test(mobile)) {
+	if (!(Utils.isMobile(mobile))) {
 		alert('手机号格式不对');
 		return;
 	}

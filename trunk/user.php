@@ -1028,7 +1028,6 @@ elseif ($action == 'send_pwd_mobile')
     include_once(ROOT_PATH . 'includes/lib_passport.php');
 	include_once('includes/cls_captcha.php');
 	require_once('includes/sms/TopSdk.php');
-    include_once('includes/cls_json.php');
 
     /* 初始化会员用户名和邮件地址 */
     $mobile = !empty($_POST['mobile']) ? trim($_POST['mobile']) : '';
@@ -1036,10 +1035,12 @@ elseif ($action == 'send_pwd_mobile')
 	$qrm = !empty($_POST['qrm']) ? trim($_POST['qrm']) : '';
 	$action = !empty($_POST['action']) ? trim($_POST['action']) : '';
     
-	//验证确认码和验证码是否正确
-	
-	$json = new JSON;
-	$result = array();
+	//get user_id from DB
+	$user_id = $db->getOne("select user_id from ". $ecs->table("users") ." where mobile_phone = '$mobile' ");
+	if(empty($user_id))
+	{
+		show_message('此手机号尚未绑定用户，请检查您的手机号是否正确。');
+	}
 	
 	/* 检查手机号格式 */
 	$reg = "/^1[34578]{1}\d{9}$/";
@@ -1056,7 +1057,6 @@ elseif ($action == 'send_pwd_mobile')
 	{
 		show_message('您输入的手机验证码有误，请返回重试。', $_LANG['back_page_up'], '', 'info');
 	}
-	/*检查手机确认码*/
 	/*手机确认码检查*/
 	$sql = "select qrm from ". $ecs->table('sms'). " where mobile = '$mobile' and action = 2";
 	$qrm_db = $db->getOne($sql);
@@ -1084,8 +1084,7 @@ elseif ($action == 'send_pwd_mobile')
 			$pass[] = $alphabet[$n];
 		}
 		$pass_str = implode($pass); //turn the array into a string
-		//get user_id from DB
-		$user_id = $db->getOne("select user_id from ". $ecs->table("users") ." where mobile_phone = '$mobile' ");
+
 		//密码更新到数据库
 		$user_info = $user->get_profile_by_id($user_id); //论坛记录
 
