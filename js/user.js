@@ -255,7 +255,7 @@ function check_password(password) {
 		document.getElementById('password_notice').innerHTML = password_shorter;
 	}
 	else {
-		document.getElementById('password_notice').innerHTML = msg_can_rg;
+		document.getElementById('password_notice').innerHTML = '';
 	}
 }
 
@@ -267,7 +267,7 @@ function check_shop_name(shopname) {
 		var submit_disabled = true;
 	}
 	else {
-		document.getElementById('shop_name_notice').innerHTML = '可以注册';
+		document.getElementById('shop_name_notice').innerHTML = '';
 		var submit_disabled = false;
 	}
 
@@ -288,7 +288,7 @@ function check_captcha(captcha) {
 		var submit_disabled = true;
 	}
 	else {
-		document.getElementById('captcha_notice').innerHTML = '可以注册';
+		document.getElementById('captcha_notice').innerHTML = '';
 		var submit_disabled = false;
 	}
 
@@ -309,7 +309,7 @@ function check_shop_addr(shop_addr) {
 		var submit_disabled = true;
 	}
 	else {
-		document.getElementById('shop_addr_notice').innerHTML = '可以注册';
+		document.getElementById('shop_addr_notice').innerHTML = '';
 		var submit_disabled = false;
 	}
 
@@ -335,7 +335,7 @@ function check_mobile(mobile) {
 		var submit_disabled = true;
 	}
 	else {
-		document.getElementById('mobile_notice').innerHTML = '可以注册';
+		document.getElementById('mobile_notice').innerHTML = '';
 		var submit_disabled = false;
 	}
 
@@ -356,7 +356,7 @@ function check_qrm(qrm) {
 		var submit_disabled = true;
 	}
 	else {
-		document.getElementById('qrm_notice').innerHTML = '可以注册';
+		document.getElementById('qrm_notice').innerHTML = '';
 		var submit_disabled = false;
 	}
 
@@ -381,7 +381,7 @@ function check_conform_password(conform_password) {
 		return false;
 	}
 	else {
-		document.getElementById('conform_password_notice').innerHTML = msg_can_rg;
+		document.getElementById('conform_password_notice').innerHTML = '';
 	}
 }
 
@@ -396,6 +396,10 @@ function is_registered(username) {
 
 	else if (!chkstr(username)) {
 		document.getElementById('username_notice').innerHTML = msg_un_format;
+		var submit_disabled = true;
+	}
+	else if (username[0] >= '0' && username[0] <='9') {
+		document.getElementById('username_notice').innerHTML = '用户名不能以数字开头';
 		var submit_disabled = true;
 	}
 	else if (unlen < 3) {
@@ -416,7 +420,7 @@ function is_registered(username) {
 
 function registed_callback(result) {
 	if (result == "true") {
-		document.getElementById('username_notice').innerHTML = msg_can_rg;
+		document.getElementById('username_notice').innerHTML = '';
 		document.forms['formUser'].elements['Submit'].disabled = '';
 	}
 	else {
@@ -496,7 +500,7 @@ function checkEmail(email) {
 
 function check_email_callback(result) {
 	if (result == 'ok') {
-		document.getElementById('email_notice').innerHTML = msg_can_rg;
+		document.getElementById('email_notice').innerHTML = '';
 		document.forms['formUser'].elements['Submit'].disabled = '';
 	}
 	else {
@@ -533,6 +537,9 @@ function register() {
 	//var msg = '';
 	if (username.length == 0) {
 		msg += username_empty + '\n';
+	}
+	if (username[0]>='0' && username[0]<='9') {
+		msg += '用户名不能以数字开头' + '\n';
 	}
 	else if (username.match(/^\s*$|^c:\\con\\con$|[%,\'\*\"\s\t\<\>\&\\]/)) {
 		msg += username_invalid + '\n';

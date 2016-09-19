@@ -413,14 +413,14 @@ $(function(){
     
               </div>
 <div class="center_continue_btn">
-  <a href="javascript:window.history.back();"></a>
+   <a href="#" onclick="javascript:window.history.back();return false;"></a>
 </div>
 <div class="center_pop_btn">
     <a href="flow.php"></a>
 </div>
 
                             
-                        </div>
+               </div>
                 
               </div>
             </div>

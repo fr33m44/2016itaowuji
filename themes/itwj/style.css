@@ -2063,14 +2063,14 @@ transition: background-color .2s;}
 .nstep_products table th {height: 33px;font-size: 14px;text-align: center;border-bottom: 1px solid #e5e5e5;font-weight: normal;background: url("images/shop_top_bg.gif") repeat-x left 0; color: #333;}
 .nstep_products table tr.cartList { border-top:1px #e5e5e5 dashed; height:80px; }
 .nstep_pbox img {border: 1px solid #e7e7e7;display: block; margin:15px; float:left}
-.nstep_products table .nstep_name { text-align:left;padding:0 0 0 10px; width:180px; margin-top:35px; font-size:14px; float:left;}
+.nstep_products table .nstep_name { text-align:left;padding:0 0 0 10px; margin-top:35px; font-size:14px; float:left;}
 .nstep_name  a{color: #333; font-family: "宋体",arial,Arial Narrow,serif;}
 .chkprice {color: #f63860;}
 .sub{margin-left:10px;}
 .sub, .add{ width:23px; height:25px; display:block; float:left;cursor: pointer; }
 .shuliang{ width: 30px; float:left;height: 21px;line-height: 21px;text-align: center;border:1px solid #e5e5e5;background: 0;}
 .nstep_products table td {text-align: center;}
-td.nstep1_count div {padding: 10px 20px 0 20px;height: 29px;line-height: 29px;text-align: left;border-top: 1px #e5e5e5 solid; font-size:14px; color:#333; font-weight:bold;}
+td.nstep1_count div {padding: 10px 20px 0 0;height: 29px;line-height: 29px;text-align: left;border-top: 1px #e5e5e5 solid; font-size:14px; color:#333; font-weight:bold;}
 td.nstep1_count div span,td.nstep1_count div b {color: #ed145b;font-size: 18px;}
 .bnt_blue_q{ width:80px; height:23px; background:url(images/qk.gif) no-repeat; border:none; padding:0; margin-top:5px; cursor:pointer;}
 .nstep_products table td.nstep1_btn {padding:0px 10px 20px 0;text-align: right;}
@@ -2176,7 +2176,7 @@ a.hpink:hover {text-decoration: underline;color: #ed145b;}
 .weiruan {font-family: '微软雅黑';}
 .nstepn_opt {padding: 15px 0 15px 10px;width: 940px;font-size: 14px;}
 .nstep1_count .f4_b{font-family: '微软雅黑'; font-weight:normal; color: #f63860;}
-.nstep1_count {padding: 10px 16px 0 16px;height: 29px;line-height: 29px;text-align: left;font-size: 14px;color: #000; font-weight:normal;}
+.nstep1_count {padding: 10px 16px 0 0;height: 29px;line-height: 29px;text-align: left;font-size: 14px;color: #000; font-weight:normal;}
 .orderconfirmBtn {background: url(images/nstep1_btn3.jpg) no-repeat 0 0;border: 0;width: 171px;height: 38px;margin: 0 10px;display: block;cursor: pointer;text-indent: -9999px;}
 .orderconfirmBtn:hover {background: url(images/nstep1_btn3.jpg) no-repeat 0 -38px;}
 .orderok {background: #fffbe1;border: 1px solid #ff9900;padding: 27px;width: 920px;height: 375px;}
