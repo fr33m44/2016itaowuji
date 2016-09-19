@@ -322,9 +322,26 @@ function check_shop_addr(shop_addr) {
 	}
 }
 
+
+function mobileCheckCallback(result) {
+	console.log(result);
+	if (result == "true") 
+	{//可以注册
+		document.forms['formUser'].elements['Submit'].disabled = '';
+	}
+	else {//已经存在
+		document.getElementById('mobile_notice').innerHTML = '该手机号已经被注册';
+		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
+	}
+}
+
+
 function check_mobile(mobile) {
 	var submit_disabled = false;
 	var regex = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+	
+	//ajax判断是否已经注册
+	Ajax.call('user.php?act=check_mobile', 'mobile=' + mobile, mobileCheckCallback, 'GET', 'TEXT', true, true);
 
 	if (Utils.trim(mobile) == '') {
 		document.getElementById('mobile_notice').innerHTML = '手机号不能为空';

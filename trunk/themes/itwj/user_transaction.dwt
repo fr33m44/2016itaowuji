@@ -604,10 +604,7 @@
                   <td colspan="3" align="left" bgcolor="#ffffff">{$order.postscript}</td>
                 </tr>
                 <!-- {/if} -->
-                <tr>
-                  <td width="15%" align="right" bgcolor="#ffffff">{$lang.booking_process}：</td>
-                  <td colspan="3" align="left" bgcolor="#ffffff">{$order.how_oos_name}</td>
-                </tr>
+                
               </table>
               <!--{/if} --> 
               <!--#订单详情页 end--> 

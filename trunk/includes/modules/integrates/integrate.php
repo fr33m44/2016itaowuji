@@ -46,6 +46,9 @@ class integrate
 
     /* 会员名称的字段名 */
     var $field_name     = '';
+	
+	/* 手机号*/
+	var $field_mobile = '';
 
     /* 会员密码的字段名 */
     var $field_pass     = '';
@@ -138,6 +141,28 @@ class integrate
      */
     function login($username, $password, $remember = null)
     {
+		if($username[0]>='0' && $username[1]<='9')//如果是手机号登陆
+        {
+			 $sql = "select ".$this->field_name." from ".$this->table($this->user_table)." where ".$this->field_mobile."='".$username."'";
+			 $username1 = $this->db->getOne($sql);
+			 if($username1)
+			 {
+				 
+				if ($this->need_sync)
+				{
+					$this->sync($username1,$password);
+				}
+				$this->set_session($username1);
+				$this->set_cookie($username1, $remember);
+
+				 return true;
+			 }
+			 else
+			 {
+				 return false;
+			 }
+        }
+
         if ($this->check_user($username, $password) > 0)
         {
             if ($this->need_sync)
@@ -490,10 +515,10 @@ class integrate
         }
         else
         {
-            $sql = "SELECT " . $this->field_id .
+			$sql = "SELECT " . $this->field_id .
                    " FROM " . $this->table($this->user_table).
-                   " WHERE " . $this->field_name . "='" . $post_username . "' AND " . $this->field_pass . " ='" . $this->compile_password(array('password'=>$password)) . "'";
-
+                   " WHERE (" . $this->field_name . "='" . $post_username . "' OR ".$this->field_mobile. "='" . $post_username ." ) AND " . $this->field_pass . " ='" . $this->compile_password(array('password'=>$password)) . "'";
+			print_r($sql);die();
             return  $this->db->getOne($sql);
         }
     }

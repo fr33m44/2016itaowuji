@@ -24,7 +24,7 @@ $back_act='';
 
 // 不需要登录的操作或自己验证是否登录（如ajax处理）的act
 $not_login_arr =
-array('login','act_login','getqrm','register','act_register','act_edit_password','get_password','send_pwd_mobile','password', 'signin', 'add_tag', 'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email','clear_history','qpassword_name', 'get_passwd_question', 'check_answer', 'oath' , 'oath_login', 'other_login');
+array('login','act_login','getqrm','check_mobile','register','act_register','act_edit_password','get_password','send_pwd_mobile','password', 'signin', 'add_tag', 'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email','clear_history','qpassword_name', 'get_passwd_question', 'check_answer', 'oath' , 'oath_login', 'other_login');
 
 /* 显示页面的action列表 */
 $ui_arr = array('register', 'login', 'profile', 'order_list', 'order_detail', 'address_list', 'collection_list',
@@ -222,7 +222,14 @@ elseif ($action == 'act_register')
 		{
             show_message('确认码不正确');
 		}
-		
+		/*判断手机号是否已经存在*/
+		$sql = "select count(1) from ".$ecs->table("users")." where mobile_phone='$mobile'";
+		$count = $db->getOne($sql);
+		if(!empty($count))
+		{
+            show_message('该手机号已经被注册。');
+		}
+
 		
         if (register($username, $password, $email, $other) !== false)
         {
@@ -512,20 +519,26 @@ elseif ($action == 'is_registered')
         echo 'true';
     }
 }
-
-/* 验证用户邮箱地址是否被注册 
-elseif($action == 'check_email')
+/* 验证用户手机号是否可以注册 */
+elseif ($action == 'check_mobile')
 {
-    $email = trim($_GET['email']);
-    if ($user->check_email($email))
+    include_once(ROOT_PATH . 'includes/lib_passport.php');
+
+    $mobile = trim($_GET['mobile']);
+	
+	$sql = "select count(1) from ".$ecs->table("users")." where mobile_phone='$mobile'";
+	$count = $db->getOne($sql);
+
+    if (empty($count))
     {
-        echo 'false';
+        echo 'true';
     }
     else
     {
-        echo 'ok';
+        echo 'false';
     }
-}*/
+}
+
 /* 用户登录界面 */
 elseif ($action == 'login')
 {
@@ -589,7 +602,6 @@ elseif ($action == 'act_login')
         recalculate_price();
 
         $ucdata = isset($user->ucdata)? $user->ucdata : '';
-        //show_message($_LANG['login_success'] . $ucdata , array($_LANG['back_up_page'], $_LANG['profile_lnk']), array($back_act,'user.php'), 'info');
 		$json   = new JSON;
 		$res    = array( 'bool' => 1);
 		die($json->encode($res));
