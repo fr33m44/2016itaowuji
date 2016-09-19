@@ -46,7 +46,7 @@
 		  </div>
           </div>
 		  <span style="color:red;font-size:large">*&nbsp;</span>
-            <span id="username_notice" style="color:#FF0000"> (建议使用姓名或手机号码)</span>
+            <span id="username_notice" style="color:#FF0000"> (建议使用真实姓名)</span>
         </div>
          <div class="coLogin_one">
           <p>{$lang.label_password}：</p>
