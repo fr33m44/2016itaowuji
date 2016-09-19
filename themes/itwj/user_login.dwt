@@ -67,37 +67,6 @@
 		}
 	}
 	$(document).ready(function() {
-		//提示
-		$('#username').val('用户名/手机号').css('color','#aaa');
-		$('#password').val('密码').css('color','#aaa').attr('type','text');
-		
-		$('#username').focus(function(){
-			$(this).val('');
-			$(this).css('color', '#000');
-		}).blur(function(){
-			if($(this).val() == "")
-			{
-				$(this).val('用户名/手机号').css('color','#aaa');
-			}
-		});
-		
-		$('#password').focus(function(){
-			$(this).val('');
-			$(this).css('color', '#000');
-			$(this).attr('type', 'password');
-		}).blur(function(){
-			$(this).attr('type','text');
-			if($(this).val() == "")
-			{
-				$(this).val('密码').css('color','#aaa');
-			}
-			else
-			{
-				$(this).attr('type','password');
-			}
-		});
-		
-		
 		//回车登陆
 		document.onkeydown = function(e) {
 			var ev = document.all ? window.event : e;
@@ -145,11 +114,11 @@
 								<p class="pbiaoqianchanger" id="dslrdengluchaoshierror">
 									<span class="yonghum aie6changer">用户名</span> 
 									<div class="diddto_name">
-									<input class="diddto" size="35" type="text" id="username" /></div>
+									<input class="diddto" size="35" type="text" id="username" placeholder="用户名/手机号" /></div>
 								</p>
 								<p class="pbiaoqianchanger">
 									<span class="yonghum">登录密码</span>
-									  <div class="diddto_pass"><input class="diddto" size="35" id="password" type="password" /></div>
+									  <div class="diddto_pass"><input class="diddto" size="35" id="password" type="password" placeholder="用户密码"/></div>
 								</p>
 								<p style="margin-top:10px;">
 								<input type="checkbox" name="remember" id="remember" />

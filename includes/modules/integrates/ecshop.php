@@ -62,6 +62,7 @@ class ecshop extends integrate
         $this->field_name = 'user_name';
         $this->field_pass = 'password';
         $this->field_email = 'email';
+        $this->field_mobile = 'mobile_phone';
         $this->field_gender = 'sex';
         $this->field_bday = 'birthday';
         $this->field_reg_date = 'reg_time';
@@ -101,14 +102,15 @@ class ecshop extends integrate
         {
             $sql = "SELECT user_id, password, salt,ec_salt " .
                    " FROM " . $this->table($this->user_table).
-                   " WHERE user_name='$post_username'";
+                   " WHERE user_name='$post_username' or mobile_phone='$_post_username'";
             $row = $this->db->getRow($sql);
-			$ec_salt=$row['ec_salt'];
+			
             if (empty($row))
             {
                 return 0;
             }
 
+			$ec_salt=$row['ec_salt'];
             if (empty($row['salt']))
             {
                 if ($row['password'] != $this->compile_password(array('password'=>$password,'ec_salt'=>$ec_salt)))
