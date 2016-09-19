@@ -78,12 +78,12 @@
 <Div class="nstep_products ">
   <div class="flowBox">
         <form id="formCart" name="formCart" method="post" action="flow.php">
-           <table width="100%" >
+           <table width="100%">
             <tr>
               <th style="font-weight:bold;" width="40">
 			  <input type="button" value="删除选定" class="del_cart_btn" style="cursor:pointer;" />
 			  <input type="button" name="chkall" id="chkall" value="全选" style="cursor:pointer;"  /></th>
-              <th   style="font-weight:bold;" >
+              <th   style="font-weight:bold;">
 			  {$lang.goods_name}</th>
       <!-- {if $show_goods_attribute eq 1} 显示商品属性 -->
               <th style="text-align: center;font-weight:bold;" width="80">{$lang.goods_attr}</th>
@@ -146,7 +146,7 @@
                
               </td>
               <td align="center" id="goods_subtotal_{$goods.rec_id}" class="chkprice ">{$goods.subtotal}</td>
-              <td align="center" >
+              <td align="center">
                 <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='flow.php?step=drop_goods&amp;id={$goods.rec_id}'; " class="chkprice ">{$lang.drop}</a>
                 <!-- {if $smarty.session.user_id gt 0 && $goods.extension_code neq 'package_buy'} 如果登录了，可以加入收藏 -->
              <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='flow.php?step=drop_to_collect&amp;id={$goods.rec_id}'; " class="chkprice ">收藏</a>
@@ -154,7 +154,7 @@
             </tr>
             <!-- {/foreach} -->
           </table>
-          <table width="100%" >
+          <table width="100%">
             <tr>
               <td id="total_desc" class="nstep1_count">
               <div>
@@ -172,10 +172,10 @@
           </table>
           <input type="hidden" name="step" value="update_cart" />
         </form>
-        <table width="100%" >
+        <table width="100%">
           <tr>
             <td colspan="3" width="60%"></td>
-            <td align="right" class="nstep1_btn" >
+            <td align="right" class="nstep1_btn">
             <div class="orderaction">
             <a class="cartsubmit" onclick="check_cart()" href="javascript:;"></a> <a class="continueFind" href="./"></a>
             </div>
@@ -362,8 +362,8 @@
   }
   </script>
   <div class="blank"></div>
-  <div class="block_s" >
-     <div class="buytab_a clearfix " >
+  <div class="block_s">
+     <div class="buytab_a clearfix ">
     <div class="buytab clearfix">
     <div id="tabnavs">
      <h2 class="nstep1_tit2">{$lang.goods_fittings}</h2>
@@ -395,7 +395,7 @@
    <div class="blank"></div>
   
     <!-- {if $promotion_goods} -->
- <div class="buytab_a clearfix " >
+ <div class="buytab_a clearfix ">
     <div class="buytab clearfix">
     <div id="tabnavs">
      <h2 class="nstep1_tit2">今日特卖精品<span>(单笔订单满两件包邮哦)</span></h2>
@@ -412,7 +412,7 @@
                 <div class="right_old  " style="white-space: nowrap;">{$goods.market_price} </div>       
                 </div>
                 <div  style="clear:both"></div>
-         <a class="pinkbtn" style="*line-height: 19px;_line-height: 16px;" href="javascript:addToCartShowDiv({$goods.id},1,'best')" >加入购物车</a>
+         <a class="pinkbtn" style="*line-height: 19px;_line-height: 16px;" href="javascript:addToCartShowDiv({$goods.id},1,'best')">加入购物车</a>
          <div class="sucess_joinCart" id="addtocartdialog_retui_{$goods.id}_best">
 
 </div>
@@ -566,15 +566,15 @@
               </td>
               <td>{$goods.goods_attr|nl2br}</td>
               <!-- {if $show_marketprice} -->
-              <td  class="weiruan " align="right">{$goods.formated_market_price}</td>
+              <td  class="weiruan" align="right">{$goods.formated_market_price}</td>
               <!-- {/if} -->
-              <td class="weiruan " align="right">{$goods.formated_goods_price}</td>
-              <td class="weiruan " align="right">{$goods.goods_number}</td>
-              <td class="weiruan " align="right">{$goods.formated_subtotal}</td>
+              <td class="weiruan" align="right">{$goods.formated_goods_price}</td>
+              <td class="weiruan" align="right">{$goods.goods_number}</td>
+              <td class="weiruan" align="right">{$goods.formated_subtotal}</td>
             </tr>
             <!-- {/foreach} -->
             <!-- {if !$gb_deposit} 团购且有保证金时不显示 -->
-            <tr class="weiruan ">
+            <tr class="weiruan">
               <td colspan="7">
               <!-- {if $discount gt 0} -->{$your_discount}<br /><!-- {/if} -->
               {$shopping_money}<!-- {if $show_marketprice} -->，{$market_price_desc}<!--{/if}-->
@@ -589,7 +589,7 @@
       <div class="nstep2_ctent">
 <div  style="line-height:30px;">
      <table  style="width:948px;border:1px #e5e5e5 solid;margin:5px auto;">
-            <tr   class="nstepn_opt optbg" >
+            <tr   class="nstepn_opt optbg">
              <td bgcolor="#ffeddd" width="14%" class="txt_r">{$lang.consignee_name}&nbsp;：</td>
               <td bgcolor="#ffeddd">&nbsp;{$consignee.consignee|escape}</td>
             </tr>
@@ -626,18 +626,18 @@
    
     <table style="width:948px;border:1px #e5e5e5 solid;margin:5px auto;"  id="paymentTable">
             <tr>
-              <th  style="background:#f5f5f5;font-weight:bold;" width="5%" >&nbsp;</th>
-              <th style="background:#f5f5f5;font-weight:bold;" width="20%" >{$lang.name}</th>
-              <th style="background:#f5f5f5;font-weight:bold;" >{$lang.describe}</th>
+              <th  style="background:#f5f5f5;font-weight:bold;" width="5%">&nbsp;</th>
+              <th style="background:#f5f5f5;font-weight:bold;" width="20%">{$lang.name}</th>
+              <th style="background:#f5f5f5;font-weight:bold;">{$lang.describe}</th>
               <th style="background:#f5f5f5;font-weight:bold;"  width="15%">{$lang.pay_fee}</th>
             </tr>
             <!-- {foreach from=$payment_list item=payment} -->
             <!-- 循环支付方式 -->
             <tr>
-              <td valign="top" class="weiruan "><input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/></td>
-              <td valign="top" class="weiruan "><strong>{$payment.pay_name}</strong></td>
-              <td valign="top" class="weiruan " style="text-align:left;">{$payment.pay_desc}</td>
-              <td align="right"class="weiruan " valign="top">{$payment.format_pay_fee}</td>
+              <td valign="top" class="weiruan"><input type="radio" name="payment" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if}/></td>
+              <td valign="top" class="weiruan"><strong>{$payment.pay_name}</strong></td>
+              <td valign="top" class="weiruan" style="text-align:left;">{$payment.pay_desc}</td>
+              <td align="right"class="weiruan" valign="top">{$payment.format_pay_fee}</td>
             </tr>
             <!-- {/foreach} 循环支付方式 -->
           </table>
@@ -654,22 +654,22 @@
       <table style="width:948px;border:1px #e5e5e5 solid;margin:5px auto;">
             <!-- {if $allow_use_surplus} 是否使用余额 -->
             <tr >
-              <td  class="weiruan " width="20%"><strong>{$lang.use_surplus}: </strong></td>
-              <td class="weiruan "><input name="surplus" type="text" class="inputBg" id="ECS_SURPLUS" size="10" value="{$order.surplus|default:0}" onblur="changeSurplus(this.value)" {if $disable_surplus}disabled="disabled"{/if} />
+              <td  class="weiruan" width="20%"><strong>{$lang.use_surplus}: </strong></td>
+              <td class="weiruan"><input name="surplus" type="text" class="inputBg" id="ECS_SURPLUS" size="10" value="{$order.surplus|default:0}" onblur="changeSurplus(this.value)" {if $disable_surplus}disabled="disabled"{/if} />
               {$lang.your_surplus}{$your_surplus|default:0} <span id="ECS_SURPLUS_NOTICE" class="notice"></span></td>
             </tr>
             <!-- {/if} 是否使用余额 -->
             <!-- {if $allow_use_integral} 是否使用积分 -->
             <tr>
-              <td class="weiruan "><strong>{$lang.use_integral}</strong></td>
-              <td class="weiruan "><input name="integral" type="text" class="input" id="ECS_INTEGRAL" onblur="changeIntegral(this.value)" value="{$order.integral|default:0}" size="10" />
+              <td class="weiruan"><strong>{$lang.use_integral}</strong></td>
+              <td class="weiruan"><input name="integral" type="text" class="input" id="ECS_INTEGRAL" onblur="changeIntegral(this.value)" value="{$order.integral|default:0}" size="10" />
               {$lang.can_use_integral}:{$your_integral|default:0} {$points_name}，{$lang.noworder_can_integral}{$order_max_integral}  {$points_name}. <span id="ECS_INTEGRAL_NOTICE" class="notice"></span></td>
             </tr>
             <!-- {/if} 是否使用积分 -->
             <!-- {if $allow_use_bonus} 是否使用红包 -->
             <tr>
-              <td  class="weiruan "><strong>{$lang.use_bonus}:</strong></td>
-              <td class="weiruan " >
+              <td  class="weiruan"><strong>{$lang.use_bonus}:</strong></td>
+              <td class="weiruan">
                 {$lang.select_bonus}
                 <select name="bonus" onchange="changeBonus(this.value)" id="ECS_BONUS" style="border:1px solid #ccc;">
                   <option value="0" {if $order.bonus_id eq 0}selected{/if}>{$lang.please_select}</option>
@@ -686,10 +686,10 @@
             <!-- {/if} 是否使用红包 -->
             <!-- {if $inv_content_list} 能否开发票 -->
             <tr>
-              <td  class="weiruan "><strong>{$lang.invoice}:</strong>
+              <td  class="weiruan"><strong>{$lang.invoice}:</strong>
                 <input name="need_inv" type="checkbox"  class="input" id="ECS_NEEDINV" onclick="changeNeedInv()" value="1" {if $order.need_inv}checked="true"{/if} />
               </td>
-              <td class="weiruan " >
+              <td class="weiruan">
                 <!-- {if $inv_type_list} -->
                 {$lang.invoice_type}
                 <select name="inv_type" id="ECS_INVTYPE" {if $order.need_inv neq 1}disabled="true"{/if} onchange="changeNeedInv()" style="border:1px solid #ccc;">
@@ -706,13 +706,13 @@
             </tr>
             <!-- {/if} -->
             <tr>
-              <td class="weiruan " valign="top"><strong>{$lang.order_postscript}:</strong></td>
-              <td class="weiruan "><textarea name="postscript" cols="80" rows="3" id="postscript" style="border:1px solid #ccc;">{$order.postscript|escape}</textarea></td>
+              <td class="weiruan" valign="top"><strong>{$lang.order_postscript}:</strong></td>
+              <td class="weiruan"><textarea name="postscript" cols="80" rows="3" id="postscript" style="border:1px solid #ccc;">{$order.postscript|escape}</textarea></td>
             </tr>
             <!-- {if $how_oos_list} 是否使用缺货处理 -->
             <tr>
-              <td class="weiruan "><strong>{$lang.booking_process}:</strong></td>
-              <td class="weiruan "><!-- {foreach from=$how_oos_list key=how_oos_id item=how_oos_name} -->
+              <td class="weiruan"><strong>{$lang.booking_process}:</strong></td>
+              <td class="weiruan"><!-- {foreach from=$how_oos_list key=how_oos_id item=how_oos_name} -->
                 <label>
                 <input name="how_oos" type="radio" value="{$how_oos_id}" {if $order.how_oos eq $how_oos_id}checked{/if} onclick="changeOOS(this)" />
                 {$how_oos_name}</label>
@@ -757,7 +757,7 @@
 
 	<img src="images/step3.gif" width="980" height="31"/>
 </div>
-        <div class="buytab_a" >
+        <div class="buytab_a">
         <div class="nstep2_con orderok">
          <p class="ordertitle">{$lang.remember_order_number}: <font style="color:red">{$order.order_sn}</font></p>
          
@@ -978,7 +978,7 @@
           </div>
                    <div class="coLogin_two">
                     <p></p>
-                   <a href="user.php?act=qpassword_name" >{$lang.get_password_by_question}</a>&nbsp;&nbsp;&nbsp;<a href="user.php?act=get_password" >{$lang.get_password_by_mail}</a>
+                   <a href="user.php?act=qpassword_name">{$lang.get_password_by_question}</a>&nbsp;&nbsp;&nbsp;<a href="user.php?act=get_password">{$lang.get_password_by_mail}</a>
                   </div>
                    <div class="coLogin_one">
                    

@@ -152,7 +152,7 @@ elseif ($action == 'act_register')
     }
     else
     {
-        include_once(ROOT_PATH . 'includes/lib_passport.php');
+		include_once(ROOT_PATH . 'includes/lib_passport.php');
 
         $qrm = isset($_POST['qrm']) ? trim($_POST['qrm']) : '';
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
@@ -255,7 +255,11 @@ elseif ($action == 'act_register')
             $sql = 'SELECT id FROM ' . $ecs->table('reg_fields') . ' WHERE type = 0 AND display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
             $fields_arr = $db->getAll($sql);
 
-            
+            /* 新会员注册发送红包50 */
+            $sql = "INSERT INTO " . $ecs->table('user_bonus') .
+                    "(bonus_type_id, bonus_sn, user_id, used_time, order_id, emailed) " .
+                    "VALUES (1, 0, '$_SESSION[user_id]', 0, 0, 1)";
+            $db->query($sql);
 
             $extend_field_str = '';    //生成扩展字段的内容字符串
             foreach ($fields_arr AS $val)
