@@ -1,16 +1,16 @@
-imgUrl1="data/afficheimg/20160910aaogvk.jpg";
+imgUrl1="data/afficheimg/20160919uwzhmr.jpg";
 imgtext1="";
 imgLink1=escape("http://itwj/category.php?id=163");
-imgUrl2="data/afficheimg/20160910cjfxbq.jpg";
+imgUrl2="data/afficheimg/20160919yaerxm.jpg";
 imgtext2="";
 imgLink2=escape("http://itwj/category.php?id=160");
-imgUrl3="data/afficheimg/20160910usleox.jpg";
+imgUrl3="data/afficheimg/20160919ufapjc.jpg";
 imgtext3="";
 imgLink3=escape("http://首页");
-imgUrl4="data/afficheimg/20160910cdechf.jpg";
+imgUrl4="data/afficheimg/20160919ryqhhl.jpg";
 imgtext4="";
 imgLink4=escape("http://itwj/category.php?id=165");
-imgUrl5="data/afficheimg/20160910uilzvz.jpg";
+imgUrl5="data/afficheimg/20160919ocrajz.jpg";
 imgtext5="";
 imgLink5=escape("http://itwj/category.php?id=167");
 
