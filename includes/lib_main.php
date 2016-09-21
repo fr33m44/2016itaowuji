@@ -1720,32 +1720,18 @@ function get_user_bonus($user_id = 0)
 function set_affiliate()
 {
     $config = unserialize($GLOBALS['_CFG']['affiliate']);
-    if (!empty($_GET['u']) && $config['on'] == 1)
+	
+	//如果没有登陆并且有ecshop_affiliate_uid,清除掉
+	if(empty($_SESSION['user_id']))
+	{
+		setcookie('ecshop_affiliate_uid', null, -1, '/');
+	}
+	$sql = "select parent_id from ".$GLOBALS['ecs']->table("users")." where user_id=$_SESSION[user_id]"; 
+	$parent_id = $GLOBALS['db']->getOne($sql);
+	if ($config['on'] == 1 && !empty($parent_id))
     {
-        if(!empty($config['config']['expire']))
-        {
-            if($config['config']['expire_unit'] == 'hour')
-            {
-                $c = 1;
-            }
-            elseif($config['config']['expire_unit'] == 'day')
-            {
-                $c = 24;
-            }
-            elseif($config['config']['expire_unit'] == 'week')
-            {
-                $c = 24 * 7;
-            }
-            else
-            {
-                $c = 1;
-            }
-            setcookie('ecshop_affiliate_uid', intval($_GET['u']), gmtime() + 3600 * $config['config']['expire'] * $c);
-        }
-        else
-        {
-            setcookie('ecshop_affiliate_uid', intval($_GET['u']), gmtime() + 3600 * 24); // 过期时间为 1 天
-        }
+		//为了地推能够一直提成，每次登陆都设置一下cookie
+		setcookie('ecshop_affiliate_uid', $parent_id, 0);
     }
 }
 
@@ -1763,17 +1749,13 @@ function get_affiliate()
     if (!empty($_COOKIE['ecshop_affiliate_uid']))
     {
         $uid = intval($_COOKIE['ecshop_affiliate_uid']);
-        if ($GLOBALS['db']->getOne('SELECT user_id FROM ' . $GLOBALS['ecs']->table('users') . "WHERE user_id = '$uid'"))
-        {
-            return $uid;
-        }
-        else
-        {
-            setcookie('ecshop_affiliate_uid', '', 1);
-        }
+        
     }
-
-    return 0;
+	else
+	{
+		$uid = $GLOBALS['db']->getOne('SELECT parent_id FROM ' . $GLOBALS['ecs']->table('users') . "WHERE user_id = '$uid'");
+	}
+	return $uid;
 }
 
 /**

@@ -103,7 +103,6 @@ elseif ($_REQUEST['act'] == 'updata')
     {
         $_POST['level_money_all'] .= '%';
     }
-    $_POST['level_register_all'] = intval($_POST['level_register_all']);
     $_POST['level_register_up'] = intval($_POST['level_register_up']);
     $temp = array();
     $temp['config'] = array('expire'                => $_POST['expire'],        //COOKIE过期数字

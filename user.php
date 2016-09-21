@@ -235,9 +235,6 @@ elseif ($action == 'act_register')
         {
             include_once(ROOT_PATH . 'includes/lib_transaction.php');
             include_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
-            //$provinc = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$province."%'");
-            //$cit = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$city."%'");
-            //$distric = $db->getOne("SELECT region_id FROM " .$ecs->table('region'). " WHERE region_name LIKE '%".$district."%'");
             $address = array(
 			'default'    =>	1,//default>0的时候将user_address.address_id赋值到users.address_id 默认地址为店铺地址
             'user_id'    => $_SESSION['user_id'],
@@ -546,6 +543,8 @@ elseif ($action == 'check_mobile')
 /* 用户登录界面 */
 elseif ($action == 'login')
 {
+	
+
     if (empty($back_act))
     {
         if (empty($back_act) && isset($GLOBALS['_SERVER']['HTTP_REFERER']))
@@ -617,7 +616,6 @@ elseif ($action == 'act_login')
 		$json   = new JSON;
 		$res    = array( 'bool' => 0, 'error' => $_LANG['login_failure']);
 		die($json->encode($res));
-        //show_message($_LANG['login_failure'], $_LANG['relogin_lnk'], 'user.php', 'error');
     }
 }
 /* 处理 ajax 的登录请求 */
@@ -761,6 +759,7 @@ elseif ($action == 'logout')
 /* 个人资料页面 */
 elseif ($action == 'profile')
 {
+	
     include_once(ROOT_PATH . 'includes/lib_transaction.php');
 	include_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
 	$smarty->assign('lang',  $_LANG);
@@ -2540,12 +2539,13 @@ elseif ($action == 'affiliate')
                 $affdb[$i]['money'] = $affiliate['item'][$i-1]['level_money'];
             }
             $smarty->assign('affdb', $affdb);
+			
 
             $sqlcount = "SELECT count(*) FROM " . $ecs->table('order_info') . " o".
         " LEFT JOIN".$ecs->table('users')." u ON o.user_id = u.user_id".
         " LEFT JOIN " . $ecs->table('affiliate_log') . " a ON o.order_id = a.order_id" .
         " WHERE o.user_id > 0 AND (u.parent_id IN ($all_uid) AND o.is_separate = 0 OR a.user_id = '$user_id' AND o.is_separate > 0)";
-
+			
             $sql = "SELECT o.*, a.log_id, a.user_id as suid,  a.user_name as auser, a.money, a.point, a.separate_type FROM " . $ecs->table('order_info') . " o".
                     " LEFT JOIN".$ecs->table('users')." u ON o.user_id = u.user_id".
                     " LEFT JOIN " . $ecs->table('affiliate_log') . " a ON o.order_id = a.order_id" .

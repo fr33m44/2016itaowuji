@@ -25,6 +25,9 @@ if (!defined('IN_ECS'))
  */
 function register($username, $password, $email, $other = array())
 {
+	
+	require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/admin/affiliate_ck.php');
+	
     /* 检查注册是否关闭 */
     if (!empty($GLOBALS['_CFG']['shop_reg_closed']))
     {
@@ -104,39 +107,6 @@ function register($username, $password, $email, $other = array())
             log_account_change($_SESSION['user_id'], 0, 0, $GLOBALS['_CFG']['register_points'], $GLOBALS['_CFG']['register_points'], $GLOBALS['_LANG']['register_points']);
         }
 
-        /*推荐处理*/
-        $affiliate  = unserialize($GLOBALS['_CFG']['affiliate']);
-        if (isset($affiliate['on']) && $affiliate['on'] == 1)
-        {
-            // 推荐开关开启
-            $up_uid     = get_affiliate();
-            empty($affiliate) && $affiliate = array();
-            $affiliate['config']['level_register_all'] = intval($affiliate['config']['level_register_all']);
-            $affiliate['config']['level_register_up'] = intval($affiliate['config']['level_register_up']);
-            if ($up_uid)
-            {
-                if (!empty($affiliate['config']['level_register_all']))
-                {
-                    if (!empty($affiliate['config']['level_register_up']))
-                    {
-                        $rank_points = $GLOBALS['db']->getOne("SELECT rank_points FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '$up_uid'");
-                        if ($rank_points + $affiliate['config']['level_register_all'] <= $affiliate['config']['level_register_up'])
-                        {
-                            log_account_change($up_uid, 0, 0, $affiliate['config']['level_register_all'], 0, sprintf($GLOBALS['_LANG']['register_affiliate'], $_SESSION['user_id'], $username));
-                        }
-                    }
-                    else
-                    {
-                        log_account_change($up_uid, 0, 0, $affiliate['config']['level_register_all'], 0, $GLOBALS['_LANG']['register_affiliate']);
-                    }
-                }
-
-                //设置推荐人
-                $sql = 'UPDATE '. $GLOBALS['ecs']->table('users') . ' SET parent_id = ' . $up_uid . ' WHERE user_id = ' . $_SESSION['user_id'];
-
-                $GLOBALS['db']->query($sql);
-            }
-        }
 
         //定义other合法的变量数组
         $other_key_array = array('parent_id', 'msn', 'qq', 'office_phone', 'home_phone', 'mobile_phone');
@@ -162,10 +132,43 @@ function register($username, $password, $email, $other = array())
         update_user_info();      // 更新用户信息
         recalculate_price();     // 重新计算购物车中的商品价格
 
+		
+        /*注册推荐送现金*/
+        $affiliate  = unserialize($GLOBALS['_CFG']['affiliate']);
+        if (isset($affiliate['on']) && $affiliate['on'] == 1)
+        {
+            // 推荐开关开启
+            $up_uid = $GLOBALS['db']->getOne('SELECT parent_id FROM ' . $GLOBALS['ecs']->table('users') . "WHERE user_id = $_SESSION[user_id]");
+			//获取推荐用户名
+			$sql = "select user_name from ".$GLOBALS['ecs']->table('users')." where user_id=$up_uid";
+			$up_name = $GLOBALS['db']->getOne($sql);
+            if ($up_uid)
+            {
+                if (!empty($affiliate['config']['level_register_all']))
+                {
+					$setmoney = $affiliate['config']['level_register_all'];
+					
+					$info = sprintf($_LANG['separate_info2'],$up_uid, $up_name, $setmoney, 0);
+                    log_account_change($up_uid, $setmoney, 0, 0, 0, $info);
+                    write_affiliate_log(0, $up_uid, $up_name, $setmoney, 0, 0);
+               
+                }
+
+            }
+        }
+		
+		
         return true;
     }
 }
-
+function write_affiliate_log($oid, $uid, $username, $money, $point, $separate_by)
+{
+    $time = gmtime();
+    $sql = "INSERT INTO " . $GLOBALS['ecs']->table('affiliate_log') . "( order_id, user_id, user_name, time, money, point, separate_type)".
+                                                              " VALUES ( '$oid', '$uid', '$username', '$time', '$money', '$point', $separate_by)";
+    $GLOBALS['db']->query($sql);
+    
+}
 /**
  *
  *

@@ -88,7 +88,7 @@ function get_order_id_by_sn($order_sn, $voucher = 'false')
 }
 
 /**
- *  通过订单sn取得order_id
+ *  hjq 通过订单sn取得order_id
  *  @param  string  $order_sn   订单sn
  *  @param  blob    $voucher    是否为会员充值
  */
@@ -98,7 +98,7 @@ function get_order_id_by_sn1($order_sn, $voucher = 'false')
     {
         if(is_numeric($order_sn))
         {
-              return $GLOBALS['db']->getOne("SELECT log_id FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id=" . $order_sn . ' AND order_type=1');
+              return $GLOBALS['db']->getOne("SELECT order_id FROM " . $GLOBALS['ecs']->table('pay_log') . " WHERE order_id=" . $order_sn . ' AND order_type=1');
         }
         else
         {
@@ -172,6 +172,9 @@ function check_money($log_id, $money)
  */
 function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
 {
+	
+	require_once(ROOT_PATH . 'languages/zh_cn/admin/affiliate_ck.php');
+	
     /* 取得支付编号 */
     $log_id = intval($log_id);
     if ($log_id > 0)
@@ -191,12 +194,14 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
             if ($pay_log['order_type'] == PAY_ORDER)
             {
                 /* 取得订单信息 */
-                $sql = 'SELECT order_id, user_id, order_sn, consignee, address, tel, shipping_id, extension_code, extension_id, goods_amount ' .
+                $sql = 'SELECT order_id, user_id, order_sn, (goods_amount-discount) as goods_amount,consignee, address, tel, shipping_id, extension_code, extension_id, goods_amount ' .
                         'FROM ' . $GLOBALS['ecs']->table('order_info') .
                        " WHERE order_id = '$pay_log[order_id]'";
                 $order    = $GLOBALS['db']->getRow($sql);
                 $order_id = $order['order_id'];
                 $order_sn = $order['order_sn'];
+				$user_id  = $order['user_id'];
+				$goods_amount=$order['goods_amount'];
 
                 /* 修改订单状态为已付款 */
                 $sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') .
@@ -246,6 +251,33 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
                         log_account_change($order['user_id'], 0, 0, intval($integral['rank_points']), intval($integral['custom_points']), sprintf($GLOBALS['_LANG']['order_gift_integral'], $order['order_sn']));
                     }
                 }
+				/* hjq  付款后推荐人获取提成提成 online pay*/
+				$affiliate  = unserialize($GLOBALS['_CFG']['affiliate']);
+				
+				if (isset($affiliate['on']) && $affiliate['on'] == 1)
+				{
+					// 推荐开关开启
+					$up_uid = $GLOBALS['db']->getOne('SELECT parent_id FROM ' . $GLOBALS['ecs']->table('users') . "WHERE user_id = $_SESSION[user_id]");
+					
+					//获取推荐用户名
+					$sql = "select user_name from ".$GLOBALS['ecs']->table('users')." where user_id=$up_uid";
+					$up_name = $GLOBALS['db']->getOne($sql);
+					if ($up_uid)
+					{
+						if (!empty($affiliate['config']['level_money_all']))
+						{
+							$setmoney = $affiliate['config']['level_money_all'];
+							$setmoney = floatval($setmoney)/100;
+							$setmoney = round($setmoney * $order['goods_amount'],2);
+							$info = sprintf($_LANG['separate_info'], $order_sn, $setmoney, 0);
+							log_account_change($up_uid, $setmoney, 0, 0, 0, $info, ACT_AFFILIATE);
+							write_affiliate_log(0, $up_uid, $up_name, $setmoney, 0, 0);
+					   
+						}
+
+					}
+				}
+				
 
             }
             elseif ($pay_log['order_type'] == PAY_SURPLUS)
@@ -322,5 +354,12 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
         }
     }
 }
-
+function write_affiliate_log($oid, $uid, $username, $money, $point, $separate_by)
+{
+    $time = gmtime();
+    $sql = "INSERT INTO " . $GLOBALS['ecs']->table('affiliate_log') . "( order_id, user_id, user_name, time, money, point, separate_type)".
+                                                              " VALUES ( '$oid', '$uid', '$username', '$time', '$money', '$point', $separate_by)";
+    $GLOBALS['db']->query($sql);
+    
+}
 ?>
