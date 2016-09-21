@@ -14,19 +14,28 @@
  * 该页面调试工具请使用写文本函数logResult，该函数已被默认关闭，见alipay_notify_class.php中的函数verifyNotify
  * 如果没有收到该页面返回的 success 信息，支付宝会在24小时内按一定的时间策略重发通知
  */
-$fp = fopen("hjq.txt","a+");
-	flock($fp, LOCK_EX) ;
-	fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time())."\n"."hjq"."\n");
-	flock($fp, LOCK_UN);
+function jqlog($word)
+{
+	$fp = fopen("hjq.txt","a+");
+	fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time()) .$word."\n");
 	fclose($fp);
+}
 	
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
 
+
+define('IN_ECS', true);
+
+require_once(dirname(__FILE__) . '/../../../../includes/init.php');
+require_once(ROOT_PATH . 'includes/lib_order.php');
+require_once(ROOT_PATH . 'includes/lib_payment.php');
+
+
 //计算得出通知验证结果
 $alipayNotify = new AlipayNotify($alipay_config);
 $verify_result = $alipayNotify->verifyNotify();
-
+jqlog("result:".$verify_result);
 if($verify_result) 
 {	//验证成功
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,40 +50,40 @@ if($verify_result)
 	$out_trade_no = $_POST['out_trade_no'];
 
 	//支付宝交易号
+	
 	$trade_no = $_POST['trade_no'];
 
 	//交易状态
 	$trade_status = $_POST['trade_status'];
 
 	//交易金额
-	
-	$total_fee = $_POST['total_fee'];
-	
+	$total_fee = $_POST['total_fee']
 	//返回商户订单号
 	$order_sn = str_replace($_POST['subject'], '', $_POST['out_trade_no']);
 	$order_sn = trim(addslashes($order_sn));
 	$pay_log_id = get_order_id_by_sn($order_sn);
 	$order_id = get_order_id_by_sn1($order_sn);
-
-	logResult($_POST);
+	jqlog(serialize($_POST));
     if($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS')
 	{
         /* 检查支付的金额是否相符 */
 		if (check_money($pay_log_id, $total_fee))
         {
-			//echo 'check money passed';
+			jqlog('check_money ok');
 			order_paid($pay_log_id, 2);
         }
 		else
 		{
-			echo '支付金额不正确！';
+			jqlog('check_money fail');
 		}
     }
     else
 	{
+		
+		jqlog('trade_status fail');
 		echo "fail";
 	   
-    } 
+    }
 	echo "success";		//请不要修改或删除
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

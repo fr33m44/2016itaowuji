@@ -15,7 +15,6 @@
 
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
-require_once("lib/alipay_notify.class.php");
 
 
 define('IN_ECS', true);
@@ -24,8 +23,7 @@ require_once(dirname(__FILE__) . '/../../../../includes/init.php');
 require_once(ROOT_PATH . 'includes/lib_order.php');
 require_once(ROOT_PATH . 'includes/lib_payment.php');
 
-?>
-<?php
+
 //计算得出通知验证结果
 $alipayNotify = new AlipayNotify($alipay_config);
 $verify_result = $alipayNotify->verifyReturn();
