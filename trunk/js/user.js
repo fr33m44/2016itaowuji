@@ -469,6 +469,8 @@ function get_qrm(mobile, action) {
 		return;
 	}
 
+	
+	document.getElementById("get_qrm_btn").disabled = "disabled";
 	Ajax.call('user.php?act=getqrm', 'mobile=' + mobile + '&captcha=' + captcha + '&action=' + action, qrm_callback, 'GET', 'JSON', true, true);
 
 

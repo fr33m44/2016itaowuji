@@ -18,7 +18,8 @@
       <li> <a href="user.php?act=collection_list"{if $action eq 'collection_list'}class="curs"{/if}> {$lang.label_collection}</a></li>
       <li> <a href="user.php?act=message_list"{if $action eq 'message_list'}class="curs"{/if}> {$lang.label_message}</a></li>
       <li> <a href="user.php?act=tag_list"{if $action eq 'tag_list'}class="curs"{/if}>{$lang.label_tag}</a></li>
-      <li><a href="user.php?act=comment_list"{if $action eq 'comment_list'}class="curs"{/if}> {$lang.label_comment}</a></li>
+      <li> <!-- {if $affiliate.on eq 1} --><a href="user.php?act=affiliate"{if $action eq 'affiliate'}class="curs"{/if}> {$lang.label_affiliate}</a><!-- {/if} --></li>
+	  <li><a href="user.php?act=comment_list"{if $action eq 'comment_list'}class="curs"{/if}> {$lang.label_comment}</a></li>
     </ul>
   </dd>
 </dl>

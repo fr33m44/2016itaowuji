@@ -20,6 +20,7 @@ if ($_SESSION['user_id'] <= 0)
 /* 载入语言文件 */
 require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/user.php');
 require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
+require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/admin/affiliate_ck.php');
 
 /*------------------------------------------------------ */
 //-- INPUT
@@ -1098,14 +1099,6 @@ elseif ($_REQUEST['step'] == 'checkout')
         $smarty->assign('allow_use_bonus', 1);
     }
 
-    /* 如果使用缺货处理，取得缺货处理列表 */
-    if (!isset($_CFG['use_how_oos']) || $_CFG['use_how_oos'] == '1')
-    {
-        if (is_array($GLOBALS['_LANG']['oos']) && !empty($GLOBALS['_LANG']['oos']))
-        {
-            $smarty->assign('how_oos_list', $GLOBALS['_LANG']['oos']);
-        }
-    }
 
     /* 如果能开发票，取得发票内容列表 */
     if ((!isset($_CFG['can_invoice']) || $_CFG['can_invoice'] == '1')
@@ -1976,6 +1969,7 @@ elseif ($_REQUEST['step'] == 'done')
         $order['pay_status']   = PS_PAYED;
         $order['pay_time']     = gmtime();
         $order['order_amount'] = 0;
+
     }
 
     $order['integral_money']   = $total['integral_money'];
@@ -1996,28 +1990,10 @@ elseif ($_REQUEST['step'] == 'done')
         $order['extension_code'] = $_SESSION['extension_code'];
         $order['extension_id'] = $_SESSION['extension_id'];
     }
-
-    $affiliate = unserialize($_CFG['affiliate']);
-    if(isset($affiliate['on']) && $affiliate['on'] == 1 && $affiliate['config']['separate_by'] == 1)
-    {
-        //推荐订单分成
-        $parent_id = get_affiliate();
-        if($user_id == $parent_id)
-        {
-            $parent_id = 0;
-        }
-    }
-    elseif(isset($affiliate['on']) && $affiliate['on'] == 1 && $affiliate['config']['separate_by'] == 0)
-    {
-        //推荐注册分成
-        $parent_id = 0;
-    }
-    else
-    {
-        //分成功能关闭
-        $parent_id = 0;
-    }
-    $order['parent_id'] = $parent_id;
+	
+	
+		
+    
 
     /* 插入订单表 */
     $error_no = 0;
@@ -2103,7 +2079,32 @@ elseif ($_REQUEST['step'] == 'done')
 		}
 		
     }
+	/*hjq 推荐注册人付款后后获取提成 （全额余额额支付）*/
+	if($order['order_amouont']<=0)
+	{
+		$affiliate  = unserialize($GLOBALS['_CFG']['affiliate']);
+		if (isset($affiliate['on']) && $affiliate['on'] == 1)
+		{
+			$up_uid = $GLOBALS['db']->getOne('SELECT parent_id FROM ' . $GLOBALS['ecs']->table('users') . "WHERE user_id = $user_id");
+			//获取推荐用户名
+			$sql = "select user_name from ".$GLOBALS['ecs']->table('users')." where user_id=$up_uid";
+			$up_name = $GLOBALS['db']->getOne($sql);
+			if ($up_uid)
+			{
+				if (!empty($affiliate['config']['level_money_all']))
+				{
+					$setmoney = $affiliate['config']['level_money_all'];
+					$setmoney = floatval($setmoney)/100;
+					$setmoney = round($setmoney * $order['goods_amount'],2);
+					$info = sprintf($_LANG['separate_info'], $order['order_sn'], $setmoney, 0);
+					log_account_change($up_uid, $setmoney, 0, 0, 0, $info, ACT_AFFILIATE);
+					write_affiliate_log($order['order_sn'], $up_uid, $up_name, $setmoney, 0, 1);
+					
+				}
 
+			}
+		}
+	}		
     /* 给商家发邮件 */
     /* 增加是否给客服发送邮件选项 */
     if ($_CFG['send_service_email'] && $_CFG['service_email'] != '')
@@ -2768,8 +2769,6 @@ else
 	}
     $smarty->assign('goods_list', $cart_goods['goods_list']);
     $smarty->assign('total', $cart_goods['total']);
-
-	//print_r($cart_goods['goods_list']);die();
 	
     //购物车的描述的格式化
     $smarty->assign('shopping_money',         sprintf($_LANG['shopping_money'], $cart_goods['total']['goods_price']));

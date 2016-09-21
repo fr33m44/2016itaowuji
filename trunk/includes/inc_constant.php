@@ -157,6 +157,7 @@ define('GAT_PACKAGE',               4); // 超值礼包
 define('ACT_SAVING',                0);     // 帐户冲值
 define('ACT_DRAWING',               1);     // 帐户提款
 define('ACT_ADJUSTING',             2);     // 调节帐户
+define('ACT_AFFILIATE',             3);     // 推荐奖励
 define('ACT_OTHER',                99);     // 其他类型
 
 /* 密码加密方法 */

@@ -239,11 +239,9 @@ if (!defined('INIT_NO_USERS'))
         }
     }
 
-    /* 设置推荐会员 */
-    if (isset($_GET['u']))
-    {
-        set_affiliate();
-    }
+    /*设置推荐会员 */
+	set_affiliate();
+    
 
     /* session 不存在，检查cookie */
     if (!empty($_COOKIE['ECS']['user_id']) && !empty($_COOKIE['ECS']['password']))
