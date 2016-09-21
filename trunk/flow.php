@@ -2098,7 +2098,7 @@ elseif ($_REQUEST['step'] == 'done')
 					$setmoney = round($setmoney * $order['goods_amount'],2);
 					$info = sprintf($_LANG['separate_info'], $order['order_sn'], $setmoney, 0);
 					log_account_change($up_uid, $setmoney, 0, 0, 0, $info, ACT_AFFILIATE);
-					write_affiliate_log($order['order_sn'], $up_uid, $up_name, $setmoney, 0, 1);
+					write_affiliate_log($order['order_id'], $up_uid, $up_name, $setmoney, 0, 1);
 					
 				}
 

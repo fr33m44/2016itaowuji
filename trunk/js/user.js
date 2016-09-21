@@ -324,7 +324,6 @@ function check_shop_addr(shop_addr) {
 
 
 function mobileCheckCallback(result) {
-	console.log(result);
 	if (result == "true") 
 	{//可以注册
 		document.forms['formUser'].elements['Submit'].disabled = '';
