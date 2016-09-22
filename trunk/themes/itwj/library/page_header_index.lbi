@@ -24,22 +24,18 @@ catch (e) {
         <ul>
           <!--<li class="background_ico"><a href="#"  rel="nofollow">手机版淘五季</a></li>-->
           <!--<li class="background_line"><a href="#"  rel="nofollow">邀请好友</a></li>-->
-          <li><a href="javascript:void(0);" onclick="AddFavorite('我的网站',location.href)">加入收藏</a></li>
-          <li class="background_pay">关注淘五季
+          <li><a href="javascript:void(0);" onclick="AddFavorite('淘五季',location.href)">加入收藏</a></li>
+          <li class="background_pay">微信关注
             <div class="bookmail_more">
-              <ul>
-                <li class="more03"><a href="#">微信公众号</a></li>
-                <li class="more01"><a href="#">新浪微博</a></li>
-                <li class="more02"><a href="#">腾讯微博</a></li>
-                
-              </ul>
+                <img src="../images/qr.jpg" alt="微信扫码关注淘五季" /> 
+                 
             </div>
           </li>
         </ul>
       </div>
       <div class="user_control">
         <ul>
-          {insert_scripts files='jquery-1.9.1.min.js,jquery.json.js,jquery.SuperSlide.js'}
+          {insert_scripts files='jquery-1.9.1.min.js,jquery.json.js,jquery.SuperSlide.js,easyzoom.js'}
           {insert_scripts files='transport.js,utils.js,ecmoban_common.js'} 
           <font id="ECS_MEMBERZONE" style="display:block; float:left;">{* ECSHOP 提醒您：根据用户id来调用member_info.lbi显示不同的界面  *}{insert name='member_info'} </font>
           <!--{if $navigator_list.top}-->

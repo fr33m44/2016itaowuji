@@ -4,7 +4,8 @@
 <div class="title_body ">
   <dl class="hot_list01">
     <!--{foreach from=$hot_goods item=goods}-->
-    <dd >
+    
+	<dd >
       <div class="hot_img"> <span class="hot"></span>
         <div class="pic"><a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></a></div>
         <div class="text">
@@ -15,8 +16,7 @@
             {$goods.promote_price} 
             <!-- {else}--> 
             {$goods.shop_price} 
-            <!--{/if}--> 
-            
+            <!--{/if}-->
             </font> <br /><font class="bb">{$goods.market_price}</font> </p>
         </div>
       </div>
