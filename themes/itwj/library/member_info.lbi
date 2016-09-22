@@ -3,8 +3,9 @@
 {if $user_info}
 
  <li>{$lang.hello}，<font class="f4_b">{$user_info.username}</font>, {$lang.welcome_return}！</li>
+<li><a href="user.php?act=order_list">我的订单</a></li>
 <li><a href="user.php">{$lang.user_center}</a></li>
-<li> <a href="user.php?act=logout">{$lang.user_logout}</a></li>
+<li><a href="user.php?act=logout">{$lang.user_logout}</a></li>
 
 {else}
  

@@ -22,16 +22,13 @@ catch (e) {
     <div class="heads">
       <div class="bookmail">
         <ul>
-          <!--<li class="background_ico"><a href="#" rel="nofollow">手机版淘五季</a></li>-->
-          <!--<li class="background_line"><a href="#" rel="nofollow">邀请好友</a></li>-->
+          <!--<li class="background_ico"><a href="#"  rel="nofollow">手机版淘五季</a></li>-->
+          <!--<li class="background_line"><a href="#"  rel="nofollow">邀请好友</a></li>-->
           <li><a href="javascript:void(0);" onclick="AddFavorite('淘五季',location.href)">加入收藏</a></li>
-          <li class="background_pay">关注淘五季
+          <li class="background_pay">微信关注
             <div class="bookmail_more">
-              <ul>
-                <li class="more03"><a href="#" target="_blank" rel="nofollow">微信公众号</a></li>
-                <li class="more01"><a href="#" target="_blank" rel="nofollow">新浪微博</a></li>
-                <li class="more02"><a href="#" target="_blank" rel="nofollow">腾讯微博</a></li>                
-              </ul>
+                <img src="../images/qr.jpg" alt="微信扫码关注淘五季" /> 
+                 
             </div>
           </li>
         </ul>
@@ -81,7 +78,7 @@ catch (e) {
        {insert name='cart_info'}
       </div>
     </div>
-    <div class="headNav" style="position:relative; z-index:999;">
+    <div class="headNav" style="position:relative; z-index:10;">
       <div class="classNav"> <a class="classNav_a" href="#">全部商品分类</a> 
       
       
