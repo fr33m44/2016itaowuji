@@ -141,7 +141,7 @@ $(function(){
                   <!-- {/if} --> 
                   
                   <!-- {if $cfg.show_goodssn} 显示商品货号-->
-                  <p>{$lang.goods_sn}{$goods.goods_sn} </p>
+                  <p>{$lang.goods_sn}<span class="attr_val">{$goods.goods_sn}</span></p>
                   <!-- {/if} --> 
                   
                   <!-- {if $goods.goods_brand neq "" and $cfg.show_brand} 显示商品品牌-->
@@ -151,8 +151,8 @@ $(function(){
                   <!-- {foreach from=$properties item=property_group key=key} -->
                       <!-- {foreach from=$property_group item=property} -->
                       <p> 
-                        {$property.name|escape:html}
-                        <span class="fit_people ">{$property.value}</span>
+                        {$property.name|escape:html}：
+                        <span class="attr_val">{$property.value}</span>
                       </p>
                       <!-- {/foreach}--> 
                   <!-- {/foreach}-->
@@ -170,12 +170,12 @@ $(function(){
                   <p style="display:none" > {$lang.goods_click_count}：{$goods.click_count} </p>
                   <p> 
                     <!-- {if $cfg.show_marketprice} 市场价格 为吊牌价--> 
-                    {$lang.market_price}{$goods.market_price} 
+                    {$lang.market_price}<span class="attr_val">{$goods.market_price}</span>
                     <!-- {/if} --> 
                   </p>
                   <p>
                     <!--wuming删除会员等级价格修改 本店价格为 配送价-->
-                    {$lang.shop_price}{$goods.shop_price}
+                    {$lang.shop_price}<span style="color:#ff4560;font-size:1.2em;font-weight:bolder">￥{$goods.shop_price}</span>
                   </p>
                   <b>
 				
@@ -194,7 +194,7 @@ $(function(){
                       <!-- {/foreach} --> 
                    
                     <!-- {else} -->
-                    <span class="spec_value" name="spec_{$spec_key}" >
+                    <span class="spec_values attr_val" name="spec_{$spec_key}" >
                       <!-- {foreach from=$spec.values item=value key=key} -->
                       {$value.label}
                       <!-- {/foreach} -->
@@ -202,7 +202,7 @@ $(function(){
                     <!-- {/if} --> 
                     <!-- {else} --> 
                     <!-- {foreach from=$spec.values item=value key=key} -->
-                    <span class="spec_value" >{$value.label} </span>
+                    <span class="spec_value attr_val" >{$value.label} </span>
                     <!-- {/foreach} -->
                     <!-- {/if} --> 
                  
@@ -232,8 +232,8 @@ $(function(){
       			<div class="clearfix"></div>
                   <!--{if $goods.is_promote and $goods.gmt_end_time } 促销--> 
                   {insert_scripts files='lefttime.js'}
-                  <p > {$lang.promote_price}{$goods.promote_price}
-                    {$lang.residual_time} <font  id="leftTime">{$lang.please_waiting}</font> </p>
+                  <p > {$lang.promote_price}<span style="color:#ff4560;font-size:1.2em;font-weight:bolder">{$goods.promote_price}</span>
+                    {$lang.residual_time} <span style="color:#ff4560" id="leftTime">{$lang.please_waiting}</span> </p>
                   <!--{/if}-->
                   <p style="display:none" > {$lang.amount}：<font id="ECS_GOODS_AMOUNT" class="shop"></font> </p>
                   <p style="display:none"> 
@@ -685,7 +685,7 @@ var now_time = {$now_time};
 
 <!-- {literal} -->
 onload = function(){
-  changePrice();
+  //changePrice();
   fixpng();
   try { onload_leftTime(); }
   catch (e) {}
