@@ -140,22 +140,14 @@ $(function(){
                  
                   <!-- {/if} --> 
                   
+                  <!-- {if $goods.goods_brand neq "" and $cfg.show_brand} 显示商品品牌-->
+                  <p> {$lang.goods_brand}<a href="{$goods.goods_brand_url}" >{$goods.goods_brand}</a> </p>
+                  <!--{/if}--> 
+				  
                   <!-- {if $cfg.show_goodssn} 显示商品货号-->
                   <p>{$lang.goods_sn}<span class="attr_val">{$goods.goods_sn}</span></p>
                   <!-- {/if} --> 
                   
-                  <!-- {if $goods.goods_brand neq "" and $cfg.show_brand} 显示商品品牌-->
-                  <p> {$lang.goods_brand}<a href="{$goods.goods_brand_url}" >{$goods.goods_brand}</a> </p>
-                  <!--{/if}--> 
-                  
-                  <!-- {foreach from=$properties item=property_group key=key} -->
-                      <!-- {foreach from=$property_group item=property} -->
-                      <p> 
-                        {$property.name|escape:html}：
-                        <span class="attr_val">{$property.value}</span>
-                      </p>
-                      <!-- {/foreach}--> 
-                  <!-- {/foreach}-->
                   
                   
                   <!-- {if $cfg.show_goodsweight} 商品重量-->
@@ -175,8 +167,15 @@ $(function(){
                   </p>
                   <p>
                     <!--wuming删除会员等级价格修改 本店价格为 配送价-->
-                    {$lang.shop_price}<span style="color:#ff4560;font-size:1.2em;font-weight:bolder">￥{$goods.shop_price}</span>
+                    {$lang.shop_price}<span style="color:#ff4560;font-size:1em;font-weight:bolder">￥{$goods.shop_price}</span>
                   </p>
+
+                  <!--{if $goods.is_promote and $goods.gmt_end_time } 促销--> 
+                  {insert_scripts files='lefttime.js'}
+                  <p> {$lang.promote_price}<span style="color:#ff4560;font-size:1.2em;font-weight:bolder">{$goods.promote_price}</span>
+                    {$lang.residual_time} <span style="color:#ff4560" id="leftTime">{$lang.please_waiting}</span> </p>
+                  <!--{/if}-->
+				  
                   <b>
 				
                 <!-- {foreach from=$specification item=spec key=spec_key} --> </b> 
@@ -211,6 +210,16 @@ $(function(){
                 <!-- {/foreach} --> 
                
                 <!-- {* 结束循环可选属性 *} -->
+				
+                  
+                  <!-- {foreach from=$properties item=property_group key=key} -->
+                      <!-- {foreach from=$property_group item=property} -->
+                      <p> 
+                        {$property.name|escape:html}：
+                        <span class="attr_val">{$property.value}</span>
+                      </p>
+                      <!-- {/foreach}--> 
+                  <!-- {/foreach}-->
                   
                   <!--{if $volume_price_list } -->
                   <font class="f1">{$lang.volume_price}：</font><br />
@@ -230,11 +239,6 @@ $(function(){
      
                   <!--{/if}--> 
       			<div class="clearfix"></div>
-                  <!--{if $goods.is_promote and $goods.gmt_end_time } 促销--> 
-                  {insert_scripts files='lefttime.js'}
-                  <p > {$lang.promote_price}<span style="color:#ff4560;font-size:1.2em;font-weight:bolder">{$goods.promote_price}</span>
-                    {$lang.residual_time} <span style="color:#ff4560" id="leftTime">{$lang.please_waiting}</span> </p>
-                  <!--{/if}-->
                   <p style="display:none" > {$lang.amount}：<font id="ECS_GOODS_AMOUNT" class="shop"></font> </p>
                   <p style="display:none"> 
                     <!-- {if $goods.give_integral > 0} 购买此商品赠送积分--> 

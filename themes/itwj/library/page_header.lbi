@@ -27,7 +27,7 @@ catch (e) {
           <li><a href="javascript:void(0);" onclick="AddFavorite('淘五季',location.href)">加入收藏</a></li>
           <li class="background_pay">微信关注
             <div class="bookmail_more">
-                <img src="../images/qr.jpg" alt="微信扫码关注淘五季" /> 
+                <img src="../images/qr.jpg" style="z-index:999" alt="微信扫码关注淘五季" /> 
                  
             </div>
           </li>
@@ -78,7 +78,7 @@ catch (e) {
        {insert name='cart_info'}
       </div>
     </div>
-    <div class="headNav" style="position:relative; z-index:10;">
+    <div class="headNav" style="position:relative;">
       <div class="classNav"> <a class="classNav_a" href="#">全部商品分类</a> 
       
       

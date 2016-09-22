@@ -115,7 +115,7 @@ a:hover {text-decoration: underline;}
 .bodycart_v .logo , .body_user .logo {width:300px;height:99px;margin:5px 0 0 0;padding:0;}
 .headBody {width: 1200px;height: 173px;margin: 0 auto;padding: 0;}
 .heads{ height:30px;}
-.bookmail {height: 30px;float: left;}
+.bookmail {height: 30px;float: left;z-index:100}
 .bookmail ul {height: 30px;float: left;}
 .bookmail ul li.background_ico {margin: 0;padding: 0 0 0 12px;background: url(images/bookmail_icos.gif) 0 0 no-repeat;}
 .bookmail ul li a {color: #666;}

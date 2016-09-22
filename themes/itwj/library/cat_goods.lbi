@@ -25,7 +25,7 @@
         <div class="brand_txt"> <b><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_name|escape:html}</a></b>
           <p> 
             <!-- {if $goods.promote_price neq ""} --> 
-            <font class="shop_s">{$goods.promote_}</font> 
+            <font class="shop_s">{$goods.promote_price}</font> 
             <!-- {else}--> 
             <font class="shop_s">{$goods.shop_price}</font> 
             <!--{/if}--> 
