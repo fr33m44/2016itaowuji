@@ -2786,11 +2786,21 @@ function order_due_field($alias = '')
  */
 function compute_discount()
 {
+	//判断是否是首单 不是首活动让利为0
+	$sql = "select count(1) from ". $GLOBALS['ecs']->table('order_info')." where user_id = $_SESSION[user_id] and act_id in (1,2,3,4)";
+	$count = $GLOBALS['db']->getOne($sql);
+	if(!empty($count))
+	{
+		return 0;
+	}
     /* 查询优惠活动 */
     $now = gmtime();
-    $user_rank = ',' . $_SESSION['user_rank'] . ',';
+	$sql = "select user_rank from ". $GLOBALS['ecs']->table("users")." where user_id = $_SESSION[user_id]";
+	$user_rank1 = $GLOBALS['db']->getOne($sql);
+
+    $user_rank = ',' . $user_rank1 . ',';
     $sql = "SELECT *" .
-            "FROM " . $GLOBALS['ecs']->table('favourable_activity') .
+            " FROM " . $GLOBALS['ecs']->table('favourable_activity') .
             " WHERE start_time <= '$now'" .
             " AND end_time >= '$now'" .
             " AND CONCAT(',', user_rank, ',') LIKE '%" . $user_rank . "%'" .
@@ -2817,6 +2827,7 @@ function compute_discount()
 
     /* 初始化折扣 */
     $discount = 0;
+	$fav_id = "";
     $favourable_name = array();
 
     /* 循环计算每个优惠活动的折扣 */
@@ -2882,17 +2893,19 @@ function compute_discount()
                 $discount += $total_amount * (1 - $favourable['act_type_ext'] / 100);
 
                 $favourable_name[] = $favourable['act_name'];
+				$fav_id = $favourable['act_id'];
             }
             elseif ($favourable['act_type'] == FAT_PRICE)
             {
                 $discount += $favourable['act_type_ext'];
-
                 $favourable_name[] = $favourable['act_name'];
+				$fav_id = $favourable['act_id'];
+				
             }
         }
     }
 
-    return array('discount' => $discount, 'name' => $favourable_name);
+    return array('discount' => $discount, 'name' => $favourable_name, 'fav_id'=>$fav_id);
 }
 
 /**

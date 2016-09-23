@@ -903,13 +903,16 @@ elseif ($_REQUEST['step'] == 'checkout')
     $smarty->assign('order', $order);
 
     /* 计算折扣 */
-    if ($flow_type != CART_EXCHANGE_GOODS && $flow_type != CART_GROUP_BUY_GOODS)
+	if ($flow_type != CART_EXCHANGE_GOODS && $flow_type != CART_GROUP_BUY_GOODS)
     {
         $discount = compute_discount();
+		
         $smarty->assign('discount', $discount['discount']);
+        $smarty->assign('fav_id', $discount['fav_id']);
         $favour_name = empty($discount['name']) ? '' : join(',', $discount['name']);
         $smarty->assign('your_discount', sprintf($_LANG['your_discount'], $favour_name, price_format($discount['discount'])));
-    }
+		
+	}
 
     /*
      * 计算订单的费用
@@ -918,6 +921,7 @@ elseif ($_REQUEST['step'] == 'checkout')
 
     $smarty->assign('total', $total);
     $smarty->assign('shopping_money', sprintf($_LANG['shopping_money'], $total['formated_goods_price']));
+	print_r($total);
     $smarty->assign('market_price_desc', sprintf($_LANG['than_market_price'], $total['formated_market_price'], $total['formated_saving'], $total['save_rate']));
 
     /* 取得配送列表 */
@@ -1760,6 +1764,7 @@ elseif ($_REQUEST['step'] == 'done')
 
     $order = array(
         'shipping_id'     => intval($_POST['shipping']),
+        'act_id'     	  => intval($_POST['act_id']),
         'pay_id'          => intval($_POST['payment']),
         'pack_id'         => isset($_POST['pack']) ? intval($_POST['pack']) : 0,
         'card_id'         => isset($_POST['card']) ? intval($_POST['card']) : 0,
@@ -2789,11 +2794,12 @@ else
 
     $smarty->assign('favourable_list', $favourable_list);
 
-    /* 计算折扣 */
-    $discount = compute_discount();
-    $smarty->assign('discount', $discount['discount']);
-    $favour_name = empty($discount['name']) ? '' : join(',', $discount['name']);
-    $smarty->assign('your_discount', sprintf($_LANG['your_discount'], $favour_name, price_format($discount['discount'])));
+    /* hjq 首单满减 计算折扣 */
+	
+	$discount = compute_discount();
+	$smarty->assign('discount', $discount['discount']);
+	$favour_name = empty($discount['name']) ? '' : join(',', $discount['name']);
+	$smarty->assign('your_discount', sprintf($_LANG['your_discount'], $favour_name, price_format($discount['discount'])));
 
     /* 增加是否在购物车里显示商品图 */
     $smarty->assign('show_goods_thumb', $GLOBALS['_CFG']['show_goods_in_cart']);

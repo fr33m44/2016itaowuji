@@ -156,15 +156,10 @@
           </table>
           <table width="100%">
             <tr>
-              <td id="total_desc" class="nstep1_count">
+              <td class="nstep1_count">
               <div>
              <span style="text-align:left;font-size:12px;float:left;"> <input type="button" value="删除选定" class="del_cart_btn" style="cursor:pointer;" /> <input type="button" value="清空进货单" onclick="location.href='flow.php?step=clear'" style="cursor:pointer;"  /></span>
-             <div  style="padding:0;border:none;float:right;">
-             <!-- {if $discount gt 0} -->
-            {$your_discount}<br />
-            <!-- {/if} -->
-            {$shopping_money}
-            </div>
+             <div  id="total_desc" style="padding:0;border:none;float:right;">{$shopping_money}</div>
               </div>
                
               </td>
@@ -578,7 +573,8 @@
               <td colspan="7">
               <!-- {if $discount gt 0} -->{$your_discount}<br /><!-- {/if} -->
               {$shopping_money}<!-- {if $show_marketprice} -->，{$market_price_desc}<!--{/if}-->
-              </td>
+              <input type="hidden" name="act_id" value="{$fav_id}" />
+			  </td>
             </tr>
             <!-- {/if} -->
           </table>

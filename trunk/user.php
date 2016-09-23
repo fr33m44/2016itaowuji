@@ -253,11 +253,12 @@ elseif ($action == 'act_register')
             $fields_arr = $db->getAll($sql);
 
             /* 新会员注册发送红包50 */
+			/*
             $sql = "INSERT INTO " . $ecs->table('user_bonus') .
                     "(bonus_type_id, bonus_sn, user_id, used_time, order_id, emailed) " .
                     "VALUES (1, 0, '$_SESSION[user_id]', 0, 0, 1)";
             $db->query($sql);
-
+			*/
             $extend_field_str = '';    //生成扩展字段的内容字符串
             foreach ($fields_arr AS $val)
             {
@@ -282,7 +283,10 @@ elseif ($action == 'act_register')
                 $sql = 'UPDATE ' . $ecs->table('users') . " SET `passwd_question`='$sel_question', `passwd_answer`='$passwd_answer'  WHERE `user_id`='" . $_SESSION['user_id'] . "'";
                 $db->query($sql);
             }
-            /* 判断是否需要自动发送注册邮件 */
+			//注册后自动放到实体店卖家 用户等级
+			$sql = 'UPDATE ' . $ecs->table('users') . " SET `user_rank`='101' where user_id = $_SESSION[user_id]";
+			$db->query($sql);
+			/* 判断是否需要自动发送注册邮件 */
             if ($GLOBALS['_CFG']['member_email_validate'] && $GLOBALS['_CFG']['send_verify_email'])
             {
                 send_regiter_hash($_SESSION['user_id']);
