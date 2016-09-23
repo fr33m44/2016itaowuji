@@ -15,7 +15,7 @@
 	<link href="{$ecs_css_path}" rel="stylesheet" type="text/css" /> {* 包含脚本文件 *} {insert_scripts files='common.js,user.js,transport.js,region.js,shopping_flow.js'}
 
 	<body>
-		<div class="body_user ">
+		<div class="body_user">
 			<!-- #BeginLibraryItem "/library/page_header.lbi" -->
 			<!-- #EndLibraryItem -->
 		</div>
@@ -412,15 +412,11 @@
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript">
-	var process_request = "{$lang.process_request}"; {
-		foreach from = $lang.passport_js item = item key = key
-	}
-	var {
-		$key
-	} = "{$item}"; {
-		/foreach}
-		var username_exist = "{$lang.username_exist}";
-	</script>
-
+<script type="text/javascript">
+var process_request = "{$lang.process_request}";
+{foreach from=$lang.passport_js item=item key=key}
+var {$key} = "{$item}";
+{/foreach}
+var username_exist = "{$lang.username_exist}";
+</script>
 </html>

@@ -26,7 +26,7 @@ if (!defined('IN_ECS'))
 function register($username, $password, $email, $other = array())
 {
 	
-	require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/admin/affiliate_ck.php');
+	require_once(ROOT_PATH . 'languages/zh_cn/admin/affiliate_ck.php');
 	
     /* 检查注册是否关闭 */
     if (!empty($GLOBALS['_CFG']['shop_reg_closed']))
@@ -109,7 +109,7 @@ function register($username, $password, $email, $other = array())
 
 
         //定义other合法的变量数组
-        $other_key_array = array('parent_id', 'msn', 'qq', 'office_phone', 'home_phone', 'mobile_phone');
+        $other_key_array = array('parent_id', 'msn', 'qq', 'office_phone', 'home_phone', 'mobile_phone', 'user_rank');
         $update_data['reg_time'] = local_strtotime(local_date('Y-m-d H:i:s'));
         if ($other)
         {
@@ -125,6 +125,7 @@ function register($username, $password, $email, $other = array())
                     $other[$key] =  htmlspecialchars(trim($val)); //防止用户输入javascript代码
                 }
             }
+			
             $update_data = array_merge($update_data, $other);
         }
         $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('users'), $update_data, 'UPDATE', 'user_id = ' . $_SESSION['user_id']);
