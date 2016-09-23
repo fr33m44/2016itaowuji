@@ -284,8 +284,8 @@ elseif ($action == 'act_register')
                 $db->query($sql);
             }
 			//注册后自动放到实体店卖家 用户等级
-			$sql = 'UPDATE ' . $ecs->table('users') . " SET `user_rank`='101' where user_id = $_SESSION[user_id]";
-			$db->query($sql);
+			//$sql = 'UPDATE ' . $ecs->table('users') . " SET `user_rank`='101' where user_id = $_SESSION[user_id]";
+			//$db->query($sql);
 			/* 判断是否需要自动发送注册邮件 */
             if ($GLOBALS['_CFG']['member_email_validate'] && $GLOBALS['_CFG']['send_verify_email'])
             {
