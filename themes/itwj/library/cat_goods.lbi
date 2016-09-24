@@ -23,13 +23,13 @@
       <div class="brand_list">
         <div class="brand_img"> <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" width="170" height="170" /></a></div>
         <div class="brand_txt"> <b><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_name|escape:html}</a></b>
-          <p> 
+          <p> <font class="shop_s">
             <!-- {if $goods.promote_price neq ""} --> 
-            <font class="shop_s">{$goods.promote_price}</font> 
+            {$lang.promote_price}{$goods.promote_price} 
             <!-- {else}--> 
-            <font class="shop_s">{$goods.shop_price}</font> 
-            <!--{/if}--> 
-            <font class="marker_s">{$goods.market_price}</font> </p>
+            {$lang.shop_price}{$goods.shop_price} 
+            <!--{/if}--></font><br />
+            <font class="marker_s">{$lang.market_price}{$goods.market_price}</font> </p>
         </div >
       </div>
       {/if} 

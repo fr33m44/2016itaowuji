@@ -243,13 +243,10 @@
                         <p class="y_price"> 
                       
                         <!--{if $goods.promote_price neq "" } -->
-                        <font class="">{$goods.promote_price}</font>
+                        <font class="">{$lang.promote_price}{$goods.promote_price}</font>
                         <!--{else}-->
-                        <font class="">{$goods.shop_price}</font>
-                        <!--{/if}-->
-                        
-                       
-          <font class="market_s">{$goods.market_price}</font> 
+                        <font class="">{$lang.shop_price}{$goods.shop_price}</font>
+                        <!--{/if}--><font class="market_s">{$lang.market_price}{$goods.market_price}</font> 
           
                         </p>
                       
