@@ -8,6 +8,7 @@
     <img src="images/icon_search.gif" width="26" height="22" border="0" alt="SEARCH" />
     &nbsp;店铺类型
 	<select name="shop_type">
+	<option value="0">所有</option>
 	<option value="1">内衣店</option>
 	<option value="2">超市</option>
 	<option value="3">化妆品店</option>
@@ -15,7 +16,6 @@
 	<option value="5">文具店</option>
 	<option value="6">鞋店</option>				
 	</select>
-    &nbsp;{$lang.extendcode}&nbsp;<input type="text" name="extendcode" size="10" /> 
     &nbsp;{$lang.label_user_name} &nbsp;<input type="text" name="keyword" /> <input type="submit" value="{$lang.button_search}" />
   </form>
 </div>
@@ -104,7 +104,6 @@ listTable.filter.{$key} = '{$item}';
 {literal}
 onload = function()
 {
-    document.forms['searchForm'].elements['extendcode'].focus();
     // 开始检查订单
     startCheckOrder();
 }
@@ -115,10 +114,7 @@ onload = function()
 function searchUser()
 {
     listTable.filter['shop_type'] = Utils.trim(document.forms['searchForm'].elements['shop_type'].value);
-    listTable.filter['extendcode'] = Utils.trim(document.forms['searchForm'].elements['extendcode'].value);
     listTable.filter['keywords'] = Utils.trim(document.forms['searchForm'].elements['keyword'].value);
-    /*listTable.filter['pay_points_gt'] = Utils.trim(document.forms['searchForm'].elements['pay_points_gt'].value);
-    listTable.filter['pay_points_lt'] = Utils.trim(document.forms['searchForm'].elements['pay_points_lt'].value);*/
     listTable.filter['page'] = 1;
     listTable.loadList();
 }
