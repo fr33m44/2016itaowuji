@@ -10,11 +10,11 @@
       
       <p class="price" > <font class="aa"> 
         <!-- {if $goods.promote_price neq ""} --> 
-        {$goods.promote_price} 
+        {$lang.promote_price}{$goods.promote_price} 
         <!-- {else}--> 
-        {$goods.shop_price} 
+        {$lang.shop_price}{$goods.shop_price} 
         <!--{/if}--> 
-        </font><br /><font class="bb">{$goods.market_price}</font> </p>
+        </font><br />{$lang.market_price}<font class="bb">{$goods.market_price}</font> </p>
     </div>
   </div>
      <!--删除加入进货单按钮-->
