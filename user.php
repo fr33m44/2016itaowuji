@@ -244,7 +244,7 @@ elseif ($action == 'act_register')
             'district'   => $district,
             'address'    => $address,
             'consignee'  => $shop_name,
-			'sign_building' => $shop_type,//店铺类型
+			'shop_type' => $shop_type,//店铺类型
             'mobile'        => $other['mobile_phone']
             );
             update_address($address);
