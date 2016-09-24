@@ -1389,6 +1389,7 @@ elseif ($action == 'act_edit_address')
 
     $address = array(
         'user_id'    => $user_id,
+        'shop_type'    => intval($_POST['shop_type']),
         'address_id' => intval($_POST['address_id']),
         'country'    => isset($_POST['country'])   ? intval($_POST['country'])  : 0,
         'province'   => isset($_POST['province'])  ? intval($_POST['province']) : 0,

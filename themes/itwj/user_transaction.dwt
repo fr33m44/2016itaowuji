@@ -157,7 +157,16 @@
                   </tr>
                   <tr>
                    <td align="right" bgcolor="#ffffff">店铺类型：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="sign_building" type="text" class="inputBg" id="sign_building_{$sn}" value="{$consignee.sign_building|escape}" /></td>
+                    <td align="left" bgcolor="#ffffff">
+						<select name="shop_type">
+							<option value="1" {if $consignee.shop_type eq '1'}selected="selected"{/if}>内衣店</option>
+							<option value="2" {if $consignee.shop_type eq '2'}selected="selected"{/if}>超市</option>
+							<option value="3" {if $consignee.shop_type eq '3'}selected="selected"{/if}>化妆品店</option>
+							<option value="4" {if $consignee.shop_type eq '4'}selected="selected"{/if}>童装店</option>
+							<option value="5" {if $consignee.shop_type eq '5'}selected="selected"{/if}>文具店</option>
+							<option value="6" {if $consignee.shop_type eq '6'}selected="selected"{/if}>鞋店</option>				
+						</select>
+					</td>
                    
                     <td align="right" bgcolor="#ffffff">{$lang.backup_phone}：</td>
                     <td align="left" bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg" id="mobile_{$sn}" value="{$consignee.mobile|escape}" /></td>

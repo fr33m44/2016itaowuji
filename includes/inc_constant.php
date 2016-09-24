@@ -242,9 +242,9 @@ define('SHIP_LIST', 'cac|city_express|ems|flat|fpd|post_express|post_mail|pressw
 /*店铺类型*/
 define('ST_NY', 	1);//内衣店
 define('ST_CS', 	2);//超市
-define('ST_HZP', 	3);//化妆品
-define('ST_TZ', 	4);//童装
-define('ST_WJ', 	5);//文具
+define('ST_HZP', 	3);//化妆品店
+define('ST_TZ', 	4);//童装店
+define('ST_WJ', 	5);//文具店
 define('ST_XD', 	6);//鞋店
 
 
