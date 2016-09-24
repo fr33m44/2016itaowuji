@@ -860,7 +860,7 @@ function user_list()
         }
         if ($filter['shop_type'])
         {
-            $ex_where .= " AND sign_building = '".$filter['shop_type']."' ";
+            $ex_where .= " AND shop_type = '".$filter['shop_type']."' ";
         }
         /*if ($filter['rank'])
         {
@@ -904,7 +904,8 @@ function user_list()
         $sql    = $result['sql'];
         $filter = $result['filter'];
     }
-
+	
+	print_r($sql);
     $user_list = $GLOBALS['db']->getAll($sql);
 	
 
