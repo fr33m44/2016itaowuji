@@ -82,66 +82,74 @@
 
 </head>
 <body>
-	<div class="overlay"></div>
-	<div id="AjaxLoading" class="showbox">
-		<div class="loadingWord">
-			<img src="images/waiting.gif">正在登录,请稍候...
-		</div>
-	</div>
-	<div class="log_inhead"></div>
-	<div class="boxWidth">
-		<div class="longinlogo">
-			<img src="images/logo2.gif">
-		</div>
-	</div>
-	<div class="dahaibaoul">
-		<ul class="dahaibaouloo">
-			<li class="color_li_change_remember_01">
-				<span style="color: #fff;font-size: 54px;position: relative;left: 100px;top: 150px;font-weight:600;letter-spacing: 8px;">全球最大实体店采购平台</span>
-			</li>
-		</ul>
-	</div>
-	<div class="longhzhangyan ">
-
-		<div class="yyzawj23 ai6changqiyinyin">
-			<div class="header_return" id="WC_AccountDisplay_div_3">
-				<div class="content" id="WC_AccountDisplay_div_6">
-					<form method="post" name="Logon" action="user.php" id="Logon">
-						<div id="WC_AccountDisplay_div_7">
-							<div class="shurukuang ai6changqiyinyinsecond">
-								<p class="yonghudeng">用户登录</p>
-								<p class="pbiaoqianchanger" id="dslrdengluchaoshierror">
-									<span class="yonghum aie6changer">用户名</span> 
-									<div class="diddto_name">
-									<input class="diddto" size="35" type="text" id="username" placeholder="用户名/手机号" /></div>
-								</p>
-								<p class="pbiaoqianchanger">
-									<span class="yonghum">登录密码</span>
-									  <div class="diddto_pass"><input class="diddto" size="35" id="password" type="password" placeholder="用户密码"/></div>
-								</p>
-								<p style="margin-top:10px;">
-								<input type="checkbox" name="remember" id="remember" />
-								<label for="remember">自动登录</label>
-								<a href="user.php?act=get_password" style="float:right;margin-right:24px" >忘记密码</a>
-								</p>
-								<p>
-									<a id="btnLogin" type="submit" class="dengluanniu" /></a>
-								</p>
-								<p style="margin-top:10px;margin-left:3px" >如果您不是会员，请 <a href="user.php?act=register" style="color:#ff0000;"><span style="font-size:16px;font-weight:700; ">注册</span></p>
-								<p class="eerrasd" id="errorMsg"></p>
-							</div>
-						</div>
-					</form>
-				</div>
+   <div class="home_page" style="width:100%;height:100%;">
+      <!--顶部 start-->
+	    <div class="overlay"></div>
+		<div id="AjaxLoading" class="showbox">
+			<div class="loadingWord">
+				<img src="images/waiting.gif">正在登录,请稍候...
 			</div>
-			<!-- 导入登录Form结束 -->
-       
 		</div>
-		<div class="yyzawj24 ai6changqiyinyin"> 
-    	  <div style="color: #fff;font-size: 40px;position: relative;left: 110px;top: 80px;font-weight:600">免费注册<br />首次下单<br />&nbsp;&nbsp;&nbsp;立减<br /><span style="font-size: 50px;">1200</span><span style="font-size:40px;">元</span></div>
-        </div>
-	</div>
-    <div class="logo_buttom"></div>
+	    <div class="log_inhead"></div>
+		<div class="boxWidth">
+			<div class="longinlogo">
+				<img src="images/logo2.gif">
+			</div>
+		</div>
+	   <!--顶部 end-->
+	   <!--中部 start-->
+        <div class="home_page_center">
+	       	<div class="dahaibaoul">
+				<ul class="dahaibaouloo">
+					<li class="color_li_change_remember_01">
+						<span style="color: #fff;font-size: 54px;position: relative;left: 20px;top: 150px;font-weight:600;letter-spacing: 4px;">全球最大实体店采购平台</span>
+					</li>
+				</ul>
+			</div>
+			<div class="longhzhangyan ">
 
+				<div class="yyzawj23 ai6changqiyinyin">
+					<div class="header_return" id="WC_AccountDisplay_div_3">
+						<div class="content" id="WC_AccountDisplay_div_6">
+							<form method="post" name="Logon" action="user.php" id="Logon">
+								<div id="WC_AccountDisplay_div_7">
+									<div class="shurukuang ai6changqiyinyinsecond">
+										<p class="yonghudeng">用户登录</p>
+										<p class="pbiaoqianchanger" id="dslrdengluchaoshierror">
+											<span class="yonghum aie6changer">用户名</span> 
+											<div class="diddto_name">
+											<input class="diddto" size="35" type="text" id="username" placeholder="用户名/手机号" /></div>
+										</p>
+										<p class="pbiaoqianchanger">
+											<span class="yonghum">登录密码</span>
+											  <div class="diddto_pass"><input class="diddto" size="35" id="password" type="password" placeholder="用户密码"/></div>
+										</p>
+										<p style="margin-top:10px;">
+										<input type="checkbox" name="remember" id="remember" />
+										<label for="remember">自动登录</label>
+										<a href="user.php?act=get_password" style="float:right;margin-right:24px" >忘记密码</a>
+										</p>
+										<p>
+											<a id="btnLogin" type="submit" class="dengluanniu" /></a>
+										</p>
+										<p style="margin-top:10px;margin-left:3px" >如果您不是会员，请 <a href="user.php?act=register" style="color:#ff0000;"><span style="font-size:16px;font-weight:700; ">注册</span></a></p>
+										<p class="eerrasd" id="errorMsg"></p>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- 导入登录Form结束 -->
+		       
+				</div>
+				<div class="yyzawj24"> 
+					  <div style="color: #fff;font-size: 40px;position: relative;top: 80px;font-weight:600">免费注册<br />首次下单<br />&nbsp;&nbsp;&nbsp;立减<br /><span style="font-size: 50px;">1200</span><span style="font-size:40px;">元</span>
+					  </div>
+				    </div>
+			</div>
+		</div>
+  	    <!-- 中部 end-->
+  	    <div class="logo_buttom"></div>
+   </div>
 </body>
 </html>
