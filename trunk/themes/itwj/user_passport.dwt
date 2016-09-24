@@ -93,12 +93,14 @@
 									<p>{$lang.label_storestype}：</p>
 									<div class="coLoginTxt" style="width:245px;">
 										<div class="coLogin_txt" style="width:245px;">
-											<input name="shop_type" type="radio" value="内衣店" checked="checked" />内衣店
-											<input name="shop_type" type="radio" value="超市" />超&nbsp; &nbsp; 市
-											<input name="shop_type" type="radio" value="化妆品店" />化妆品店<br/>
-											<input name="shop_type" type="radio" value="童装店" />童装店
-											<input name="shop_type" type="radio" value="文具店" />文具店
-											<input name="shop_type" type="radio" value="鞋店" />鞋店
+										
+																 
+											<input  name="shop_type" id="st_ny" value="1" type="radio" checked="checked" /><label for="st_ny">内衣店</label>
+											<input name="shop_type" id="st_cs" value="2" type="radio" /><label for="st_cs">超市</label>
+											<input name="shop_type" id="st_hzp"  value="3" type="radio" /><label for="st_hzp">化妆品店</label> <br/>
+											<input name="shop_type" id="st_tz"  value="4" type="radio" /><label for="st_tz">童装店</label>
+											<input name="shop_type" id="st_wj" value="5"  type="radio" /><label for="st_wj">文具店</label>
+											<input name="shop_type" id="st_xd"  value="6" type="radio" /><label for="st_xd">鞋店</label>
 										</div>
 									</div>
 									<span id="shop_type_notice" style="color:#FF0000"></span>

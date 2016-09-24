@@ -817,8 +817,8 @@ function user_list()
         {
             $filter['keywords'] = json_str_iconv($filter['keywords']);
         }
-        $filter['extendcode'] = empty($_REQUEST['extendcode']) ? 0 : intval($_REQUEST['extendcode']);
-        $filter['storestype'] = empty($_REQUEST['storestype']) ? 0 : trim($_REQUEST['storestype']);
+        //$filter['extendcode'] = empty($_REQUEST['extendcode']) ? 0 : intval($_REQUEST['extendcode']);
+        //$filter['storestype'] = empty($_REQUEST['storestype']) ? 0 : trim($_REQUEST['storestype']);
         /*$filter['pay_points_gt'] = empty($_REQUEST['pay_points_gt']) ? 0 : intval($_REQUEST['pay_points_gt']);
         $filter['pay_points_lt'] = empty($_REQUEST['pay_points_lt']) ? 0 : intval($_REQUEST['pay_points_lt']);*/
 
@@ -830,13 +830,9 @@ function user_list()
         {
             $ex_where .= " AND user_name LIKE '%" . mysql_like_quote($filter['keywords']) ."%'";
         }
-        if ($filter['extendcode'])
+        if ($filter['shop_type'])
         {
-            $ex_where .= " AND extendcode LIKE '%" . mysql_like_quote($filter['extendcode']) ."%'";
-        }
-        if ($filter['storestype'])
-        {
-            $ex_where .= " AND storestype = '".$filter['storestype']."' ";
+            $ex_where .= " AND sign_building = '".$filter['shop_type']."' ";
         }
         /*if ($filter['rank'])
         {
@@ -865,9 +861,11 @@ function user_list()
 
         /* 分页大小 */
         $filter = page_and_size($filter);
-        $sql = "SELECT user_id, user_name, email, is_validated, user_money, mobile_phone, frozen_money, rank_points, pay_points, reg_time ".
-                " FROM " . $GLOBALS['ecs']->table('users') . $ex_where .
-                " ORDER by " . $filter['sort_by'] . ' ' . $filter['sort_order'] .
+        $sql = "SELECT u.*,a.*".
+                " FROM " . $GLOBALS['ecs']->table('users') ." u ".
+				"left join ". $GLOBALS['ecs']->table('user_address') ." a on a.address_id = u.shop_address_id".
+				$ex_where .
+				" ORDER by u." . $filter['sort_by'] . ' ' . $filter['sort_order'] .
                 " LIMIT " . $filter['start'] . ',' . $filter['page_size'];
 
         $filter['keywords'] = stripslashes($filter['keywords']);
@@ -880,6 +878,14 @@ function user_list()
     }
 
     $user_list = $GLOBALS['db']->getAll($sql);
+	print_r($sql);
+	// foreach($user_list as $k=>$user)
+	// {
+		// $sql ="select * from ".$GLOBALS['ecs']->table('user_address')." where address_id = $user[shop_address_id]";
+		// $result = $GLOBALS['db']->getRow($sql);
+		// $user_list[$k][]
+		
+	// }
 
     $count = count($user_list);
     for ($i=0; $i<$count; $i++)
