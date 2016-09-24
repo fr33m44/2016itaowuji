@@ -377,11 +377,6 @@ elseif ($_REQUEST['act'] == 'edit')
         $user['formated_frozen_money'] = price_format($row['frozen_money']);
         $user['parent_id']      = $row['parent_id'];
         $user['parent_username']= $row['parent_username'];
-        $user['qq']             = $row['qq'];
-        $user['msn']            = $row['msn'];
-        $user['office_phone']   = $row['office_phone'];
-        $user['home_phone']     = $row['home_phone'];
-        $user['mobile_phone']   = $row['mobile_phone'];
         $user['country']      = $row['country'];
         $user['province']      = $row['province'];
         $user['city']      = $row['city'];
@@ -549,20 +544,6 @@ elseif ($_REQUEST['act'] == 'update')
         }
     }
 
-
-    /* 更新会员的其它信息 */
-    $other =  array();
-    $other['credit_line'] = $credit_line;
-    $other['user_rank'] = $rank;
-
-    $other['msn'] = isset($_POST['extend_field1']) ? htmlspecialchars(trim($_POST['extend_field1'])) : '';
-    $other['qq'] = isset($_POST['extend_field2']) ? htmlspecialchars(trim($_POST['extend_field2'])) : '';
-    $other['office_phone'] = isset($_POST['extend_field3']) ? htmlspecialchars(trim($_POST['extend_field3'])) : '';
-    $other['home_phone'] = isset($_POST['extend_field4']) ? htmlspecialchars(trim($_POST['extend_field4'])) : '';
-    $other['mobile_phone'] = isset($_POST['extend_field5']) ? htmlspecialchars(trim($_POST['extend_field5'])) : '';
-
-    $db->autoExecute($ecs->table('users'), $other, 'UPDATE', "user_name = '$username'");
-	
 	//更新店铺信息
 	$address = array(
 	'shop_type'    => intval($_POST['shop_type']),
@@ -845,6 +826,7 @@ function user_list()
     {
         /* 过滤条件 */
         $filter['keywords'] = empty($_REQUEST['keywords']) ? '' : trim($_REQUEST['keywords']);
+        $filter['shop_type'] = empty($_REQUEST['shop_type']) ? '' : trim($_REQUEST['shop_type']);
         if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1)
         {
             $filter['keywords'] = json_str_iconv($filter['keywords']);
@@ -862,30 +844,11 @@ function user_list()
         {
             $ex_where .= " AND shop_type = '".$filter['shop_type']."' ";
         }
-        /*if ($filter['rank'])
-        {
-            $sql = "SELECT min_points, max_points, special_rank FROM ".$GLOBALS['ecs']->table('user_rank')." WHERE rank_id = '$filter[rank]'";
-            $row = $GLOBALS['db']->getRow($sql);
-            if ($row['special_rank'] > 0)
-            {
-                // 特殊等级 
-                $ex_where .= " AND user_rank = '$filter[rank]' ";
-            }
-            else
-            {
-                $ex_where .= " AND rank_points >= " . intval($row['min_points']) . " AND rank_points < " . intval($row['max_points']);
-            }
-        }
-        if ($filter['pay_points_gt'])
-        {
-             $ex_where .=" AND pay_points >= '$filter[pay_points_gt]' ";
-        }
-        if ($filter['pay_points_lt'])
-        {
-            $ex_where .=" AND pay_points < '$filter[pay_points_lt]' ";
-        }*/
 
-        $filter['record_count'] = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('users') . $ex_where);
+        $filter['record_count'] = $GLOBALS['db']->getOne("SELECT u.*,a.*".
+                " FROM " . $GLOBALS['ecs']->table('users') ." u ".
+				"left join ". $GLOBALS['ecs']->table('user_address') ." a on a.address_id = u.shop_address_id".
+				$ex_where);
 
         /* 分页大小 */
         $filter = page_and_size($filter);
@@ -905,7 +868,6 @@ function user_list()
         $filter = $result['filter'];
     }
 	
-	print_r($sql);
     $user_list = $GLOBALS['db']->getAll($sql);
 	
 
