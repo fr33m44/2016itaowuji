@@ -94,6 +94,10 @@ $(function(){
 		{
 			alert(res.err_msg);
 		}
+		else if(res.result.value == 0)//无库存
+		{
+			document.forms['ECS_FORMBUY'].elements[res.result.name].parentNode.innerHTML = '无库存'
+		}
 		else
 		{
 			//如果输入的数量大于库存量，修改数量为库存量
