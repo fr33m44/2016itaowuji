@@ -43,7 +43,15 @@
     <td class="first-cell">{$user.user_name|escape}</td>
     <td class="first-cell">{$user.parent_id|escape}</td>
     <td class="first-cell">{$user.mobile_phone|escape}</td>
-    <td class="first-cell">{$user.sign_building|escape}</td>
+    <td class="first-cell">
+	{if $user.shop_type eq 1 }内衣店{/if}
+	{if $user.shop_type eq 2 }超市{/if}
+	{if $user.shop_type eq 3 }化妆品店{/if}
+	{if $user.shop_type eq 4 }童装店{/if}
+	{if $user.shop_type eq 5 }文具店{/if}
+	{if $user.shop_type eq 6 }鞋店{/if}
+	
+	</td>
     <td class="first-cell">{$user.consignee|escape}</td>
     <td class="first-cell">{$user.address|escape}</td>
     <td>{$user.user_money}</td>

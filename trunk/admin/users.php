@@ -234,12 +234,6 @@ elseif ($_REQUEST['act'] == 'insert')
     $username = empty($_POST['username']) ? '' : trim($_POST['username']);
     $password = empty($_POST['password']) ? '' : trim($_POST['password']);
     $email = empty($_POST['email']) ? '' : trim($_POST['email']);
-
-    //$storename = empty($_POST['storename']) ? '' : trim($_POST['storename']);
-    //$storeaddress = empty($_POST['storeaddress']) ? '' : trim($_POST['storeaddress']);
-    //$storestype = empty($_POST['storestype']) ? '' : trim($_POST['storestype']);
-    $extendcode = empty($_POST['extendcode']) ? '' : trim($_POST['extendcode']);
-
     $sex = empty($_POST['sex']) ? 0 : intval($_POST['sex']);
     $sex = in_array($sex, array(0, 1, 2)) ? $sex : 0;
     $birthday = $_POST['birthdayYear'] . '-' .  $_POST['birthdayMonth'] . '-' . $_POST['birthdayDay'];
@@ -345,26 +339,32 @@ elseif ($_REQUEST['act'] == 'edit')
     /* 检查权限 */
     admin_priv('users_manage');
 
-    $sql = "SELECT u.user_name, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn, u.office_phone, u.home_phone, u.mobile_phone".
-        " FROM " .$ecs->table('users'). " u LEFT JOIN " . $ecs->table('users') . " u2 ON u.parent_id = u2.user_id WHERE u.user_id='$_GET[id]'";
-
+	
+	
+    $sql = 	"SELECT u.user_name, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn, u.office_phone, u.home_phone, u.mobile_phone".
+			" FROM " .$ecs->table('users'). " u LEFT JOIN " . $ecs->table('users') . " u2 ON u.parent_id = u2.user_id WHERE u.user_id='$_GET[id]'";
+	
     $row = $db->GetRow($sql);
     $row['user_name'] = addslashes($row['user_name']);
     $users  =& init_users();
     $user   = $users->get_user_info($row['user_name']);
 
-    $sql = "SELECT u.user_id, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn,
-    u.office_phone, u.home_phone, u.mobile_phone".
-        " FROM " .$ecs->table('users'). " u LEFT JOIN " . $ecs->table('users') . " u2 ON u.parent_id = u2.user_id WHERE u.user_id='$_GET[id]'";
-
+	$sql = "SELECT u.user_id, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank, u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name AS parent_username, u.qq, u.msn, u.office_phone, u.home_phone, u.mobile_phone,a.*
+			FROM  " .$ecs->table('users'). " u
+			LEFT JOIN  " .$ecs->table('users'). " u2 ON u.parent_id = u2.user_id
+			LEFT JOIN " .$ecs->table('user_address'). " a on u.shop_address_id = a.address_id
+			WHERE u.user_id =  '$_GET[id]'";
+	
+	
     $row = $db->GetRow($sql);
 
     if ($row)
     {
         $user['user_id']        = $row['user_id'];
-        //$user['storename']      = $row['storename'];
-        //$user['storeaddress']      = $row['storeaddress'];
-        //$user['storestype']      = $row['storestype'];
+        $user['shop_address_id']      = $row['address_id'];
+        $user['shop_name']      = $row['consignee'];
+        $user['shop_addr']      = $row['address'];
+        $user['shop_type']      = $row['shop_type'];
         $user['sex']            = $row['sex'];
         $user['birthday']       = date($row['birthday']);
         $user['pay_points']     = $row['pay_points'];
@@ -382,7 +382,10 @@ elseif ($_REQUEST['act'] == 'edit')
         $user['office_phone']   = $row['office_phone'];
         $user['home_phone']     = $row['home_phone'];
         $user['mobile_phone']   = $row['mobile_phone'];
-        $user['extendcode']      = $row['extendcode'];
+        $user['country']      = $row['country'];
+        $user['province']      = $row['province'];
+        $user['city']      = $row['city'];
+        $user['district']      = $row['district'];
     }
     else{
         $link[] = array('text' => $_LANG['go_back'], 'href'=>'users.php?act=list');
@@ -396,7 +399,19 @@ elseif ($_REQUEST['act'] == 'edit')
        $user['formated_user_money'] = price_format(0);
        $user['formated_frozen_money'] = price_format(0);*/
      }
+	 
+	/* 取得国家 */
+	$smarty->assign('country_list', get_regions());
+	
+	/* 取得省份 */
+	$smarty->assign('province_list', get_regions(1, $user['country']));
 
+	/* 取得城市 */
+	$smarty->assign('city_list', get_regions(2, $user['province']));
+
+	/* 取得区域 */
+	$smarty->assign('district_list', get_regions(3, $user['city']));
+	
     /* 取出注册扩展字段 */
     $sql = 'SELECT * FROM ' . $ecs->table('reg_fields') . ' WHERE type < 2 AND display = 1 AND id != 6 ORDER BY dis_order, id';
     $extend_info_list = $db->getAll($sql);
@@ -481,7 +496,8 @@ elseif ($_REQUEST['act'] == 'update')
     admin_priv('users_manage');
     $username = empty($_POST['username']) ? '' : trim($_POST['username']);
     $password = empty($_POST['password']) ? '' : trim($_POST['password']);
-    $email = empty($_POST['email']) ? '' : trim($_POST['email']);
+	$shop_address_id = empty($_POST['shop_address_id']) ? 0 : intval($_POST['shop_address_id']);
+	$email = empty($_POST['email']) ? '' : trim($_POST['email']);
     $sex = empty($_POST['sex']) ? 0 : intval($_POST['sex']);
     $sex = in_array($sex, array(0, 1, 2)) ? $sex : 0;
     $birthday = $_POST['birthdayYear'] . '-' .  $_POST['birthdayMonth'] . '-' . $_POST['birthdayDay'];
@@ -546,6 +562,22 @@ elseif ($_REQUEST['act'] == 'update')
     $other['mobile_phone'] = isset($_POST['extend_field5']) ? htmlspecialchars(trim($_POST['extend_field5'])) : '';
 
     $db->autoExecute($ecs->table('users'), $other, 'UPDATE', "user_name = '$username'");
+	
+	//更新店铺信息
+	$address = array(
+	'shop_type'    => intval($_POST['shop_type']),
+	'country'    => isset($_POST['country'])   ? intval($_POST['country'])  : 0,
+	'province'   => isset($_POST['province'])  ? intval($_POST['province']) : 0,
+	'city'       => isset($_POST['city'])      ? intval($_POST['city'])     : 0,
+	'district'   => isset($_POST['district'])  ? intval($_POST['district']) : 0,
+	'address'    => isset($_POST['shop_addr'])   ? compile_str(trim($_POST['shop_addr']))    : '',
+	'consignee'  => isset($_POST['shop_name']) ? compile_str(trim($_POST['shop_name']))  : '',
+	);
+
+	$GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('user_address'), $address, 'UPDATE', 'address_id = ' .$shop_address_id . ' AND user_id = ' . $user_id);
+
+	
+	
 
     /* 记录管理员操作 */
     admin_log($username, 'edit', 'users');
@@ -817,11 +849,7 @@ function user_list()
         {
             $filter['keywords'] = json_str_iconv($filter['keywords']);
         }
-        //$filter['extendcode'] = empty($_REQUEST['extendcode']) ? 0 : intval($_REQUEST['extendcode']);
-        //$filter['storestype'] = empty($_REQUEST['storestype']) ? 0 : trim($_REQUEST['storestype']);
-        /*$filter['pay_points_gt'] = empty($_REQUEST['pay_points_gt']) ? 0 : intval($_REQUEST['pay_points_gt']);
-        $filter['pay_points_lt'] = empty($_REQUEST['pay_points_lt']) ? 0 : intval($_REQUEST['pay_points_lt']);*/
-
+       
         $filter['sort_by']    = empty($_REQUEST['sort_by'])    ? 'user_id' : trim($_REQUEST['sort_by']);
         $filter['sort_order'] = empty($_REQUEST['sort_order']) ? 'DESC'     : trim($_REQUEST['sort_order']);
 
@@ -878,14 +906,7 @@ function user_list()
     }
 
     $user_list = $GLOBALS['db']->getAll($sql);
-	print_r($sql);
-	// foreach($user_list as $k=>$user)
-	// {
-		// $sql ="select * from ".$GLOBALS['ecs']->table('user_address')." where address_id = $user[shop_address_id]";
-		// $result = $GLOBALS['db']->getRow($sql);
-		// $user_list[$k][]
-		
-	// }
+	
 
     $count = count($user_list);
     for ($i=0; $i<$count; $i++)

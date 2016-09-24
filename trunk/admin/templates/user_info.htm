@@ -52,19 +52,53 @@
   <tr>
     <td class="label">{$lang.storename}:</td>
     <td>
-    <input name="storename" type="text" size="40" class="inputBg" value="{$user.storename}"/>
+    <input name="shop_name" type="text" size="40" class="inputBg" value="{$user.shop_name}"/>
     </td>
+  </tr>
+  <tr>
+    <td align="right" bgcolor="#ffffff">店铺地址（区域）：</td>
+	<td colspan="3" align="left" bgcolor="#ffffff">
+	<select name="country" id="selCountries" onChange="region.changed(this, 1, 'selProvinces')">
+        <option value="0" selected="true">{$lang.select_please}</option>
+        {foreach from=$country_list item=country}
+        <option value="{$country.region_id}" {if $user.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
+        {/foreach}
+      </select> <select name="province" id="selProvinces" onChange="region.changed(this, 2, 'selCities')">
+        <option value="0">{$lang.select_please}</option>
+        {foreach from=$province_list item=province}
+        <option value="{$province.region_id}" {if $user.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
+        {/foreach}
+      </select> <select name="city" id="selCities" onchange="region.changed(this, 3, 'selDistricts')">
+          <option value="0">{$lang.select_please}</option>
+          <!-- {foreach from=$city_list item=city} -->
+          <option value="{$city.region_id}" {if $user.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
+          <!-- {/foreach} -->
+        </select>
+        <select name="district" id="selDistricts">
+          <option value="0">{$lang.select_please}</option>
+          <!-- {foreach from=$district_list item=district} -->
+          <option value="{$district.region_id}" {if $user.district eq $district.region_id}selected{/if}>{$district.region_name}</option>
+          <!-- {/foreach} -->
+        </select>
+	  </td>
   </tr>
   <tr>
     <td class="label">{$lang.storeaddress}:</td>
     <td>
-    <input name="storeaddress" type="text" size="40" class="inputBg" value="{$user.storeaddress}"/>
+    <input name="shop_addr" type="text" size="40" class="inputBg" value="{$user.shop_addr}"/>
     </td>
   </tr>
   <tr>
     <td class="label">{$lang.storestype}:</td>
     <td>
-    <input name="storestype" type="text" size="40" class="inputBg" value="{$user.storestype}"/>
+    <select name="shop_type">
+							<option value="1" {if $user.shop_type eq '1'}selected="selected"{/if}>内衣店</option>
+							<option value="2" {if $user.shop_type eq '2'}selected="selected"{/if}>超市</option>
+							<option value="3" {if $user.shop_type eq '3'}selected="selected"{/if}>化妆品店</option>
+							<option value="4" {if $user.shop_type eq '4'}selected="selected"{/if}>童装店</option>
+							<option value="5" {if $user.shop_type eq '5'}selected="selected"{/if}>文具店</option>
+							<option value="6" {if $user.shop_type eq '6'}selected="selected"{/if}>鞋店</option>				
+	</select>
     </td>
   </tr>
   <tr>
@@ -119,13 +153,9 @@
   </tr>
   {/if}
   <tr>
-    <td class="label">{$lang.extendcode}:</td>
-    <td>
-    <input name="extendcode" type="text" size="40" class="inputBg" value="{$user.extendcode}"/>
-    </td>
-  </tr>
-  <tr>
     <td colspan="2" align="center">
+	  <input type="hidden" name="user_id" value="{$user.user_id}"  />
+	  <input type="hidden"  name="shop_address_id" value="{$user.shop_address_id}"  />
       <input type="submit" value="{$lang.button_submit}" class="button" />
       <input type="reset" value="{$lang.button_reset}" class="button" />
       <input type="hidden" name="act" value="{$form_action}" />
@@ -135,9 +165,10 @@
 
 </form>
 </div>
-{insert_scripts files="../js/utils.js,validator.js"}
+{insert_scripts files="../js/utils.js,validator.js,../js/region.js"}
 {literal}
 <script language="JavaScript">
+region.isAdmin=true;
 
 
 /*if (document.forms['theForm'].elements['act'].value == "insert")
