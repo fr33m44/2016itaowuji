@@ -71,18 +71,17 @@ class wx_new_qrcode
             define("WXKEY", $payment['key']);
             define("WXAPPSECRET", $payment['appsecret']);
             define("WXCURL_TIMEOUT", 30);
-            define('WXNOTIFY_URL',$root_url.'wx_native_callback.php');
-            define('WXSSLCERT_PATH',dirname(__FILE__).'/WxPayPubHelper/cacert/apiclient_cert.pem');
-            define('WXSSLKEY_PATH',dirname(__FILE__).'/WxPayPubHelper/cacert/apiclient_key.pem');
+            //define('WXNOTIFY_URL',$root_url.'wx_native_callback.php');
+            //define('WXSSLCERT_PATH',dirname(__FILE__).'/WxPayPubHelper/cacert/apiclient_cert.pem');
+            //define('WXSSLKEY_PATH',dirname(__FILE__).'/WxPayPubHelper/cacert/apiclient_key.pem');
             
-            define('WXJS_API_CALL_URL',$root_url.'wx_refresh.php');
+            //define('WXJS_API_CALL_URL',$root_url.'wx_refresh.php');
         }
-        require_once(dirname(__FILE__)."/WxPayPubHelper/WxPayPubHelper.php");
+        //require_once(dirname(__FILE__)."/WxPayPubHelper/WxPayPubHelper.php");
 
 	}
 	function get_code($order, $payment)
 	{
-
 		$notify = new NativePay();
 		
 		$unifiedOrder = new WxPayUnifiedOrder();
@@ -94,19 +93,18 @@ class wx_new_qrcode
         $unifiedOrder->SetTotal_fee(strval(intval($order['order_amount']*100)));//总金额
 		//$unifiedOrder->SetTime_start(date("YmdHis"));
 		//$unifiedOrder->SetTime_expire(date("YmdHis", time() + 600));
-		$unifiedOrder->SetNotify_url("http://itwj/includes/modules/payment/wxpay/example/notify.php");
+		$unifiedOrder->SetNotify_url("http://".$_SERVER['SERVER_NAME']."/includes/modules/payment/wxpay/example/notify.php");
 		$unifiedOrder->SetTrade_type("NATIVE");
 		$unifiedOrder->SetProduct_id($out_trade_no);
         //$unifiedOrderResult = $unifiedOrder->getResult();
 		$result = $notify->GetPayUrl($unifiedOrder);
-		
+		$this->log("GetPayUrl return:\r\n".var_export($result,true));
 		$code_url = $result["code_url"];
 
         $html = '<button type="button" onclick="javascript:alert(\'出错了\')">微信支付</button>';
 
-        if($result["code_url"] != NULL)
+        if($code_url != NULL)
         {
-            $code_url = $unifiedOrderResult["code_url"];
             $html = '<div class="wx_qrcode" style="text-align:center">';
             $html .= $this->getcode($code_url);
             $html .= "</div>";
@@ -120,7 +118,7 @@ class wx_new_qrcode
 	}
     function respond()
     {
-		$this->log(ROOT_PATH.'/data/wx_new_log.txt',"respond()\r\n".var_export('respond',true));
+		$this->log("respond()\r\n".var_export('respond',true));
 		
         $payment  = get_payment('wx_new_qrcode');
 
@@ -129,7 +127,7 @@ class wx_new_qrcode
 		
         if($payment['logs'])
         {
-            $this->log(ROOT_PATH.'/data/wx_new_log.txt',"传递过来的XML\r\n".var_export($xml,true));
+            $this->log("传递过来的XML\r\n".var_export($xml,true));
         }
         $notify->saveData($xml);
 		$checkSign = $notify->checkSign();
@@ -140,19 +138,19 @@ class wx_new_qrcode
             if ($notify->data["return_code"] == "FAIL") {
                 //此处应该更新一下订单状态，商户自行增删操作
                 if($payment['logs']){
-                    $this->log(ROOT_PATH.'/data/wx_new_log.txt',"return_code失败\r\n");
+                    $this->log("return_code失败\r\n");
                 }
             }
             elseif($notify->data["result_code"] == "FAIL"){
                 //此处应该更新一下订单状态，商户自行增删操作
                 if($payment['logs']){
-                    $this->log(ROOT_PATH.'/data/wx_new_log.txt',"result_code失败\r\n");
+                    $this->log("result_code失败\r\n");
                 }
             }
             else{
                 //此处应该更新一下订单状态，商户自行增删操作
                 if($payment['logs']){
-                    $this->log(ROOT_PATH.'/data/wx_new_log.txt',"支付成功\r\n");
+                    $this->log("支付成功\r\n");
                 }
                 $total_fee = $notify->data["total_fee"];
                 $log_id = $notify->data["attach"];
@@ -161,7 +159,7 @@ class wx_new_qrcode
                 
                 if($payment['logs'])
                 {
-                    $this->log(ROOT_PATH.'/data/wx_new_log.txt','订单金额'.$amount."\r\n");
+                    $this->log('订单金额'.$amount."\r\n");
                 }
                 
                 if(intval($amount*100) != $total_fee)
@@ -169,14 +167,14 @@ class wx_new_qrcode
                     
                     if($payment['logs'])
                     {   
-                        $this->log(ROOT_PATH.'/data/wx_new_log.txt','订单金额不符'."\r\n");
+                        $this->log('订单金额不符'."\r\n");
                     }
                     
                     echo 'fail';
                     return;
                 }
 				
-		 $this->log(ROOT_PATH.'/data/wx_new_log.txt',$log_id."\r\n");
+		 $this->log($log_id."\r\n");
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('pay_log') .
                 " WHERE log_id = '$log_id'";
         $pay_log = $GLOBALS['db']->getRow($sql);
@@ -203,7 +201,7 @@ class wx_new_qrcode
         }
         else
         {
-            $this->log(ROOT_PATH.'/data/wx_new_log.txt',"签名失败\r\n");
+            $this->log("签名失败\r\n");
         }
         return false;
     }
@@ -224,12 +222,13 @@ class wx_new_qrcode
         }
         $filename = $tmp . $errorCorrectionLevel . $matrixPointSize . '.png';
         QRcode::png($url, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
+		//print_r($url.$filename.$errorCorrectionLevel.$matrixPointSize);die();
         return '<img src="'.$GLOBALS['ecs']->url(). 'images/qrcode/'.basename($filename).'" />';
     }
     
-    function log($file,$txt)
+    function log($txt)
     {
-       $fp =  fopen($file,'a+');
+       $fp =  fopen('wx_hjq.txt','a+');
        fwrite($fp,'-----------'.local_date('Y-m-d H:i:s').'-----------------');
        fwrite($fp,$txt);
        fwrite($fp,"\r\n\r\n\r\n");
