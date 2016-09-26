@@ -187,7 +187,6 @@
 				{
 					if(formCart.elements[i].id.substr(0,13) == 'goods_number_')
 					{
-						console.log(parseInt(formCart.elements[i].value) % parseInt(formCart.elements[i].getAttribute('pkg')));
 						if( parseInt(formCart.elements[i].value) % parseInt(formCart.elements[i].getAttribute('pkg')) != 0)
 						{
 							alert("订购数量必须是"+formCart.elements[i].getAttribute('pkg')+"的整数倍!");
