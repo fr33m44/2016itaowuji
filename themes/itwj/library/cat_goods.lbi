@@ -42,7 +42,7 @@
     <!--{foreach from=$goods_cat.brands item=brands name=foo}-->
     
     
-     <dd> <a href="{$brands.url}" target="_blank" title="{$brands.brand_name}"> {if $brands.logo neq 'data/brandlogo/'}<img width="78" height="40" border="0" alt="{$brands.brand_name}" src="{$brands.logo}">{else}{$brands.brand_name}{/if}</a> </dd>
+     <dd> <a href="{$brands.url}" title="{$brands.brand_name}"> {if $brands.logo neq 'data/brandlogo/'}<img width="78" height="40" border="0" alt="{$brands.brand_name}" src="{$brands.logo}">{else}{$brands.brand_name}{/if}</a> </dd>
      
           <!--{/foreach}-->
     
