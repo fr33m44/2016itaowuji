@@ -132,29 +132,25 @@ class wx_new_qrcode
 	}
 	function get_code($order, $payment)
 	{
+		$rand = str_pad(strval(rand(0,999999)), 6, "0", STR_PAD_LEFT);
+		$out_trade_no = $order['order_sn'];
 		$notify = new NativePay();
 		$unifiedOrder = new WxPayUnifiedOrder();
 		$unifiedOrder->SetBody($order['order_sn']); //商品描述
-		$out_trade_no = $order['order_sn'];
-		$unifiedOrder->SetOut_trade_no($out_trade_no); //商户订单号
+		$unifiedOrder->SetOut_trade_no($out_trade_no."_".$rand); //商户订单号
 		$unifiedOrder->SetAttach(strval($order['log_id'])); //商户支付日志
 		$unifiedOrder->SetTotal_fee(strval(intval($order['order_amount'] * 100))); //总金额
-		// $unifiedOrder->SetTime_start(date("YmdHis"));
-		// $unifiedOrder->SetTime_expire(date("YmdHis", time() + 600));
 		$unifiedOrder->SetNotify_url("http://" . $_SERVER['SERVER_NAME'] . "/wx_native_callback.php");
 		$unifiedOrder->SetTrade_type("NATIVE");
 		$unifiedOrder->SetProduct_id($out_trade_no);
-		// $unifiedOrderResult = $unifiedOrder->getResult();
 		$result = $notify->GetPayUrl($unifiedOrder);
 		$this->log("GetPayUrl return:\r\n" . var_export($result, true));
 		$code_url = $result["code_url"];
-		$html = '<button type="button" onclick="javascript:alert(\'出错了\')">微信支付</button>';
 		if ($code_url != NULL)
 		{
 			$html = '<div class="wx_qrcode" style="text-align:center">';
-			$html.= $this->getcode($code_url);
+			$html.= $this->img_qr($code_url);
 			$html.= "</div>";
-			$html.= "<div style=\"text-align:center\">支付后点击<a href=\"user.php?act=order_list\">此处</a>查看我的订单</div>";
 		}
 		return $html;
 	}
@@ -165,11 +161,10 @@ class wx_new_qrcode
 		Log::DEBUG("begin notify");
 		$notify = new PayNotifyCallBack();
 		$notify->Handle(false);
-		//$ret = $notify->GetValues();
-		//echo $notify->ToXml(); //返回给微信确认
 		$xmlpost = $GLOBALS['HTTP_RAW_POST_DATA'];
 		$post = json_decode(json_encode(simplexml_load_string($xmlpost, 'SimpleXMLElement', LIBXML_NOCDATA)), true);		
-		//print_r($array_data);
+		$log_id = $post['attach'];
+		
 		if ($payment['logs'])
 		{
 			$this->log("传递过来的XML\r\n" . var_export($xml, true));
@@ -192,7 +187,6 @@ class wx_new_qrcode
 			if ($post["result_code"] == "SUCCESS")
 			{
 				$total_fee = $post["total_fee"];
-				$log_id = $post["attach"];
 				$sql = 'SELECT order_amount FROM ' . $GLOBALS['ecs']->table('pay_log') . " WHERE log_id = '$log_id'";
 				$amount = $GLOBALS['db']->getOne($sql);
 				if ($payment['logs'])
@@ -235,26 +229,8 @@ class wx_new_qrcode
 		}
 		return false;
 	}
-	function getcode($url)
+	function img_qr($url)
 	{
-		if (file_exists(ROOT_PATH . 'includes/phpqrcode.php'))
-		{
-			include (ROOT_PATH . 'includes/phpqrcode.php');
-
-		}
-		// 纠错级别：L、M、Q、H
-		$errorCorrectionLevel = 'Q';
-		// 点的大小：1到10
-		$matrixPointSize = 5;
-		// 生成的文件名
-		$tmp = ROOT_PATH . 'images/qrcode/';
-		if (!is_dir($tmp))
-		{
-			@mkdir($tmp);
-		}
-		$filename = $tmp . $errorCorrectionLevel . $matrixPointSize . '.png';
-		QRcode::png($url, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
-		// print_r($url.$filename.$errorCorrectionLevel.$matrixPointSize);die();
 		return '<img src="' . $GLOBALS['ecs']->url() . 'includes/modules/payment/wxpay/example/qrcode.php?data=' . $url . '" />';
 	}
 	function log($txt)

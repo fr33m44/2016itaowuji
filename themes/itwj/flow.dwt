@@ -740,9 +740,25 @@
 {insert_scripts files='jquery-1.9.1.min.js'}
 <script type="text/javascript">
   $("document").ready(function(){
-	$("#paybtn").click(function(){
+	var order_id = document.getElementById("order_id").value;
+	var id;
+	if($("#payname").html() == '微信支付')
+	{
+		id = setInterval(function() {
+			firstInFlag = 0;
+			Ajax.call('flow.php?step=check_order_status', 'order_id=' + order_id, check_order_callback, 'GET', 'JSON', true, true);
+		}, 3000);
+	}
+	function check_order_callback(res)
+	{
+		if(res.code == 1)//付款成功
+		{
 		
-	});
+			alert("付款成功！");
+			window.location = 'user.php?act=order_detail&order_id='+order_id;
+			clearInterval(id);
+		}
+	}
 });
 </script>
         <!-- 订单提交成功 -->
@@ -755,8 +771,8 @@
         <div class="buytab_a">
         <div class="nstep2_con orderok">
          <p class="ordertitle">{$lang.remember_order_number}: <font style="color:red">{$order.order_sn}</font></p>
-         
-            <p> {$lang.select_payment}: <span class="pink ">{$order.pay_name}</span>。{$lang.order_amount}: <span class="pink ">{$total.amount_formated}</span></p>
+			<input type="hidden"  name="order_id" id="order_id" value="{$order.order_id}" />
+            <p> {$lang.select_payment}: <span id="payname" class="pink ">{$order.pay_name}</span>。{$lang.order_amount}: <span class="pink ">{$total.amount_formated}</span></p>
              <p class="orderpayinfo">
             {$order.pay_desc}
           

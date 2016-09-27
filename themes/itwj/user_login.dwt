@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
 {insert_scripts files='jquery-1.9.1.min.js'}
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=58697507" charset="UTF-8"></script>
 <script type="text/javascript">
 	function sub() {
 
