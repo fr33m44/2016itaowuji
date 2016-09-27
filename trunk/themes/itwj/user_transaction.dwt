@@ -301,6 +301,28 @@
               <!--#包裹状态查询界面 end--> 
               <!-- ==========订单详情页面,包括：订单状态，商品列表，费用总计，收货人信息，支付方式，其它信息========== --> 
               <!--{if $action eq order_detail} -->
+			<script type="text/javascript">
+			  $("document").ready(function(){
+				var order_id = document.getElementsByName("order_id")[0].value;
+				var id;
+				if(document.getElementsByClassName("wx_qrcode"))//如果是微信支付
+				{
+					id = setInterval(function() {
+						firstInFlag = 0;
+						Ajax.call('flow.php?step=check_order_status', 'order_id=' + order_id, check_order_callback, 'GET', 'JSON', true, true);
+					}, 3000);
+				}
+				function check_order_callback(res)
+				{
+					if(res.code == 1)//付款成功
+					{
+						alert("付款成功！");
+						window.location = 'user.php?act=order_detail&order_id='+order_id;
+						clearInterval(id);
+					}
+				}
+			});
+			</script>
               <h5><span>{$lang.order_status}</span></h5>
               <div class="blank"></div>
               <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">

@@ -2402,7 +2402,7 @@ elseif ($_REQUEST['step'] == 'update_cart')
     show_message($_LANG['update_cart_notice'], $_LANG['back_to_cart'], 'flow.php');
     exit;
 }
-//获取库存
+//hjq 获取库存
 elseif($_REQUEST['step'] == 'get_stock')
 {
 	include('includes/cls_json.php');
@@ -2444,6 +2444,35 @@ elseif($_REQUEST['step'] == 'get_stock')
 			));
 		}
     }
+	die($json->encode($res));
+}
+
+//hjq ajax获取订单支付状态
+elseif($_REQUEST['step'] == 'check_order_status')
+{
+	include('includes/cls_json.php');
+	$json   = new JSON;
+	$res    = array('code' => '', 'msg' => '');
+
+	$order_id = intval($_GET['order_id']);
+	if(empty($order_id))
+	{
+		$res['code'] = 0;
+		$res['msg'] = '参数错误';
+		die($json->encode($res));
+	}
+	$sql = "select pay_status from ". $ecs->table("order_info")." where order_id=$order_id and user_id = $_SESSION[user_id]";
+	$ps = $db->getOne($sql);
+	if($ps == PS_PAYED)
+	{
+		$res['code'] = 1;
+		$res['msg'] = '付款成功';
+	}
+	else
+	{
+		$res['code'] = 0;
+		$res['msg'] = '未付款';
+	}
 	die($json->encode($res));
 }
 /*------------------------------------------------------ */
@@ -3445,4 +3474,6 @@ function cart_favourable_amount($favourable)
     /* 优惠范围内的商品总额 */
     return $GLOBALS['db']->getOne($sql);
 }
+
+
 ?>
