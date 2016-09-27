@@ -118,15 +118,29 @@ class alipay
         }
 
         $extend_param = 'isv^sh22';
-		
-        $parameter = array(
-            /* 业务参数 */
-            'subject'           => '淘五季进货 订单号'.$order['order_sn'],
-            'out_trade_no'      => $order['order_sn'],
-            'total_fee'             => $order['order_amount'],
-			'body'             => ''
-          
-        );
+		if(empty($order['surplus_amount']))//订单付款
+		{
+			$parameter = array(
+				/* 业务参数 */
+				'subject'           => '订单号：'.$order['order_sn'],
+				'out_trade_no'      => $order['order_sn'],
+				'total_fee'             => $order['order_amount'],
+				'body'             => ''
+			  
+			);
+		}
+		else//充值
+		{
+			$parameter = array(
+				/* 业务参数 */
+				'subject'           => '充值：'.$order['order_amount'].'元',
+				'out_trade_no'      => $order['order_sn'],
+				'total_fee'             => $order['order_amount'],
+				'body'             => '',
+				'extra_common_param' => $order['log_id']
+			  
+			);
+		}
 
         ksort($parameter);
         reset($parameter);

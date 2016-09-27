@@ -136,7 +136,15 @@ class wx_new_qrcode
 		$out_trade_no = $order['order_sn'];
 		$notify = new NativePay();
 		$unifiedOrder = new WxPayUnifiedOrder();
-		$unifiedOrder->SetBody($order['order_sn']); //商品描述
+		if(empty($order['surplus_amount']))
+		{
+			$unifiedOrder->SetBody('订单号：'.$order['order_sn']); //商品描述
+		}
+		else
+		{
+			$unifiedOrder->SetBody('充值：'.$order['surplus_amount'].'元'); //商品描述
+		}
+		
 		$unifiedOrder->SetOut_trade_no($out_trade_no."_".$rand); //商户订单号
 		$unifiedOrder->SetAttach(strval($order['log_id'])); //商户支付日志
 		$unifiedOrder->SetTotal_fee(strval(intval($order['order_amount'] * 100))); //总金额
@@ -163,7 +171,7 @@ class wx_new_qrcode
 		$notify->Handle(false);
 		$xmlpost = $GLOBALS['HTTP_RAW_POST_DATA'];
 		$post = json_decode(json_encode(simplexml_load_string($xmlpost, 'SimpleXMLElement', LIBXML_NOCDATA)), true);		
-		$log_id = $post['attach'];
+		$log_id = intval($post['attach']);
 		
 		if ($payment['logs'])
 		{
@@ -235,6 +243,7 @@ class wx_new_qrcode
 	}
 	function log($txt)
 	{
+		return;
 		$fp = fopen('wx_hjq.txt', 'a+');
 		fwrite($fp, '-----------' . local_date('Y-m-d H:i:s') . '-----------------');
 		fwrite($fp, $txt);

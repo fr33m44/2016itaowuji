@@ -40,7 +40,7 @@ require_once(ROOT_PATH . 'includes/lib_order.php');
         //商品描述，可空
         $body = $_GET['body'];
 
-
+		$extra_common_param = $_GET['extra_common_param'];
 
 
 
@@ -61,6 +61,7 @@ $parameter = array(
 		"subject"	=> $subject,
 		"total_fee"	=> $total_fee,
 		"body"	=> $body,
+		"extra_common_param"	=> $extra_common_param,
 		"_input_charset"	=> trim(strtolower($alipay_config['input_charset']))
 		//其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.kiX33I&treeId=62&articleId=103740&docType=1
         //如"参数名"=>"参数值"

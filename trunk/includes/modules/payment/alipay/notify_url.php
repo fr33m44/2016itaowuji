@@ -24,6 +24,7 @@ function jqlog($word)
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
 
+jqlog("result1");
 
 define('IN_ECS', true);
 
@@ -31,11 +32,12 @@ require_once(dirname(__FILE__) . '/../../../../includes/init.php');
 require_once(ROOT_PATH . 'includes/lib_order.php');
 require_once(ROOT_PATH . 'includes/lib_payment.php');
 
+jqlog("result2");
 
 //计算得出通知验证结果
 $alipayNotify = new AlipayNotify($alipay_config);
 $verify_result = $alipayNotify->verifyNotify();
-jqlog("result:".$verify_result);
+
 if($verify_result) 
 {	//验证成功
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,19 +59,30 @@ if($verify_result)
 	$trade_status = $_POST['trade_status'];
 
 	//交易金额
-	$total_fee = $_POST['total_fee']
+	$total_fee = $_POST['total_fee'];
+	
+	//判断是充值还是订单 
+	$is_cz = strpos($_POST['subject'],'充值');
+	
 	//返回商户订单号
 	$order_sn = str_replace($_POST['subject'], '', $_POST['out_trade_no']);
 	$order_sn = trim(addslashes($order_sn));
-	$pay_log_id = get_order_id_by_sn($order_sn);
-	$order_id = get_order_id_by_sn1($order_sn);
-	jqlog(serialize($_POST));
+	if($is_cz === FALSE)
+	{
+		$pay_log_id = get_order_id_by_sn($order_sn);
+		$order_id = get_order_id_by_sn1($order_sn);
+	}
+	else
+	{
+		$pay_log_id = $_POST['extra_common_param'];
+	}
+	
     if($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS')
 	{
         /* 检查支付的金额是否相符 */
 		if (check_money($pay_log_id, $total_fee))
         {
-			jqlog('check_money ok');
+			jqlog('pay_log_id:'.$pay_log_id);
 			order_paid($pay_log_id, 2);
         }
 		else
