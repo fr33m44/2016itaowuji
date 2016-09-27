@@ -1890,7 +1890,7 @@ background-image: url("images/rank_num_icon.gif");background-position: 0 -66px;b
 .inLeft_tab ul li img{float:left;  }
 .inLeft_nav{width:845px; float:left; display:inline;}
 .inLeft_tabnav{ width:845px;}
-.slideTxtBox3 {width: 845px;margin: 38px 0 0 31px;padding: 0 0 25px 0;overflow: hidden;}
+.slideTxtBox3 {width: 845px;margin: 38px 0 0 31px;padding: 15px 0 25px 0;overflow: hidden;}
 .slideTxtBox3 .hd {position: relative;}
 .slideTxtBox3 .hd ul {width: 870px;height: 92px;float: left;}
 .slideTxtBox3 .hd ul li {width: 84px;height: 92px;cursor: pointer;float: left;display: inline;margin: 0 24px 0 0;}
