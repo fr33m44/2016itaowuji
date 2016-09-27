@@ -33,7 +33,7 @@ if($verify_result) {//验证成功
 	
 	//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
     //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表
-
+	//print_r($_GET);die();
 	//商户订单号
 	$out_trade_no = $_GET['out_trade_no'];
 
@@ -47,19 +47,28 @@ if($verify_result) {//验证成功
 	
 	$total_fee = $_GET['total_fee'];
 	
+	$is_cz = strpos($_GET['subject'],'充值');
+	
+
+	
 	//返回商户订单号
 	$order_sn = str_replace($_GET['subject'], '', $_GET['out_trade_no']);
 	$order_sn = trim(addslashes($order_sn));
-	$pay_log_id = get_order_id_by_sn($order_sn);
-	$order_id = get_order_id_by_sn1($order_sn);
-
+	if($is_cz === FALSE)
+	{
+		$pay_log_id = get_order_id_by_sn($order_sn);
+		$order_id = get_order_id_by_sn1($order_sn);
+	}
+	else
+	{
+		$pay_log_id = $_GET['extra_common_param'];
+	}
     if($_GET['trade_status'] == 'TRADE_FINISHED' || $_GET['trade_status'] == 'TRADE_SUCCESS')
 	{
 		
         /* 检查支付的金额是否相符 */
 		if (check_money($pay_log_id, $total_fee))
         {
-			//echo 'check money passed';
 			order_paid($pay_log_id, 2);
         }
 		else
@@ -71,7 +80,14 @@ if($verify_result) {//验证成功
       echo "trade_status=".$_GET['trade_status'];
     }
 	
-	ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_detail&order_id=".$order_id."\n");
+	if($is_cz === FALSE)//订单
+	{
+		ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_detail&order_id=".$order_id."\n");
+	}
+	else
+	{
+		ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=account_detail\n");
+	}
 	//echo "验证成功<br />";
 
 	//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
@@ -81,6 +97,6 @@ if($verify_result) {//验证成功
 else {
     //验证失败
     //如要调试，请看alipay_notify.php页面的verifyReturn函数
-	ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php?act=order_detail&order_id=".$order_id."\n");
+	ecs_header("Location: http://".$_SERVER['SERVER_NAME']."/user.php\n");
 }
 ?>

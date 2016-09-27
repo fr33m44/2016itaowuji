@@ -2475,6 +2475,35 @@ elseif($_REQUEST['step'] == 'check_order_status')
 	}
 	die($json->encode($res));
 }
+
+//hjq ajax获取订单支付状态
+elseif($_REQUEST['step'] == 'check_user_account')
+{
+	include('includes/cls_json.php');
+	$json   = new JSON;
+	$res    = array('code' => '', 'msg' => '');
+
+	$rec_id = intval($_GET['rec_id']);
+	if(empty($rec_id))
+	{
+		$res['code'] = 0;
+		$res['msg'] = '参数错误';
+		die($json->encode($res));
+	}
+	$sql = "select is_paid from ". $ecs->table("user_account")." where id=$rec_id and user_id = $_SESSION[user_id]";
+	$is_paid = $db->getOne($sql);
+	if($is_paid == 1)
+	{
+		$res['code'] = 1;
+		$res['msg'] = '付款成功';
+	}
+	else
+	{
+		$res['code'] = 0;
+		$res['msg'] = '未付款';
+	}
+	die($json->encode($res));
+}
 /*------------------------------------------------------ */
 //-- 删除购物车中的商品
 /*------------------------------------------------------ */

@@ -714,10 +714,32 @@
               </form>
               <!-- {/if} --> 
               <!-- {if $action eq "act_account"} -->
+			  <script type="text/javascript">
+			  $("document").ready(function(){
+				var rec_id = document.getElementsByName("rec_id")[0].value;
+				var id;
+				if(document.getElementsByClassName("wx_qrcode"))//如果是微信支付
+				{
+					id = setInterval(function() {
+						firstInFlag = 0;
+						Ajax.call('flow.php?step=check_user_account', 'rec_id=' + rec_id, check_user_account_callback, 'GET', 'JSON', true, true);
+					}, 3000);
+				}
+				function check_user_account_callback(res)
+				{
+					if(res.code == 1)//付款成功
+					{
+						alert("付款成功！");
+						window.location = 'user.php?act=account_detail';
+						clearInterval(id);
+					}
+				}
+			});
+			</script>
               <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                 <tr>
                   <td width="25%" align="right" bgcolor="#ffffff">{$lang.surplus_amount}</td>
-                  <td width="80%" bgcolor="#ffffff">{$amount}</td>
+                  <td width="80%" bgcolor="#ffffff">{$amount}<input type="hidden" name="rec_id" id="rec_id" value="{$order.order_sn}"/></td>
                 </tr>
                 <tr>
                   <td align="right" bgcolor="#ffffff">{$lang.payment_name}</td>
