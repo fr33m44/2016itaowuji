@@ -109,6 +109,11 @@ if ($action == 'default')
 /* 显示会员注册界面 */
 if ($action == 'register')
 {
+	//已经登陆的用户禁止访问注册页面
+	if($_SESSION['user_id']>0)
+	{
+		ecs_header("Location: user.php\n");
+	}
 	    /* 取得国家列表、商店所在国家、商店所在国家的省列表 */
     $smarty->assign('country_list',       get_regions());
     //$smarty->assign('shop_province_list', get_regions(1, $_CFG['shop_country']));
