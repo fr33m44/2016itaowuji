@@ -221,16 +221,7 @@
 						</div>
 
 					</div>
-					<!-- <div class="coLogin_right" style="width:294px; height:460px; margin: 36px 0 0 0;padding: 0 0 0 23px; border-left: 1px #e5e5e5 solid; border-top:none; float:right;">
-                    <p>您也可以使用合作网站账号登录</p>
-                    <ul style="width:280px;">
- 						<li class="sina_ico"> <a href="user.php?act=oath&type=weibo">新浪微博</a></li>
-					    <li class="qq_ico"><a href="user.php?act=oath&type=qq"><span class="arial">QQ</span>登录</a></li>
-                        <li class="alipay_ico"><a href="user.php?act=oath&type=alipay"></a></li>
-					   <li style="background:none; width:78px; padding:0;"><a href="user.php?act=oath&type=taobao"><img src="images/taobao_login.gif"/></a></li>
-					    
-                    </ul>
-                </div> -->
+					
 					<!--{/if}-->
 					<!--{/if}-->
 					<!--#会员注册界面 end-->
