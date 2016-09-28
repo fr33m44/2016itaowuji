@@ -162,7 +162,7 @@ Message.controlSound = function(_sndObj)
 
   try
   {
-    sndObj.Play();
+    sndObj.play();
   }
   catch (e) { }
 }
