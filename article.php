@@ -16,12 +16,7 @@
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
-/* 检查是否登录 */
-if ($_SESSION['user_id'] <= 0)
-{
-	ecs_header("Location: user.php\n");
-	exit;
-}
+
 if ((DEBUG_MODE & 2) != 2)
 {
     $smarty->caching = true;
