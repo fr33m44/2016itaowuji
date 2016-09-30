@@ -148,7 +148,7 @@ function insert_cart_info()
 		}		
     $sql = 'SELECT SUM(goods_number) AS number, SUM(goods_price * goods_number) AS amount' .
            ' FROM ' . $GLOBALS['ecs']->table('cart') .
-           " WHERE session_id = '" . SESS_ID . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
+           " WHERE user_id = '" . $_SESSION['user_id'] . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
     $row = $GLOBALS['db']->GetRow($sql);
 
     if ($row)
