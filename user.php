@@ -114,10 +114,10 @@ if ($action == 'register')
 	{
 		ecs_header("Location: user.php\n");
 	}
-	    /* 取得国家列表、商店所在国家、商店所在国家的省列表 */
-    $smarty->assign('country_list',       get_regions());
-    //$smarty->assign('shop_province_list', get_regions(1, $_CFG['shop_country']));
-	
+	/* 取得国家列表、商店所在国家、商店所在国家的省列表 */
+    $smarty->assign('province_list', get_regions(1, $_CFG['shop_country']));
+    $smarty->assign('city_list', get_regions(2, $_COOKIE['province']));
+    $smarty->assign('district_list', get_regions(3, $_COOKIE['city']));
 
     if ((!isset($back_act)||empty($back_act)) && isset($GLOBALS['_SERVER']['HTTP_REFERER']))
     {
@@ -218,7 +218,7 @@ elseif ($action == 'act_register')
         {
             if (empty($_POST['captcha']))
             {
-                show_message($_LANG['invalid_captcha'], $_LANG['sign_up'], 'user.php?act=register', 'error');
+                show_message($_LANG['invalid_captcha']);
             }
 
             /* 检查验证码 */
@@ -227,7 +227,7 @@ elseif ($action == 'act_register')
             $validator = new captcha();
             if (!$validator->check_word($_POST['captcha']))
             {
-                show_message($_LANG['invalid_captcha'], $_LANG['sign_up'], 'user.php?act=register', 'error');
+                show_message($_LANG['invalid_captcha']);
             }
         }
 		/*手机确认码检查*/
@@ -308,7 +308,7 @@ elseif ($action == 'act_register')
                 send_regiter_hash($_SESSION['user_id']);
             }
             $ucdata = empty($user->ucdata)? "" : $user->ucdata;
-            show_message(sprintf($_LANG['register_success'], $username . $ucdata), array($_LANG['back_up_page'], $_LANG['profile_lnk']), array($back_act, 'user.php'), 'info');
+            show_message(sprintf($_LANG['register_success'], $username . $ucdata), array($_LANG['profile_lnk']), array('user.php'), 'info');
         }
         else
         {
@@ -326,7 +326,7 @@ elseif ($action == 'is_registered')
     $username = json_str_iconv($username);
 
     if ($user->check_user($username) || admin_registered($username))
-    {
+    {//已经注册
         echo 'false';
     }
     else
@@ -399,7 +399,7 @@ elseif ($action == 'act_login')
     {
         if (empty($_POST['captcha']))
         {
-            show_message($_LANG['invalid_captcha'], $_LANG['relogin_lnk'], 'user.php', 'error');
+            show_message($_LANG['invalid_captcha']);
         }
 
         /* 检查验证码 */
@@ -409,7 +409,7 @@ elseif ($action == 'act_login')
         $validator->session_word = 'captcha_login';
         if (!$validator->check_word($_POST['captcha']))
         {
-            show_message($_LANG['invalid_captcha'], $_LANG['relogin_lnk'], 'user.php', 'error');
+            show_message($_LANG['invalid_captcha']);
         }
     }
 
@@ -441,7 +441,7 @@ elseif ($action == 'getqrm')
 	
 	$json = new JSON;
 	$result = array();
-	$mobile = $_GET['mobile'];
+	$mobile = trim($_GET['mobile']);
 	$action = intval($_GET['action']);
 	
 	do{
@@ -456,6 +456,16 @@ elseif ($action == 'getqrm')
 			);
 			break;
 		}
+		/*检查手机号格式*/
+		if (0 == preg_match("/^1[34578]\d{9}$/", $mobile))
+		{
+			$result = array(
+				'error'=>1,
+				'content'=> '手机号格式不正确'
+			);
+			break;
+		}
+
 		//查询该手机号5分钟内是否已经获取过
 		$sql = "SELECT req_time from ". $ecs->table('sms')." where mobile='$mobile' and action=$action"; //1:signup
 		$req_time = $db->getOne($sql);
