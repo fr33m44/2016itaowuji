@@ -78,7 +78,7 @@ Utils.isTel = function(tel)
 }
 Utils.isMobile = function(mobile)
 {
-	var reg = /^1[34578]{1}\d{9}$/;
+	var reg = /^1[34578]\d{9}$/;
 	return reg.test(mobile);
 }
 

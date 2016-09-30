@@ -25,6 +25,12 @@
 
 					<!--*会员注册界面 start-->
 					<!--{if $action eq 'register'}-->
+<script>
+window.onload = function() {
+	//refresh captcha
+	document.getElementById("captchaimg").src = 'captcha.php?' + Math.random();
+};
+</script>
 					<!-- {if $shop_reg_closed eq 1} -->
 					<div class="coLoginBody">
 						<div class="usBox_2 clearfix">
@@ -43,12 +49,12 @@
 									<p>{$lang.label_username}：</p>
 									<div class="coLoginTxt" style="width:245px;">
 										<div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-											<input name="username" type="text" size="17" id="username" onblur="is_registered(this.value);" class="coLogin_txt" style="width:225px;" />
+											<input name="username" type="text" size="17" id="username" placeholder="建议使用真实姓名" onblur="is_registered(this.value);" class="coLogin_txt" style="width:225px;" />
 
 										</div>
 									</div>
 									<span style="color:red;font-size:large">*&nbsp;</span>
-									<span id="username_notice" style="color:#FF0000"> (建议使用真实姓名)</span>
+									<span id="username_notice" style="color:#FF0000"></span>
 								</div>
 								<div class="coLogin_one">
 									<p>{$lang.label_password}：</p>
@@ -108,28 +114,23 @@
 								<div class="coLogin_one">
 									<p>{$lang.country_province}：</p>
 									<div class="coLoginTxt" style="width:340px;line-height:35px;">
-										<select name="country" id="selCountries_1" onchange="region.changed(this, 1, 'selProvinces_1')">
-			<option value="0">{$lang.please_select}{$name_of_region[0]}</option>
-			<!-- {foreach from=$country_list item=country} -->
-			<option value="{$country.region_id}" {if $consignee.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
-			<!-- {/foreach} -->
-		  </select>
-										<select name="province" id="selProvinces_1" onchange="region.changed(this, 2, 'selCities_1')">
+							
+		<select style="height:35px" name="province" id="selProvinces_1" onchange="region.changed(this, 2, 'selCities_1');">
 			<option value="0">{$lang.please_select}{$name_of_region[1]}</option>
-			<!-- {foreach from=$province_list.$sn item=province} -->
-			<option value="{$province.region_id}" {if $consignee.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
+			<!-- {foreach from=$province_list item=province} -->
+			<option value="{$province.region_id}">{$province.region_name}</option>
 			<!-- {/foreach} -->
-		  </select>
-										<select name="city" id="selCities_1" onchange="region.changed(this, 3, 'selDistricts_1')">
+		</select>
+		<select style="height:35px" name="city" id="selCities_1" onchange="region.changed(this, 3, 'selDistricts_1');">
 			<option value="0">{$lang.please_select}{$name_of_region[2]}</option>
-			<!-- {foreach from=$city_list.$sn item=city} -->
-			<option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
+			<!-- {foreach from=$city_list item=city} -->
+			<option value="{$city.region_id}">{$city.region_name}</option>
 			<!-- {/foreach} -->
-		  </select>
-										<select name="district" id="selDistricts_1" {if !$district_list.$sn}style="display:none" {/if}>
+		</select>
+		<select style="height:35px" name="district" id="selDistricts_1">
 			<option value="0">{$lang.please_select}{$name_of_region[3]}</option>
-			<!-- {foreach from=$district_list.$sn item=district} -->
-			<option value="{$district.region_id}" {if $consignee.district eq $district.region_id}selected{/if}>{$district.region_name}</option>
+			<!-- {foreach from=$district_list item=district} -->
+			<option value="{$district.region_id}">{$district.region_name}</option>
 			<!-- {/foreach} -->
 		</select>
 									</div>
@@ -163,9 +164,9 @@
 									<p>{$lang.comment_captcha}：</p>
 									<div class="coLoginTxt_2">
 										<div class="coLogin_txt_2_all">
-											<input type="text" size="8" name="captcha" onblur="check_captcha(this.value)" class="coLogin_txt_2" />
+											<input type="text" size="8" name="captcha"onblur="check_captcha(this.value)" class="coLogin_txt_2" />
 										</div>
-										<div class="coLoginTxt_2_img"> <img src="captcha.php?{$rand}" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='captcha.php?'+Math.random()" /> </div>
+										<div class="coLoginTxt_2_img"> <img src="captcha.php?{$rand}"  id="captchaimg"  alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='captcha.php?'+Math.random()" /> </div>
 										<span style="color:red;font-size:large">*&nbsp;</span>
 										<span id="captcha_notice" style="color:#FF0000"></span>
 									</div>
@@ -194,7 +195,7 @@
 									<p>{$lang.extendcode}：</p>
 									<div class="coLoginTxt" style="width:245px;">
 										<div class="coLogin_txt_all" style="width:245px; background:url(images/coLogin_txt_bg.gif) no-repeat;">
-											<input name="extendcode" type="text" class="coLogin_txt" size="25" style="width:225px;" />
+											<input name="extendcode" placeholder="可以不填写" type="text" class="coLogin_txt" size="25" style="width:225px;" />
 										</div>
 									</div>
 								</div>
@@ -229,18 +230,15 @@
 					<!--*找回密码界面 -->
 					<!--{if $action eq 'get_password'} -->
 					{insert_scripts files='utils.js'}
-					<script type="text/javascript">
-					{
-						foreach from = $lang.password_js item = item key = key
-					}
-					var {
-						$key
-					} = "{$item}"; {
-						/foreach}
+					
+					    <script type="text/javascript">
+						{foreach from=$lang.password_js item=item key=key}
+						  var {$key} = "{$item}";
+						{/foreach}
 						window.onload = function() {
 							document.getElementById("captchaimg").src = 'captcha.php?' + Math.random();
 						};
-					</script>
+						</script>
 					<div class="usBox">
 						<div class="usBox_2 clearfix">
 							<form action="user.php" method="post" name="formUser" onsubmit="return submitPwdInfo();">

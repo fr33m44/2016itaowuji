@@ -260,128 +260,71 @@ function check_password(password) {
 }
 
 function check_shop_name(shopname) {
-	var submit_disabled = false;
 
 	if (Utils.trim(shopname) == '') {
 		document.getElementById('shop_name_notice').innerHTML = '店铺名称不能为空';
-		var submit_disabled = true;
 	}
 	else {
 		document.getElementById('shop_name_notice').innerHTML = '';
-		var submit_disabled = false;
-	}
-
-	if (submit_disabled) {
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-		return false;
-	}
-	else {
-		document.forms['formUser'].elements['Submit'].disabled = '';
 	}
 }
 
 function check_captcha(captcha) {
-	var submit_disabled = false;
 
 	if (Utils.trim(captcha) == '') {
 		document.getElementById('captcha_notice').innerHTML = '验证码不能为空';
-		var submit_disabled = true;
 	}
 	else {
 		document.getElementById('captcha_notice').innerHTML = '';
-		var submit_disabled = false;
-	}
-
-	if (submit_disabled) {
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-		return false;
-	}
-	else {
-		document.forms['formUser'].elements['Submit'].disabled = '';
 	}
 }
 
 function check_shop_addr(shop_addr) {
-	var submit_disabled = false;
 
 	if (Utils.trim(shop_addr) == '') {
 		document.getElementById('shop_addr_notice').innerHTML = '详细地址不能为空';
-		var submit_disabled = true;
 	}
 	else {
 		document.getElementById('shop_addr_notice').innerHTML = '';
-		var submit_disabled = false;
 	}
-
-	if (submit_disabled) {
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-		return false;
-	}
-	else {
-		document.forms['formUser'].elements['Submit'].disabled = '';
-	}
+	
 }
 
 
-function mobileCheckCallback(result) {
-	if (result == "true") 
-	{//可以注册
-		document.forms['formUser'].elements['Submit'].disabled = '';
-	}
-	else {//已经存在
-		document.getElementById('mobile_notice').innerHTML = '该手机号已经被注册';
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-	}
-}
 
 
 function check_mobile(mobile) {
-	var submit_disabled = false;
-	var regex = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
+	
 	
 	//ajax判断是否已经注册
-	Ajax.call('user.php?act=check_mobile', 'mobile=' + mobile, mobileCheckCallback, 'GET', 'TEXT', true, true);
-
+	
 	if (Utils.trim(mobile) == '') {
 		document.getElementById('mobile_notice').innerHTML = '手机号不能为空';
-		var submit_disabled = true;
 	}
-	else if (!regex.test(mobile)) {
+	else if (!(Utils.isMobile(mobile))) {
 		document.getElementById('mobile_notice').innerHTML = '手机号格式不对';
-		var submit_disabled = true;
 	}
-	else {
-		document.getElementById('mobile_notice').innerHTML = '';
-		var submit_disabled = false;
-	}
-
-	if (submit_disabled) {
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-		return false;
-	}
-	else {
-		document.forms['formUser'].elements['Submit'].disabled = '';
+	else{
+		Ajax.call('user.php?act=check_mobile', 'mobile=' + mobile, mobileCheckCallback, 'GET', 'TEXT', true, true);
 	}
 }
 
+function mobileCheckCallback(result) {
+	if (result == "false") 
+	{//已经存在
+		document.getElementById('mobile_notice').innerHTML = '该手机号已经被注册';
+	}
+	if (result == "true") 
+	{//可以注册
+		document.getElementById('mobile_notice').innerHTML = '';
+	}
+}
 function check_qrm(qrm) {
-	var submit_disabled = false;
-
 	if (Utils.trim(qrm) == '') {
 		document.getElementById('qrm_notice').innerHTML = '确认码不能为空';
-		var submit_disabled = true;
 	}
 	else {
 		document.getElementById('qrm_notice').innerHTML = '';
-		var submit_disabled = false;
-	}
-
-	if (submit_disabled) {
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-		return false;
-	}
-	else {
-		document.forms['formUser'].elements['Submit'].disabled = '';
 	}
 }
 
@@ -402,46 +345,36 @@ function check_conform_password(conform_password) {
 }
 
 function is_registered(username) {
-	var submit_disabled = false;
 	var unlen = username.replace(/[^\x00-\xff]/g, "**").length;
 
 	if (username == '') {
 		document.getElementById('username_notice').innerHTML = msg_un_blank;
-		var submit_disabled = true;
 	}
 
 	else if (!chkstr(username)) {
 		document.getElementById('username_notice').innerHTML = msg_un_format;
-		var submit_disabled = true;
 	}
 	else if (username[0] >= '0' && username[0] <='9') {
 		document.getElementById('username_notice').innerHTML = '用户名不能以数字开头';
-		var submit_disabled = true;
 	}
 	else if (unlen < 3) {
 		document.getElementById('username_notice').innerHTML = username_shorter;
-		var submit_disabled = true;
 	}
 	else if (unlen > 14) {
 		document.getElementById('username_notice').innerHTML = msg_un_length;
-		var submit_disabled = true;
 	}
-
-	if (submit_disabled) {
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-		return false;
+	else
+	{
+		Ajax.call('user.php?act=is_registered', 'username=' + username, registed_callback, 'GET', 'TEXT', true, true);
 	}
-	Ajax.call('user.php?act=is_registered', 'username=' + username, registed_callback, 'GET', 'TEXT', true, true);
 }
 
 function registed_callback(result) {
 	if (result == "true") {
 		document.getElementById('username_notice').innerHTML = '';
-		document.forms['formUser'].elements['Submit'].disabled = '';
 	}
 	else {
 		document.getElementById('username_notice').innerHTML = msg_un_registered;
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
 	}
 }
 
@@ -480,6 +413,7 @@ function qrm_callback(result) {
 
 	if (parseInt(result.error) > 0) {
 		document.getElementById('captcha_notice').innerHTML = result.content;
+		document.getElementById("get_qrm_btn").disabled = "";
 	}
 	else {
 		var sec = 500;
@@ -498,20 +432,12 @@ function qrm_callback(result) {
 }
 
 function checkEmail(email) {
-	var submit_disabled = false;
 
 	if (email == '') {
 		document.getElementById('email_notice').innerHTML = msg_email_blank;
-		submit_disabled = true;
 	}
 	else if (!Utils.isEmail(email)) {
 		document.getElementById('email_notice').innerHTML = msg_email_format;
-		submit_disabled = true;
-	}
-
-	if (submit_disabled) {
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
-		return false;
 	}
 	Ajax.call('user.php?act=check_email', 'email=' + email, check_email_callback, 'GET', 'TEXT', true, true);
 }
@@ -519,11 +445,9 @@ function checkEmail(email) {
 function check_email_callback(result) {
 	if (result == 'ok') {
 		document.getElementById('email_notice').innerHTML = '';
-		document.forms['formUser'].elements['Submit'].disabled = '';
 	}
 	else {
 		document.getElementById('email_notice').innerHTML = msg_email_registered;
-		document.forms['formUser'].elements['Submit'].disabled = 'disabled';
 	}
 }
 
@@ -539,7 +463,6 @@ function register() {
 
 	var shop_type = Utils.trim(frm.elements['shop_type'].value);
 	var shop_name = Utils.trim(frm.elements['shop_name'].value);
-	var country = Utils.trim(frm.elements['country'].value);
 	var province = Utils.trim(frm.elements['province'].value);
 	var city = Utils.trim(frm.elements['city'].value);
 	var district = Utils.trim(frm.elements['district'].value);
@@ -548,22 +471,38 @@ function register() {
 	var mobile = Utils.trim(frm.elements['mobile'].value);
 	var qrm = Utils.trim(frm.elements['qrm'].value);
 	var captcha = Utils.trim(frm.elements['captcha'].value);
-
+	
+	var username_notice = document.getElementById("username_notice").innerHTML;
+	var password_notice = document.getElementById("password_notice").innerHTML;
+	var shop_name_notice = document.getElementById("shop_name_notice").innerHTML;
+	var captcha_notice = document.getElementById("captcha_notice").innerHTML;
+	var shop_addr_notice = document.getElementById("shop_addr_notice").innerHTML;
+	var mobile_notice = document.getElementById("mobile_notice").innerHTML;
+	var qrm_notice = document.getElementById("qrm_notice").innerHTML;
+	var conform_password_notice = document.getElementById("conform_password_notice").innerHTML;
 
 	var msg = "";
 	// 检查输入
-	//var msg = '';
-	if (username.length == 0) {
+	var msg = '';
+	if (username.length == 0)
+	{
 		msg += username_empty + '\n';
 	}
-	if (username[0]>='0' && username[0]<='9') {
+	else if (username[0]>='0' && username[0]<='9')
+	{
 		msg += '用户名不能以数字开头' + '\n';
 	}
-	else if (username.match(/^\s*$|^c:\\con\\con$|[%,\'\*\"\s\t\<\>\&\\]/)) {
+	else if (username.match(/^\s*$|^c:\\con\\con$|[%,\'\*\"\s\t\<\>\&\\]/))
+	{
 		msg += username_invalid + '\n';
 	}
-	else if (username.replace(/[^\x00-\xff]/g, "**").length < 3) {
+	else if (username.replace(/[^\x00-\xff]/g, "**").length < 3)
+	{
 		msg += username_shorter + '\n';
+	}
+	else if(username_notice != '')
+	{
+		msg += username_notice + '\n';
 	}
 	if (shop_addr.length == 0) {
 		msg += '详细地址不能为空' + '\n';
@@ -597,14 +536,42 @@ function register() {
 	}
 
 	if (mobile.length > 0) {
-		var reg = /^[\d|\-|\s]+$/;
-		if (!reg.test(mobile)) {
+		if (!(Utils.isMobile(mobile))) {
 			msg += mobile_phone_invalid + '\n';
 		}
 	}
-	if (country == "0" || province == "0" || city == "0" || district == "0") {
+	if (province == "0" || city == "0" || district == "0") {
 		msg += '店铺地址未填写完整' + '\n';
 	}
+	if(password_notice != '')
+	{
+		msg += password_notice + '\n';
+	}
+	if(conform_password_notice != '')
+	{
+		msg += conform_password_notice + '\n';
+	}
+	if(shop_name_notice != '')
+	{
+		msg += shop_name_notice + '\n';
+	}
+	if(captcha_notice != '')
+	{
+		msg += captcha_notice + '\n';
+	}
+	if(shop_addr_notice != '')
+	{
+		msg += shop_addr_notice + '\n';
+	}
+	if(mobile_notice != '')
+	{
+		msg += mobile_notice + '\n';
+	}
+	if(qrm_notice != '')
+	{
+		msg += qrm_notice + '\n';
+	}
+	
 
 	if (msg.length > 0) {
 		alert(msg);
