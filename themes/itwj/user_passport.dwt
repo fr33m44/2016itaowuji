@@ -114,7 +114,7 @@ window.onload = function() {
 								<div class="coLogin_one">
 									<p>{$lang.country_province}：</p>
 									<div class="coLoginTxt" style="width:340px;line-height:35px;">
-							
+		<input type="hidden" name="country" value="1" />
 		<select style="height:35px" name="province" id="selProvinces_1" onchange="region.changed(this, 2, 'selCities_1');">
 			<option value="0">{$lang.please_select}{$name_of_region[1]}</option>
 			<!-- {foreach from=$province_list item=province} -->
