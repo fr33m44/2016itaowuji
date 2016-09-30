@@ -116,8 +116,6 @@ if ($action == 'register')
 	}
 	/* 取得国家列表、商店所在国家、商店所在国家的省列表 */
     $smarty->assign('province_list', get_regions(1, $_CFG['shop_country']));
-    $smarty->assign('city_list', get_regions(2, $_COOKIE['province']));
-    $smarty->assign('district_list', get_regions(3, $_COOKIE['city']));
 
     if ((!isset($back_act)||empty($back_act)) && isset($GLOBALS['_SERVER']['HTTP_REFERER']))
     {
