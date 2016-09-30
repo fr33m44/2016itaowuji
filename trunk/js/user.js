@@ -540,7 +540,7 @@ function register() {
 			msg += mobile_phone_invalid + '\n';
 		}
 	}
-	if (province == "0" || city == "0" || district == "0") {
+	if (province == "0" || city == "0" || district == "0" || province=='' || city==''|| district=='') {
 		msg += '店铺地址未填写完整' + '\n';
 	}
 	if(password_notice != '')
