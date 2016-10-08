@@ -71,20 +71,21 @@ function insert_history()
     if (!empty($_COOKIE['ECS']['history']))
     {
         $where = db_create_in($_COOKIE['ECS']['history'], 'goods_id');
-        $sql   = 'SELECT goods_id, goods_name, goods_thumb, shop_price FROM ' . $GLOBALS['ecs']->table('goods') .
+        $sql   = 'SELECT goods_id, goods_name, goods_thumb, shop_price,promote_price, promote_start_date, promote_end_date FROM ' . $GLOBALS['ecs']->table('goods') .
                 " WHERE $where AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0";
         $query = $GLOBALS['db']->query($sql);
         $res = array();
 		
         while ($row = $GLOBALS['db']->fetch_array($query))
         {
+            $promote_price = bargain_price($row['promote_price'],$row['promote_start_date'], $row['promote_end_date']);
             $goods['goods_id'] = $row['goods_id'];
             $goods['goods_name'] = $row['goods_name'];
             $goods['short_name'] = $GLOBALS['_CFG']['goods_name_length'] > 0 ? sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
             $goods['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
-            $goods['shop_price'] = price_format($row['shop_price']);
+            $goods['shop_price'] = $promote_price == 0?price_format($row['shop_price']):price_format($promote_price);
             $goods['url'] = build_uri('goods', array('gid'=>$row['goods_id']), $row['goods_name']);
-            $str.='<li class="goodsimg"><a href="'.$goods['url'].'" target="_blank" class="history_pic"><img src="'.$goods['goods_thumb'].'" alt="'.$goods['goods_name'].'" /></a><a href="'.$goods['url'].'" target="_blank"  title="'.$goods['goods_name'].'" class="history_name">'.$goods['short_name'].'</a>'.'<p class="history_price">'.'<a  href="'.$goods['url'].'">'.$goods['shop_price'].'</a>'.'</p></li>';
+            $str.='<li class="goodsimg"><a href="'.$goods['url'].'" class="history_pic"><img src="'.$goods['goods_thumb'].'" alt="'.$goods['goods_name'].'" /></a><a href="'.$goods['url'].'" title="'.$goods['goods_name'].'" class="history_name">'.$goods['short_name'].'</a>'.'<p class="history_price">'.'<a  href="'.$goods['url'].'">'.$goods['shop_price'].'</a>'.'</p></li>';
         }
         $str .= '<ul id="clear_history"><a onclick="clear_history()">' . $GLOBALS['_LANG']['clear_history'] . '</a></ul>';
     }
@@ -98,16 +99,18 @@ function insert_index_history()
     if (!empty($_COOKIE['ECS']['history']))
     {
         $where = db_create_in($_COOKIE['ECS']['history'], 'goods_id');
-        $sql   = 'SELECT goods_id, goods_name, goods_thumb, shop_price ,market_price FROM ' . $GLOBALS['ecs']->table('goods') .
+        $sql   = 'SELECT goods_id, goods_name, goods_thumb, shop_price,market_price, promote_price, promote_start_date, promote_end_date FROM ' . $GLOBALS['ecs']->table('goods') .
                 " WHERE $where AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0";
         $res = $GLOBALS['db']->getAll($sql);
      	
 		foreach($res as $idx => $row)
 		{
+            $promote_price = bargain_price($row['promote_price'],$row['promote_start_date'], $row['promote_end_date']);
 			$goods[$idx]['goods_id'] = $row['goods_id'];
             $goods[$idx]['goods_name'] = $row['goods_name'];
             $goods[$idx]['short_name'] = $GLOBALS['_CFG']['goods_name_length'] > 0 ? sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
             $goods[$idx]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+            $goods[$idx]['promote_price'] = $promote_price;
             $goods[$idx]['shop_price'] = price_format($row['shop_price']);
 			$goods[$idx]['market_price'] = price_format($row['market_price']);
             $goods[$idx]['url'] = build_uri('goods', array('gid'=>$row['goods_id']), $row['goods_name']);	
