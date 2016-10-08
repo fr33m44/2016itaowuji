@@ -61,7 +61,6 @@ catch (e) {
     </div>
     <div class="headBox">
       <div class="logo"><a href="../index.php" name="top"><img src="../images/logo.gif" /></a>
-	  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2033604296&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2033604296:51" alt="联系淘五季客服" title="联系淘五季客服"/></a>
 	  </div>
       <!--search start-->
       <div id="search"  class="headSearch">
