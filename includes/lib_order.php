@@ -2788,12 +2788,15 @@ function compute_discount()
 {
 	//判断首单
 	//该用户有【已经付款】或者【未确认】的订单
+	//2016.10.08 满减活动延续到10.31，非首单均可满减
+	/*
 	$sql = "select count(1) from ". $GLOBALS['ecs']->table('order_info')." where user_id = $_SESSION[user_id] and act_id in (1,2,3,4) and (pay_status = ".PS_PAYED." or order_status=0)";
 	$count = $GLOBALS['db']->getOne($sql); 
 	if(!empty($count))
 	{
 		return 0;
 	}
+	*/
 	//
     /* 查询优惠活动 */
     $now = gmtime();

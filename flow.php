@@ -2510,11 +2510,14 @@ elseif($_REQUEST['step'] == 'check_user_account')
 
 elseif ($_REQUEST['step'] == 'drop_goods')
 {
-    $rec_id = intval($_GET['id']);
-    flow_drop_cart_goods($rec_id);
-
-    ecs_header("Location: flow.php\n");
-    exit;
+	$rec_ids = $_GET['id'];
+	$rec_arr = explode(',', $rec_ids);
+	foreach($rec_arr as $rec)
+	{
+		flow_drop_cart_goods($rec);
+	}
+	exit();
+	//ecs_header("Location: flow.php\n");
 }
 
 /* 把优惠活动加入购物车 */
