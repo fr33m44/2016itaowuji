@@ -5,7 +5,11 @@
 <li>
   <div class="white_img"> <a href="{$goods.url}"> <img src="{$goods.goods_thumb}" border="0" width="170" height="170"> </a> </div>
   <div class="white_txt"> <b><a href="{$goods.url}">{$goods.short_name}</a></b>
-    <p>{$goods.shop_price}<font>{$goods.market_price}</font></p>
+    <p><!-- {if $goods.promote_price neq ""} --> 
+            {$lang.promote_price}￥<span>{$goods.promote_price}</span> 
+            <!-- {else}--> 
+            {$lang.shop_price}{$goods.shop_price} 
+            <!--{/if}--><br /><font>{$lang.market_price}{$goods.market_price}</font></p>
   </div>
 </li>
 
