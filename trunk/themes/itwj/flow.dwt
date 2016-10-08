@@ -37,13 +37,15 @@
   $("document").ready(function(){
 	  $(".del_cart_btn").click(function(){
 		  var formCart = document.forms['formCart'];
+		  var rec_ids ='';
 		  for(var i=0;i<formCart.elements.length;i++)
 		  {
 			  if(formCart.elements[i].id.substr(0,4) == 'rec_' && formCart.elements[i].checked)
 			  {
-				  Ajax.call('flow.php?step=drop_goods', 'id=' + formCart.elements[i].id.substr(4), delete_cart_response, 'GET', 'TEXT', false, true);
+				  rec_ids += formCart.elements[i].id.substr(4)+ ',';
 			  }
 		  }
+		  Ajax.call('flow.php?step=drop_goods', 'id=' + rec_ids, delete_cart_response, 'GET', 'TEXT', false, true);
 		  window.location.href='flow.php';
 	  });
 	  $("#chkall").click(function(){
