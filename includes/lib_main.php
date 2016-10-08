@@ -1545,7 +1545,7 @@ function recalculate_price()
             'LEFT JOIN ' . $GLOBALS['ecs']->table('goods') . ' AS g ON g.goods_id = c.goods_id '.
             "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
                     "ON mp.goods_id = g.goods_id AND mp.user_rank = '" . $_SESSION['user_rank'] . "' ".
-            "WHERE session_id = '" .SESS_ID. "' AND c.parent_id = 0 AND c.is_gift = 0 AND c.goods_id > 0 " .
+            "WHERE c.user_id = '" .$_SESSION['user_id']. "' AND c.parent_id = 0 AND c.is_gift = 0 AND c.goods_id > 0 " .
             "AND c.rec_type = '" . CART_GENERAL_GOODS . "' AND c.extension_code <> 'package_buy'";
 
             $res = $GLOBALS['db']->getAll($sql);
@@ -1559,14 +1559,14 @@ function recalculate_price()
 
 
         $goods_sql = "UPDATE " .$GLOBALS['ecs']->table('cart'). " SET goods_price = '$goods_price' ".
-                     "WHERE goods_id = '" . $row['goods_id'] . "' AND session_id = '" . SESS_ID . "' AND rec_id = '" . $row['rec_id'] . "'";
+                     "WHERE goods_id = '" . $row['goods_id'] . "' AND user_id = '" . $_SESSION['user_id'] . "' AND rec_id = '" . $row['rec_id'] . "'";
 
         $GLOBALS['db']->query($goods_sql);
     }
 
     /* 删除赠品，重新选择 */
     $GLOBALS['db']->query('DELETE FROM ' . $GLOBALS['ecs']->table('cart') .
-        " WHERE session_id = '" . SESS_ID . "' AND is_gift > 0");
+        " WHERE user_id = '" . $_SESSION['user_id'] . "' AND is_gift > 0");
 }
 
 /**

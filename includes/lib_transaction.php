@@ -932,7 +932,7 @@ function return_to_cart($order_id)
 
         //检查商品价格是否有会员价格
         $sql = "SELECT goods_number FROM" . $GLOBALS['ecs']->table('cart') . " " .
-                "WHERE session_id = '" . SESS_ID . "' " .
+                "WHERE user_id = '" . $_SESSION['user_id'] . "' " .
                 "AND goods_id = '" . $row['goods_id'] . "' " .
                 "AND rec_type = '" . CART_GENERAL_GOODS . "' LIMIT 1";
         $temp_number = $GLOBALS['db']->getOne($sql);
@@ -993,7 +993,7 @@ function return_to_cart($order_id)
         // 返回购物车：看有没有相同商品
         $sql = "SELECT goods_id " .
                 "FROM " . $GLOBALS['ecs']->table('cart') .
-                " WHERE session_id = '" . SESS_ID . "' " .
+                " WHERE user_id = '" . $_SESSION['user_id'] . "' " .
                 " AND goods_id = '$return_goods[goods_id]' " .
                 " AND goods_attr = '$return_goods[goods_attr]' " .
                 " AND parent_id = '$return_goods[parent_id]' " .
@@ -1022,7 +1022,7 @@ function return_to_cart($order_id)
 
     // 清空购物车的赠品
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('cart') .
-            " WHERE session_id = '" . SESS_ID . "' AND is_gift = 1";
+            " WHERE user_id = '" . $_SESSION['user_id'] . "' AND is_gift = 1";
     $GLOBALS['db']->query($sql);
 
     return true;
