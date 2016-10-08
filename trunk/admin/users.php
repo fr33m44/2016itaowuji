@@ -40,7 +40,6 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign('page_count',   $user_list['page_count']);
     $smarty->assign('full_page',    1);
     $smarty->assign('sort_user_id', '<img src="images/sort_desc.gif">');
-
     assign_query_info();
     $smarty->display('users_list.htm');
 }
@@ -874,7 +873,13 @@ function user_list()
     $count = count($user_list);
     for ($i=0; $i<$count; $i++)
     {
-        $user_list[$i]['reg_time'] = local_date($GLOBALS['_CFG']['date_format'], $user_list[$i]['reg_time']);
+		$user_list[$i]['reg_time'] = local_date($GLOBALS['_CFG']['date_format'], $user_list[$i]['reg_time']);
+		
+		$p = $GLOBALS['db']->getOne("SELECT region_name FROM ". $GLOBALS['ecs']->table('region') ." WHERE region_id = '".$user_list[$i]['province']."'");
+		$c = $GLOBALS['db']->getOne("SELECT region_name FROM ". $GLOBALS['ecs']->table('region') ." WHERE region_id = '".$user_list[$i]['city']."'");
+		$d = $GLOBALS['db']->getOne("SELECT region_name FROM ". $GLOBALS['ecs']->table('region') ." WHERE region_id = '".$user_list[$i]['district']."'");
+		$user_list[$i]['address']=$p.' '.$c.' '. $d.' '.$user_list[$i]['address'];
+		
     }
 
     $arr = array('user_list' => $user_list, 'filter' => $filter,
