@@ -21,7 +21,7 @@
   <th width="8%">推荐人ID/名字</th>
   <th width="12%">分成时间</th>
   <th width="8%">分成金额</th>
-  <th>详细信息</th>
+  <th>分成订单号</th>
   <th width="8%">{$lang.separate_type}</th>
 </tr>
 <!-- {foreach from=$logdb item=val} -->
@@ -30,7 +30,7 @@
   <td>{$val.user_id} / {$val.user_name}</td>
   <td>{$val.time}</td>
   <td>{$val.money}</td>
-  <td>{$val.change_desc}</td>
+  <td><a href="order.php?act=info&order_id={$val.order_id}">{$val.order_sn}</a></td>
   <td>{if $val.separate_type eq 0}注册分成{else}订单分成{/if}</td>
   
 </tr>

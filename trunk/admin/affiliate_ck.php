@@ -227,7 +227,7 @@ function get_affiliate_ck()
     {
 		$sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('affiliate_log') . " a WHERE a.user_id > 0  $sqladd";
     }
-	print_r($sql);
+	
     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
     $logdb = array();
     /* 分页大小 */
@@ -235,8 +235,8 @@ function get_affiliate_ck()
 
     if(!empty($affiliate['on']))
     {
-           $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('affiliate_log') . " a left join ". $GLOBALS['ecs']->table('account_log')
-			." b on b.log_id = a.log_id WHERE a.user_id > 0 $sqladd".
+           $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('affiliate_log') . " a left join ". $GLOBALS['ecs']->table('order_info')
+			." o on o.order_id = a.order_id WHERE a.user_id > 0 $sqladd order by a.log_id desc".
                     " LIMIT " . $filter['start'] . ",$filter[page_size]";
 
     }
