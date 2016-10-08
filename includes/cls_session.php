@@ -259,11 +259,6 @@ class cls_session
         setcookie($this->session_name, $this->session_id, 1, $this->session_cookie_path, $this->session_cookie_domain, $this->session_cookie_secure);
 
         /* ECSHOP 鑷?畾涔夋墽琛岄儴鍒 */
-        if (!empty($GLOBALS['ecs']))
-        {
-            $this->db->query('DELETE FROM ' . $GLOBALS['ecs']->table('cart') . " WHERE session_id = '$this->session_id'");
-        }
-        /* ECSHOP 鑷?畾涔夋墽琛岄儴鍒 */
 
         $this->db->query('DELETE FROM ' . $this->session_data_table . " WHERE sesskey = '" . $this->session_id . "' LIMIT 1");
 
