@@ -2084,6 +2084,7 @@ elseif ($_REQUEST['step'] == 'done')
 		
     }
 	/*hjq 推荐注册人付款后后获取提成 （全额余额额支付）*/
+	/*
 	if($order['order_amouont']<=0)
 	{
 		$affiliate  = unserialize($GLOBALS['_CFG']['affiliate']);
@@ -2108,7 +2109,8 @@ elseif ($_REQUEST['step'] == 'done')
 
 			}
 		}
-	}		
+	}
+	*/
     /* 给商家发邮件 */
     /* 增加是否给客服发送邮件选项 */
     if ($_CFG['send_service_email'] && $_CFG['service_email'] != '')
