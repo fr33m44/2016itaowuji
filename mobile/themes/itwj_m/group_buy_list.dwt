@@ -14,7 +14,7 @@
 <body>
 <div id="page" style="right: 0px; left: 0px; display: block;">
   <header id="header" style="z-index:1">
-    <div class="header_l"> <a class="ico_10" href="cat_all.php"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
     <h1> ecTouch 团购 </h1>
   </header>
   <div class="srp album flex-f-row" id="J_ItemList" style="opacity:1;">

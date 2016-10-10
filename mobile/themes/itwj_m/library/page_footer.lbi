@@ -10,17 +10,17 @@
     <a href="./" class="homeBtn"> <span class="ico_05"> </span> </a> <a href="#top" class="gotop"> <span class="ico_06"> </span> <p> TOP </p>
     </a>
   </div>
-  <p class="link region"> <a href="{$site_url}?computer=1"> 电脑版 </a> <a href="./"> 触屏版 </a> <a href="#"> 苹果客户端 </a> <a class="#"> Android客户端 </a> </p>
+  <p class="link region"> <a href="{$site_url}?computer=1"> 电脑版 </a> <a href="./"> 触屏版 </a> 
+  <!--<a href="#"> 苹果客户端 </a> <a class="#"> Android客户端 </a>--> </p>
   <p class="region"> 
     <!-- ICP 证书{if $icp_number} --> 
     {$lang.icp_number}: <a href="http://www.miibeian.gov.cn/" target="_blank"> {$icp_number} </a> 
     <!-- 结束ICP 证书{/if} --> 
     {$copyright} </p>
-  <div class="favLink region"> <a href="http://www.ecmoban.com"> powered by ecmoban </a> </div>
 </div>
 
 
-<link href="{$ectouch_themes}/css/global_nav.css?v=20140408" type="text/css" rel="stylesheet"/>
+<link href="{$ectouch_themes}/css/global_nav.css" type="text/css" rel="stylesheet"/>
 <!--全局导航-Start-->
 <div class="global-nav   global-nav--current">
     <div class="global-nav__nav-wrap">

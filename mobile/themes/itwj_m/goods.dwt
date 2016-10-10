@@ -114,7 +114,7 @@ function changenum(diff) {
 </head>
 <body>
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="cat_all.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
   <h1> 商品详情 </h1>
 
 </header>
@@ -448,7 +448,7 @@ function tab(id){
     </div>
   </div>
 </section>
-<!-- #BeginLibraryItem "/library/page_footer_tianxin100.lbi" --><!-- #EndLibraryItem --> 
+<!-- #BeginLibraryItem "/library/page_footer_goods.lbi" --><!-- #EndLibraryItem --> 
 <!--购物车区域 S--> 
 
 <!--购物车区域 E-->

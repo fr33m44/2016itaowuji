@@ -76,7 +76,7 @@ Template Type: type_0
 	.blank1{height:0.4rem; line-height:0.4rem;/* _margin:-3px 0;*/ clear:both; visibility:hidden;}
 	.blank2{height:0.6rem; line-height:0.6rem; clear:both; visibility:hidden;}
 	.blank3{height:1rem; line-height:1rem; clear:both; visibility:hidden;}
-	.mr-t20{margin-top:20px}
+	.mr-t20{margin-top:20px;margin-bottom:58px;}
 	.mr-t30{margin-top:30px}
 	.clearfix:after{content:"."; display:block; height:0; clear:both;visibility:hidden;}
 	*html .clearfix{height:1%;}
@@ -508,7 +508,7 @@ Template Type: type_0
 	float: left;
 	margin: 0.4rem 0.4rem 0 0;
 	padding: 0 0.6rem;font-size: 0.8rem;overflow:hidden}
-	.goodsItem{ width:10rem;  padding:0.6rem;}
+	.goodsItem{ width:15rem;  padding:0.6rem;}
 	.goodsItem img{width: 100%;height:auto;}
 	.goodsItem del{height:1rem; line-height:1rem; font-size:0.4rem  }
 	/*页脚*/

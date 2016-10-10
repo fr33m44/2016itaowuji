@@ -18,7 +18,7 @@
 <!-- *用户中心默认显示页面 start--> 
 <!-- {if $action eq 'default'} -->
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
   <h1> 分销中心 </h1>
 </header>
 <dl class="user_top">
@@ -105,7 +105,7 @@
 <!-- /一级分销 S--> 
 <!-- {if $action eq 'fenxiao1'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
   <h1> 我的分销一级会员{$count}人</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
@@ -135,7 +135,7 @@
 <!-- /二级分销 S--> 
 <!-- {if $action eq 'fenxiao2'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
   <h1> 我的分销二级会员{$count}人</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
@@ -165,7 +165,7 @@
 <!-- /三级分销 S--> 
 <!-- {if $action eq 'fenxiao3'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
   <h1> 我的分销三级会员{$count}人</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
@@ -194,7 +194,7 @@
 <!-- /四级分销 S--> 
 <!-- {if $action eq 'fenxiao4'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
   <h1> 我的分销四级会员{$count}人</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
@@ -223,7 +223,7 @@
 <!-- /五级分销 S--> 
 <!-- {if $action eq 'fenxiao5'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
   <h1> 我的分销四级会员{$count}人</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
