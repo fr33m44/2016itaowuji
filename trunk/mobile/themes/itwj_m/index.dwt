@@ -176,7 +176,7 @@ TouchSlide({
         <!-- {foreach name=goods from=$cat_goods item=goods}-->
         <div class="goodsItem flex_in">
             <a href="{$goods.url}">
-                <img src="{$site_url}{$goods.thumb}" alt="{$goods.name|escape:html}" />
+                <img src="{$site_url}{$goods.goods_img}" alt="{$goods.name|escape:html}" />
             </a>
             <div style="text-align:center">
             <!-- {if $goods.promote_price neq ""} --> 
@@ -218,7 +218,7 @@ TouchSlide({
         <!-- {foreach name=goods from=$cat_goods item=goods}-->
         <div class="goodsItem flex_in">
             <a href="{$goods.url}">
-                <img src="{$site_url}{$goods.thumb}" alt="{$goods.name|escape:html}" />
+                <img src="{$site_url}{$goods.goods_img}" alt="{$goods.name|escape:html}" />
             </a>
             <div style="text-align:center">
             <!-- {if $goods.promote_price neq ""} --> 
@@ -229,7 +229,7 @@ TouchSlide({
             <br>{$goods.name|escape:html|truncate:12}
             </div>
         </div>
-         <!--{if $smarty.foreach.goods.iteration%3 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
+         <!--{if $smarty.foreach.goods.iteration%2 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
         <!-- {/foreach} -->
     </div>
     <div class="item_tags clearfix">
@@ -260,7 +260,7 @@ TouchSlide({
         <!-- {foreach name=goods from=$cat_goods item=goods}-->
         <div class="goodsItem flex_in">
             <a href="{$goods.url}">
-                <img src="{$site_url}{$goods.thumb}" alt="{$goods.name|escape:html}" />
+                <img src="{$site_url}{$goods.goods_img}" alt="{$goods.name|escape:html}" />
             </a>
             <div style="text-align:center">
             <!-- {if $goods.promote_price neq ""} --> 
@@ -271,7 +271,7 @@ TouchSlide({
             <br>{$goods.name|escape:html|truncate:12}
             </div>
         </div>
-         <!--{if $smarty.foreach.goods.iteration%3 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
+         <!--{if $smarty.foreach.goods.iteration%2 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
         <!-- {/foreach} -->
     </div>
     <div class="item_tags clearfix">
@@ -302,7 +302,7 @@ TouchSlide({
         <!-- {foreach name=goods from=$cat_goods item=goods}-->
         <div class="goodsItem flex_in">
             <a href="{$goods.url}">
-                <img src="{$site_url}{$goods.thumb}" alt="{$goods.name|escape:html}" />
+                <img src="{$site_url}{$goods.goods_img}" alt="{$goods.name|escape:html}" />
             </a>
             <div style="text-align:center">
             <!-- {if $goods.promote_price neq ""} --> 
@@ -313,7 +313,7 @@ TouchSlide({
             <br>{$goods.name|escape:html|truncate:12}
             </div>
         </div>
-         <!--{if $smarty.foreach.goods.iteration%3 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
+         <!--{if $smarty.foreach.goods.iteration%2 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
         <!-- {/foreach} -->
     </div>
     <div class="item_tags clearfix">
