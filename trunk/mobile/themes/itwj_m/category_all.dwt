@@ -14,7 +14,7 @@
 
 <body>
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="index.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
   <h1> 所有分类页 </h1>
   <div class="header_r header_search"> <a class="ico_03"  onClick="showSearch()"> 搜索 </a> </div>
   <div id="search_box">
