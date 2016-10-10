@@ -9,9 +9,8 @@
 <meta name="format-detection" content="telephone=no" />
 <link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
 <link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-<link href="{$ectouch_themes}/ectouch.css?v=2014" rel="stylesheet" type="text/css" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{$ectouch_themes}/js/TouchSlide.js"></script>
-<!--甜心新增---> 
 <style>
 .user_top_goods {
 height: 5rem;
@@ -88,7 +87,6 @@ font-size: 0.9rem;
     width: 100%;
 }
 </style>
-<!--甜心新增  ---> 
 </head>
 <body>
 <!--头部s-->
