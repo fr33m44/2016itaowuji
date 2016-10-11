@@ -27,7 +27,7 @@
 </div>
 <section class="wrap">
   <div id="leftTabBox" class="loginBox">
-    <div class="hd"> <span>欢迎光临，登录后体验更多服务</span>
+    <div class="hd"> <span>欢迎光临淘五季，登录后体验更多服务</span>
       <ul>
         <li<!--{if $action eq 'login'}--> class="on"<!--{/if}-->><a href="javascript:void(0)">登录</a></li>
         <li<!--{if $action eq 'register'}--> class="on"<!--{/if}-->><a href="javascript:void(0)">注册</a></li>
@@ -74,7 +74,6 @@
     </div>
     <div class="bd"<!--{if $action eq 'login'}--> style="display:none"<!--{/if}-->><!-- 添加id，js用到 -->
       <ul style="height:25rem">
-      	<!--{if $enabled_sms_signin eq 1} 支持手机短信功能-->
         <form action="user.php" method="post" name="formUser" onsubmit="return register2();">
           <input type="hidden" name="flag" id="flag" value="register" />
           <div class="table_box">
@@ -111,46 +110,6 @@
             </dl>
           </div>
         </form>
-        <!--{else}-->
-        <form action="user.php" method="post" name="formUser" onsubmit="return register();">
-          <input type="hidden" name="flag" id="flag" value="register" />
-          <div class="table_box">
-            <dl>
-              <dd>
-                <input placeholder="请输入用户名" class="inputBg" name="username" id="username" type="text" />
-              </dd>
-            </dl>
-
-            <dl>
-              <dd>
-                <input placeholder="请输入登录密码" class="inputBg" name="password" id="password1" type="password" />
-              </dd>
-            </dl>
-            <dl>
-              <dd>
-                <input placeholder="请重新输入一遍密码" class="inputBg" name="confirm_password" id="confirm_password" type="password" />
-              </dd>
-            </dl>
-
-            <dl>
-              <dd>
-                <input id="agreement" name="agreement" type="checkbox" value="1" checked="checked" style="vertical-align:middle; zoom:200%;" /><label for="agreement"> 我已看过并同意《<a href="article.php?cat_id=-1">用户协议</a>》</label>
-              </dd>
-            </dl>
-            <dl>
-              <dd>
-                <input name="act" type="hidden" value="act_register" />
-                <input name="enabled_sms" type="hidden" value="0" />
-                <input type="hidden" name="back_act" value="{$back_act}" />
-                <input name="Submit" type="submit" value="下一步" class="c-btn3" />
-              </dd>
-            </dl>
-          </div>
-        </form>
-        <!--{/if}-->
-        {if $need_rechoose_gift}
-        {$lang.gift_remainder}
-        {/if}
       </ul>
     </div>
   </div>
