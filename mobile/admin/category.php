@@ -388,15 +388,15 @@ if ($_REQUEST['act'] == 'remove') {
     }
     $link = array(
         array(
-            'text' => '编辑商品分类',
+            'text' => '缂栬緫鍟嗗搧鍒嗙被',
             'href' => 'category.php?act=edit&cat_id=' . $cat_id
         ) ,
         array(
-            'text' => '商品分类列表',
+            'text' => '鍟嗗搧鍒嗙被鍒楄〃',
             'href' => 'category.php?act=list'
         )
     );
-    sys_msg('删除商品分类小图成功', 0, $link);
+    sys_msg('鍒犻櫎鍟嗗搧鍒嗙被灏忓浘鎴愬姛', 0, $link);
 }
 function get_cat_info($cat_id) {
     $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('category') . " WHERE cat_id='$cat_id' LIMIT 1";
