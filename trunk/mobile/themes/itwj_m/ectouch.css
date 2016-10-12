@@ -22,7 +22,7 @@ Template Type: type_0
 	*{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:0;margin:0;padding:0}
 	ul,ol{list-style:none}
 	input[type="text"],input[type="search"]{-webkit-appearance:none;-webkit-tap-highlight-color:#fff;outline:0}
-	.inputBg{height:2.4rem;width: 94%;border: solid 1px #ddd;padding:0 3%;color: #333;font-size: 0.8rem;-webkit-border-radius: 0;background:#fff;}
+	.inputBg{height:2.4rem;width:60%;border: solid 1px #ddd;padding:0 3%;color: #333;font-size: 0.8rem;-webkit-border-radius: 0;background:#fff;}
 	.inputBg2{width: 94%;border: solid 1px #ddd;padding:3%;color: #333;font-size: 0.8rem;-webkit-border-radius: 0;-webkit-appearance: none;background:#fff;}
 	.pop-share{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:99;background:rgba(0,0,0,0.8) url(images/share.png) center 10px no-repeat;background-size:90% auto;}
 	
@@ -38,7 +38,7 @@ Template Type: type_0
 	.c-btn1 { border:none;display: inline-block;height: 2rem;line-height: 2rem;font-size:0.8rem;color: #fff;padding: 0 2rem; width:5rem; border-radius: 5px;background:#ec5151;}
 	.c-btn2 {color:#fff;border:0;height:2.5rem; line-height:2.5rem; width:40%;-webkit-box-flex:1;display:block;-webkit-user-select:none; font-size:0.9rem;background:#ec5151; text-align: center}
 	.c-btn2 a,.c-btn2 a:visited{color:#fff;}
-	.c-btn3 { color:#fff;border:0;height:2.5rem; line-height:2.5rem; width:100%;-webkit-box-flex:1;display:block;-webkit-user-select:none; font-size:0.9rem;background:#ee6a6a; text-align: center}
+	.c-btn3 { color:#fff;border:0;height:2.5rem; line-height:2.5rem;width:50%;-webkit-box-flex:1;display:block;-webkit-user-select:none; font-size:0.9rem;background:#ee6a6a; text-align: center}
 	.c-btn4 { color:#fff;border:0;height:2.5rem; line-height:2.5rem; width:100%;-webkit-box-flex:1;display:block;-webkit-user-select:none; font-size:0.9rem;background:#00D20D; text-align: center}
 	.hidden{display:none}
 	.wrap{ padding:0 0.0rem}
@@ -936,11 +936,10 @@ Template Type: type_0
 	.itemlist li p{ color:#999}
 	
 	/* div表格化 */
-	.table_box{}
-	.table_box { }
-	.table_box dl{ padding:0.5rem 0; display:table; width:100% }
-	.table_box dd{display:table-cell; }
-	.table_box dd .inputBg{ }
+	.table_box dl{ padding:0.5rem 0;width:100% }
+	
+	.table_box .first{float:left;width:20%;line-height:40px;text-align:right;padding-right:1rem}
+	.table_box .second{margin-left:20%;width:80%}
 	
 	
 	/* 文字 */
@@ -957,8 +956,8 @@ Template Type: type_0
 	/* 登录注册切换模块 */
 	.loginBox{ margin:10px auto;   }
 	.loginBox .hd{ height:2.7rem; line-height:2.5rem; font-size:1.1rem; overflow:hidden;   }
-	.loginBox .hd span{ float:left; font-size:0.8rem; }
-	.loginBox .hd ul{ float:right;   }
+	.loginBox .hd span{ float:left; font-size:0.8rem; margin-left:2rem}
+	.loginBox .hd ul{ float:right;margin-right:1rem}
 	.loginBox .hd ul li{ float:left; padding-left:0.5rem;   vertical-align:top;  }
 	.loginBox .hd ul li.on a{ color:#ee6a6a; display:block; height:2.5rem; line-height:2.5rem;   border-bottom:2px solid #ee6a6a;  }
 	.loginBox .bd   ul{ padding:0px 0.2rem;  }
