@@ -905,7 +905,7 @@ background: url(images/countdown.gif) no-repeat 32px center;}
 .left_top_title ul li a.title11{background-position:0 -399px;}
 .left_top_title ul li a:hover{color:#0981be;}
 .left_top_title ul li .sh_more{position:absolute;display:none;left:0;top:24px;padding-bottom:5px;width:100px;border:1px solid #ccc;background:#fff; }
-.left_top_title ul li .sh_title{height:30px;line-height:27px;color:#333;padding-left:10px;font-size:14px;font-weight:bold;background:url(../images/subnav_bg_main.gif) repeat-x left top; }
+.left_top_title ul li .sh_title{height:30px;line-height:27px;color:#333;padding-left:10px;font-size:14px;font-weight:bold;background:url(images/subnav_bg_main.gif) repeat-x left top; }
 .left_top_title ul li .sh_more ul{width:110px;height:auto;margin:0;padding:0;float:left;}
 .left_top_title ul li .sh_more li{margin:10px 0 0 6px;display:inline;padding:0 0 0 5px;height:20px;line-height:20px;}
 
@@ -2191,7 +2191,7 @@ a.hpink:hover {text-decoration: underline;color: #ed145b;}
 .help_left{width:181px;font-size:14px;float:left;}
 .sideMenu{  width: 181px;padding: 0 0 4px 0;background: url(images/help_nav_left.gif) 0 bottom repeat-x;margin: 11px 0 0 0;float: left; }
 .sideMenu h2{ width: 179px;height: 33px;line-height: 33px;font-weight: bold;border-top: 1px #e5e5e5 solid;border-right: 1px #e5e5e5 solid;border-left: 1px #e5e5e5 solid;
-background: url(../images/novice_btn.jpg) 0 0 no-repeat; font-size:14px;float: left;}
+background: url(images/novice_btn.jpg) 0 0 no-repeat; font-size:14px;float: left;}
 .sideMenu h2  a{width: 164px;height: 33px;display: block;padding: 0 0 0 15px;color: #212121;}
 .sideMenu h2 a:hover {color: #f63860;text-decoration: none;}
 .sideMenu h2 em{ float:right; display:block; width:40px; height:32px;   background:url(images/novice_btn_right.gif) 16px 12px no-repeat; cursor:pointer; }
@@ -2276,23 +2276,23 @@ border: 1px #383838 solid;font-weight: bold;}
 .footBody{width:1200px;height:400px;margin:0 auto;}
 .footBottom_line{width:980px;height:94px;margin:20px 0 0 0;padding:0 60px 20px 60px;float:left;}
 .footBottom_blog{width:100%;height:98px;margin:20px 0 0 0;float:left;}
-.footBlog_01{width:285px;height:98px;background:url(../images/footBlog.jpg) 0 0 no-repeat;float:left;}
-.footBlog_01 a{width:109px;height:35px;margin:49px 0 0 48px;display:inline;background:url(../images/footBlog_btn.jpg) 0 0 no-repeat;float:left;}
+.footBlog_01{width:285px;height:98px;background:url(images/footBlog.jpg) 0 0 no-repeat;float:left;}
+.footBlog_01 a{width:109px;height:35px;margin:49px 0 0 48px;display:inline;background:url(images/footBlog_btn.jpg) 0 0 no-repeat;float:left;}
 .footBlog_01 a:hover{background-position:0 -35px;}
-.footBlog_02{width:285px;height:98px;margin:0 0 0 20px;display:inline;background:url(../images/footBlog.jpg) 0 -98px no-repeat;float:left;}
-.footBlog_02 a{width:109px;height:35px;margin:49px 0 0 48px;display:inline;background:url(../images/footBlog_btn.jpg) 0 -70px no-repeat;float:left;}
+.footBlog_02{width:285px;height:98px;margin:0 0 0 20px;display:inline;background:url(images/footBlog.jpg) 0 -98px no-repeat;float:left;}
+.footBlog_02 a{width:109px;height:35px;margin:49px 0 0 48px;display:inline;background:url(images/footBlog_btn.jpg) 0 -70px no-repeat;float:left;}
 .footBlog_02 a:hover{background-position:0 -105px;}
-.footBlog_03{width:285px;height:98px;margin:0 0 0 20px;display:inline;background:url(../images/footBlog.jpg) 0 -196px no-repeat;float:left;}
-.footBlog_03 a{width:109px;height:35px;margin:49px 0 0 48px;display:inline;background:url(../images/footBlog_btn.jpg) 0 -140px no-repeat;float:left;}
+.footBlog_03{width:285px;height:98px;margin:0 0 0 20px;display:inline;background:url(images/footBlog.jpg) 0 -196px no-repeat;float:left;}
+.footBlog_03 a{width:109px;height:35px;margin:49px 0 0 48px;display:inline;background:url(images/footBlog_btn.jpg) 0 -140px no-repeat;float:left;}
 .footBlog_03 a:hover{background-position:0 -175px;}
-.footBlog_04{width:285px;height:98px;background:url(../images/footBlog.jpg) 0 -294px no-repeat;float:right;}
+.footBlog_04{width:285px;height:98px;background:url(images/footBlog.jpg) 0 -294px no-repeat;float:right;}
 .footLine_list{width:122px;height:94px;float:left;}
 .footBottom_list{width:660px;padding:0 270px;float:left;}
 .footBottom_list img{float:left;}
 .footBottom_list p{font-size:12px;line-height:20px;}
 .footBottom_list ul{width:660px;padding:0 0 15px 0;float:left;}
 .footBottom_list ul li{width:100px;margin:0 5px;display:inline;float:left;}
-.footBottom_list ul li div{width:100px;height:35px;background:url(../images/footBottom_list.gif) 0 0 no-repeat;float:left;}
+.footBottom_list ul li div{width:100px;height:35px;background:url(images/footBottom_list.gif) 0 0 no-repeat;float:left;}
 .footBottom_list ul li div a{width:100px;height:35px;display:block;}
 .footBottom_list ul li .one{background-position:0 0;}
 .footBottom_list ul li .two{background-position:0 -35px;}
