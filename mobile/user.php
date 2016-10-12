@@ -3,12 +3,6 @@
 /**
  * ECSHOP 会员中心
  * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
- * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
  * $Author: liubo $
  * $Id: user.php 17217 2011-01-19 06:29:08Z liubo $
 */
@@ -294,6 +288,14 @@ elseif ($action == 'oath_login') {
 /* 显示会员注册界面 */
 if ($action == 'register')
 {
+		//已经登陆的用户禁止访问注册页面
+	if($_SESSION['user_id']>0)
+	{
+		ecs_header("Location: user.php\n");
+	}
+	/* 取得国家列表、商店所在国家、商店所在国家的省列表 */
+    $smarty->assign('province_list', get_regions(1, $_CFG['shop_country']));
+
     if ((!isset($back_act)||empty($back_act)) && isset($GLOBALS['_SERVER']['HTTP_REFERER']))
     {
         $back_act = strpos($GLOBALS['_SERVER']['HTTP_REFERER'], 'user.php') ? './index.php' : $GLOBALS['_SERVER']['HTTP_REFERER'];
@@ -331,56 +333,148 @@ elseif ($action == 'act_register')
     /* 增加是否关闭注册 */
     if ($_CFG['shop_reg_closed'])
     {
-        $smarty->assign('action',     'register');
+        $smarty->assign('action', 'register');
         $smarty->assign('shop_reg_closed', $_CFG['shop_reg_closed']);
         $smarty->display('user_passport.dwt');
     }
     else
     {
-        include_once(ROOT_PATH . 'include/lib_passport.php');
+		include_once(ROOT_PATH . 'includes/lib_passport.php');
 
-        //注册类型 by carson start
-        $enabled_sms = intval($_POST['enabled_sms']);
-        if($enabled_sms){
-            $username = $other['mobile_phone'] = isset($_POST['mobile']) ? trim($_POST['mobile']) : '';
-            $password = isset($_POST['password']) ? trim($_POST['password']) : '';
-            $email    = $username .'@qq.com';
-        }else{
-            $username = isset($_POST['username']) ? trim($_POST['username']) : '';
-            $password = isset($_POST['password']) ? trim($_POST['password']) : '';
-           $email    = $username .'@qq.com';
-        }
-        //注册类型 by carson end
-
+        $qrm = isset($_POST['qrm']) ? trim($_POST['qrm']) : '';
+        $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+        $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+        $email    = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $province    = isset($_POST['province']) ? trim($_POST['province']) : '';
+        $city    = isset($_POST['city']) ? trim($_POST['city']) : '';
+        $district    = isset($_POST['district']) ? trim($_POST['district']) : '';
+        $address    = isset($_POST['shop_addr']) ? trim($_POST['shop_addr']) : '';
+		$other['mobile_phone'] = isset($_POST['mobile']) ? $_POST['mobile'] : '';
+		$mobile = $other['mobile_phone'];
+		$shop_type = isset($_POST['shop_type']) ? $_POST['shop_type'] : '';
+		$shop_name = isset($_POST['shop_name']) ? $_POST['shop_name'] : '';
         $back_act = isset($_POST['back_act']) ? trim($_POST['back_act']) : '';
-
+		$other['parent_id'] = isset($_POST['extendcode']) ? trim($_POST['extendcode']) : '';
+		
+		if(empty($other['parent_id'])) 
+		{
+			$other['parent_id']=0;
+		}
+		//检查推荐人id是否存在,if不存在,归0
+		if($other['parent_id'] != 0)
+		{
+			$sql = "select count(1) from ". $ecs->table('users'). " where user_id = $other[parent_id]";
+			$count = $db->getOne($sql);
+			if(empty($count))
+			{
+				$other['parent_id']=0;
+			}
+		}
+		include_once('include/cls_json.php');
+		$json = new JSON;
+		$result   = array('err' => 0, 'msg' => '');
+		
         if(empty($_POST['agreement']))
         {
-            show_message($_LANG['passport_js']['agreement']);
+			$result['err'] = 1;
+			$result['msg'] = $_LANG['passport_js']['agreement'];
+			die($json->encode($result));
         }
-        if (strlen($username) < 3)
+        if(empty($qrm))
         {
-            show_message($_LANG['passport_js']['username_shorter']);
+			$result['err'] = 2;
+			$result['msg'] = '确认码不能为空';
+			die($json->encode($result));
+        }
+        if (mb_strlen($username) < 3)//支持中文
+        {
+			$result['err'] = 3;
+			$result['msg'] = $_LANG['passport_js']['username_shorter'];
+			die($json->encode($result));
         }
 
         if (strlen($password) < 6)
         {
-            show_message($_LANG['passport_js']['password_shorter']);
+			$result['err'] = 4;
+			$result['msg'] = $_LANG['passport_js']['password_shorter'];
+			die($json->encode($result));
         }
 
         if (strpos($password, ' ') > 0)
         {
-            show_message($_LANG['passwd_balnk']);
+			$result['err'] = 5;
+			$result['msg'] = $_LANG['passwd_balnk'];
+			die($json->encode($result));
         }
 
+        /* 验证码检查 */
+		/*
+        if ((intval($_CFG['captcha']) & CAPTCHA_REGISTER) && gd_version() > 0)
+        {
+            if (empty($_POST['captcha']))
+            {
+				$result['err'] = 6;
+				$result['msg'] = $_LANG['invalid_captcha'];
+				die($json->encode($result));
+            }
+            include_once('includes/cls_captcha.php');
 
+            $validator = new captcha();
+            if (!$validator->check_word($_POST['captcha']))
+            {
+                show_message($_LANG['invalid_captcha']);
+            }
+        }
+		*/
+		/*手机确认码检查*/
+		$sql = "select qrm from ". $ecs->table('sms'). " where mobile = '$mobile' and action = 1";
+		$qrm_db = $db->getOne($sql);
+		
+		if($qrm != $qrm_db)
+		{
+			$result['err'] = 6;
+			$result['msg'] = '确认码不正确';
+			die($json->encode($result));
+		}
+		/*判断手机号是否已经存在*/
+		$sql = "select count(1) from ".$ecs->table("users")." where mobile_phone='$mobile'";
+		$count = $db->getOne($sql);
+		if(!empty($count))
+		{
+			$result['err'] =7;
+			$result['msg'] = '该手机号已经被注册';
+			die($json->encode($result));
+		}
 
+		
         if (register($username, $password, $email, $other) !== false)
         {
+            include_once(ROOT_PATH . 'includes/lib_transaction.php');
+            include_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
+            $address = array(
+			'default'    =>	1,//default>0的时候将user_address.address_id赋值到users.address_id 默认地址为店铺地址
+            'user_id'    => $_SESSION['user_id'],
+            'country'    => 1,
+            'province'   => $province,
+            'city'       => $city,
+            'district'   => $district,
+            'address'    => $address,
+            'consignee'  => $shop_name,
+			'shop_type' => $shop_type,//店铺类型
+            'mobile'        => $other['mobile_phone']
+            );
+            update_address($address);
             /*把新注册用户的扩展信息插入数据库*/
             $sql = 'SELECT id FROM ' . $ecs->table('reg_fields') . ' WHERE type = 0 AND display = 1 ORDER BY dis_order, id';   //读出所有自定义扩展字段的id
             $fields_arr = $db->getAll($sql);
 
+            /* 新会员注册发送红包50 */
+			/*
+            $sql = "INSERT INTO " . $ecs->table('user_bonus') .
+                    "(bonus_type_id, bonus_sn, user_id, used_time, order_id, emailed) " .
+                    "VALUES (1, 0, '$_SESSION[user_id]', 0, 0, 1)";
+            $db->query($sql);
+			*/
             $extend_field_str = '';    //生成扩展字段的内容字符串
             foreach ($fields_arr AS $val)
             {
@@ -405,17 +499,23 @@ elseif ($action == 'act_register')
                 $sql = 'UPDATE ' . $ecs->table('users') . " SET `passwd_question`='$sel_question', `passwd_answer`='$passwd_answer'  WHERE `user_id`='" . $_SESSION['user_id'] . "'";
                 $db->query($sql);
             }
-            /* 判断是否需要自动发送注册邮件 */
+			//注册后自动放到实体店卖家 用户等级
+			//$sql = 'UPDATE ' . $ecs->table('users') . " SET `user_rank`='101' where user_id = $_SESSION[user_id]";
+			//$db->query($sql);
+			/* 判断是否需要自动发送注册邮件 */
             if ($GLOBALS['_CFG']['member_email_validate'] && $GLOBALS['_CFG']['send_verify_email'])
             {
                 send_regiter_hash($_SESSION['user_id']);
             }
             $ucdata = empty($user->ucdata)? "" : $user->ucdata;
-            show_message(sprintf($_LANG['register_success'], $username . $ucdata), array($_LANG['back_up_page'], $_LANG['profile_lnk']), array($back_act, 'user.php'), 'info');
-        }
+            show_message(sprintf($_LANG['register_success'], $username . $ucdata), array($_LANG['profile_lnk']), array('user.php'), 'info');
+		}
         else
         {
-            $err->show($_LANG['sign_up'], 'user.php?act=register');
+            //$err->show($_LANG['sign_up'], 'user.php?act=register');
+			$result['err'] =8;
+			$result['msg'] = '注册失败，未知错误';
+			die($json->encode($result));
         }
     }
 }
@@ -525,68 +625,7 @@ elseif ($action == 'act_login')
         }
     }
     */
-	$login_type = intval($_POST['login_type']);
-  if($login_type==3)
-  {
-           $card_info = $db->getRow("select * from " . $ecs->table('user_card') ." where card_no='$username' and card_pass='$password' and is_show =1 " );
-		   //var_dump($card_info);exit;
-		  if($card_info)
-		  {
-			 $user_id = intval($card_info['user_id']);
-			 if($user_id)
-			  {
-				 $user_name = $db->getOne("select user_name from " . $ecs->table('users') ." where user_id='$user_id'" );
-				 
-					 if ($user_name)
-				   {
-					  $_SESSION['user_id'] = $user_id;
-					  $_SESSION['user_name']   = $username;
-					show_message($_LANG['login_success'] . $ucdata , array($_LANG['back_up_page'], $_LANG['profile_lnk']), array($back_act,'user.php'), 'info');
-				   }
-				   else
-				   {
-					$_SESSION['login_fail'] ++ ;
-					show_message($_LANG['login_failure'], $_LANG['relogin_lnk'], 'user.php', 'error');
-				   }
-			  }
-			  else
-			  {
-				include_once(ROOT_PATH . 'include/lib_passport.php');
-			        $cu_user_name = 'cu_'.$card_info['card_no'];
-					$user_name = 'cu_'.$card_info['card_no'];
-					$email = $card_info['email']==''?$cu_user_name.'@temp.com':$card_info['email'];
-					$other = array();
-					include_once(ROOT_PATH . 'includes/lib_passport.php');
-					if (register($cu_user_name, $password, $email, $other) !== false)
-					{
-						$db->autoExecute($ecs->table('user_card'), array('user_id'=>$_SESSION['user_id'],'bind_time'=>gmtime(),'card_status'=>1), 'UPDATE', " id='$card_info[id]' ");
-						$ucdata = empty($user->ucdata)? "" : $user->ucdata;
-						show_message(sprintf($_LANG['login_success'], $cu_user_name . $ucdata), array($_LANG['back_up_page'], $_LANG['profile_lnk']), array($back_act, 'user.php'), 'info');
-					}
-					else
-					{
-						$_SESSION['login_fail'] ++ ;
-					    show_message($_LANG['login_failure'], $_LANG['relogin_lnk'], 'user.php', 'error');
-					}
-			  
-			  }
-
-		  }
-		  else
-		  {
-			   $num = $db->getOne("select count(*) from " . $ecs->table('user_card') ." where card_no='$username' and card_pass ='$password'  and user_id=0 and is_show=1 " );
-			   if($num==1)
-			   {
-			  
-				  show_message('此卡号还未绑定，您可以用此新注册一个会员帐号并绑定此卡号，如果您已有本站会员帐号，请登录后在会员中心绑定此卡号后方可登录!', array('立即注册并绑定此卡号','重新登录'), array('user.php?act=register&card_no='.$username.'&card_pass='.$password,'user.php'), 'error'); 
-			   
-			   }
-			   
-			   show_message('会员卡卡号不存在', '请重新登录', 'user.php', 'error'); 
-		  }
-  
-  }
-    //用户名是邮箱格式 by wang
+	//用户名是邮箱格式 by wang
     if(is_email($username))
     {
         $sql ="select user_name from ".$ecs->table('users')." where email='".$username."'";
