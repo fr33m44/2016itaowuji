@@ -1,5 +1,5 @@
 <?php
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require ('includes/init.php');
 
 

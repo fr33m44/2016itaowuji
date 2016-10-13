@@ -13,7 +13,7 @@
  * $Id: inc_priv.php 15503 2008-12-24 09:22:45Z sunxiaodong $
 */
 
-if (!defined('IN_ECTOUCH'))
+if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }

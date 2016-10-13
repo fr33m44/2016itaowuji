@@ -12,7 +12,7 @@
  * $Id: help_wei.php 16220 2014-05-14 21:08:59Z hnllyrp $
  */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require(dirname(__FILE__) . '/includes/init.php');
 
 /*------------------------------------------------------ */

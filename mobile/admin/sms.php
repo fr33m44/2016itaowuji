@@ -13,7 +13,7 @@
  * $Id: sms.php 17155 2010-05-06 06:29:05Z yehuaixiao $
  */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require_once(ROOT_PATH . 'include/cls_sms.php');

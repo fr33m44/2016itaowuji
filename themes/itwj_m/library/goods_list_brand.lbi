@@ -1,0 +1,27 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="filter" style="position:static; top:0px; width:100%;">
+  <form method="GET" class="sort" name="listform">
+    <ul class="filter-inner">
+      <li class="{if $pager.sort == 'goods_id' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=goods_id&order=DESC#goods_list">综合</a> </li>
+      <li class="{if $pager.sort =='click_count' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=click_count&order=DESC#goods_list">人气<i class="f-ico-arrow-d"></i></a> </li>
+      <li class="{if $pager.sort =='sales_count' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=sales_count&order=DESC#goods_list">销量</a></li>
+      <li class="{if $pager.sort == 'shop_price'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=shop_price&order=<!-- {if $pager.sort == 'shop_price' && $pager.order == 'ASC'} -->DESC<!-- {else} -->ASC<!-- {/if} -->#goods_list">价格 <span> <i class="f-ico-triangle-mt {if $pager.sort == 'shop_price' && $pager.order == 'ASC'} f-ico-triangle-slctd{/if}"></i> <i class="f-ico-triangle-mb {if $pager.sort == 'shop_price' && $pager.order == 'DESC'}f-ico-triangle-slctd{/if}"></i> </span> </a> </li>
+      
+    </ul>
+    <input type="hidden" name="category" value="{$category}" />
+    <input type="hidden" name="display" value="{$pager.display}" id="display" />
+    <input type="hidden" name="brand" value="{$brand_id}" />
+    <input type="hidden" name="price_min" value="{$price_min}" />
+    <input type="hidden" name="price_max" value="{$price_max}" />
+    <input type="hidden" name="filter_attr" value="{$filter_attr}" />
+    <input type="hidden" name="page" value="{$pager.page}" />
+    <input type="hidden" name="sort" value="{$pager.sort}" />
+    <input type="hidden" name="order" value="{$pager.order}" />
+  </form>
+</div>
+  <div class="srp album flex-f-row" id="J_ItemList" style="opacity:1;"> 
+    <div class="product flex_in single_item">
+      <div class="pro-inner"></div>
+    </div>
+    <a href="javascript:;" class="get_more"></a>
+  </div>

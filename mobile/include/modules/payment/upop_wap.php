@@ -9,7 +9,7 @@
  * $Author: wanganlin $
  * $Id: upop_wap.php 17063 2010-03-25 06:35:46Z douqinghua $
  */
-if (!defined('IN_ECTOUCH')) {
+if (!defined('IN_ECS')) {
     die('Hacking attempt');
 }
 

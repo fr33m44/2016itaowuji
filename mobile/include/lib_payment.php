@@ -13,7 +13,7 @@
  * $Id: lib_payment.php 17218 2011-01-24 04:10:41Z yehuaixiao $
  */
 
-if (!defined('IN_ECTOUCH'))
+if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }

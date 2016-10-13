@@ -496,5 +496,15 @@ function get_ad_posti_child($cat_n_child = ''){
 	 
 	 return $arr;
 }
+/**
+* 调用购物车商品数目
+*/
+function insert_cart_info_number()
+{
+    $sql = 'SELECT SUM(goods_number) AS number FROM ' . $GLOBALS['ecs']->table('cart') .
+           " WHERE session_id = '" . SESS_ID . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
+    $number = $GLOBALS['db']->getOne($sql);
+    return intval($number);
+}
 
 ?>

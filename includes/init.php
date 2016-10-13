@@ -157,40 +157,52 @@ if(isset($_SERVER['PHP_SELF']))
 }
 if (!defined('INIT_NO_SMARTY'))
 {
-    header('Cache-control: private');
-    header('Content-type: text/html; charset='.EC_CHARSET);
+	header('Cache-control: private');
+	header('Content-type: text/html; charset='.EC_CHARSET);
 
-    /* 创建 Smarty 对象。*/
-    require(ROOT_PATH . 'includes/cls_template.php');
-    $smarty = new cls_template;
+	/* 创建 Smarty 对象。*/
+	require(ROOT_PATH . 'includes/cls_template.php');
+	$smarty = new cls_template;
 
-    $smarty->cache_lifetime = $_CFG['cache_time'];
-    $smarty->template_dir   = ROOT_PATH . 'themes/' . $_CFG['template'];
-    $smarty->cache_dir      = ROOT_PATH . 'temp/caches';
-    $smarty->compile_dir    = ROOT_PATH . 'temp/compiled';
+	$smarty->cache_lifetime = $_CFG['cache_time'];
+	if(checkmobile())
+	{
+		$smarty->template_dir   = ROOT_PATH . 'themes/' . $_CFG['template_mobile'];
+	}
+	else
+	{
+		$smarty->template_dir   = ROOT_PATH . 'themes/' . $_CFG['template'];
+	}
+	$smarty->cache_dir      = ROOT_PATH . 'temp/caches';
+	$smarty->compile_dir    = ROOT_PATH . 'temp/compiled';
 
-    if ((DEBUG_MODE & 2) == 2)
-    {
-        $smarty->direct_output = true;
-        $smarty->force_compile = true;
-    }
-    else
-    {
-        $smarty->direct_output = false;
-        $smarty->force_compile = false;
-    }
+	if ((DEBUG_MODE & 2) == 2)
+	{
+		$smarty->direct_output = true;
+		$smarty->force_compile = true;
+	}
+	else
+	{
+		$smarty->direct_output = false;
+		$smarty->force_compile = false;
+	}
 
-    $smarty->assign('lang', $_LANG);
-    $smarty->assign('ecs_charset', EC_CHARSET);
-    if (!empty($_CFG['stylename']))
-    {
-        $smarty->assign('ecs_css_path', 'themes/' . $_CFG['template'] . '/style_' . $_CFG['stylename'] . '.css');
-    }
-    else
-    {
-        $smarty->assign('ecs_css_path', 'themes/' . $_CFG['template'] . '/style.css');
-    }
+	$smarty->assign('lang', $_LANG);
+	$smarty->assign('ecs_charset', EC_CHARSET);
+	
+	if (!empty($_CFG['stylename']))
+	{
+		$smarty->assign('ecs_css_path', 'themes/' . $_CFG['template'] . '/style_' . $_CFG['stylename'] . '.css');
+	}
+	else
+	{
+		$smarty->assign('ecs_css_path', 'themes/' . $_CFG['template'] . '/style.css');
+	}
 
+	if(checkmobile())//移动端
+	{
+		$smarty->assign('ectouch_themes', 'themes/' . $_CFG['template_mobile']);
+	}
 }
 
 if (!defined('INIT_NO_USERS'))

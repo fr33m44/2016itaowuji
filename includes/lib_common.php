@@ -2780,5 +2780,38 @@ if (!function_exists('array_combine')) {
         return $combined;
     }
 }
+function dstrpos($string, $arr, $returnvalue = false) {
+	if(empty($string)) return false;
+	foreach((array)$arr as $v) {
+		if(strpos($string, $v) !== false) {
+			$return = $returnvalue ? $v : true;
+			return $return;
+		}
+	}
+	return false;
+}
+function checkmobile() {
+	$mobile = array();
+	static $touchbrowser_list =array('iphone', 'android', 'phone', 'mobile', 'wap', 'netfront', 'java', 'opera mobi', 'opera mini',
+				'ucweb', 'windows ce', 'symbian', 'series', 'webos', 'sony', 'blackberry', 'dopod', 'nokia', 'samsung',
+				'palmsource', 'xda', 'pieplus', 'meizu', 'midp', 'cldc', 'motorola', 'foma', 'docomo', 'up.browser',
+				'up.link', 'blazer', 'helio', 'hosin', 'huawei', 'novarra', 'coolpad', 'techfaith', 'palmsource',
+				'alcatel', 'amoi', 'ktouch', 'nexian', 'ericsson', 'philips', 'sagem', 'wellcom', 'bunjalloo', 'maui', 'smartphone',
+				'iemobile', 'spice', 'bird', 'zte-', 'longcos', 'pantech', 'gionee', 'portalmmm', 'jig browser', 'hiptop',
+				'benq', 'haier', '^lct', '320x320', '240x320', '176x220', 'windows phone');
+	
+	static $pad_list = array('ipad');
 
+	$useragent = strtolower($_SERVER['HTTP_USER_AGENT']);
+
+	if(dstrpos($useragent, $pad_list)) {
+		return false;
+	}
+	if(($v = dstrpos($useragent, $touchbrowser_list, true))){
+		return  true;
+	}
+	$brower = array('mozilla', 'chrome', 'safari', 'opera', 'm3gate', 'winwap', 'openwave', 'myop');
+	if(dstrpos($useragent, $brower)) return false;
+
+}
 ?>

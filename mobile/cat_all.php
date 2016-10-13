@@ -13,7 +13,7 @@
  * $Id: index.php 15013 2010-03-25 09:31:42Z liuhui $
  */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/include/init.php');
 $pcat_array = get_categories_tree();

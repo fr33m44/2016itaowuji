@@ -13,7 +13,7 @@
  * $Id: goods.php 16345 2009-06-24 09:36:23Z liubo $
 */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require_once(ROOT_PATH . '/'. ADMIN_PATH.'/includes/lib_goods.php');

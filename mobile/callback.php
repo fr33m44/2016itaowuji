@@ -1,7 +1,7 @@
 
 <?php
 header("Content-type:text/html;charset=utf-8");
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require(dirname(AEDECBF) . '/include/init.php');
 require(dirname(AEDECBF) . '/include/modules/integrates/saetv2.ex.class.php');
 require_once(ROOT_PATH . 'lang/' . $_CFG['lang'] . '/user.php');

@@ -2,7 +2,7 @@
 /**
  * ECSHOP微信新版JSAPI支付插件
  */
-if (!defined('IN_ECTOUCH')) {
+if (!defined('IN_ECS')) {
     die('Hacking attempt');
 }
 $payment_lang = ROOT_PATH . 'lang/' .$GLOBALS['_CFG']['lang']. '/payment/wx_new_jspay.php';

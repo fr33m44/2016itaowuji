@@ -1,5 +1,5 @@
 <?php
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 $uri = !empty($_GET['uri']) ? $_GET['uri'] : '';
 if(!empty($uri)) 
 {

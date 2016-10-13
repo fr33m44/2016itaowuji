@@ -1,0 +1,8 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- {if $related_goods} -->
+<!--{foreach from=$related_goods item=releated_goods_data}-->
+
+   <a style="color:#000; text-decoration:none; outline: 0px none;" rev="images/201405/1400657882250360796.jpg" rel="zoom1"  href="{$releated_goods_data.url}" class="catcolor"  onclick="changeAtt(this , 1)" href="{$releated_goods_data.url}"><label>{$releated_goods_data.bb_chicun}</label></a>
+
+<!--{/foreach}-->
+<!-- {/if} -->

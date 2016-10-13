@@ -13,7 +13,7 @@
  * $Id: reg_fields.php 15013 2008-10-23 09:31:42Z testyang $
 */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 

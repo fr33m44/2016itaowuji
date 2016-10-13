@@ -1,5 +1,5 @@
 <?php
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require(dirname(__FILE__) . '/includes/init.php');
 require('wxch_lg.php');
 $_REQUEST['act'] = trim($_REQUEST['act']);

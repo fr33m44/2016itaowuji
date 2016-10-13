@@ -3,7 +3,7 @@
 * 告警通知手机端
 */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/../include/init.php');
 

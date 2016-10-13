@@ -13,7 +13,7 @@
  * $Id: index.php 16075 2009-05-22 02:19:40Z wangleisvn $
 */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/include/init.php');
 

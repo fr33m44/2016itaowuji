@@ -1,0 +1,26 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="filter" style="position:static; top:0px; width:100%;">
+  <form method="GET" class="sort" name="listform">
+    <ul class="filter-inner">
+      <li class="{if $pager.sort == 'goods_id' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="exchange.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=goods_id&order=DESC&keywords={$keywords}#goods_list&">综合</a> </li>
+      <li class="{if $pager.sort =='exchange_integral' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="exchange.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=exchange_integral&order=DESC&keywords={$keywords}#goods_list">积分<i class="f-ico-arrow-d"></i></a> </li>
+      <li class="{if $pager.sort =='last_update' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="exchange.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=last_update&order=DESC&keywords={$keywords}#goods_list">时间</a></li>
+      
+    </ul>
+    <input type="hidden" name="category" value="{$category}" />
+    <input type="hidden" name="display" value="{$pager.display}" id="display" />
+    <input type="hidden" name="brand" value="{$brand_id}" />
+    <input type="hidden" name="price_min" value="{$price_min}" />
+    <input type="hidden" name="price_max" value="{$price_max}" />
+    <input type="hidden" name="filter_attr" value="{$filter_attr}" />
+    <input type="hidden" name="page" value="{$pager.page}" />
+    <input type="hidden" name="sort" value="{$pager.sort}" />
+    <input type="hidden" name="order" value="{$pager.order}" />
+  </form>
+</div>
+<div class="srp album flex-f-row" id="J_ItemList" style="opacity:1;"> 
+    <div class="product flex_in single_item">
+      <div class="pro-inner"></div>
+    </div>
+    <a href="javascript:;" class="get_more"></a>
+</div>

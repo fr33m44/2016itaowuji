@@ -10,7 +10,7 @@
 // | Author: EcTouch Team <zhong@ecmoban.com> (QQ: 2880175560)
 // +----------------------------------------------------------------------
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 // 检测PHP环境
 if(version_compare(PHP_VERSION,'5.2.0','<')) die('require PHP > 5.2.0 !');

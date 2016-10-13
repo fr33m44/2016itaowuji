@@ -1,0 +1,31 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!--循环品牌下商品 begin-->
+<div class="blank2"></div>
+<section class="item_show_box1 box1 region">
+    <header>
+        <span>
+            {$goods_brand.name|escape:html}
+        </span>
+        <a href="{$goods_brand.url}" class="ico_04 more">
+        </a>
+    </header>
+    <div class="flex flex-f-row">
+         <!--{foreach from=$brand_goods item=goods name=brand_goods}-->
+          <div class="goodsItem flex_in">
+            <a href="{$goods.url}">
+                <img src="{$site_url}{$goods.thumb}" alt="{$goods.name|escape:html}" />
+            </a>
+            <div style="text-align:center">
+            <!-- {if $goods.promote_price neq ""} --> 
+            <span class="price_s"> {$goods.promote_price} </span> 
+            <!-- {else}--> 
+            <span class="price_s"> {$goods.shop_price} </span> 
+            <!--{/if}-->
+            <br>{$goods.short_name|escape:html}
+            </div>
+        </div>
+        <!--{if $smarty.foreach.brand_goods.iteration%3 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
+        <!--{/foreach}-->
+    </div>
+</section>
+<!--循环分类下商品end-->

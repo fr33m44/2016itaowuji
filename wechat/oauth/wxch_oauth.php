@@ -1,5 +1,5 @@
 <?php
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require (dirname(__FILE__) . '/../../mobile/include/init.php');
 $oid = $_GET['oid'];
 $_SESSION['wxch_oid'] = $oid;

@@ -1,5 +1,5 @@
 <?php
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 include_once ('includes/init.php');
 define('WEBSITE', true);
 

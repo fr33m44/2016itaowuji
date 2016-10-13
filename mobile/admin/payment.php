@@ -1,5 +1,5 @@
 <?php
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require ('includes/init.php');
 $exc = new exchange($ecs->table('touch_payment') , $db, 'pay_code', 'pay_name');
 
