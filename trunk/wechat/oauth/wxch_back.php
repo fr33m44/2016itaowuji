@@ -1,5 +1,5 @@
 <?php
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 if(!empty($_SESSION['wxch_oid'])) {
 	$oid = $_SESSION['wxch_oid'];
 } else {

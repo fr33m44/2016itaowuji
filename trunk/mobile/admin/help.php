@@ -12,7 +12,7 @@
  * $Id: respond.php 16220 2009-06-12 02:08:59Z liubo $
  */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require(dirname(__FILE__) . '/includes/init.php');
 
 $get_keyword = trim($_GET['al']); // 获取关键字

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title} 触屏版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css?v=2011" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+ <div class="ct"><img src="images/ct.png"></div>
+  <div class="ct"><img src="images/ct2.png"></div>
+  <div class="foot">
+   <div class="foot-left">
+     <img class="foot-img" src="{$info.avatar}">
+	 <div class="foot-intro">
+	  <span class="user-name">{$info.username}</span>
+	  <span class="tips">{if  $tianxin}分销商品页面获取提成{else}您还不是东家，点击购买成为东家{/if}</span>
+	 </div>
+   </div>
+   <div class="foot-right">{if  $tianxin}<a href="{$goodsurl}">点击分享</a>{else}<a href="{$goodsurl}">点击购买</a>{/if}</div>
+   <div calss="clear"></div>
+  </div>
+ </div>
+ 
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+<!-- {/literal} -->
+  wx.config({
+    debug: false,
+    appId: '{$signPackage.appId}',
+    timestamp: {$signPackage.timestamp},
+    nonceStr: '{$signPackage.nonceStr}',
+    signature: '{$signPackage.signature}',
+    jsApiList: [
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage' 
+    ]
+  });
+ wx.ready(function () {
+	//甜心100监听“分享给朋友”
+    wx.onMenuShareAppMessage({
+      title: '{$page_title}',
+      desc: '{$page_title}',
+      link: '{$url}',
+      imgUrl: '',
+      trigger: function (res) {
+		
+		{if $url}
+        alert('恭喜！分享可以获取提成哦！');
+		{else}
+		alert('糟糕，需要分销商登录才能获得提成哦！');
+		{/if}
+		
+      },
+      success: function (res) {
+		{if $dourl }
+        window.location.href="{$dourl}&type=1"; 
+		{/if}
+      },
+      cancel: function (res) {
+        alert('很遗憾，您已取消分享');
+      },
+      fail: function (res) {
+        alert(JSON.stringify(res));
+      }
+    });
+
+	//分享到朋友圈甜心100
+    wx.onMenuShareTimeline({
+      title: '{$page_title}',
+      link: '{$url}',
+      imgUrl: '',
+      trigger: function (res) {
+			
+        {if $url}
+			alert('恭喜！分享可以获取提成哦！');
+		{else}
+			alert('糟糕，需要分销商登录才能获得提成哦！');
+		{/if}
+      },
+      success: function (res) {
+       	{if $dourl }
+        window.location.href="{$dourl}&type=2"; 
+		{/if}
+      },
+      cancel: function (res) {
+         alert('很遗憾，您已取消分享');
+      },
+      fail: function (res) {
+        alert(JSON.stringify(res));
+      }
+    });
+
+
+});
+<!-- {literal} -->
+</script>
+
+</body>
+</html>

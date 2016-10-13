@@ -4,7 +4,7 @@
  * 甜  心  100  开发单品推广管理页面
 */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require_once(ROOT_PATH . 'include/fckeditor/fckeditor.php');

@@ -2,7 +2,7 @@
 /* 
 *甜心  100分销微分销分销中心
 */
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/include/init.php');
 require(ROOT_PATH . 'include/lib_weixintong.php');

@@ -135,6 +135,7 @@ $_LANG['09_others'] = '杂项管理';
 $_LANG['10_priv_admin'] = '权限管理';
 $_LANG['11_system'] = '系统设置';
 $_LANG['12_template'] = '模板管理';
+$_LANG['12_2_template'] = '移动端模板管理';
 $_LANG['13_backup'] = '数据库管理';
 $_LANG['14_sms'] = '短信管理';
 $_LANG['15_rec'] = '推荐管理';

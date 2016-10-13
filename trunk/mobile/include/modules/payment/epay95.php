@@ -12,7 +12,7 @@
  * $Author: admin_zhang
  */
 
-if (!defined('IN_ECTOUCH'))
+if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }

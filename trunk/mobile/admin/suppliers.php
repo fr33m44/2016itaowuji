@@ -13,7 +13,7 @@
  * $Id: suppliers.php 15013 2009-05-13 09:31:42Z wanglei $
  */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 

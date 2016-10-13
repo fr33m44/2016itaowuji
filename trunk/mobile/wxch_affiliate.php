@@ -5,7 +5,7 @@
  * Date: 14-6-27 下午3:35
  * Copyright: http://www.weixincaihong.com
  */
-// define('IN_ECTOUCH', true);
+// define('IN_ECS', true);
 // require (dirname(__FILE__) . '/include/init.php');
 
 // $action  = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';

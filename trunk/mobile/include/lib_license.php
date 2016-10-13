@@ -13,7 +13,7 @@
  * $Id: lib_article.php 16336 2009-06-24 07:09:13Z liubo $
 */
 
-if (!defined('IN_ECTOUCH'))
+if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }

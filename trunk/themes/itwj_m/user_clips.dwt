@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title} 触屏版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+{* 包含脚本文件 *}
+{insert_scripts files='transport.js,common.js,user.js'}
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+<!-- *用户中心默认显示页面 start--> 
+<!-- {if $action eq 'default'} -->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="./"> 返回 </a> </div>
+  <h1> 会员中心 </h1>
+</header>
+<dl class="user_top">
+  <dt> {if $info.avatar neq ''}<img src="{$info.avatar}">{else}<img src="{$ectouch_themes}/images/get_avatar.png">{/if} </dt>
+  <dd>
+    <p>会员ID：{$info.username}</p>
+    <p>微信昵称：{$info.nickname}</p>
+    <p>关注时间：{$info.subscribe_time}</p>
+  </dd>
+  <div class="user_top_list">
+    <ul>
+      <li> <a href="user.php?act=order_list"> <strong>{$info.order_count}</strong> <img  src="{$ectouch_themes}/images/ico_user_01.png"> <span>30天订单</span> </a> </li>
+      <li> <a href="user.php?act=point"> <strong>{$info.integral}</strong> <img  src="{$ectouch_themes}/images/ico_user_02.png"> <span>积分</span> </a> </li>
+      <li> <a href="distribute.php?act=account_detail"> <strong>{$info.surplus}</strong> <img  src="{$ectouch_themes}/images/ico_user_03.png"> <span>余额</span> </a> </li>
+      <li> <a class="fragment" href="user.php?act=bonus"> <strong>{$info.bonus}</strong> <img  src="{$ectouch_themes}/images/ico_user_04.png"> <span>红包</span> </a> </li>
+    </ul>
+  </div>
+  <div class="quan1"></div>
+  <div class="quan2"></div>
+  <div class="quan3"></div>
+</dl>
+<div class="blank3"></div>
+<section class="wrap">
+<!--
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;">
+   <a href="index.php?u={$user_id}" class="clearfix"> <span>我的店铺</span><i></i> </a>
+   <a href="user.php?act=dianpu" class="clearfix"> <span>修改店铺名</span><i></i> </a>  
+    <a href="user.php?act=fenxiao1" class="clearfix"> <span>我的直销</span><i></i> </a>
+ <a href="user.php?act=fenxiao2" class="clearfix"> <span>二级分销</span><i></i> </a>
+  <a href="user.php?act=fenxiao3" class="clearfix"> <span>三级分销</span><i></i> </a>
+  <a href="user.php?act=fenxiao4" class="clearfix"> <span>四级分销</span><i></i> </a>
+	</div>
+	-->
+	<div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;">
+	 <a  href="distribute.php" class="clearfix"> <span>分销中心</span><i></i> </a>
+	</div>
+	  <div class="blank3"></div>
+	  
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+  <a  href="tel:{$service_phone}" class="clearfix"> <span>呼叫客服</span><i></i> </a><a href="user.php?act=profile" class="clearfix"> <span>{$lang.label_profile}</span><i></i> </a> <a href="user.php?act=order_list" class="clearfix"> <span>{$lang.label_order}</span><i></i> </a> <a href="user.php?act=address_list"  class="clearfix"> <span>{$lang.label_address}</span><i></i> </a> <a href="user.php?act=collection_list"  class="clearfix"> <span>{$lang.label_collection}</span><i></i> </a> </div>
+  <div class="blank3"></div>
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> <a href="user.php?act=message_list" class="clearfix"> <span>{$lang.label_message}</span><i></i> </a>  <a href="user.php?act=comment_list"  class="clearfix"> <span>{$lang.label_comment}</span><i></i> </a>
+	<a href="user.php?act=user_card"  class="clearfix"> <span>会员卡</span><i></i> </a>
+  </div>
+  <div class="blank3"></div>
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+    <a href="user.php?act=logout" class="clearfix"> <span>退出登录</span><i></i> </a> </div>
+</section>
+
+<!-- {/if} --> 
+<!-- #用户中心默认显示页面 end--> 
+<!-- *我的留言 start--> 
+<!-- {if $action eq 'message_list'} -->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <h1> {$lang.label_message} </h1>
+</header>
+<section class="wrap message_list">
+  <section class="order_box padd1 radius10 single_item">
+  <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
+    <tr>
+        <td class="message"></td>
+    </tr>
+  </table>
+  </section>
+  <a href="javascript:;" style="text-align:center" class="get_more"></a>
+  <section class="order_box padd1 radius10">
+  <form action="user.php" method="post" enctype="multipart/form-data" name="formMsg" onSubmit="return submitMsg()">
+    <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
+      {if $order_info}
+      <tr>
+        <td> {$lang.order_number} <a href ="{$order_info.url}"><img src="images/note.gif" />{$order_info.order_sn}</a>
+          <input name="msg_type" type="hidden" value="5" />
+          <input name="order_id" type="hidden" value="{$order_info.order_id}" class="inputBg_touch" /></td>
+      </tr>
+      {else}
+      <tr>
+        <td><input name="msg_type" type="radio" value="0" checked="checked" />
+          {$lang.type[0]}
+          <input type="radio" name="msg_type" value="1" />
+          {$lang.type[1]}
+          <input type="radio" name="msg_type" value="2" />
+          {$lang.type[2]}
+          <input type="radio" name="msg_type" value="3" />
+          {$lang.type[3]}
+          <input type="radio" name="msg_type" value="4" />
+          {$lang.type[4]} </td>
+      </tr>
+      {/if}
+      <tr>
+        <td><input name="msg_title" type="text" placeholder="{$lang.message_title}" class="inputBg_touch" /></td>
+      </tr>
+      <tr>
+        <td><textarea name="msg_content" placeholder="{$lang.message_content}" cols="50" rows="4" wrap="virtual" style="border: 1px #DDD solid; width: 90%;"></textarea></td>
+      </tr>
+      <tr>
+        <td><input type="hidden" name="act" value="act_add_message" />
+          <input type="submit" value="{$lang.submit}" class="c-btn3" /></td>
+      </tr>
+    </table>
+  </form>
+  </section>
+</section>
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery.more.js"></script>
+<script type="text/javascript">
+jQuery(function($){
+    $('.message_list').more({'address': 'user.php?act=async_message_list', amount: 5, 'spinner_code':'<div style="text-align:center; margin:10px;"><img src="{$ectouch_themes}/images/loader.gif" /></div>'})
+	$(window).scroll(function () {
+		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			$('.get_more').click();
+		}
+	});	
+});
+</script>
+<!-- {/if} --> 
+<!--#我的留言 end--> 
+<!-- *我的评论 start--> 
+<!-- {if $action eq 'comment_list'} -->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <h1> {$lang.label_comment} </h1>
+</header>
+<section class="wrap comment_list">
+  <section class="order_box padd1 radius10 single_item">
+  <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
+    <tr>
+        <td class="comment"></td>
+    </tr>
+  </table>
+  </section>
+  <a href="javascript:;" style="text-align:center" class="get_more"></a>
+</section>
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery.more.js"></script>
+<script type="text/javascript">
+jQuery(function($){
+    $('.comment_list').more({'address': 'user.php?act=async_comment_list', amount: 5, 'spinner_code':'<div style="text-align:center; margin:10px;"><img src="{$ectouch_themes}/images/loader.gif" /></div>'})
+	$(window).scroll(function () {
+		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			$('.get_more').click();
+		}
+	});
+});
+</script>
+<!--{/if} --> 
+<!--#我的评论 end--> 
+
+<!--*收藏商品列表页面 start--> 
+<!--{if $action eq 'collection_list'} --> 
+{insert_scripts files='transport.js,utils.js'}
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <h1> {$lang.label_collection} </h1>
+</header>
+<section class="wrap collection_list">
+  <section class="order_box padd1 radius10 single_item">
+  <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
+    <tr>
+        <td class="collection"></td>
+    </tr>
+  </table>
+</section>
+<a href="javascript:;" style="text-align:center" class="get_more"></a>
+</section>
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery.more.js"></script>
+<script type="text/javascript">
+jQuery(function($){
+    $('.collection_list').more({'address': 'user.php?act=async_collection_list', amount: 5, 'spinner_code':'<div style="text-align:center; margin:10px;"><img src="{$ectouch_themes}/images/loader.gif" /></div>'})
+	$(window).scroll(function () {
+		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			$('.get_more').click();
+		}
+	});
+});
+</script>
+<!--{/if} --> 
+<!--#收藏商品列表页面 end--> 
+<!--*缺货登记列表页面 start--> 
+<!--{if $action eq 'booking_list'} -->
+<header id="header">
+  <div class="c-inav">
+    <section>
+      <button class="back">
+      <span><em></em></span><a href="javascript:history.go(-1)">返回</a>
+      </button>
+    </section>
+    <section> <span style="font-size:14px; color:#333; font-weight:normal">{$lang.label_booking}</span> </section>
+    <section></section>
+  </div>
+</header>
+<div class="blank"></div>
+<div class="fullscreen">
+  <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+    <tr align="center">
+      <td width="20%" bgcolor="#ffffff">名称</td>
+      <td width="20%" bgcolor="#ffffff">数量</td>
+      <td width="20%" bgcolor="#ffffff">{$lang.booking_time}</td>
+      <td width="25%" bgcolor="#ffffff">备注</td>
+      <td width="15%" bgcolor="#ffffff">{$lang.handle}</td>
+    </tr>
+    <!-- {foreach from=$booking_list item=item} -->
+    <tr>
+      <td align="center" bgcolor="#ffffff"><a href="{$item.url}" target="_blank" class="f6">{$item.goods_name}</a></td>
+      <td align="center" bgcolor="#ffffff">{$item.goods_number}</td>
+      <td align="center" bgcolor="#ffffff">{$item.booking_time}</td>
+      <td align="center" bgcolor="#ffffff">{$item.dispose_note}</td>
+      <td align="center" bgcolor="#ffffff"><a href="javascript:if (confirm('{$lang.confirm_remove_account}')) location.href='user.php?act=act_del_booking&id={$item.rec_id}'" class="f6">{$lang.drop}</a></td>
+    </tr>
+    <!--{/foreach}-->
+  </table>
+</div>
+<!--{/if} --> 
+
+<!--#缺货登记列表页面 --> 
+<!--{if $action eq 'add_booking'} -->
+<header id="header">
+  <div class="c-inav">
+    <section>
+      <button class="back">
+      <span><em></em></span><a href="javascript:history.go(-1)">返回</a>
+      </button>
+    </section>
+    <section> <span style="font-size:14px; color:#333; font-weight:normal">{{$lang.add}{$lang.label_booking}</span> </section>
+    <section></section>
+  </div>
+</header>
+{insert_scripts files='utils.js'} 
+<script type="text/javascript">
+    {foreach from=$lang.booking_js item=item key=key}
+    var {$key} = "{$item}";
+    {/foreach}
+    </script>
+<div class="fullscreen">
+  <div class="blank"></div>
+  <form action="user.php" method="post" name="formBooking" onsubmit="return addBooking();">
+    <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.booking_goods_name}</td>
+        <td bgcolor="#ffffff">{$info.goods_name}</td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.booking_amount}:</td>
+        <td bgcolor="#ffffff"><input name="number" type="text" value="{$info.goods_number}" class="inputBg" /></td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.describe}:</td>
+        <td bgcolor="#ffffff"><textarea name="desc" cols="50" rows="5" wrap="virtual" class="B_blue">{$goods_attr}{$info.goods_desc|escape}</textarea></td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.contact_username}:</td>
+        <td bgcolor="#ffffff"><input name="linkman" type="text" value="{$info.consignee|escape}" size="25"  class="inputBg"/></td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.email_address}:</td>
+        <td bgcolor="#ffffff"><input name="email" type="text" value="{$info.email|escape}" size="25" class="inputBg" /></td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">{$lang.contact_phone}:</td>
+        <td bgcolor="#ffffff"><input name="tel" type="text" value="{$info.tel|escape}" size="25" class="inputBg" /></td>
+      </tr>
+      <tr>
+        <td align="right" bgcolor="#ffffff">&nbsp;</td>
+        <td bgcolor="#ffffff"><input name="act" type="hidden" value="act_add_booking" />
+          <input name="id" type="hidden" value="{$info.id}" />
+          <input name="rec_id" type="hidden" value="{$info.rec_id}" />
+          <input type="submit" name="submit" class="submit" value="{$lang.submit_booking_goods}" />
+          <input type="reset" name="reset" class="reset" value="{$lang.button_reset}" /></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<!-- {/if} --> 
+
+<!-- *积分记录 --> 
+    <!--{if $action eq 'point'} -->
+    <header id="header">
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:history.go(-1)"> 返回 </a> </div>
+      <h1> 积分记录</h1>
+    </header>
+    <section class="wrap">
+      <section class="order_box padd1 radius10"> 
+  <table cellpadding="3" cellspacing="1" style=" width:100%;">
+    <tr>
+      <th align="center">变化时间</th>
+      <th align="center">{$lang.change_desc}</th>
+      <th align="center">{$lang.pay_points}</th>
+    </tr>
+    {foreach from=$account_list item=account}
+    <tr>
+      <td align="center">{$account.change_time}</td>
+      <td align="center">{$account.change_desc|escape:html}</td>
+
+
+      <td align="center">
+        {if $account.pay_points gt 0}
+          <span style="color:#0000FF">+{$account.pay_points}</span>
+        {elseif $account.pay_points lt 0}
+          <span style="color:#FF0000">{$account.pay_points}</span>
+        {else}
+          {$account.pay_points}
+        {/if}
+      </td>
+    </tr>
+    {foreachelse}
+    <tr><td class="no-records" colspan="6">{$lang.no_records}</td></tr>
+    {/foreach}
+  </table>
+      </section>
+    </section>	
+	
+	
+    <!--{/if} --> 
+<!-- *我的推荐 --> 
+<!-- {if $affiliate.on eq 1} --> 
+<!-- {if $action eq 'affiliate'} --> 
+<!-- {if !$goodsid || $goodsid eq 0} -->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <h1> {$lang.label_affiliate} </h1>
+</header>
+  <!--会员上下级关系  by  tianxin100-->
+  	 <!-- {foreach from=$children key=level item=children name=affdb} -->
+    <section class="order_box padd1 radius10 single_item">
+        <table border="0" cellspacing="1" style="width:100%;">
+    <tr >
+    <td align="center">{$lang.affiliate_lever}</td>
+    {foreach from=$affdb key=level item=val0}
+    <td align="center">{$level}</td>
+    {/foreach}
+    </tr>
+    <tr>
+    <td align="center">{$lang.affiliate_num}</td>
+    {foreach from=$affdb item=val}
+    <td align="center">{$val.num}</td>
+    {/foreach}
+    </tr>
+    </table>
+	
+  </section>
+  <!-- {/foreach} -->
+
+  
+  <!--会员上下级关系  by  tianxin100-->
+   <!--详细下线记录by  tianxin100-->
+      <section class="order_box padd1 radius10 single_item">
+  <table border="0" cellspacing="1" style=" width:100%;">
+  <tr>
+    <td align="center">会员ID</td>
+    <td align="center">{$lang.username}</td>
+    <td align="center">等级</td>
+    <td align="center">{$lang.email}</td>
+  <tr>
+  {foreach from=$user_list item=user}
+  <tr>
+    <td align="center">{$user.user_id}</td>
+    <td align="center">{$user.user_name|escape}</td>
+    <td align="center"">{$user.level}</td>
+    <td align="center" >{$user.email}</td>
+  </tr>
+  {foreachelse}
+  <tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
+  {/foreach}
+</table>
+  </section>
+  
+    <!--详细分成记录 by  tianxin100-->
+  <section class="order_box padd1 radius10 single_item">
+   <table border="0" cellspacing="1" style=" width:100%;">
+<tr>
+  <th width="20%">{$lang.order_id}</th>
+  <th width="20%">{$lang.order_stats.name}</th>
+  <th width="20%">{$lang.sch_stats.name}</th>
+  <th width="20%">{$lang.log_info}</th>
+  <th width="20%">{$lang.separate_type}</th>
+
+</tr>
+<!-- {foreach from=$logdb item=val} -->
+<tr>
+  <td align="center"><a href="order.php?act=info&order_id={$val.order_id}">{$val.order_sn}</a></td>
+  <td align="center">{$lang.order_stats[$val.order_status]}</td>
+  <td align="center">{$lang.sch_stats[$val.is_separate]}</td>
+  <td align="center">{$val.info}</td>
+  <td align="center">{$lang.separate_by.$val.separate_type}</td>
+</tr>
+    <!-- {foreachelse} -->
+    <tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
+<!-- {/foreach} -->
+</table>
+    </section>
+
+      <section class="order_box padd1 radius10 single_item">
+  <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
+    <tr align="center"><td bgcolor="#ffffff"><a>二维码推荐</a>
+<img style="padding:10px;" src="http://qr.liantu.com/api.php?bg=f3f3f3&fg=ff0000&gc=222222&el=l&w=150&m=10&text={$shopurl}/?u={$userid}"/>
+
+</td>
+</tr>
+      <td>推荐代码：<a href="{$shopurl}?u={$userid}" target="_blank" class="f6">{$shopname}</a> 可调用在线分享</td>
+    </tr>
+  </table>
+  
+  </section>
+<!-- {/if} --> 
+<!-- {/if} --> 
+<!-- {/if} --> 
+<!-- /我的推荐end --> 
+<!-- /我的会员下线开发 S--> 
+<!-- {if $action eq 'fenxiao1'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1> 我的一级会员</h1>
+</header>
+<!--详细下线记录by  tianxin100-->
+<section class="order_box padd1 radius10 single_item">
+  <table border="0" cellspacing="1" style=" width:100%;">
+    <tr>
+    <td align="center">头像</td>
+    <td align="center">会员名</td>
+	<td align="center">订单数量</td>
+    <td align="center">提成金额 </td>
+	<td align="center">查看详情</td>
+
+  <tr>
+  {foreach from=$user_list item=user}
+  <tr>
+    <td align="center">{if $user.head_url neq ''}<img src="{$user.head_url}"  style="width: 3.7rem;height: 3.7rem;border-radius: 3.7rem;">{else}<img src="{$ectouch_themes}/images/get_avatar.png"  style="width: 3.7rem;height: 3.7rem;border-radius: 3.7rem;" >{/if}</td>
+    <td align="center">{if $user.nickname}{$user.nickname|truncate:3:"..":true}{else}{$user.user_name}{/if}[{$user.level}]级</td>
+    <td align="center">{$user.order_num}</td>
+	 <td align="center">{$user.setmoney}</td>
+	 <td align="center"><a href="user.php?act=myorder&user_id={$user.user_id}&level={$user.level}">点击查看</td>
+  </tr>
+  {foreachelse}
+  <tr><td class="no-records" colspan="10" align="center">{$lang.no_records}</td></tr>
+  {/foreach}
+</table>
+</section>
+<!-- {/if} --> 
+<!-- /我的会员下线E --> 
+
+
+<!-- /我的会员下线开发 S--> 
+<!-- {if $action eq 'fenxiao2'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1> 我的二级会员</h1>
+</header>
+<!--详细下线记录by  tianxin100-->
+<section class="order_box padd1 radius10 single_item">
+  <table border="0" cellspacing="1" style=" width:100%;">
+    <tr>
+    <td align="center">头像</td>
+    <td align="center">会员名</td>
+	<td align="center">订单数量</td>
+    <td align="center">提成金额 </td>
+	<td align="center">查看详情</td>
+
+  </tr>
+  {foreach from=$user_list item=user}
+  <tr>
+    <td align="center">{if $user.head_url neq ''}<img src="{$user.head_url}"  style="width: 3.7rem;height: 3.7rem;border-radius: 3.7rem;">{else}<img src="{$ectouch_themes}/images/get_avatar.png"  style="width: 3.7rem;height: 3.7rem;border-radius: 3.7rem;" >{/if}</td>
+    <td align="center">{if $user.nickname}{$user.nickname|truncate:3:"..":true}{else}{$user.user_name}{/if}[{$user.level}]级</td>
+    <td align="center">{$user.order_num}</td>
+	 <td align="center">{$user.setmoney}</td>
+	 <td align="center"><a href="user.php?act=myorder&user_id={$user.user_id}&level={$user.level}">点击查看</td>
+  </tr>
+  {foreachelse}
+  <tr><td class="no-records" colspan="10" align="center">{$lang.no_records}</td></tr>
+  {/foreach}
+</table>
+</section>
+<!-- {/if} --> 
+<!-- /我的会员下线E --> 
+<!-- /我的会员下线开发 S--> 
+<!-- {if $action eq 'fenxiao3'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1> 我的三级会员</h1>
+</header>
+<!--详细下线记录by  tianxin100-->
+<section class="order_box padd1 radius10 single_item">
+  <table border="0" cellspacing="1" style=" width:100%;">
+    <tr>
+    <td align="center">头像</td>
+    <td align="center">会员名</td>
+	<td align="center">订单数量</td>
+    <td align="center">提成金额 </td>
+	<td align="center">查看详情</td>
+
+  <tr>
+  {foreach from=$user_list item=user}
+  <tr>
+    <td align="center">{if $user.head_url neq ''}<img src="{$user.head_url}"  style="width: 3.7rem;height: 3.7rem;border-radius: 3.7rem;">{else}<img src="{$ectouch_themes}/images/get_avatar.png"  style="width: 3.7rem;height: 3.7rem;border-radius: 3.7rem;" >{/if}</td>
+    <td align="center">{if $user.nickname}{$user.nickname|truncate:3:"..":true}{else}{$user.user_name}{/if}[{$user.level}]级</td>
+    <td align="center">{$user.order_num}</td>
+	 <td align="center">{$user.setmoney}</td>
+	 <td align="center"><a href="user.php?act=myorder&user_id={$user.user_id}&level={$user.level}">点击查看</td>
+  </tr>
+  {foreachelse}
+  <tr><td class="no-records" colspan="10"  align="center">{$lang.no_records}</td></tr>
+  {/foreach}
+</table>
+</section>
+<!-- {/if} --> 
+<!-- /我的会员下线E --> 
+<!-- /我的会员下线开发 S--> 
+<!-- {if $action eq 'fenxiao4'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1> 我的四级会员</h1>
+</header>
+<!--详细下线记录by  tianxin100-->
+<section class="order_box padd1 radius10 single_item">
+  <table border="0" cellspacing="1" style=" width:100%;">
+    <tr>
+    <td align="center">头像</td>
+    <td align="center">会员名</td>
+	<td align="center">订单数量</td>
+    <td align="center">提成金额 </td>
+	<td align="center">查看详情</td>
+
+  <tr>
+  {foreach from=$user_list item=user}
+  <tr>
+    <td align="center">{if $user.head_url neq ''}<img src="{$user.head_url}"  style="width: 3.7rem;height: 3.7rem;border-radius: 3.7rem;">{else}<img src="{$ectouch_themes}/images/get_avatar.png"  style="width: 3.7rem;height: 3.7rem;border-radius: 3.7rem;" >{/if}</td>
+    <td align="center">{if $user.nickname}{$user.nickname|truncate:3:"..":true}{else}{$user.user_name}{/if}[{$user.level}]级</td>
+    <td align="center">{$user.order_num}</td>
+	 <td align="center">{$user.setmoney}</td>
+	 <td align="center"><a href="user.php?act=myorder&user_id={$user.user_id}&level={$user.level}">点击查看</td>
+  </tr>
+  {foreachelse}
+  <tr><td class="no-records" colspan="10"  align="center">{$lang.no_records}</td></tr>
+  {/foreach}
+</table>
+</section>
+<!-- {/if} --> 
+<!-- /我的会员下线E --> 
+<!-- /分销订单 S--> 
+<!-- {if $action eq 'myorder'} --> 
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <h1> 订单列表</h1>
+</header>
+   <!--详细下线记录by  tianxin100-->
+   <section class="order_box padd1 radius10 single_item">
+   <table border="0" cellspacing="1" style=" width:100%;">
+<tr>
+  <th width="20%">订单号</th>
+  <th width="20%">总金额</th>
+  <th width="20%">比列</th>
+  <th width="20%">分成金额</th>
+  <th width="20%">状态</th>
+</tr>
+<!-- {foreach from=$logdb item=val} -->
+<tr>
+  <td align="center"><a href="distribute.php?act=myorder_detail&order_id={$val.order_id}&level={$level}">{$val.order_sn}</a></td>
+  <td align="center">{$val.order_amount}</td>
+  <td align="center">{$val.level_money}</td>
+  <td align="center">{$val.set_money}</td>
+   
+  <td align="center">{if $val.is_separate eq 0}未分成{else}已分成{/if}</td>
+</tr>
+<tr>
+  <td align="center">-</td>
+  <td align="center">-</td>
+  <td align="center">-</td>
+  <td align="center">-</td>
+   
+  <td align="center">-</td>
+</tr>
+<!-- {foreachelse} -->
+<tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
+<!-- {/foreach} -->
+</table>
+</section> 
+<!-- {/if} --> 
+<!-- /分销订单E --> 
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+</body>
+<script type="text/javascript">
+{foreach from=$lang.clips_js item=item key=key}
+var {$key} = "{$item}";
+{/foreach}
+</script>
+</html>

@@ -7,7 +7,7 @@
  * $Id: user.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/include/init.php');
 require(ROOT_PATH . 'include/lib_weixintong.php');
@@ -23,7 +23,7 @@ $back_act='';
 $not_login_arr =
 array('login','act_login','register','act_register','act_edit_password','get_password','send_pwd_email','send_pwd_sms','password', 'signin', 'add_tag', 
     'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email','clear_history','qpassword_name', 
-    'get_passwd_question', 'check_answer', 'oath', 'oath_login');
+    'get_passwd_question', 'check_answer', 'oath', 'oath_login', 'getqrm');
 
 /* 显示页面的action列表 */
 $ui_arr = array('register', 'login', 'profile','dianpu', 'act_dianpu', 'order_list', 'order_detail', 'order_tracking', 'address_list', 'act_edit_address', 'collection_list',
@@ -433,7 +433,7 @@ elseif ($action == 'act_register')
 		if($qrm != $qrm_db)
 		{
 			$result['err'] = 6;
-			$result['msg'] = '确认码不正确';
+			$result['msg'] = '手机确认码不正确';
 			die($json->encode($result));
 		}
 		/*判断手机号是否已经存在*/
@@ -508,7 +508,10 @@ elseif ($action == 'act_register')
                 send_regiter_hash($_SESSION['user_id']);
             }
             $ucdata = empty($user->ucdata)? "" : $user->ucdata;
-            show_message(sprintf($_LANG['register_success'], $username . $ucdata), array($_LANG['profile_lnk']), array('user.php'), 'info');
+            //show_message(sprintf($_LANG['register_success'], $username . $ucdata), array($_LANG['profile_lnk']), array('user.php'), 'info');
+		  $result['err'] =0;
+		  $result['msg'] = '恭喜您，注册成功，请牢记您的用户名、手机号和密码';
+		  die($json->encode($result));
 		}
         else
         {
@@ -655,7 +658,85 @@ elseif ($action == 'act_login')
         show_message($_LANG['login_failure'], $_LANG['relogin_lnk'], 'user.php', 'error');
     }
 }
+/* 处理 ajax 的发送手机确认码请求 */
+elseif ($action == 'getqrm')
+{
+	include_once('../includes/cls_captcha.php');
+	require_once('../includes/sms/TopSdk.php');
+    include_once('../includes/cls_json.php');
+	
+	$json = new JSON;
+	$result = array();
+	$mobile = trim($_GET['mobile']);
+	$action = intval($_GET['action']);
+	
+	do{
+		
+		/* 检查验证码 */
+		$validator = new captcha();
+		$validator->session_word = 'captcha_word';
+		if (!$validator->check_word($_GET['captcha']))
+		{
+			$result = array(
+				'error'=>1,
+				'content'=> '您输入的验证码不正确'
+			);
+			break;
+		}
+		/*检查手机号格式*/
+		if (0 == preg_match("/^1[34578]\d{9}$/", $mobile))
+		{
+			$result = array(
+				'error'=>1,
+				'content'=> '手机号格式不正确'
+			);
+			break;
+		}
+		$sql = "select count(1) from ".$ecs->table("users")." where mobile_phone = ''";
 
+		//查询该手机号5分钟内是否已经获取过
+		$sql = "SELECT req_time from ". $ecs->table('sms')." where mobile='$mobile' and action=$action"; //1:signup
+		$req_time = $db->getOne($sql);
+		//5分钟以后或者没有发送记录就发送给用户确认码，否则提示
+		if($req_time == '' || ($req_time + 300) < gmtime())
+		{
+			$qrm = str_pad(strval(rand(0,999999)), 6, "0", STR_PAD_LEFT);
+			
+			$c = new TopClient;
+			$c->appkey = '23453610';
+			$c->secretKey = '8c021a3095cab696fada8e6bcfa4eb37';
+			$req = new AlibabaAliqinFcSmsNumSendRequest;
+			$req->setExtend("1");
+			$req->setSmsType("normal");
+			$req->setSmsFreeSignName("淘五季");
+			$req->setSmsParam("{\"name\":\"$qrm\"}");
+			$req->setRecNum($mobile);
+			$req->setSmsTemplateCode("SMS_14900132");
+			$resp = $c->execute($req);
+			$result['error']   = 0;
+			$result['content'] = '成功';
+			if($req_time == '')
+			{
+				$sql = "INSERT INTO " . $GLOBALS['ecs']->table('sms') . " (mobile, qrm, req_time, action ) VALUES('$mobile', '$qrm', ".gmtime().", $action)";
+				$db->query($sql);
+			}
+			if(($req_time + 300) < gmtime())
+			{
+				$sql = "UPDATE " . $GLOBALS['ecs']->table('sms') . " set req_time = ".gmtime().", qrm = '$qrm' where mobile='$mobile' and action=$action";
+				$db->query($sql);
+			}
+			break;
+		}
+		else
+		{
+			$result['error']   = 2;
+			$result['content'] = '您的操作太频繁，请在5分钟后重新获取确认码';
+			break;
+		}
+	}while(0);
+
+	die($json->encode($result));
+}
 /* 处理 ajax 的登录请求 */
 elseif ($action == 'signin')
 {

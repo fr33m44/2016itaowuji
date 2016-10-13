@@ -13,7 +13,7 @@
  * $Id: cloud.php 17063 2011-07-25 06:35:46Z liubo $
 */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 require(ROOT_PATH . 'include/cls_transport.php');

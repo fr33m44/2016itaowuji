@@ -430,7 +430,7 @@ elseif ($action == 'act_login')
 		die($json->encode($res));
     }
 }
-/* 处理 ajax 的登录请求 */
+/* 处理 ajax 的发送手机确认码请求 */
 elseif ($action == 'getqrm')
 {
 	include_once('includes/cls_captcha.php');

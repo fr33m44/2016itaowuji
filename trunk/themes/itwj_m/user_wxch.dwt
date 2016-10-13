@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">     
+<title>{$page_title}--{$shop_name}</title>
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" name="viewport">     
+<meta content="yes" name="apple-mobile-web-app-capable">     
+<meta content="black" name="apple-mobile-web-app-status-bar-style">     
+<meta content="telephone=no" name="format-detection">
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+</head>
+{* 包含脚本文件 *}
+{insert_scripts files='common.js,user.js,transport.js'}
+ 
+<body>
+ <div id="tbh5v0">
+<div class="screen-wrap fullscreen login">
+
+<!--#登录界面 start-->
+<!-- {if $action eq 'login'} -->
+<div id="page">
+  <header id="header">
+    <div class="header_l"> <a class="ico_10" href="./"> 首页 </a> </div>
+    <h1> 绑定会员 </h1>
+  </header>
+</div> 
+
+<section class="wrap">
+  <div id="leftTabBox" class="loginBox">
+    <div class="bd"<!--{if $action eq 'register'}--> style="display:none"<!--{/if}-->>
+      <ul>
+        <div class="table_box">
+          <form class="c-form login-form" id="J_Login" name="formLogin" action="user_wxch.php" method="post" onSubmit="return userLogin()">
+            <dl>
+              <dd>
+                <input placeholder="{$lang.username}/{$lang.mobile}/{$lang.email}" name="username" type="text"  class="inputBg" id="username" />
+              </dd>
+            </dl>
+            <dl>
+              <dd>
+                <input placeholder="{$lang.label_password}"  name="password" type="password" class="inputBg" />
+              </dd>
+            </dl>
+            <dl>
+              <dd>
+			   <input type="hidden" name="wxid" value="{$wxid}" />
+                <input type="hidden" name="act" value="act_login" />
+                <input type="hidden" name="back_act" value="{$back_act}" />
+                <input type="submit" name="submit"  value="绑定会员" class="c-btn3" />
+              </dd>
+            </dl>
+          </form>
+        </div>
+      </ul>
+    </div>
+  </div>
+</section>
+<!--{/if}-->
+<!--#登录界面 end-->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</div>
+</div>
+<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+<script type="text/javascript">
+var process_request = "{$lang.process_request}";
+{foreach from=$lang.passport_js item=item key=key}
+var {$key} = "{$item}";
+{/foreach}
+var username_exist = "{$lang.username_exist}";
+</script>
+</body>
+</html>

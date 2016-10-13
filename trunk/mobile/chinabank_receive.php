@@ -13,7 +13,7 @@
  * $Id: chinabank_receive.php 17063 2010-11-03 06:35:46Z liubo $
  */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/include/init.php');
 require(ROOT_PATH . 'include/lib_payment.php');

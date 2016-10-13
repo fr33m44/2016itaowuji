@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title} 触屏版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+{* 包含脚本文件 *}
+{insert_scripts files='common.js,lefttime.js'}
+<script type="text/javascript">
+  {foreach from=$lang.js_languages item=item key=key}
+    var {$key} = "{$item}";
+  {/foreach}
+</script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script type="text/javascript">
+// 筛选商品属性
+jQuery(function($) {
+	$(".info").click(function(){
+		$('.goodsBuy .fields').slideToggle("fast");
+	});
+})
+
+function changenum(diff) {
+	var num = parseInt(document.getElementById('goods_number').value);
+	var goods_number = num + Number(diff);
+	if( goods_number >= 1){
+		document.getElementById('goods_number').value = goods_number;//更新数量
+		changePrice();
+	}
+}
+</script>
+
+</head>
+<body>
+<div id="page" style="right: 0px; left: 0px; display: block;">
+  <header id="header" style="z-index:1">
+    <div class="header_l"> <a class="ico_10" href="cat_all.php"> 返回 </a> </div>
+    <h1> {$lang.groupbuy_goods_info} </h1>
+  </header>
+  <!--商品图 s--->
+  <section class="goods_slider">
+    <div class="blank2"></div>
+    <div id="slideBox" class="slideBox">
+      <div class="scroller">
+        <ul>
+          <li><a href="javascript:showPic()"><img alt="{$gb_goods.goods_name|escape:html}" src="{$site_url}{$gb_goods.goods_thumb}"/></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="blank2"></div>
+  </section>
+  <!--商品图 end---> 
+  <!--商品参数-->
+  <section class="goodsInfo">
+    <div class="title">
+      <h1>{$gb_goods.goods_name|escape:html}</h1>
+      <!-- {if $cfg.show_goodssn && 0} --> 
+      {$lang.goods_sn}{$gb_goods.goods_sn}<br>
+      <!-- {/if} --> 
+      <!-- {if $cfg.goods.brand_name && $show_brand && 0} --> 
+      {$lang.goods_brand} {$gb_goods.brand_name}<br>
+      <!--{/if}--> 
+      <!-- {if $cfg.show_goodsweight && 0} --> 
+      {$lang.goods_weight} {$gb_goods.goods_weight}<br>
+      <!-- {/if} --> 
+    </div>
+    <ul>
+      <!-- {if $group_buy.deposit > 0} 保证金额-->
+      <li>{$lang.gb_deposit}{$group_buy.formated_deposit}</li>
+      <!--{/if}--> 
+      <!--{if $group_buy.restrict_amount > 0} 限购数量-->
+      <li> {$lang.gb_restrict_amount} {$group_buy.restrict_amount} </li>
+      <!--{/if}--> 
+      <!--{if $group_buy.gift_integral > 0} 送积分-->
+      <li> {$lang.gb_gift_integral} {$group_buy.gift_integral} </li>
+      <!--{/if}--> 
+      <!-- {if $group_buy.status eq 0} 未开始 -->
+      <li> {$lang.gbs_pre_start}</li>
+      <!-- {elseif $group_buy.status eq 1} 进行中 -->
+      <li><font class="f4">{$lang.gbs_under_way} <span id="leftTime" class="price">{$lang.please_waiting}</span></font></li>
+      <li>{$lang.gb_cur_price} <b class="price">{$group_buy.formated_cur_price}</b></li>
+      <li>{$lang.gb_valid_goods} {$group_buy.valid_goods}</li>
+      <!-- {elseif $group_buy.status eq 2} 已结束 -->
+      <li>{$lang.gbs_finished} {$lang.gb_cur_price} {$group_buy.formated_cur_price} {$lang.gb_valid_goods} {$group_buy.valid_goods}</li>
+      <!-- {elseif $group_buy.status eq 3} 团购成功 -->
+      <li>{$lang.gbs_succeed}
+        {$lang.gb_final_price} {$group_buy.formated_trans_price}<br />
+        {$lang.gb_final_amount} {$group_buy.trans_amount}</li>
+      <!-- {elseif $group_buy.status eq 4} 团购失败 -->
+      <li>{$lang.gbs_fail}</li>
+      <!-- {/if} -->
+    </ul>
+    <table  width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#dddddd">
+      <tr>
+        <th width="30%" bgcolor="#FFFFFF">{$lang.gb_ladder_amount}</th>
+        <th width="70%" bgcolor="#FFFFFF">{$lang.gb_ladder_price}</th>
+      </tr>
+      <!-- {foreach from=$group_buy.price_ladder item=item} -->
+      <tr>
+        <td bgcolor="#FFFFFF" align="center" style="padding:5px">{$item.amount}</td>
+        <td bgcolor="#FFFFFF" align="center">{$item.formated_price}</td>
+      </tr>
+      <!-- {/foreach} -->
+    </table>
+  </section>
+  <!--商品参数 E--> 
+  <!--商品参数 B-->
+  <div class="wrap">
+    <section class="goodsBuy radius5">
+      <input id="goodsBuy-open" type="checkbox">
+      <label class="info" for="goodsBuy-open">
+      <div>请选择<span><!-- {foreach name=spec from=$specification item=spec key=spec_key} --><!-- {if $smarty.foreach.spec.iteration>1}-->/<!-- {/if} -->{$spec.name}<!-- {/foreach} --></span><i></i></div>
+      <div class="selected"> </div>
+      </label>
+      <form action="group_buy.php?act=buy" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
+        <div class="fields">
+          <ul class="ul1">
+            <li>{$lang.amount}：<font id="ECS_GOODS_AMOUNT" class="price">{$group_buy.formated_cur_price}</font></li>
+          </ul>
+          <ul class="ul2">
+            <!-- {* 开始循环所有可选属性 *} --> 
+            <!-- {foreach from=$specification item=spec key=spec_key} -->
+            <li>
+              <h2>{$spec.name}：</h2>
+              <div class="items"> 
+               {$spec.name}
+               <!-- {if $cfg.goodsattr_style eq 1} 规格显示方式：单选按钮 -->
+                <!-- {foreach from=$spec.values item=value key=key} -->
+                     <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
+                    <label for="spec_value_{$value.id}">{$value.label}</label> 
+                    <!-- {/foreach} -->
+                    <input type="hidden" name="spec_list" value="{$key}" />
+               <!-- {else} 规格显示方式：下拉列表 -->
+                <select name="spec_{$spec_key}" style="border:1px solid #ccc;">
+                    <!-- {foreach from=$spec.values item=value key=key} -->
+                    <option label="{$value.label}" value="{$value.id}">{$value.label} </option>
+                    <!-- {/foreach} -->
+                    </select>
+               <!-- {/if} 规格显示方式 -->
+              </div>
+            </li>
+            <!-- {/foreach} --> 
+            <!-- {* 结束循环可选属性 *} -->
+          </ul>
+          <!-- {if $smarty.session.user_id > 0} 如果登录了，显示购买数量 -->
+          <ul class="quantity">
+            <h2>数量：</h2>
+            <div class="items"> <span class="ui-number radius5"> 
+              <button type="button" class="decrease radius5" onclick="changenum(-1)">-</button>
+              <input class="num" name="number" id="goods_number" autocomplete="off" value="1" min="1" max="{$goods.goods_number}" type="number" />
+              <button type="button" class="increase radius5" onclick="changenum(1)">+</button>
+              </span> </div>
+          </ul>
+          <!-- {/if} --> 
+        </div>
+        <div class="option" > 
+          <script type="text/javascript">
+            function showDiv(){
+                document.getElementById('popDiv').style.display = 'block';
+				document.getElementById('hidDiv').style.display = 'block';
+				document.getElementById('cartNum').innerHTML = document.getElementById('goods_number').value;
+				document.getElementById('cartPrice').innerHTML = document.getElementById('ECS_GOODS_AMOUNT').innerHTML;
+            }
+            function closeDiv(){
+                document.getElementById('popDiv').style.display = 'none';
+				document.getElementById('hidDiv').style.display = 'none';
+            }
+     </script>
+           <!-- {if $smarty.session.user_id > 0} 如果登录了，显示购买按钮 -->
+          <button type="submit" class="btn buy radius5" >立即购买</button>
+           <!-- {else} 如果没有登录，显示提示信息 -->
+          {$lang.gb_notice_login}
+          <!-- {/if} 判断登录结束 -->
+          <input type="hidden" name="group_buy_id" value="{$group_buy.group_buy_id}" />
+        </div>
+      </form>
+    </section>
+    
+    
+<!--团购说明 begin-->
+<section class="s-detail">
+<div id="tab1">
+    <div class="desc wrap">
+      <div class="blank2"></div>
+      {$group_buy.group_buy_desc}
+    </div>
+  </div>
+</section>
+<!---团购说明-->
+  </div>
+</div>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript">
+//介绍 评价 咨询切换
+var tab_now = 1;
+function tab(id){
+	document.getElementById('tabs' + tab_now).className = document.getElementById('tabs' + tab_now).className.replace('current', '');
+	document.getElementById('tabs' + id).className = document.getElementById('tabs' + id).className.replace('', 'current');
+
+	tab_now = id;
+	if (id == 1) {
+		document.getElementById('tab1').className = '';
+		document.getElementById('tab2').className = 'hidden';
+		document.getElementById('tab3').className = 'hidden';
+	}else if (id == 2) {
+		document.getElementById('tab1').className = 'hidden';
+		document.getElementById('tab2').className = '';
+		document.getElementById('tab3').className = 'hidden';
+	}else if (id == 3) {
+		document.getElementById('tab1').className = 'hidden';
+		document.getElementById('tab2').className = 'hidden';
+		document.getElementById('tab3').className = '';
+	}
+}
+</script> 
+{insert_scripts files='transport.js,utils.js'}
+<!--商品参数 E--> 
+<script type="text/javascript">
+var gmt_end_time = "{$group_buy.gmt_end_date|default:0}";
+{foreach from=$lang.goods_js item=item key=key}
+var {$key} = "{$item}";
+{/foreach}
+var now_time = {$now_time};
+<!-- {literal} -->
+
+onload = function()
+{
+  try
+  {
+    onload_leftTime();
+  }
+  catch (e)
+  {}
+}
+<!-- {/literal} -->
+</script>
+</body>
+</html>

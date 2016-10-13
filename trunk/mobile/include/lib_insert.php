@@ -3,17 +3,11 @@
 /**
  * ECSHOP 动态内容函数库
  * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
- * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
  * $Author: liubo $
  * $Id: lib_insert.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
-if (!defined('IN_ECTOUCH'))
+if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }
@@ -97,6 +91,38 @@ function insert_history()
     return $str;
 }
 
+
+function insert_index_history()
+{
+    $str = '';
+    if (!empty($_COOKIE['ECS']['history']))
+    {
+        $where = db_create_in($_COOKIE['ECS']['history'], 'goods_id');
+        $sql   = 'SELECT goods_id, goods_name, goods_thumb, shop_price,market_price, promote_price, promote_start_date, promote_end_date FROM ' . $GLOBALS['ecs']->table('goods') .
+                " WHERE $where AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0";
+        $res = $GLOBALS['db']->getAll($sql);
+     	
+		foreach($res as $idx => $row)
+		{
+            $promote_price = bargain_price($row['promote_price'],$row['promote_start_date'], $row['promote_end_date']);
+			$goods[$idx]['goods_id'] = $row['goods_id'];
+            $goods[$idx]['goods_name'] = $row['goods_name'];
+            $goods[$idx]['short_name'] = $GLOBALS['_CFG']['goods_name_length'] > 0 ? sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
+            $goods[$idx]['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+            $goods[$idx]['promote_price'] = $promote_price;
+            $goods[$idx]['shop_price'] = price_format($row['shop_price']);
+			$goods[$idx]['market_price'] = price_format($row['market_price']);
+            $goods[$idx]['url'] = build_uri('goods', array('gid'=>$row['goods_id']), $row['goods_name']);	
+		}
+		
+		$GLOBALS['smarty']->assign('history_goods',$goods);
+	    $output = $GLOBALS['smarty']->fetch('library/history_info.lbi');
+		$GLOBALS['smarty']->caching = $need_cache;
+		return $output;
+    }
+   // return $str;
+}	
+		
 /**
  * 调用购物车信息
  *

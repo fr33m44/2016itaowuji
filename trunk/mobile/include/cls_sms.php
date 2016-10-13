@@ -12,7 +12,7 @@
  * $Author: Jack $
  * $Id: cls_sms.php 17155 2014-02-06 06:29:05Z $
  */
-if (!defined('IN_ECTOUCH')) {
+if (!defined('IN_ECS')) {
     die('Hacking attempt');
 }
 

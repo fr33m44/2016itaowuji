@@ -13,7 +13,7 @@
  * $Id: privilege.php 16529 2009-08-12 05:38:57Z wangleisvn $
 */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
 

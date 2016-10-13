@@ -381,7 +381,6 @@ function registed_callback(result) {
 function get_qrm(mobile, action) {
 	/* 检查验证码和手机号 */
 	var regex_captcha = /\w{4}$/;
-
 	var captcha = Utils.trim(document.forms['formUser'].elements['captcha'].value);
 	var mobile = Utils.trim(document.forms['formUser'].elements['mobile'].value);
 	if (captcha == "") {
@@ -400,13 +399,8 @@ function get_qrm(mobile, action) {
 		alert('手机号格式不对');
 		return;
 	}
-
-	
 	document.getElementById("get_qrm_btn").disabled = "disabled";
 	Ajax.call('user.php?act=getqrm', 'mobile=' + mobile + '&captcha=' + captcha + '&action=' + action, qrm_callback, 'GET', 'JSON', true, true);
-
-
-
 }
 
 function qrm_callback(result) {

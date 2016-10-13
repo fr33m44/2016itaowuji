@@ -2,7 +2,7 @@
 /**
 * 维权通知
 */
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/../include/init.php');
 require(ROOT_PATH . 'include/lib_payment.php');

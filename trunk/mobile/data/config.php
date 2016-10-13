@@ -10,7 +10,7 @@
 // | Author: EcTouch Team <zhong@ecmoban.com> (QQ: 2880175560)
 // +----------------------------------------------------------------------
 
-if (!defined('IN_ECTOUCH')){
+if (!defined('IN_ECS')){
     die('Hacking attempt');
 }
 

@@ -1,5 +1,5 @@
 <?php
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require( 'include/init.php');
 $do   = array(
     'www.bswtg.com',

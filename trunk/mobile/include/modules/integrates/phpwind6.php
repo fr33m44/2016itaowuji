@@ -13,7 +13,7 @@
  * $Id: phpwind6.php 14769 2008-07-31 07:10:31Z testyang $
 */
 
-if (!defined('IN_ECTOUCH'))
+if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }

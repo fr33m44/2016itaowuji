@@ -13,7 +13,7 @@
  * $Id: article_auto.php 17217 2011-01-19 06:29:08Z liubo $
  */
 
-define('IN_ECTOUCH', true);
+define('IN_ECS', true);
 require(dirname(__FILE__) . '/includes/init.php');
 admin_priv('article_auto');
 $smarty->assign('thisfile', 'article_auto.php');

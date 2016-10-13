@@ -13,7 +13,7 @@
  * $Id: lib_compositor.php 2009-07-24 09:31:42Z liuhui $
  */
 
-if (!defined('IN_ECTOUCH'))
+if (!defined('IN_ECS'))
 {
     die('Hacking attempt');
 }
