@@ -373,8 +373,15 @@ function build_urhere($arr, $type = 'category')
  */
 function assign_dynamic($tmp)
 {
-    $sql = 'SELECT id, number, type FROM ' . $GLOBALS['ecs']->table('template') .
+	if(checkmobile())
+	{
+		$sql = 'SELECT id, number, type FROM ' . $GLOBALS['ecs']->table('touch_template') .
+        " WHERE filename = '$tmp' AND type > 0 AND remarks ='' AND theme='" . $GLOBALS['_CFG']['touch_mobile'] . "'";
+	}else
+	{
+		$sql = 'SELECT id, number, type FROM ' . $GLOBALS['ecs']->table('template') .
         " WHERE filename = '$tmp' AND type > 0 AND remarks ='' AND theme='" . $GLOBALS['_CFG']['template'] . "'";
+	}
     $res = $GLOBALS['db']->getAll($sql);
 
    foreach ($res AS $row)
@@ -1328,10 +1335,20 @@ function get_dyna_libs($theme, $tmp)
 {
     $ext = end(explode('.', $tmp));
     $tmp = basename($tmp,".$ext");
-    $sql = 'SELECT region, library, sort_order, id, number, type' .
+    if(checkmobile())
+	{
+		$sql = 'SELECT region, library, sort_order, id, number, type' .
+            ' FROM ' . $GLOBALS['ecs']->table('touch_template') .
+            " WHERE theme = '$theme' AND filename = '" . $tmp . "' AND type > 0 AND remarks=''".
+            ' ORDER BY region, library, sort_order';
+	}
+	else
+	{
+		$sql = 'SELECT region, library, sort_order, id, number, type' .
             ' FROM ' . $GLOBALS['ecs']->table('template') .
             " WHERE theme = '$theme' AND filename = '" . $tmp . "' AND type > 0 AND remarks=''".
             ' ORDER BY region, library, sort_order';
+	}
     $res = $GLOBALS['db']->getAll($sql);
 
     $dyna_libs = array();
@@ -1357,6 +1374,7 @@ function get_dyna_libs($theme, $tmp)
  */
 function dyna_libs_replace($matches)
 {
+	var_dump($matches);
     $key = '/' . $matches[1];
 
     if ($row = array_shift($GLOBALS['libs'][$key]))
@@ -1893,9 +1911,16 @@ function get_library_number($library, $template = null)
     if (!isset($lib_list[$template]))
     {
         $lib_list[$template] = array();
-        $sql = "SELECT library, number FROM " . $GLOBALS['ecs']->table('template') .
+        if(checkmobile()){
+			$sql = "SELECT library, number FROM " . $GLOBALS['ecs']->table('touch_template') .
+                " WHERE theme = '" . $GLOBALS['_CFG']['touch_template'] . "'" .
+                " AND filename = '$template' AND remarks='' ";
+		}
+		else{
+			$sql = "SELECT library, number FROM " . $GLOBALS['ecs']->table('template') .
                 " WHERE theme = '" . $GLOBALS['_CFG']['template'] . "'" .
                 " AND filename = '$template' AND remarks='' ";
+		}
         $res = $GLOBALS['db']->query($sql);
         while ($row = $GLOBALS['db']->fetchRow($res))
         {

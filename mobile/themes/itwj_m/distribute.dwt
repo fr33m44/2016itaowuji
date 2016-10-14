@@ -9,7 +9,7 @@
 <meta name="format-detection" content="telephone=no" />
 <link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
 <link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-<link href="{$ectouch_themes}/ectouch.css?id=1212" rel="stylesheet" type="text/css" />
+<link href="{$ectouch_themes}/style.css?id=1212" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
 {insert_scripts files='transport.js,common.js,user.js'}
 <script type="text/javascript" src="{$ectouch_themes}/js/jquery-1.4.4.min.js"></script>

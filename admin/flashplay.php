@@ -797,33 +797,40 @@ function get_url_image($url)
 
 function get_width_height()
 {
-    $curr_template = $GLOBALS['_CFG']['template'];
-    $path = ROOT_PATH . 'themes/' . $curr_template . '/library/';
-    $template_dir = @opendir($path);
+	if(checkmobile())
+	{
+		$curr_template = $GLOBALS['_CFG']['touch_template'];
+	}
+	else
+	{
+		$curr_template = $GLOBALS['_CFG']['template'];
+	}
+	$path = ROOT_PATH . 'themes/' . $curr_template . '/library/';
+	$template_dir = @opendir($path);
 
-    $width_height = array();
-    while($file = readdir($template_dir))
-    {
-        if($file == 'index_ad.lbi')
-        {
-            $string = file_get_contents($path . $file);
-            $pattern_width = '/var\s*swf_width\s*=\s*(\d+);/';
-            $pattern_height = '/var\s*swf_height\s*=\s*(\d+);/';
-            preg_match($pattern_width, $string, $width);
-            preg_match($pattern_height, $string, $height);
-            if(isset($width[1]))
-            {
-                $width_height['width'] = $width[1];
-            }
-            if(isset($height[1]))
-            {
-                $width_height['height'] = $height[1];
-            }
-            break;
-        }
-    }
+	$width_height = array();
+	while($file = readdir($template_dir))
+	{
+		if($file == 'index_ad.lbi')
+		{
+			$string = file_get_contents($path . $file);
+			$pattern_width = '/var\s*swf_width\s*=\s*(\d+);/';
+			$pattern_height = '/var\s*swf_height\s*=\s*(\d+);/';
+			preg_match($pattern_width, $string, $width);
+			preg_match($pattern_height, $string, $height);
+			if(isset($width[1]))
+			{
+				$width_height['width'] = $width[1];
+			}
+			if(isset($height[1]))
+			{
+				$width_height['height'] = $height[1];
+			}
+			break;
+		}
+	}
 
-    return $width_height;
+	return $width_height;
 }
 
 function get_flash_templates($dir)

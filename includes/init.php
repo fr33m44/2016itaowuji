@@ -167,14 +167,16 @@ if (!defined('INIT_NO_SMARTY'))
 	$smarty->cache_lifetime = $_CFG['cache_time'];
 	if(checkmobile())
 	{
-		$smarty->template_dir   = ROOT_PATH . 'themes/' . $_CFG['template_mobile'];
+		$smarty->template_dir   = ROOT_PATH . 'themes/' . $_CFG['touch_template'] ;
+		$smarty->cache_dir      = ROOT_PATH . 'temp/caches_mobile';
+		$smarty->compile_dir    = ROOT_PATH . 'temp/compiled_mobile';
 	}
 	else
 	{
 		$smarty->template_dir   = ROOT_PATH . 'themes/' . $_CFG['template'];
+		$smarty->cache_dir      = ROOT_PATH . 'temp/caches';
+		$smarty->compile_dir    = ROOT_PATH . 'temp/compiled';
 	}
-	$smarty->cache_dir      = ROOT_PATH . 'temp/caches';
-	$smarty->compile_dir    = ROOT_PATH . 'temp/compiled';
 
 	if ((DEBUG_MODE & 2) == 2)
 	{
@@ -201,7 +203,7 @@ if (!defined('INIT_NO_SMARTY'))
 
 	if(checkmobile())//移动端
 	{
-		$smarty->assign('ectouch_themes', 'themes/' . $_CFG['template_mobile']);
+		$smarty->assign('ectouch_themes', 'themes/' . $_CFG['touch_template'] );
 	}
 }
 
