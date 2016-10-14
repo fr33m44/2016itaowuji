@@ -99,7 +99,7 @@ function get_categories_tree($cat_id = 0)
     if ($GLOBALS['db']->getOne($sql) || $parent_id == 0)
     {
         /* 获取当前分类及其子分类 */
-        $sql = 'SELECT cat_id,cat_name ,parent_id,is_show ' .
+        $sql = 'SELECT cat_id,cat_name ,parent_id, is_show, cat_ico ' .
                 'FROM ' . $GLOBALS['ecs']->table('category') .
                 "WHERE parent_id = '$parent_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
 
@@ -112,6 +112,7 @@ function get_categories_tree($cat_id = 0)
                 $cat_arr[$row['cat_id']]['id']   = $row['cat_id'];
                 $cat_arr[$row['cat_id']]['name'] = $row['cat_name'];
                 $cat_arr[$row['cat_id']]['url']  = build_uri('category', array('cid' => $row['cat_id']), $row['cat_name']);
+                $cat_arr[$row['cat_id']]['ico'] = empty($row['cat_ico']) ? $GLOBALS['_CFG']['no_picture'] : DATA_DIR.'/cat_ico/'.$row['cat_ico'];
 
                 if (isset($row['cat_id']) != NULL)
                 {
@@ -863,7 +864,6 @@ function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
         $sql .= ' LIMIT ' . $num;
     }
     $res = $GLOBALS['db']->getAll($sql);
-
     $goods = array();
     foreach ($res AS $idx => $row)
     {
@@ -901,14 +901,12 @@ function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
 
     if ($from == 'web')
     {
-		$goods['id'] = $cat_id;
         $GLOBALS['smarty']->assign('cat_goods_' . $cat_id, $goods);
     }
     elseif ($from == 'wap')
     {
         $cat['goods'] = $goods;
     }
-
     /* 分类信息 */
     $sql = 'SELECT cat_name FROM ' . $GLOBALS['ecs']->table('category') . " WHERE cat_id = '$cat_id'";
     $cat['name'] = $GLOBALS['db']->getOne($sql);
@@ -946,7 +944,6 @@ function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
 	
 	$cat['brands'] = $brands;
 	$cat['cat_clild'] = get_clild_list($cat_id);
-
     return $cat;
 }
 
