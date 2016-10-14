@@ -1374,7 +1374,6 @@ function get_dyna_libs($theme, $tmp)
  */
 function dyna_libs_replace($matches)
 {
-	var_dump($matches);
     $key = '/' . $matches[1];
 
     if ($row = array_shift($GLOBALS['libs'][$key]))
@@ -1958,53 +1957,76 @@ function get_library_number($library, $template = null)
  */
 function get_navigator($ctype = '', $catlist = array())
 {
-    $sql = 'SELECT * FROM '. $GLOBALS['ecs']->table('nav') . '
-            WHERE ifshow = \'1\' ORDER BY type, vieworder';
-    $res = $GLOBALS['db']->query($sql);
+	global $_CFG;
+	$ismobile = checkmobile();
+	if($ismobile){
+		$sql = 'SELECT * FROM '. $GLOBALS['ecs']->table('touch_nav') . '
+			WHERE ifshow = \'1\' ORDER BY type, vieworder';
+	}
+	else{
+		$sql = 'SELECT * FROM '. $GLOBALS['ecs']->table('nav') . '
+			WHERE ifshow = \'1\' ORDER BY type, vieworder';
+	}
+	$res = $GLOBALS['db']->query($sql);
 
-    $cur_url = substr(strrchr($_SERVER['REQUEST_URI'],'/'),1);
+	$cur_url = substr(strrchr($_SERVER['REQUEST_URI'],'/'),1);
 
-    if (intval($GLOBALS['_CFG']['rewrite']))
-    {
-        if(strpos($cur_url, '-'))
-        {
-            preg_match('/([a-z]*)-([0-9]*)/',$cur_url,$matches);
-            $cur_url = $matches[1].'.php?id='.$matches[2];
-        }
-    }
-    else
-    {
-        $cur_url = substr(strrchr($_SERVER['REQUEST_URI'],'/'),1);
-    }
+	if (intval($GLOBALS['_CFG']['rewrite']))
+	{
+		if(strpos($cur_url, '-'))
+		{
+			preg_match('/([a-z]*)-([0-9]*)/',$cur_url,$matches);
+			$cur_url = $matches[1].'.php?id='.$matches[2];
+		}
+	}
+	else
+	{
+		$cur_url = substr(strrchr($_SERVER['REQUEST_URI'],'/'),1);
+	}
 
-    $noindex = false;
-    $active = 0;
-    $navlist = array(
-        'top' => array(),
-        'middle' => array(),
-        'bottom' => array()
-    );
-    while ($row = $GLOBALS['db']->fetchRow($res))
-    {
-        $navlist[$row['type']][] = array(
-            'name'      =>  $row['name'],
-            'opennew'   =>  $row['opennew'],
-            'url'       =>  $row['url'],
-            'ctype'     =>  $row['ctype'],
-            'cid'       =>  $row['cid'],
-            );
-    }
+	$noindex = false;
+	$active = 0;
+	$navlist = array(
+		'top' => array(),
+		'middle' => array(),
+		'bottom' => array()
+	);
+	while ($row = $GLOBALS['db']->fetchRow($res))
+	{
+		if($ismobile)
+		{
+			$navlist[$row['type']][] = array(
+				'name'      =>  $row['name'],
+				'opennew'   =>  $row['opennew'],
+				'url'       =>  $row['url'],
+				'pic'       =>  'themes/' . $_CFG['touch_template'] . '/images/'.(empty($row['pic'])?'ico.png':$row['pic']),
+				'ctype'     =>  $row['ctype'],
+				'cid'       =>  $row['cid'],
+				);
+		}
+		else
+		{
+			$navlist[$row['type']][] = array(
+				'name'      =>  $row['name'],
+				'opennew'   =>  $row['opennew'],
+				'url'       =>  $row['url'],
+				'ctype'     =>  $row['ctype'],
+				'cid'       =>  $row['cid'],
+				);
+		}
+	}
 
-    /*遍历自定义是否存在currentPage*/
-    foreach($navlist['middle'] as $k=>$v)
-    {
-        $condition = empty($ctype) ? (strpos($cur_url, $v['url']) === 0) : (strpos($cur_url, $v['url']) === 0 && strlen($cur_url) == strlen($v['url']));
-        if ($condition)
-        {
-            $navlist['middle'][$k]['active'] = 1;
-            $noindex = true;
-            $active += 1;
-        }		if(substr($v['url'],0,8)=='category')
+	/*遍历自定义是否存在currentPage*/
+	foreach($navlist['middle'] as $k=>$v)
+	{
+		$condition = empty($ctype) ? (strpos($cur_url, $v['url']) === 0) : (strpos($cur_url, $v['url']) === 0 && strlen($cur_url) == strlen($v['url']));
+		if ($condition)
+		{
+			$navlist['middle'][$k]['active'] = 1;
+			$noindex = true;
+			$active += 1;
+		}		
+		if(substr($v['url'],0,8)=='category' && !$ismobile) //pc端
 		{
 			$cat_id = $v['cid'];
 			$children = get_children($cat_id);
@@ -2012,29 +2034,28 @@ function get_navigator($ctype = '', $catlist = array())
 			$navlist['middle'][$k]['cat'] =1;
 			$navlist['middle'][$k]['cat_list'] =$cat_list;
 		}		
-    }
-	
-    if(!empty($ctype) && $active < 1)
-    {
-        foreach($catlist as $key => $val)
-        {
-            foreach($navlist['middle'] as $k=>$v)
-            {
-                if(!empty($v['ctype']) && $v['ctype'] == $ctype && $v['cid'] == $val && $active < 1)
-                {
-                    $navlist['middle'][$k]['active'] = 1;
-                    $noindex = true;
-                    $active += 1;
-                }
-            }
-        }
-    }
+	}
 
-    if ($noindex == false) {
-        $navlist['config']['index'] = 1;
-    }
+	if(!empty($ctype) && $active < 1)
+	{
+		foreach($catlist as $key => $val)
+		{
+			foreach($navlist['middle'] as $k=>$v)
+			{
+				if(!empty($v['ctype']) && $v['ctype'] == $ctype && $v['cid'] == $val && $active < 1)
+				{
+					$navlist['middle'][$k]['active'] = 1;
+					$noindex = true;
+					$active += 1;
+				}
+			}
+		}
+	}
 
-    return $navlist;
+	if ($noindex == false) {
+		$navlist['config']['index'] = 1;
+	}
+	return $navlist;
 }
 
 function get_categories_tree_xaphp($cat_id = 0)
