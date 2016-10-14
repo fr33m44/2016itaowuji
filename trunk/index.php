@@ -428,7 +428,7 @@ function get_flash_xml()
             {
                 $val[4] = isset($val[4]) ? $val[4] : 0;
                 $flashdb[] = array('src'=>$val[1],'url'=>$val[2],'text'=>$val[3],'sort'=>$val[4]);
-//print_r($flashdb);
+
             }
         }
     }
