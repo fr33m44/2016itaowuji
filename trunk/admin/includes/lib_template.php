@@ -458,23 +458,30 @@ function get_template_region($tmp_name, $tmp_file, $lib=true)
  */
 function move_plugin_library($tmp_name, &$msg)
 {
-    $sql = 'SELECT code, library FROM ' . $GLOBALS['ecs']->table('plugins') . " WHERE library > ''";
-    $rec = $GLOBALS['db']->query($sql);
-    $return_value = true;
-    $target_dir = ROOT_PATH . 'themes/' . $tmp_name;
-    $source_dir = ROOT_PATH . 'themes/' . $GLOBALS['_CFG']['template'];
-    while ($row = $GLOBALS['db']->fetchRow($rec))
-    {
-        //先移动，移动失败试则拷贝
-        if (!@rename($source_dir . $row['library'], $target_dir . $row['library']))
-        {
-            if (!@copy(ROOT_PATH . 'plugins/' . $row['code'] . '/temp' . $row['library'], $target_dir . $row['library']))
-            {
-                $return_value = false;
-                $msg .= "\n moving " . $row['library'] . ' failed';
-            }
-        }
-    }
+	$sql = 'SELECT code, library FROM ' . $GLOBALS['ecs']->table('plugins') . " WHERE library > ''";
+	$rec = $GLOBALS['db']->query($sql);
+	$return_value = true;
+	$target_dir = ROOT_PATH . 'themes/' . $tmp_name;
+	if(checkmobile())
+	{
+		$source_dir = ROOT_PATH . 'themes/' . $GLOBALS['_CFG']['touch_template'];
+	}
+	else
+	{
+		$source_dir = ROOT_PATH . 'themes/' . $GLOBALS['_CFG']['template'];
+	}
+	while ($row = $GLOBALS['db']->fetchRow($rec))
+	{
+		//先移动，移动失败试则拷贝
+		if (!@rename($source_dir . $row['library'], $target_dir . $row['library']))
+		{
+			if (!@copy(ROOT_PATH . 'plugins/' . $row['code'] . '/temp' . $row['library'], $target_dir . $row['library']))
+			{
+				$return_value = false;
+				$msg .= "\n moving " . $row['library'] . ' failed';
+			}
+		}
+	}
 }
 
 /**

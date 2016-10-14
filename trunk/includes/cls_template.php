@@ -1050,94 +1050,106 @@ class cls_template
 
     function smarty_prefilter_preCompile($source)
     {
-        $file_type = strtolower(strrchr($this->_current_file, '.'));
-        $tmp_dir   = 'themes/' . $GLOBALS['_CFG']['template'] . '/'; // 模板所在路径
+		$file_type = strtolower(strrchr($this->_current_file, '.'));
+		if(checkmobile())
+		{
+			$tmp_dir   = 'themes/' . $GLOBALS['_CFG']['touch_template'] . '/'; // 模板所在路径
+		}
+		else
+		{
+			$tmp_dir   = 'themes/' . $GLOBALS['_CFG']['template'] . '/'; // 模板所在路径
+		}
 
-        /**
-         * 处理模板文件
-         */
-        if ($file_type == '.dwt')
-        {
-            /* 将模板中所有library替换为链接 */
-            $pattern     = '/<!--\s#BeginLibraryItem\s\"\/(.*?)\"\s-->.*?<!--\s#EndLibraryItem\s-->/se';
-            $replacement = "'{include file='.strtolower('\\1'). '}'";
-            $source      = preg_replace($pattern, $replacement, $source);
+		/**
+		 * 处理模板文件
+		 */
+		if ($file_type == '.dwt')
+		{
+			/* 将模板中所有library替换为链接 */
+			$pattern     = '/<!--\s#BeginLibraryItem\s\"\/(.*?)\"\s-->.*?<!--\s#EndLibraryItem\s-->/se';
+			$replacement = "'{include file='.strtolower('\\1'). '}'";
+			$source      = preg_replace($pattern, $replacement, $source);
 
-            /* 检查有无动态库文件，如果有为其赋值 */
-            $dyna_libs = get_dyna_libs($GLOBALS['_CFG']['template'], $this->_current_file);
-            if ($dyna_libs)
-            {
-                foreach ($dyna_libs AS $region => $libs)
-                {
-                    $pattern = '/<!--\\s*TemplateBeginEditable\\sname="'. $region .'"\\s*-->(.*?)<!--\\s*TemplateEndEditable\\s*-->/s';
+			/* 检查有无动态库文件，如果有为其赋值 */
+			if(checkmobile()){
+				$dyna_libs = get_dyna_libs($GLOBALS['_CFG']['touch_template'], $this->_current_file);
+			}
+			else{
+				$dyna_libs = get_dyna_libs($GLOBALS['_CFG']['template'], $this->_current_file);
+			}
+			if ($dyna_libs)
+			{
+				foreach ($dyna_libs AS $region => $libs)
+				{
+					$pattern = '/<!--\\s*TemplateBeginEditable\\sname="'. $region .'"\\s*-->(.*?)<!--\\s*TemplateEndEditable\\s*-->/s';
 
-                    if (preg_match($pattern, $source, $reg_match))
-                    {
-                        $reg_content = $reg_match[1];
-                        /* 生成匹配字串 */
-                        $keys = array_keys($libs);
-                        $lib_pattern = '';
-                        foreach ($keys AS $lib)
-                        {
-                            $lib_pattern .= '|' . str_replace('/', '\/', substr($lib, 1));
-                        }
-                        $lib_pattern = '/{include\sfile=(' . substr($lib_pattern, 1) . ')}/';
-                        /* 修改$reg_content中的内容 */
-                        $GLOBALS['libs'] = $libs;
-                        $reg_content = preg_replace_callback($lib_pattern, 'dyna_libs_replace', $reg_content);
+					if (preg_match($pattern, $source, $reg_match))
+					{
+						$reg_content = $reg_match[1];
+						/* 生成匹配字串 */
+						$keys = array_keys($libs);
+						$lib_pattern = '';
+						foreach ($keys AS $lib)
+						{
+							$lib_pattern .= '|' . str_replace('/', '\/', substr($lib, 1));
+						}
+						$lib_pattern = '/{include\sfile=(' . substr($lib_pattern, 1) . ')}/';
+						/* 修改$reg_content中的内容 */
+						$GLOBALS['libs'] = $libs;
+						$reg_content = preg_replace_callback($lib_pattern, 'dyna_libs_replace', $reg_content);
 
-                        /* 用修改过的内容替换原来当前区域中内容 */
-                        $source = preg_replace($pattern, $reg_content, $source);
-                    }
-                }
-            }
+						/* 用修改过的内容替换原来当前区域中内容 */
+						$source = preg_replace($pattern, $reg_content, $source);
+					}
+				}
+			}
 
-            /* 在头部加入版本信息 */
-            $source = preg_replace('/<head>/i', "<head>\r\n<meta name=\"Generator\" content=\"" . APPNAME .' ' . VERSION . "\" />",  $source);
+			/* 在头部加入版本信息 */
+			$source = preg_replace('/<head>/i', "<head>\r\n<meta name=\"Generator\" content=\"" . APPNAME .' ' . VERSION . "\" />",  $source);
 
-            /* 修正css路径 */
-            $source = preg_replace('/(<link\shref=["|\'])(?:\.\/|\.\.\/)?(css\/)?([a-z0-9A-Z_]+\.css["|\']\srel=["|\']stylesheet["|\']\stype=["|\']text\/css["|\'])/i','\1' . $tmp_dir . '\2\3', $source);
+			/* 修正css路径 */
+			$source = preg_replace('/(<link\shref=["|\'])(?:\.\/|\.\.\/)?(css\/)?([a-z0-9A-Z_]+\.css["|\']\srel=["|\']stylesheet["|\']\stype=["|\']text\/css["|\'])/i','\1' . $tmp_dir . '\2\3', $source);
 
-            /* 修正js目录下js的路径 */
-            $source = preg_replace('/(<script\s(?:type|language)=["|\']text\/javascript["|\']\ssrc=["|\'])(?:\.\/|\.\.\/)?(js\/[a-z0-9A-Z_\-\.]+\.(?:js|vbs)["|\']><\/script>)/', '\1' . $tmp_dir . '\2', $source);
+			/* 修正js目录下js的路径 */
+			$source = preg_replace('/(<script\s(?:type|language)=["|\']text\/javascript["|\']\ssrc=["|\'])(?:\.\/|\.\.\/)?(js\/[a-z0-9A-Z_\-\.]+\.(?:js|vbs)["|\']><\/script>)/', '\1' . $tmp_dir . '\2', $source);
 
-            /* 更换编译模板的编码类型 */
-            $source = preg_replace('/<meta\shttp-equiv=["|\']Content-Type["|\']\scontent=["|\']text\/html;\scharset=(?:.*?)["|\'][^>]*?>\r?\n?/i', '<meta http-equiv="Content-Type" content="text/html; charset=' . EC_CHARSET . '" />' . "\n", $source);
+			/* 更换编译模板的编码类型 */
+			$source = preg_replace('/<meta\shttp-equiv=["|\']Content-Type["|\']\scontent=["|\']text\/html;\scharset=(?:.*?)["|\'][^>]*?>\r?\n?/i', '<meta http-equiv="Content-Type" content="text/html; charset=' . EC_CHARSET . '" />' . "\n", $source);
 
-        }
+		}
 
-        /**
-         * 处理库文件
-         */
-         elseif ($file_type == '.lbi')
-         {
-            /* 去除meta */
-            $source = preg_replace('/<meta\shttp-equiv=["|\']Content-Type["|\']\scontent=["|\']text\/html;\scharset=(?:.*?)["|\']>\r?\n?/i', '', $source);
-         }
+		/**
+		 * 处理库文件
+		 */
+		 elseif ($file_type == '.lbi')
+		 {
+			/* 去除meta */
+			$source = preg_replace('/<meta\shttp-equiv=["|\']Content-Type["|\']\scontent=["|\']text\/html;\scharset=(?:.*?)["|\']>\r?\n?/i', '', $source);
+		 }
 
-        /* 替换文件编码头部 */
-        if (strpos($source, "\xEF\xBB\xBF") !== FALSE)
-        {
-            $source = str_replace("\xEF\xBB\xBF", '', $source);
-        }
+		/* 替换文件编码头部 */
+		if (strpos($source, "\xEF\xBB\xBF") !== FALSE)
+		{
+			$source = str_replace("\xEF\xBB\xBF", '', $source);
+		}
 
-        $pattern = array(
-            '/<!--[^>|\n]*?({.+?})[^<|{|\n]*?-->/', // 替换smarty注释
-            '/<!--[^<|>|{|\n]*?-->/',               // 替换不换行的html注释
-            '/(href=["|\'])\.\.\/(.*?)(["|\'])/i',  // 替换相对链接
-            '/((?:background|src)\s*=\s*["|\'])(?:\.\/|\.\.\/)?(images\/.*?["|\'])/is', // 在images前加上 $tmp_dir
-            '/((?:background|background-image):\s*?url\()(?:\.\/|\.\.\/)?(images\/)/is', // 在images前加上 $tmp_dir
-            '/([\'|"])\.\.\//is', // 以../开头的路径全部修正为空
-            );
-        $replace = array(
-            '\1',
-            '',
-            '\1\2\3',
-            '\1' . $tmp_dir . '\2',
-            '\1' . $tmp_dir . '\2',
-            '\1'
-            );
-        return preg_replace($pattern, $replace, $source);
+		$pattern = array(
+			'/<!--[^>|\n]*?({.+?})[^<|{|\n]*?-->/', // 替换smarty注释
+			'/<!--[^<|>|{|\n]*?-->/',               // 替换不换行的html注释
+			'/(href=["|\'])\.\.\/(.*?)(["|\'])/i',  // 替换相对链接
+			'/((?:background|src)\s*=\s*["|\'])(?:\.\/|\.\.\/)?(images\/.*?["|\'])/is', // 在images前加上 $tmp_dir
+			'/((?:background|background-image):\s*?url\()(?:\.\/|\.\.\/)?(images\/)/is', // 在images前加上 $tmp_dir
+			'/([\'|"])\.\.\//is', // 以../开头的路径全部修正为空
+			);
+		$replace = array(
+			'\1',
+			'',
+			'\1\2\3',
+			'\1' . $tmp_dir . '\2',
+			'\1' . $tmp_dir . '\2',
+			'\1'
+			);
+		return preg_replace($pattern, $replace, $source);
     }
 
     function insert_mod($name) // 处理动态内容

@@ -223,6 +223,7 @@ function insert_show_div_info($goods_number,$script_name,$goods_id,$goods_recomm
  */
 function insert_ads($arr)
 {
+	
     static $static_res = NULL;
 
     $time = gmtime();
@@ -255,6 +256,7 @@ function insert_ads($arr)
     $ads = array();
     $position_style = '';
 
+		//print_r($sql);
     foreach ($res AS $row)
     {
         if ($row['position_id'] != $arr['id'])

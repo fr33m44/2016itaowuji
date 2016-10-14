@@ -9,7 +9,7 @@
 <meta name="format-detection" content="telephone=no" />
 <link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
 <link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-<link href="{$ectouch_themes}/ectouch.css?v=2011" rel="stylesheet" type="text/css" />
+<link href="{$ectouch_themes}/style.css?v=2011" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="wrapper">

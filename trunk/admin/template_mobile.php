@@ -13,7 +13,7 @@
  * @version:    v2.1
  * ---------------------------------------------
  * $Author: liubo $
- * $Id: template.php 17217 2011-01-19 06:29:08Z liubo $
+ * $Id: template_mobile.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
 define('IN_ECS', true);
@@ -29,7 +29,7 @@ if ($_REQUEST['act'] == 'list')
     admin_priv('template_select');
 
     /* 获得当前的模版的信息 */
-    $curr_template = $_CFG['template_mobile'];
+    $curr_template = $_CFG['touch_template'] ;
     $curr_style = $_CFG['stylename'];
 
     /* 获得可用的模版 */
@@ -56,7 +56,7 @@ if ($_REQUEST['act'] == 'list')
 
     /* 清除不需要的模板设置 */
     $available_code = array();
-    $sql = "DELETE FROM ".$ecs->table('template')." WHERE 1 ";
+    $sql = "DELETE FROM ".$ecs->table('touch_template')." WHERE 1 ";
     foreach ($available_templates AS $tmp)
     {
         $sql .= " AND theme <> '".$tmp['code']."' ";
@@ -95,7 +95,7 @@ if ($_REQUEST['act'] == 'setup')
 {
     admin_priv('template_setup');
 
-    $template_theme = $_CFG['template_mobile'];
+    $template_theme = $_CFG['touch_template'] ;
     $curr_template  = empty($_REQUEST['template_file']) ? 'index' : $_REQUEST['template_file'];
 
     $temp_options   = array();
@@ -152,7 +152,7 @@ if ($_REQUEST['act'] == 'setup')
     $cat_articles = array();
     $ad_positions = array();
 
-    $sql = "SELECT region, library, sort_order, id, number, type FROM ".$ecs->table('template') ." ".
+    $sql = "SELECT region, library, sort_order, id, number, type FROM ".$ecs->table('touch_template') ." ".
            "WHERE theme='$template_theme' AND filename='$curr_template' AND remarks='' ".
            "ORDER BY region, sort_order ASC ";
 
@@ -245,7 +245,7 @@ if ($_REQUEST['act'] == 'setup')
     $smarty->assign('arr_brands',         get_brand_list());
     $smarty->assign('arr_article_cats',   article_cat_list(0, 0, true));
     $smarty->assign('arr_ad_positions',   get_position_list());
-    $smarty->display('template_setup.htm');
+    $smarty->display('template_mobile_setup.htm');
 }
 
 /*------------------------------------------------------ */
@@ -256,8 +256,8 @@ if ($_REQUEST['act'] == 'setting')
 {
     admin_priv('template_setup');
 
-    $curr_template = $_CFG['template_mobile'];
-    $db->query("DELETE FROM " .$ecs->table('template'). " WHERE remarks = '' AND filename = '$_POST[template_file]' AND theme = '$curr_template'");
+    $curr_template = $_CFG['touch_template'] ;
+    $db->query("DELETE FROM " .$ecs->table('touch_template'). " WHERE remarks = '' AND filename = '$_POST[template_file]' AND theme = '$curr_template'");
 
     /* 先处理固定内容 */
     foreach ($_POST['regions'] AS $key => $val)
@@ -265,7 +265,7 @@ if ($_REQUEST['act'] == 'setting')
         $number = isset($_POST['number'][$key]) ? intval($_POST['number'][$key]) : 0;
         if (!in_array($key, $GLOBALS['dyna_libs']) AND (isset($_POST['display'][$key]) AND $_POST['display'][$key] == 1 OR $number > 0))
         {
-            $sql = "INSERT INTO " .$ecs->table('template').
+            $sql = "INSERT INTO " .$ecs->table('touch_template').
                         "(theme, filename, region, library, sort_order, number)".
                     " VALUES ".
                         "('$curr_template', '$_POST[template_file]', '$val', '".$_POST['map'][$key]."', '" . @$_POST['sort_order'][$key] . "', '$number')";
@@ -280,7 +280,7 @@ if ($_REQUEST['act'] == 'setting')
         {
             if ($_POST['categories']['cat_goods'][$key] != '' && intval($_POST['categories']['cat_goods'][$key]) > 0)
             {
-                $sql = "INSERT INTO " .$ecs->table('template'). " (".
+                $sql = "INSERT INTO " .$ecs->table('touch_template'). " (".
                             "theme, filename, region, library, sort_order, type, id, number".
                         ") VALUES (".
                             "'$curr_template', ".
@@ -300,7 +300,7 @@ if ($_REQUEST['act'] == 'setting')
         {
             if ($_POST['brands']['brand_goods'][$key] != '' && intval($_POST['brands']['brand_goods'][$key]) > 0)
             {
-                $sql = "INSERT INTO " .$ecs->table('template'). " (".
+                $sql = "INSERT INTO " .$ecs->table('touch_template'). " (".
                             "theme, filename, region, library, sort_order, type, id, number".
                         ") VALUES (".
                             "'$curr_template', ".
@@ -320,7 +320,7 @@ if ($_REQUEST['act'] == 'setting')
         {
             if ($_POST['article_cat']['cat_articles'][$key] != '' && intval($_POST['article_cat']['cat_articles'][$key]) > 0)
             {
-                $sql = "INSERT INTO " .$ecs->table('template'). " (".
+                $sql = "INSERT INTO " .$ecs->table('touch_template'). " (".
                             "theme, filename, region, library, sort_order, type, id, number".
                         ") VALUES (".
                             "'$curr_template', ".
@@ -340,7 +340,7 @@ if ($_REQUEST['act'] == 'setting')
         {
             if ($_POST['ad_position'][$key] != '' && intval($_POST['ad_position'][$key]) > 0)
             {
-                $sql = "INSERT INTO " .$ecs->table('template'). " (".
+                $sql = "INSERT INTO " .$ecs->table('touch_template'). " (".
                             "theme, filename, region, library, sort_order, type, id, number".
                         ") VALUES (".
                             "'$curr_template', ".
@@ -469,7 +469,7 @@ if ($_REQUEST['act'] == 'setting')
     {
         //clear_tpl_files(false, '.dwt.php'); // 清除对应的编译文件
         clear_cache_files();
-        $lnk[] = array('text' => $_LANG['go_back'], 'href'=>'template.php?act=setup&template_file=' .$_POST['template_file']);
+        $lnk[] = array('text' => $_LANG['go_back'], 'href'=>'template_mobile.php?act=setup&template_file=' .$_POST['template_file']);
         sys_msg($_LANG['setup_success'], 0, $lnk);
     }
     else
@@ -497,7 +497,7 @@ if ($_REQUEST['act'] == 'library')
             include_once(ROOT_PATH . 'plugins/'.$row['code'].'/languages/common_'.$_CFG['lang'].'.php');
         }
     }
-    $curr_template = $_CFG['template_mobile'];
+    $curr_template = $_CFG['touch_template'] ;
     $arr_library   = array();
     $library_path  = '../themes/' . $curr_template . '/library';
     $library_dir   = @opendir($library_path);
@@ -528,7 +528,7 @@ if ($_REQUEST['act'] == 'library')
     $smarty->assign('curr_library', $curr_library);
     $smarty->assign('libraries',    $arr_library);
     $smarty->assign('library_html', $lib['html']);
-    $smarty->display('template_library.htm');
+    $smarty->display('template_mobile_library.htm');
 }
 
 /*------------------------------------------------------ */
@@ -576,7 +576,7 @@ if ($_REQUEST['act'] == 'backup')
 {
     check_authz_json('backup_setting');
     include_once('includes/cls_phpzip.php');
-    $tpl= $_CFG['template_mobile'];
+    $tpl= $_CFG['touch_template'] ;
     //$tpl = trim($_REQUEST['tpl_name']);
 
     $filename = '../temp/backup/' . $tpl . '_' . date('Ymd') . '.zip';
@@ -600,7 +600,7 @@ if ($_REQUEST['act'] == 'backup')
 
 if ($_REQUEST['act'] == 'load_library')
 {
-    $library = load_library($_CFG['template_mobile'], trim($_GET['lib']));
+    $library = load_library($_CFG['touch_template'] , trim($_GET['lib']));
     $message = ($library['mark'] & 7) ? '' : $_LANG['library_not_written'];
 
     make_json_result($library['html'], $message);
@@ -615,20 +615,20 @@ if ($_REQUEST['act'] == 'update_library')
     check_authz_json('library_manage');
 
     $html = stripslashes(json_str_iconv($_POST['html']));
-    $lib_file = '../themes/' . $_CFG['template_mobile'] . '/library/' . $_POST['lib'] . '.lbi';
+    $lib_file = '../themes/' . $_CFG['touch_template']  . '/library/' . $_POST['lib'] . '.lbi';
     $lib_file = str_replace("0xa", '', $lib_file); // 过滤 0xa 非法字符
 
     $org_html = str_replace("\xEF\xBB\xBF", '', file_get_contents($lib_file));
 
     if (@file_exists($lib_file) === true && @file_put_contents($lib_file, $html))
     {
-        @file_put_contents('../temp/backup/library/' . $_CFG['template_mobile'] . '-' . $_POST['lib'] . '.lbi', $org_html);
+        @file_put_contents('../temp/backup/library/' . $_CFG['touch_template']  . '-' . $_POST['lib'] . '.lbi', $org_html);
 
         make_json_result('', $_LANG['update_lib_success']);
     }
     else
     {
-        make_json_error(sprintf($_LANG['update_lib_failed'], 'themes/' . $_CFG['template_mobile'] . '/library'));
+        make_json_error(sprintf($_LANG['update_lib_failed'], 'themes/' . $_CFG['touch_template']  . '/library'));
     }
 }
 
@@ -639,9 +639,9 @@ if ($_REQUEST['act'] == 'restore_library')
 {
     admin_priv('backup_setting');
     $lib_name   = trim($_GET['lib']);
-    $lib_file   = '../themes/' . $_CFG['template_mobile'] . '/library/' . $lib_name . '.lbi';
+    $lib_file   = '../themes/' . $_CFG['touch_template']  . '/library/' . $lib_name . '.lbi';
     $lib_file   = str_replace("0xa", '', $lib_file); // 过滤 0xa 非法字符
-    $lib_backup = '../temp/backup/library/' . $_CFG['template_mobile'] . '-' . $lib_name . '.lbi';
+    $lib_backup = '../temp/backup/library/' . $_CFG['touch_template']  . '-' . $lib_name . '.lbi';
     $lib_backup = str_replace("0xa", '', $lib_backup); // 过滤 0xa 非法字符
 
     if (file_exists($lib_backup) && filemtime($lib_backup) >= filemtime($lib_file))
@@ -662,7 +662,7 @@ if ($_REQUEST['act'] == 'backup_setting')
 {
     admin_priv('backup_setting');
 
-    $sql = "SELECT DISTINCT(remarks) FROM " . $ecs->table('template') . " WHERE theme = '" . $_CFG['template_mobile'] . "' AND remarks > ''";
+    $sql = "SELECT DISTINCT(remarks) FROM " . $ecs->table('touch_template') . " WHERE theme = '" . $_CFG['touch_template']  . "' AND remarks > ''";
     $col = $db->getCol($sql);
     $remarks = array();
     foreach ($col as $val)
@@ -670,7 +670,7 @@ if ($_REQUEST['act'] == 'backup_setting')
         $remarks[] = array('content'=>$val, 'url'=>urlencode($val));
     }
 
-    $sql = "SELECT DISTINCT(filename) FROM " . $ecs->table('template') . " WHERE theme = '" . $_CFG['template_mobile'] . "' AND remarks = ''";
+    $sql = "SELECT DISTINCT(filename) FROM " . $ecs->table('touch_template') . " WHERE theme = '" . $_CFG['touch_template']  . "' AND remarks = ''";
     $col = $db->getCol($sql);
     $files = array();
     foreach ($col as $val)
@@ -698,21 +698,21 @@ if ($_REQUEST['act'] == 'act_backup_setting')
         $files = $_POST['files'];
     }
 
-    $sql = "SELECT COUNT(*) FROM " . $ecs->table('template') . " WHERE remarks='$remarks' AND theme = '" . $_CFG['template_mobile'] . "'";
+    $sql = "SELECT COUNT(*) FROM " . $ecs->table('touch_template') . " WHERE remarks='$remarks' AND theme = '" . $_CFG['touch_template']  . "'";
     if ($db->getOne($sql) > 0)
     {
         sys_msg(sprintf($_LANG['remarks_exist'], $remarks), 1);
     }
 
-    $sql = "INSERT INTO " . $ecs->table('template') .
+    $sql = "INSERT INTO " . $ecs->table('touch_template') .
            " (filename, region, library, sort_order, id, number, type, theme, remarks)".
            " SELECT filename, region, library, sort_order, id, number, type, theme, '$remarks'".
-           " FROM " . $ecs->table('template') .
-           " WHERE remarks = '' AND theme = '" . $_CFG['template_mobile'] . "'".
+           " FROM " . $ecs->table('touch_template') .
+           " WHERE remarks = '' AND theme = '" . $_CFG['touch_template']  . "'".
            " AND " . db_create_in($files, 'filename');
 
     $db->query($sql);
-    sys_msg($_LANG['backup_template_ok'],0,array(array('text'=>$_LANG['backup_setting'], 'href'=>'template.php?act=backup_setting')));
+    sys_msg($_LANG['backup_template_ok'],0,array(array('text'=>$_LANG['backup_setting'], 'href'=>'template_mobile.php?act=backup_setting')));
 }
 
 if ($_REQUEST['act'] == 'del_backup')
@@ -720,10 +720,10 @@ if ($_REQUEST['act'] == 'del_backup')
     $remarks = empty($_GET['remarks']) ? '' : trim($_GET['remarks']);
     if ($remarks)
     {
-        $sql = "DELETE FROM " . $ecs->table('template') . " WHERE remarks='$remarks' AND theme = '" . $_CFG['template_mobile'] . "'";
+        $sql = "DELETE FROM " . $ecs->table('touch_template') . " WHERE remarks='$remarks' AND theme = '" . $_CFG['touch_template']  . "'";
         $db->query($sql);
     }
-    sys_msg($_LANG['del_backup_ok'],0,array(array('text'=>$_LANG['backup_setting'], 'href'=>'template.php?act=backup_setting')));
+    sys_msg($_LANG['del_backup_ok'],0,array(array('text'=>$_LANG['backup_setting'], 'href'=>'template_mobile.php?act=backup_setting')));
 }
 
 if ($_REQUEST['act'] == 'restore_backup')
@@ -732,8 +732,8 @@ if ($_REQUEST['act'] == 'restore_backup')
     if ($remarks)
     {
         $sql = "SELECT filename, region, library, sort_order ".
-               " FROM " . $ecs->table('template').
-               " WHERE remarks='$remarks' AND theme = '" . $_CFG['template_mobile'] . "'".
+               " FROM " . $ecs->table('touch_template').
+               " WHERE remarks='$remarks' AND theme = '" . $_CFG['touch_template']  . "'".
                " ORDER BY filename, region, sort_order";
         $arr = $db->getAll($sql);
         if ($arr)
@@ -741,7 +741,7 @@ if ($_REQUEST['act'] == 'restore_backup')
             $data = array();
             foreach ($arr as $val)
             {
-                $lib_content     = file_get_contents(ROOT_PATH . 'themes/' . $_CFG['template_mobile'] . $val['library']);
+                $lib_content     = file_get_contents(ROOT_PATH . 'themes/' . $_CFG['touch_template']  . $val['library']);
                 //去除lib头部
                 $lib_content     = preg_replace('/<meta\\shttp-equiv=["|\']Content-Type["|\']\\scontent=["|\']text\/html;\\scharset=utf-8"|\']>/i', '', $lib_content);
                 //去除utf bom
@@ -761,7 +761,7 @@ if ($_REQUEST['act'] == 'restore_backup')
             foreach ($data as $file => $regions)
             {
                 $pattern = '/(?:<!--\\s*TemplateBeginEditable\\sname="('. implode('|',array_keys($regions)) .')"\\s*-->)(?:.*?)(?:<!--\\s*TemplateEndEditable\\s*-->)/se';
-                $temple_file = ROOT_PATH . 'themes/' . $_CFG['template_mobile'] . '/' . $file . '.dwt';
+                $temple_file = ROOT_PATH . 'themes/' . $_CFG['touch_template']  . '/' . $file . '.dwt';
                 $template_content = file_get_contents($temple_file);
                 $match = array();
                 $template_content = preg_replace($pattern, "'<!-- TemplateBeginEditable name=\"\\1\" -->\r\n' . \$regions['\\1'] . '\r\n<!-- TemplateEndEditable -->';", $template_content);
@@ -769,19 +769,19 @@ if ($_REQUEST['act'] == 'restore_backup')
             }
 
             /* 文件修改成功后，恢复数据库 */
-            $sql = "DELETE FROM " .$ecs->table('template').
-                   " WHERE remarks = '' AND  theme = '" . $_CFG['template_mobile'] . "'".
+            $sql = "DELETE FROM " .$ecs->table('touch_template').
+                   " WHERE remarks = '' AND  theme = '" . $_CFG['touch_template']  . "'".
                    " AND " . db_create_in(array_keys($data), 'filename');
             $db->query($sql);
-            $sql = "INSERT INTO " . $ecs->table('template') .
+            $sql = "INSERT INTO " . $ecs->table('touch_template') .
                    " (filename, region, library, sort_order, id, number, type, theme, remarks)".
                    " SELECT filename, region, library, sort_order, id, number, type, theme, ''".
-                   " FROM " . $ecs->table('template') .
-                   " WHERE remarks = '$remarks' AND theme = '" . $_CFG['template_mobile'] . "'";
+                   " FROM " . $ecs->table('touch_template') .
+                   " WHERE remarks = '$remarks' AND theme = '" . $_CFG['touch_template']  . "'";
             $db->query($sql);
         }
     }
-    sys_msg($_LANG['restore_backup_ok'],0,array(array('text'=>$_LANG['backup_setting'], 'href'=>'template.php?act=backup_setting')));
+    sys_msg($_LANG['restore_backup_ok'],0,array(array('text'=>$_LANG['backup_setting'], 'href'=>'template_mobile.php?act=backup_setting')));
 }
 
 function array_sort($a, $b)
