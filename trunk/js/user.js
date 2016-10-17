@@ -236,8 +236,15 @@ function userLogin() {
 		alert(msg);
 		return false;
 	}
-	else {
-		return true;
+	Ajax.call( 'user.php?act=act_login', $('#formLogin').serialize(), act_login_callback , 'POST', 'JSON', true, true );
+	return false;
+}
+
+function act_login_callback(res){
+	alert(res.msg);
+	if(res.err == 0)
+	{
+		window.location = 'user.php';
 	}
 }
 
@@ -566,16 +573,16 @@ function register() {
 		msg += qrm_notice + '\n';
 	}
 	
-
-	if (msg.length > 0) {
-		alert(msg);
-		return false;
-	}
-	else {
-		return true;
+	Ajax.call( 'user.php?act=act_register', $('#formUser').serialize(), act_reg_callback , 'POST', 'JSON', true, true );
+	return false;
+}
+function act_reg_callback(res){
+	alert(res.msg);
+	if(res.err == 0)
+	{
+		window.location = 'user.php';
 	}
 }
-
 /* *
  * 用户中心订单保存地址信息
  */

@@ -88,10 +88,6 @@ function register2(){
 		alert(msg_un_length);
 		return false;
 	}
-	/*
-	if (captcha.length == 0) {
-		msg += '验证码不能为空' + '\n';
-	}*/
 	if (password.length == 0) {
 		alert('密码不能为空');
 		return false;
@@ -148,26 +144,12 @@ function register2(){
 		alert(agreement);
 		return false;
 	}
-	/*
-	$.ajax({
-		type: "POST",
-		url: "user.php?act=act_register",
-		data:$('#formUser').serialize(),
-		dataType: "json",
-		async: false,
-		success: function(result){
-			if (result.code!=2){
-				alert(result.msg);
-				status = false;
-			}
-		}
-	});
-	*/
-	Ajax.call( 'user.php?act=act_register', $('#formUser').serialize(), registed_callback , 'POST', 'JSON', true, true );
+	Ajax.call( 'user.php?act=act_register', $('#formUser').serialize(), act_reg_callback , 'POST', 'JSON', true, true );
 	return false;
 }
-function registed_callback(res){
+function act_reg_callback(res){
 	alert(res.msg);
+	document.getElementById("captchaimg").src = 'captcha.php?' + Math.random();
 	if(res.err == 0)
 	{
 		window.location = 'user.php';
