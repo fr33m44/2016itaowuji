@@ -214,7 +214,7 @@ class wechatCallbackapi {
 									$db->query("UPDATE  ecs_users SET `wxch_bd`='ok',`wxid`='$fromUsername' WHERE `user_name`='$ecs_user_name'");
 									$zhanghaoinfo="您的账号：".$ecs_user_name."密码：".$ec_pwd_no;
 								}else{
-									$zhanghaoinfo="自动注册功能未开启！";
+									$zhanghaoinfo="";
 								}
 							} 
 						} 
@@ -652,6 +652,14 @@ class wechatCallbackapi {
 					$this -> universal($fromUsername, $base_url, $keyword);
 					exit;
 				} 
+			} elseif ($keyword == 'lxwm') {
+					$msgType = "text";
+					$contentStr = "重庆季吉世家网络科技有限公司\n地址：重庆市南岸区经开区玉马路18号\n网站：www.itaowuji.com\n客服电话：023-68813252";
+					$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+					echo $resultStr;
+					$this -> insert_wmessage($db, $fromUsername, $contentStr, $time, $belong);
+					$this -> universal($fromUsername, $base_url, $keyword);
+					exit;
 			} elseif ($keyword == 'news') {
 				$thistable = $db -> prefix . 'goods';
 				$query_sql = "SELECT * FROM  `$thistable` WHERE `is_new` = 1 $goods_is ORDER BY sort_order, last_update DESC  LIMIT 0 , 6 ";
@@ -1103,8 +1111,8 @@ nation=大雁塔&mode=driving&region=西安';
 				if(!empty($zhanghaoinfo)){
 					$contentStr .=$zhanghaoinfo;
 				}else{
-					$contentStr .= "您已经注册过！账号是".$user_name."默认密码是:".$user_password;
-					
+					//$contentStr .= "您已经注册过！账号是".$user_name."默认密码是:".$user_password;
+					$contentStr .=$zhanghaoinfo;
 				}
 				$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
 				$this -> insert_wmessage($db, $fromUsername, $contentStr, $time, $belong);
@@ -1566,8 +1574,8 @@ nation=大雁塔&mode=driving&region=西安';
 							if(!empty($zhanghaoinfo)){
 								$contentStr .=$zhanghaoinfo;
 							}else{
-	
-								$contentStr .= "您已经注册过！账号是".$user_name."默认密码是:".$user_password;
+								//$contentStr .= "您已经注册过！账号是".$user_name."默认密码是:".$user_password;
+								$contentStr .=$zhanghaoinfo;
 							}	
 							
 							//增加关注送积分
