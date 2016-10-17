@@ -43,7 +43,7 @@
 			};
 			jQuery.post(url, params,
 					function(data) {
-						if (data.bool) {
+						if (data.err == 0) {
 							location.href = "index.php";
 						} else {
 							$(".showbox").stop(true).animate({
@@ -55,7 +55,7 @@
 								'opacity' : '0'
 							});
 							
-							$("#errorMsg").text(data.error);
+							$("#errorMsg").text(data.msg);
 							$("#errorMsg").show();
 							$('#username').val("");
 							$('#password').val("");

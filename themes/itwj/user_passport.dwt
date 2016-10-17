@@ -44,7 +44,7 @@ window.onload = function() {
 							<p><span>欢迎加入淘五季</span>如果您已有淘五季账号，<a href="user.php?act=login">立即登录</a></p>
 						</div>
 						<div class="coLogin_box" style="width: 582px;margin: 0 0 0 73px;">
-							<form action="user.php" method="post" name="formUser" onsubmit="return register();">
+							<form action="user.php" method="post" name="formUser" id="formUser" onsubmit="return register();">
 								<div class="coLogin_one">
 									<p>{$lang.label_username}：</p>
 									<div class="coLoginTxt" style="width:245px;">
@@ -241,7 +241,7 @@ window.onload = function() {
 						</script>
 					<div class="usBox">
 						<div class="usBox_2 clearfix">
-							<form action="user.php" method="post" name="formUser" onsubmit="return submitPwdInfo();">
+							<form action="user.php" method="post" name="formUser" id="formUser" onsubmit="return submitPwdInfo();">
 								<br />
 								<table width="70%" border="0" align="center">
 									<tr>

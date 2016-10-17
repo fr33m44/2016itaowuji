@@ -11,8 +11,7 @@
 <link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 <link href="{$ectouch_themes}/style.css" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
-{insert_scripts files='transport.js,common.js,user.js'}
-<script type="text/javascript" src="{$ectouch_themes}/js/jquery-1.4.4.min.js"></script>
+{insert_scripts files='transport.js,common.js,user.js,jquery-1.4.4.min.js'}
 </head>
 <body>
 <!-- *用户中心默认显示页面 start--> 

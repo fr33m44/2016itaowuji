@@ -11,9 +11,7 @@
 <link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 <link href="{$ectouch_themes}/style.css" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
-{insert_scripts files='common.js,transport.js,user.js,region.js'}
-<script type="text/javascript" src="{$ectouch_themes}/js/jquery-1.4.4.min.js"></script>
-{insert_scripts files='utils.js'}
+{insert_scripts files='jquery-1.4.4.min.js,jquery.json.js,common.js,transport.js,user.js,region.js,utils.js'}
 <script type="text/javascript">
   region.isAdmin = false;
 </script>
@@ -27,6 +25,10 @@
 {foreach from=$lang.password_js item=item key=key}
   var {$key} = "{$item}";
 {/foreach}
+window.onload = function() {
+	//refresh captcha
+	document.getElementById("captchaimg").src = 'captcha.php?' + Math.random();
+};
 </script>
 <div id="page">
   <header id="header">
@@ -49,7 +51,7 @@
           <div class="table_box">
             <dl>
               <dd class="first"><label for="username">用户名</label></dd>
-			  <dd class="second"><input placeholder="建议使用真实姓名" class="inputBg" name="username" id="username" type="text" /></dd>
+		   <dd class="second"><input placeholder="建议使用真实姓名" class="inputBg" name="username" id="username" type="text" /></dd>
             </dl>
             <dl>
               <dd class="first"><label for="password">密码</label></dd>
@@ -110,7 +112,7 @@
 		  <dl>
               <dd class="first"><label for="captcha">验证码</label></dd>
 		    <dd class="second">
-			<input placeholder="请输入右图中的验证码" class="inputBg" name="captcha" id="captcha" type="text" />
+			<input placeholder="请输入下图中的验证码" class="inputBg" name="captcha" id="captcha" type="text" />
 		    </dd>
             </dl>
 		  <dl>
@@ -178,7 +180,7 @@
     <div class="bd">
       <ul>
         <div class="table_box">
-          <form name="formLogin" action="user.php" method="post" onSubmit="return userLogin()">
+          <form name="formLogin" id="formLogin" action="user.php" method="post" onSubmit="return userLogin()">
             <dl>
               <dd class="first"><label for="username">用户名</label></dd>
 			  <dd class="second"><input placeholder="建议使用真实姓名" class="inputBg" name="username" id="username" type="text" /></dd>
@@ -222,7 +224,11 @@
     {foreach from=$lang.password_js item=item key=key}
       var {$key} = "{$item}";
     {/foreach}
-    </script>
+	window.onload = function() {
+		//refresh captcha
+		document.getElementById("captchaimg").src = 'captcha.php?' + Math.random();
+	};
+</script>
 <div id="page">
   <header id="header">
     <div class="header_l"> <a class="ico_10" onClick="javascript:history.back();"> 返回 </a> </div>
@@ -235,61 +241,53 @@
     </div>
     <div id="tabBox1-bd"><!-- 添加id，js用到 -->
       <ul>
-      	<!--{if $enabled_sms_signin eq 1} 支持手机短信功能-->
-      	<form  action="user.php" method="post" name="getPassword" onSubmit="return submitForget();">
+      	<form  action="user.php" method="post" name="formUser" id="formUser" onSubmit="return submitPwdInfo();">
           <input type="hidden" name="flag" id="flag" value="forget" />
           <div class="table_box">
-			<dl>
+		  <dl>
+              <dd class="first"><label for="mobile">手机</label></dd>
+			  <dd class="second"><input placeholder="请输入手机号码" class="inputBg" name="mobile" id="mobile" type="text" /></dd>
+            </dl>
+		  <dl>
+              <dd class="first"><label for="captcha">验证码</label></dd>
+		    <dd class="second">
+			<input placeholder="请输入下图中的验证码" class="inputBg" name="captcha" id="captcha" type="text" />
+		    </dd>
+            </dl>
+		  <dl>
+              <dd class="first"><label for="captcha">&nbsp;</label></dd>
+		    <dd class="second">
+			<img src="captcha.php?{$rand}" id="captchaimg" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='captcha.php?'+Math.random()" />
+		    </dd>
+            </dl>
+            <dl>
               <dd class="first">&nbsp;</dd>
-			  <dd class="second"><input placeholder="请输入手机号码" class="inputBg" name="mobile" id="mobile_phone" type="text" />
-              </dd>
+              <dd class="second">
+			  <input id="get_qrm_btn" name="get_qrm_btn" type="button" value="获取手机确认码" onClick="get_qrm(document.forms['formUser'].elements['mobile'].value,1)" class="c-btn3" />
+			  </dd>
             </dl>
             <dl>
-              <dd>
-                <input placeholder="请输入验证码" class="inputBg" name="mobile_code" id="mobile_code" type="text" />
-              </dd>
-              <dd>
-              <input id="zphone" name="sendsms" type="button" value="获取手机验证码" onClick="sendSms();" class="c-btn3" />
-              </dd>
+              <dd class="first"><label for="qrm">手机确认码</label></dd>
+              <dd class="second">
+			  <input placeholder="请输入手机确认码" class="inputBg" name="qrm" id="qrm" type="text" />
+			  </dd>
             </dl>
             <dl>
-              <dd>
-                <input name="act" type="hidden" value="send_pwd_sms" />
-                <input name="Submit" type="submit" value="{$lang.submit}" class="c-btn3" />
-              </dd>
+              <dd class="first">&nbsp;</dd>
+              <dd class="second">
+			  <input value="提交" class="c-btn3" name="submit" id="submit" type="submit"  />
+			  <input name="act" value="send_pwd_mobile" type="hidden" >
+			  </dd>
             </dl>
           </div>
         </form>
-        <!--{else}-->
-        <form action="user.php" method="post" name="getPassword" onsubmit="return submitPwdInfo();">
-          <div class="table_box">
-            <dl>
-              <dd>
-                <input placeholder="{$lang.username}" class="inputBg" name="user_name" type="text" />
-              </dd>
-            </dl>
-            <dl>
-              <dd>
-                <input placeholder="{$lang.email}" class="inputBg" name="email" type="text" />
-              </dd>
-            </dl>
-            <dl>
-              <dd>
-                <input name="act" type="hidden" value="send_pwd_email" />
-                <input name="Submit" type="submit" value="{$lang.submit}" class="c-btn3" />
-              </dd>
-            </dl>
-          </div>
-        <br />
-      </form>
-        <!--{/if}-->
       </ul>
     </div>
   </div>
 </section>
 <!--{/if}--> 
 <!--#找回密码界面 end-->
-<script type="text/javascript" src="{$ectouch_themes}/js/sms.js"></script>
+{insert_scripts files='sms.js'}
 
 <script type="text/javascript">
 var process_request = "{$lang.process_request}";
