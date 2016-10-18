@@ -61,7 +61,7 @@
     </div>
 </div>
 <!--全局导航-End-->
-<script type="text/javascript" src="{$ectouch_themes}/js/zepto.min.js?v=20140408"></script>
+{insert_scripts files='zepto.min.js'}
 <script type="text/javascript">
 Zepto(function($){
    var $nav = $('.global-nav'), $btnLogo = $('.global-nav__operate-wrap');

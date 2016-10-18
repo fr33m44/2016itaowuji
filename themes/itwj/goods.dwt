@@ -135,7 +135,7 @@ $(function(){
                     <!-- {elseif $item.type eq "group_buy"} --> 
                     <a href="group_buy.php" title="{$lang.group_buy}" style="font-weight:100; color:#FF4560; text-decoration:none;">[{$lang.group_buy}]</a> 
                     <!-- {elseif $item.type eq "auction"} --> 
-                  <a href="auction.php" title="{$lang.auction}" style="font-weight:100; color:#FF4560; text-decoration:none;">[{$lang.auction}]</a>  
+                    <a href="auction.php" title="{$lang.auction}" style="font-weight:100; color:#FF4560; text-decoration:none;">[{$lang.auction}]</a>  
                     <!-- {elseif $item.type eq "favourable"} --> 
                     <a href="activity.php" title="{$lang.favourable}" style="font-weight:100; color:#FF4560; text-decoration:none;">[{$lang.favourable}]</a>
                     <!-- {/if} --> 
@@ -179,11 +179,10 @@ $(function(){
                   <p> {$lang.promote_price}<span style="color:#ff4560;font-size:1.2em;font-weight:bolder">{$goods.promote_price}</span>
                     {$lang.residual_time} <span style="color:#ff4560" id="leftTime">{$lang.please_waiting}</span> </p>
                   <!--{/if}-->
-				  
-                  <b>
+				   
 				
-                <!-- {foreach from=$specification item=spec key=spec_key} --> </b> 
-                <p class="catt" >
+                <!-- {foreach from=$specification item=spec key=spec_key} -->  
+                <p>
                 {$spec.name}：
               
                     <!-- {* 判断属性是复选还是单选 *} --> 
@@ -192,7 +191,7 @@ $(function(){
                     
                       <!-- {foreach from=$spec.values item=value key=key} --> 
                        
-                      <a style="text-decoration:none" {if $key eq 0}class="cattsel"{/if} ref="javascript:;" name="{$value.id}" title="[{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]">{$value.label} 
+                      <span style="text-decoration:none" class="spec_value attr_val" name="{$value.id}">{$value.label}</span>
                       
                       <!-- {/foreach} --> 
                    

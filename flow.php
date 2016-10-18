@@ -20,7 +20,6 @@ if ($_SESSION['user_id'] <= 0)
 /* 载入语言文件 */
 require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/user.php');
 require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/shopping_flow.php');
-require_once(ROOT_PATH . 'languages/' .$_CFG['lang']. '/admin/affiliate_ck.php');
 
 /*------------------------------------------------------ */
 //-- INPUT
@@ -55,7 +54,6 @@ if ($_REQUEST['step'] == 'add_to_cart')
     include_once('includes/cls_json.php');
     $_POST['goods']=strip_tags(urldecode($_POST['goods']));
     $_POST['goods'] = json_str_iconv($_POST['goods']);
-
     if (!empty($_REQUEST['goods_id']) && empty($_POST['goods']))
     {
         if (!is_numeric($_REQUEST['goods_id']) || intval($_REQUEST['goods_id']) <= 0)
@@ -71,7 +69,7 @@ if ($_REQUEST['step'] == 'add_to_cart')
 
     if (empty($_POST['goods']))
     {
-        $result['error'] = 1;
+        $result['error'] = 2;
         die($json->encode($result));
     }
 
@@ -123,12 +121,45 @@ if ($_REQUEST['step'] == 'add_to_cart')
     {
         clear_cart();
     }
-
+	//增加检查属性库存是否充足，不足的话返回错误
+	//有属性传入时，判断属性库存
+	
+	if (!empty($goods->spec))
+    {
+	$goods_attr_id=$goods->spec;
+	$new_goods_attr_id=array();
+	foreach($goods_attr_id as $key=>$value){
+		
+		$sql = "SELECT *".
+        ' FROM ' . $GLOBALS['ecs']->table('goods_attr') . ' AS g ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('attribute') . ' AS a ON a.attr_id = g.attr_id ' .
+        "WHERE g.goods_attr_id = '" . $value . "'  AND a.attr_type = 1";
+        $sql_info = $GLOBALS['db']->getAll($sql);
+		if(!empty($sql_info)){
+		
+			$new_goods_attr_id[]=$value;
+		}
+	}
+	$goods_attr_id=implode('|', $new_goods_attr_id);
+	$sql = "SELECT product_number ".
+        'FROM ' . $GLOBALS['ecs']->table('products').
+        "WHERE goods_attr = '" . $goods_attr_id . "'";
+    $goods_number = $GLOBALS['db']->getOne($sql);
+	if ($goods_number==0)
+    {
+        $result['error']   = 3;
+        $result['message'] = "库存不足，请重新选择商品";
+		die($json->encode($result));
+    }
+	
+	}
     /* 检查：商品数量是否合法 */
     if (!is_numeric($goods->number) || intval($goods->number) <= 0)
     {
-        $result['error']   = 1;
+        $result['error']   = 4;
         $result['message'] = $_LANG['invalid_number'];
+		
+		die($json->encode($result));
     }
     /* 更新：购物车 */
     else
@@ -147,6 +178,7 @@ if ($_REQUEST['step'] == 'add_to_cart')
 
             $result['content'] = insert_cart_info();
             $result['one_step_buy'] = $_CFG['one_step_buy'];
+			$result['cart_number'] = insert_cart_info_number();
         }
         else
         {
@@ -2791,49 +2823,6 @@ else
 
     /* 取得商品列表，计算合计 */
     $cart_goods = get_cart_goods();
-
-	foreach($cart_goods['goods_list'] as $key =>$goods)
-	{
-		$properties = get_goods_properties($goods['goods_id']);
-		foreach($properties['pro'] as $key1 => $prop)
-		{
-			foreach($prop as $key2=>$prop2)
-			{
-				if($prop2['name'] == '规格')
-				{
-					$pkg_num = substr($prop2['value'],2);
-					break;
-				}
-			}
-		}
-		$spec = explode(',',$cart_goods['goods_list'][$key]['goods_attr_id']);
-		
-		$rec_id = intval($goods['rec_id']);
-		$sql = "select goods_id from ".$ecs->table("cart")." where rec_id=$rec_id";
-		$goods_id = $db->getOne($sql);
-		
-		$spec_str = $_REQUEST["spec_str"];
-		$spec_arr = explode("_", $spec_str);
-		$size = $spec_arr[0];
-		$color = $spec_arr[1];
-		$cup = $spec_arr[2];
-		
-		$sql = "select goods_type from ".$ecs->table("goods")." where goods_id=$goods_id";
-		$goods_type = $db->getOne($sql);
-		if($goods_type == 13)
-		{ 
-			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=".$goods['goods_id']." and cup=$spec[2] and size=$spec[0] and color=$spec[1]";
-		}
-		else
-		{
-			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=".$goods['goods_id']." and size=$spec[0] and color=$spec[1]";
-		}
-		$stock = $db->getOne($sql);
-		$cart_goods['goods_list'][$key]['pkg_num'] = $pkg_num;
-		$cart_goods['goods_list'][$key]['stock'] = $stock;
-		$cart_goods['goods_list'][$key]['attr'] = str_replace(',','_', $cart_goods['goods_list'][$key]['goods_attr_id']);
-		
-	}
     $smarty->assign('goods_list', $cart_goods['goods_list']);
     $smarty->assign('total', $cart_goods['total']);
 	
@@ -2883,6 +2872,9 @@ else
     $fittings_list = get_goods_fittings($parent_list);
 
     $smarty->assign('fittings_list', $fittings_list);
+    
+    //新增购物来路链接，用于返回跳转 by carson 20140425
+    $smarty->assign('jump_http_referer', $_SERVER["HTTP_REFERER"]);
 }
 
 $smarty->assign('currency_format', $_CFG['currency_format']);

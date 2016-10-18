@@ -12,7 +12,7 @@
  * $Author: liubo $
  * $Id: calendar.php 17217 2011-01-19 06:29:08Z liubo $
 */
-define('IN_ECS', true);
+define('IN_ECTOUCH', true);
 
 $lang = (!empty($_GET['lang'])) ? trim($_GET['lang']) : 'zh_cn';
 

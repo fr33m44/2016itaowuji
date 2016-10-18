@@ -11,11 +11,7 @@
 <link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 <link href="{$ectouch_themes}/style.css?id=12" rel="stylesheet" type="text/css" />
 {* 包含脚本文件 *}
-{insert_scripts files='common.js,shopping_flow.js'}
-{insert_scripts files='transport.js,utils.js'}
-<script type="text/javascript" src="{$ectouch_themes}/js/TouchSlide.js"></script>
-<script type="text/javascript" src="{$ectouch_themes}/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="{$ectouch_themes}/js/ectouch.js"></script>
+{insert_scripts files='common.js,shopping_flow.js,transport.js,utils.js,jquery-1.4.4.min.js,jquery.json.js,ectouch.js'}
 </head>
 
 <body>
