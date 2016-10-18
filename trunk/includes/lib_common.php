@@ -2374,13 +2374,13 @@ function sort_goods_attr_id_array($goods_attr_id_array, $sort = 'asc')
     }
 
     //重新排序
-    $sql = "SELECT a.attr_type, v.attr_value, v.goods_attr_id
+    $sql = "SELECT a.sort_order, a.attr_type, v.attr_value, v.goods_attr_id
             FROM " .$GLOBALS['ecs']->table('attribute'). " AS a
             LEFT JOIN " .$GLOBALS['ecs']->table('goods_attr'). " AS v
                 ON v.attr_id = a.attr_id
                 AND a.attr_type = 1
             WHERE v.goods_attr_id " . db_create_in($goods_attr_id_array) . "
-            ORDER BY a.attr_id $sort";
+            ORDER BY a.sort_order $sort";
     $row = $GLOBALS['db']->GetAll($sql);
 
     $return_arr = array();

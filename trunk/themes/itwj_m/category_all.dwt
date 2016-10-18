@@ -48,7 +48,8 @@
     <!--{/foreach}-->
   </ul>
 </div>
-<script type="text/javascript" src="{$ectouch_themes}/js/zepto.min.js"></script> 
+{insert_scripts files='zepto.min.js'}
+
 <script type="text/javascript">
 /*头部搜索点击关闭或者弹出搜索框*/  
 function showSearch( ){

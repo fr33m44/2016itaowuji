@@ -780,7 +780,11 @@ margin-left: 0.2rem; float:right;
 -o-transform: rotate(-45deg);
 top:0.4rem;
 }
-
+.goodsInfo .spec_value{
+	padding: 3px 6px;
+	margin-left: 2px;
+	border: #ccc solid 1px;
+}
 #s-action{background-color:#f0f0f0;border:0;display:-webkit-box;display:-ms-flexbox;display:flex;position:relative;padding:10px;padding-right:50px}#s-action.float{position:fixed;left:0;right:0;bottom:0;background-color:#fff}#s-action button,#s-action .countdown{-webkit-box-flex:1;-ms-flex:1;flex:1;flex-basis:auto;display:block;flex-basis:1px}#s-action .buy{border:1px solid;-webkit-border-radius:.5em;border-radius:.5em;padding:.8em;font-size:.9rem;min-width:7em;border-color:#fb6878;background-color:#fff0f0;color:#c40000;margin-right:10px}#s-action .buy:disabled{background-color:#999;border-color:#999;color:#fff}#s-action .countdown{display:none;height:.4rem;line-height:.4rem}#s-action .countdown .label{color:#999}#s-action .countdown .time{padding:0 0 0 .03rem;color:#c40000}#s-action .countdown .num{font-weight:400}#s-action .cart{border:1px solid;-webkit-border-radius:.5em;border-radius:.5em;padding:.8em;font-size:0.9rem;min-width:7em;border-color:#c40000;background-color:#c40000;color:#fff}#s-action .chaoshiCart{border:1px solid;-webkit-border-radius:.5em;border-radius:.5em;padding:.8em;font-size:.14rem;min-width:7em;border-color:#c40000;background-color:#c40000;color:#fff}#s-action .chaoshiCart.shorter{margin-left:50px}#s-action .cart-link{position:absolute;width:20px;height:20px;background:url("images/guc.png") no-repeat 50% 50%;background-size:20px;right:20px;top:50%;margin-top:-10px}#s-action .cart-link i{color:#fff;-webkit-border-radius:1em;border-radius:1em;padding:0 .4em;-webkit-box-sizing:border-box;box-sizing:border-box;background-color:#000;position:absolute;top:-10px;left:14px;line-height:1.5;min-width:1.5em;height:1.5em;-webkit-transform:scale(0.7);-webkit-transform-origin:left bottom;text-align:center}#s-action .cart-link i::after{content:"\20";position:absolute;left:0;bottom:0;border:5px solid #000;border-color:transparent transparent #000 #000}
 
 /* 购买模块 */
