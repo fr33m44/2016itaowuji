@@ -592,7 +592,19 @@ function get_goods_info($goods_id)
             "WHERE g.goods_id = '$goods_id' AND g.is_delete = 0 " .
             "GROUP BY g.goods_id";
     $row = $GLOBALS['db']->getRow($sql);
-
+	
+	/* 查询该商品的实际销量 */
+    $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
+        'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
+            $GLOBALS['ecs']->table('order_goods') . ' AS g ' .
+        "WHERE o.order_id = g.order_id " .
+        "AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
+        " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
+        " AND g.goods_id = '$goods_id'" ;
+    $sales_count = $GLOBALS['db']->getOne($sql);
+	$row['sales_volume_total'] =  $row['sales_volume_base'] + $sales_count;
+	/* 累计销量 = 自定义销量基数 + 实际销量 */
+	/*济南五铢电子商务修改开发*/
     if ($row !== false)
     {
         /* 用户评论级别取整 */

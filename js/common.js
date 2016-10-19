@@ -329,11 +329,18 @@ function getSelectedAttributes(formBuy)
 	for (i = 0; i < formBuy.elements.length; i++)
 	{
 		var prefix = formBuy.elements[i].name.substr(0, 5);
-		if (prefix == 'spec_' && (
-				((formBuy.elements[i].type == 'radio' || formBuy.elements[i].type == 'checkbox') && formBuy.elements[i].checked) || formBuy.elements[i].tagName == 'SELECT'))
+		//mobile
+		if (prefix == 'spec_' && (((formBuy.elements[i].type == 'radio' || formBuy.elements[i].type == 'checkbox') && formBuy.elements[i].checked) || formBuy.elements[i].tagName == 'SELECT'))
 		{
 			spec_arr[j] = formBuy.elements[i].value;
 			j++;
+		}
+		//pc
+		if (prefix == 'spec_' && formBuy.elements[i].type == 'text' && formBuy.elements[i].value > 0 )
+		{
+		  idarr = formBuy.elements[i].name.substr(5).split("_");
+		  spec_arr.push({number:formBuy.elements[i].value, specs:idarr});
+		 
 		}
 	}
 	return spec_arr;

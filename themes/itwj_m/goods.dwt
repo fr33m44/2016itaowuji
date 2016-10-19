@@ -219,7 +219,7 @@ function showPic(){
 	<!-- {if $spec.attr_type eq 1} -->
 		<!-- {if $cfg.goodsattr_style eq 1} -->
 			<!-- {foreach from=$spec.values item=value key=key} -->
-			<a style="text-decoration:none" {if $key eq 0}class="cattsel" {/if} ref="javascript:;" name="{$value.id}" title="[{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]">{$value.label} 
+		<span class="spec_value attr_val">{$value.label} </span>
 			<!-- {/foreach} -->
 		<!-- {else} -->
 		<span class="spec_values attr_val" name="spec_{$spec_key}">
@@ -247,7 +247,7 @@ function showPic(){
 	<!-- hjq 商品属性end -->
 </ul>
 <ul>
-	<li>月销量：{$goods.sales_volume_total}件</li>
+	<!--<li>月销量：{$goods.sales_volume_total}件</li>-->
 </ul>
 </section>
 <!--商品参数 begin-->
@@ -265,9 +265,6 @@ function showPic(){
 		<div class="fields" style="display: block;">
 			<ul class="ul1">
 				<li>{$lang.amount}：<font id="ECS_GOODS_AMOUNT" class="price"></font></li>
-				<li>
-				<!--推荐功能-->
-				</li>
 			</ul>
 			<ul class="ul2">
 				<!-- {* 开始循环所有可选属性 *} -->
@@ -351,7 +348,7 @@ function showPic(){
 					</div>
 				</div>
 				<div class="popbtn">
-					<a class="bnt1 flex_in radius5" onclick="closeDiv()" href="javascript:void(0);">继续购物</a><a class="bnt2 flex_in radius5" href="flow.php">去结算</a>
+					<a class="bnt1 flex_in radius5" onclick="closeDiv()" href="javascript:void(0);">继续进货</a><a class="bnt2 flex_in radius5" href="flow.php">去结算</a>
 				</div>
 			</div>
 			<!--弹出层 E-->
