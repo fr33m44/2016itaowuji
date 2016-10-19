@@ -2123,8 +2123,7 @@ function license_info()
         }
         $url_domain=url_domain();
         $host = 'http://' . $host .$url_domain ;
-        $license = '<a href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=' . urlencode($host) . '" target="_blank"
->&nbsp;&nbsp;Licensed</a>';
+        $license = '';
         return $license;
     }
     else

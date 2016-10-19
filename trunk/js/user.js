@@ -244,7 +244,7 @@ function act_login_callback(res){
 	alert(res.msg);
 	if(res.err == 0)
 	{
-		window.location = 'user.php';
+		window.location = 'index.php';
 	}
 }
 

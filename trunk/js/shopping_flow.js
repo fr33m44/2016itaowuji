@@ -550,12 +550,6 @@ function checkConsignee(frm)
 	var msg = new Array();
 	var err = false;
 
-	if (frm.elements['country'] && frm.elements['country'].value == 0)
-	{
-		msg.push(country_not_null);
-		err = true;
-	}
-
 	if (frm.elements['province'] && frm.elements['province'].value == 0 && frm.elements['province'].length > 1)
 	{
 		err = true;
