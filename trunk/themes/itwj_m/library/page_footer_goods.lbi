@@ -44,7 +44,7 @@
         <div class="global-nav__nav-item">
             <a href="flow.php?step=cart" class="global-nav__nav-link">
                 <i class="global-nav__iconfont global-nav__icon-shop-cart">&#xf0004;</i>
-                <span class="global-nav__nav-tit">购物车</span>
+                <span class="global-nav__nav-tit">进货单</span>
                 <span class="global-nav__nav-shop-cart-num" id="carId">{insert name='cart_info_number'}</span>
             </a>
         </div>
