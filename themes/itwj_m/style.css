@@ -930,7 +930,7 @@ border-radius:5px;}
 
 /* 购物车商品列表 */
 .itemlist{ padding:0.8rem 0;    border:1px solid #ddd; background:#FFF}
-.itemlist li{ padding:0.9rem  ;position:relative; border-bottom:1px solid #ddd  }
+.itemlist li{ padding:0.2rem  ;position:relative; border-bottom:1px solid #ddd  }
 .itemlist li h4{ padding-right:2rem; height:2.2rem; line-height:1.1rem; overflow:hidden}
 .itemlist li .b{   line-height:2.2rem; }
 .itemlist li .b .cha{ 
@@ -1000,7 +1000,7 @@ background-size:2.4rem 0.4rem;}
 .table_box2 .dd1{ width:28%; vertical-align:middle;}
 .table_box2 .dd2{ color:#999; font-size:0.8rem; text-align:left; width:90%; height:2.5rem; line-height: normal; vertical-align:middle; border:none}
 .table_box2 .dl_box p{ line-height:36px;}
-.table_box2  input{ color:#999;  text-align:left; width:90%; border:none; background:#fff ; padding:0; height:24px;  }
+.table_box2  input{ color:#999;  text-align:left; width:60%; border:1px solid #ddd; background:#fff ; padding:0; height:24px;  }
 .table_box2  input.radio{width:auto;}
 display: inline-block;
 height: 24px;

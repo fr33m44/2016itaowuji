@@ -34,6 +34,18 @@
   {foreach from=$lang.password_js item=item key=key}
     var {$key} = "{$item}";
   {/foreach}
+  function delcart(rec_id)
+  {
+	  Ajax.call('flow.php?step=drop_goods', 'id=' + rec_id, delete_cart_response, 'GET', 'JSON', true, true);
+  }
+  function delete_cart_response(res)
+  {
+	  rec_arr = res.msg.split(',');
+	  for(var i=0;i<rec_arr.length && rec_arr[i].length != 0;i++)
+	  {
+		  document.getElementById("tr_goods_"+rec_arr[i]).parentElement.removeChild(document.getElementById("tr_goods_"+rec_arr[i]));
+	  }
+  }
   $("document").ready(function(){
 	  $(".del_cart_btn").click(function(){
 		  var formCart = document.forms['formCart'];
@@ -45,8 +57,10 @@
 				  rec_ids += formCart.elements[i].id.substr(4)+ ',';
 			  }
 		  }
-		  Ajax.call('flow.php?step=drop_goods', 'id=' + rec_ids, delete_cart_response, 'GET', 'TEXT', false, true);
-		  window.location.href='flow.php';
+		  if(rec_ids != '')
+		  {
+			  Ajax.call('flow.php?step=drop_goods', 'id=' + rec_ids, delete_cart_response, 'GET', 'JSON', true, true);
+		  }
 	  });
 	  $("#chkall").click(function(){
 		  var formCart = document.forms['formCart'];
@@ -72,9 +86,6 @@
 		  
 	  });
   });
-  function delete_cart_response(result)
-  {
-  }
   </script>
   
 <Div class="nstep_products ">
@@ -149,10 +160,8 @@
               </td>
               <td align="center" id="goods_subtotal_{$goods.rec_id}" class="chkprice ">{$goods.subtotal}</td>
               <td align="center">
-                <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='flow.php?step=drop_goods&amp;id={$goods.rec_id}'; " class="chkprice ">{$lang.drop}</a>
-                <!-- {if $smarty.session.user_id gt 0 && $goods.extension_code neq 'package_buy'} 如果登录了，可以加入收藏 -->
-             <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='flow.php?step=drop_to_collect&amp;id={$goods.rec_id}'; " class="chkprice ">收藏</a>
-                <!-- {/if} -->            </td>
+                <a class="chkprice" href="javscript:;" onclick="delcart({$goods.rec_id})">{$lang.drop}</a>
+			</td>
             </tr>
             <!-- {/foreach} -->
           </table>

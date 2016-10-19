@@ -26,6 +26,36 @@
 <!-- 购物车内容 --> 
 {* 包含脚本文件 *}
   {insert_scripts files='showdiv.js'} 
+      {insert_scripts files='transport.js'} 
+			<script>
+        function changenum(rec_id,diff){
+					var num = parseInt(document.getElementById('goods_number_'+rec_id).value);
+					var goods_number = num + Number(diff);
+					if( goods_number >= 1){
+						document.getElementById('goods_number_'+rec_id).value = goods_number;//更新数量
+						change_goods_number(rec_id,goods_number);
+					}
+        }
+        
+        function change_goods_number(rec_id, goods_number)
+        {   
+        Ajax.call('flow.php?step=ajax_update_cart', 'rec_id=' + rec_id +'&goods_number=' + goods_number, change_goods_number_response, 'POST','JSON');  
+        } 
+        
+        function change_goods_number_response(result)
+        {    
+          if (result.error == 0)
+          {
+          var rec_id = result.rec_id;
+            document.getElementById('goods_subtotal').innerHTML = result.goods_subtotal;//更新小计
+            
+        }
+        else if (result.message != '')
+          {
+          alert(result.message);
+          }                
+        }
+      </script>
 <script type="text/javascript">
   {foreach from=$lang.password_js item=item key=key}
     var {$key} = "{$item}";
@@ -77,40 +107,6 @@
             <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
             <input class="num" type="text" min="1" max="1000" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="4"   onkeyup="changenum({$goods.rec_id},0)"/>
 			<button type="button" class="increase" onclick="changenum({$goods.rec_id},1)">+</button>
-            {insert_scripts files='transport.js'} 
-			<script>
-        function changenum(rec_id,diff){
-					var num = parseInt(document.getElementById('goods_number_'+rec_id).value);
-					var goods_number = num + Number(diff);
-					if( goods_number >= 1){
-						document.getElementById('goods_number_'+rec_id).value = goods_number;//更新数量
-						change_goods_number(rec_id,goods_number);
-					}
-        }
-        
-        function change_goods_number(rec_id, goods_number)
-        {   
-        Ajax.call('flow.php?step=ajax_update_cart', 'rec_id=' + rec_id +'&goods_number=' + goods_number, change_goods_number_response, 'POST','JSON');  
-        } 
-        
-        function change_goods_number_response(result)
-        {    
-          if (result.error == 0)
-          {
-          var rec_id = result.rec_id;
-            document.getElementById('total_number').innerHTML = result.total_number;//更新数量
-            document.getElementById('goods_subtotal').innerHTML = result.total_desc;//更新小计
-            if (document.getElementById('ECS_CARTINFO'))
-              {//更新购物车数量
-              document.getElementById('ECS_CARTINFO').innerHTML = result.cart_info;
-              }
-        }
-        else if (result.message != '')
-          {
-          alert(result.message);
-          }                
-        }
-      </script>
             <!-- {else} --> 
             {$goods.goods_number} 
             <!-- {/if} --> 
@@ -178,7 +174,7 @@
 </section>
 <footer class="toolbar">
   <p>合计: <em class="price" id="goods_subtotal">{$total.goods_price}</em></p>
-  <a href="flow.php?step=checkout">结算(<em class="num" id="total_number">{$total.total_number}</em>)</a> </footer>
+  <a href="flow.php?step=checkout">结算(<em class="num" id="total_number">{$total.real_goods_count}</em>)</a> </footer>
 <!-- {else} -->
 <section class="wrap"  >
   <div class="empty-cart">
@@ -272,7 +268,7 @@
   <section class="order_box padd1 radius10" style="padding-top:0;padding-bottom:0;">
     <div class="table_box2 table_box">
       <form style="padding:8px;" action="flow.php" method="post" name="theForm" id="theForm" onSubmit="return checkConsignee(this)">
-        <!-- #BeginLibraryItem "/Library/consignee.lbi" --><!-- #EndLibraryItem -->
+        <!-- #BeginLibraryItem "/library/consignee.lbi" --><!-- #EndLibraryItem -->
       </form>
     </div>
   </section>
@@ -286,7 +282,8 @@
 
 <!-- {if $step eq "checkout"} 开始订单确认界面 -->
 <script>
- onload = function() {  
+ onload = function() {
+ var oRadioValue;
  var sp = document.getElementsByName('shipping');
          
              for (i=0;i<sp.length;i++){
@@ -358,7 +355,7 @@ var card = document.getElementsByName('card');
             <dd class="w50">{$lang.consignee_name} <span class="f1">{$consignee.consignee|escape}</span></dd>
             <dd class="w50 c999">
               <div class="ico_14"></div>
-              {$consignee.tel} <a href="flow.php?step=consignee" class="modify radius5">{$lang.modify}</a></dd>
+              {$consignee.mobile} <a href="flow.php?step=consignee" class="modify radius5">{$lang.modify}</a></dd>
           </dl>
           <dl>
             <dd class="w50 b_no" >{$lang.detailed_address} {$consignee.address|escape} </dd>
@@ -369,24 +366,8 @@ var card = document.getElementsByName('card');
     <div class="blank3"></div>
     <section class="order_box padd1 radius10" style="padding-top:0.3rem;padding-bottom:0.3rem;">
       <div class="table_box table_box2"> 
-        <!--{if $total.real_goods_count neq 0}-->
-        <dl>
-          <dd class="dd1">{$lang.shipping_method} <span class="span1 radius5">必填</span></dd>
-          <dd class="dd2" id="selected1">请选择配送方式</dd>
-          <i></i>
-        </dl>
-		<div class="dl_box" id="shipping" style="display:none">
-		  <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
-		  <p>
-            <input name="shipping" type="radio" class="radio" id="shipping_{$shipping.shipping_id}" value="{$shipping.shipping_id}" {if $order.shipping_id eq $shipping.shipping_id}checked="true"{/if} supportCod="{$shipping.support_cod}" insure="{$shipping.insure}" onclick="selectShipping(this)" style="vertical-align:middle" /><label for="shipping_{$shipping.shipping_id}"> {$shipping.shipping_name} [{$shipping.format_shipping_fee}]</label>
-           </p>
-            <!-- {/foreach} 循环配送方式 -->
-             <!--  <input name="need_insure" id="ECS_NEEDINSURE" type="checkbox"  onclick="selectInsure(this.checked)" value="1" {if $order.need_insure}checked="true"{/if} {if $insure_disabled}disabled="true"{/if}  />
-                {$lang.need_insure}-->
-		</div>
-        <!--{else}-->
-        <input name="shipping"  type="radio" value = "-1" checked="checked"  style="display:none"/>
-        <!--{/if}-->
+        
+        <input name="shipping"  type="hidden" value = "1" checked="checked"  style="display:none"/>
          <!--{if $is_exchange_goods neq 1 || $total.real_goods_count neq 0}-->
         <dl>
           <dd class="dd1">{$lang.payment_method} <span class="span1 radius5">必填</span></dd>
@@ -403,44 +384,7 @@ var card = document.getElementsByName('card');
         <!--{else}-->
         <input name = "payment" type="radio" value = "-1" checked="checked"  style="display:none"/>
         <!--{/if}-->  
-        <dl class="b_no" style="line-height: 40px;">
-          <dd class="dd1">是否开票</dd>
-		  <span class="modRadio fr" style="margin-top: 10px;">
-            <i class="fl"></i>
-            <ins>否</ins>
-         </span>
-        </dl>
-		<div class="dl_box" id="inviype_box" style="margin-bottom:0.5rem; display:none;">
-            <!-- {if $inv_content_list} 能否开发票 -->
-                <dl style="line-height: 40px;">
-                    <dd class="c333">发票类型</dd>
-                    <dd>
-                     <!-- {if $inv_type_list} -->
-                    {$lang.invoice_type}
-                    <select name="inv_type" id="ECS_INVTYPE"  onchange="changeNeedInv()" style="border:1px solid #ccc;">
-                    {html_options options=$inv_type_list selected=$order.inv_type}</select>
-                    <!-- {/if} -->
-                        </dd>
-                      </dl>		
-            
-                <dl style="line-height: 40px;">
-                    <dd class="c333">发票抬头</dd>
-                    <dd><input name="inv_payee" type="text"  class="input" id="ECS_INVPAYEE" size="20" value="{$order.inv_payee}" onblur="changeNeedInv()" /></dd>
-                </dl>	
-                 <dl style="line-height: 40px;">
-                    <dd class="c333">
-                    发票内容
-                    </dd>
-                    <dd>
-                   <select name="inv_content" id="ECS_INVCONTENT"  onchange="changeNeedInv()" style="border:1px solid #ccc;">
-
-                {html_options values=$inv_content_list output=$inv_content_list selected=$order.inv_content}
-                   </select>
-                     </dd> 
-                </dl>	
-            <!-- {/if} -->
-			  
-		</div>	
+			
       </div>
     </section>
     <div class="blank3"> </div>
@@ -465,45 +409,14 @@ var card = document.getElementsByName('card');
 		</div>
         <!-- {/if} 是否使用红包 --> 
 	
-		
-        <!-- {if $pack_list} 是否有包装 -->
-        <dl class="b_no">
-          <dd class="dd1">{$lang.goods_package}</dd>
-		   <dd class="dd2" id="selected5"> 未选择 </dd>  
-           <i></i>
-        </dl>
-		<div class="dl_box" id="package_box" style="display:none;">
-         <p> <input type="radio" class="radio"  name="pack" value="0" {if $order.pack_id eq 0}checked="true"{/if} onclick="selectPack(this)" />{$lang.no_pack}</p>
-         <!-- {foreach from=$pack_list item=pack} 循环包装 -->
-		  <p><input type="radio" class="radio" name="pack" id="pack_{$pack.pack_id}" value="{$pack.pack_id}" {if $order.pack_id eq $pack.pack_id}checked="true"{/if} onclick="selectPack(this)" /><label for="pack_{$pack.pack_id}">{$pack.pack_name}[{$pack.format_pack_fee}]</label></p>
-         <!-- {/foreach} 循环包装 --> 	
-		</div>
-        <!-- {/if} 是否使用包装 --> 
-		
-		
-        <!-- {if $card_list} 是否有贺卡 -->
-        <dl class="b_no">
-          <dd class="dd1">{$lang.goods_card}</dd>
-           <dd class="dd2" id="selected6"> 未选择 </dd>  
-          <i></i>
-        </dl>
-		
-		<div class="dl_box" id="card_box" style="display:none;">
-           <p> <input type="radio" class="radio"  name="card" value="0" {if $order.card_id eq 0}checked="true"{/if} onclick="selectCard(this)" />{$lang.no_card}</p>
-		    <!-- {foreach from=$card_list item=card} 循环贺卡 -->
-           <p><input type="radio" class="radio"  name="card"  id="card_{$card.card_id}" value="{$card.card_id}" {if $order.card_id eq $card.card_id}checked="true"{/if} onclick="selectCard(this)"  /><label for="card_{$card.card_id}">{$card.card_name}[{$card.format_card_fee}]</label>
-           </p>
-            <!-- {/foreach} 循环贺卡 -->
-		</div>
-        <!-- {/if} 是否使用贺卡 --> 
 		            
-								<div class="dl_box">
+		<div class="dl_box">
             <dl>
               <dd>{$lang.use_surplus}</dd>
               <dd class="weiruan " bgcolor="#ffffff"><input name="surplus" type="text" class="inputBg" id="ECS_SURPLUS" size="10" value="{$order.surplus|default:0}" onblur="changeSurplus(this.value)" {if $disable_surplus}disabled="disabled"{/if} />
               {$lang.your_surplus}{$your_surplus|default:0} </dd>
             </dl>
-				</div>	
+		</div>	
           
 		
 		<div class="dl_box">
@@ -511,19 +424,11 @@ var card = document.getElementsByName('card');
 				<dd class="c333">
 				留言备注
 				</dd>
-				<dd >	
-			<input placeholder="请输入订单备注" name="inv_payee" type="text"   size="20"  />
+				<dd>	
+				<input placeholder="请输入订单备注" name="inv_payee" type="text"   size="20"  />
 				 </dd>
 		 </dl>
-		 <dl>
-				<dd class="c333">
-			 
-				</dd>
-				<dd >	
-		 	<a href="flow.php" class="modify radius5">{$lang.modify}</a>
-			 
-				 </dd>
-			</dl>
+		  
 		</div>	
 		
 		<!-- {if $allow_use_integral} 是否使用积分 -->
