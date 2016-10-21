@@ -156,15 +156,26 @@ class wx_new_qrcode
 		$this->log("WxPayApi::unifiedOrder return:\r\n" . var_export($result, true));
 		$code_url = $payUrl["code_url"];
 		if ($code_url != NULL)
-		{	
+		{
 			if(checkmobile()){
-				$html = '<a id="getBrandWCPayRequest" href="';
-				$url = str_replace('=','%3D','weixin://wap/pay?appid='.WXAPPID.'&noncestr='.$result['nonce_str'].'&package=WAP&prepayid='.$result['prepay_id'].'&timestamp='.time().'&sign='.$result['sign']);
-				$url = str_replace('&','%26',$url);
-				$html .= $url;
-				$html .= '">微信支付1</a>';
-				
-				//$html = '<div class="operation"><a class="btn-blue" id="getBrandWCPayRequest" href="weixin://wap/pay?appid%3Dwx2421b1c4370ec43b%26noncestr%3DMIEtImbHy2XLveW5%26package%3DWAP%26prepayid%3Dwx20161020162409c6f19642e50470057945%26timestamp%3D1476951849%26sign%3D07A215A869A4D1F176AF2C9559AE964D">立即购买</a></div>';
+				$html ="wx.config({
+    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: '".WXAPPID."', // $result[appid]这个返回的和config里面的不一致!!!造成invaild signature错误
+    timestamp: '".time()."', // 必填，生成签名的时间戳
+    nonceStr: '".$result[nonce_str]."', // 必填，生成签名的随机串
+    signature: '".sha1("jsapi_ticket=kgt8ON7yVITDhtdwci0qeaANwLF01SZZt6MXpbQQ_4v7jSDXWqwnw8Y3rYXIGLqj85K9ZKUn4O6PWnyKe4lWFQ&noncestr=".$result[nonce_str]."&timestamp=".time()."&url=http://192.168.0.112/user.php?act=order_detail&order_id=99")."',// 必填，签名，见附录1
+    jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+});
+document.querySelector('#chooseWXPay').onclick = function () {
+    // 注意：此 Demo 使用 2.7 版本支付接口实现，建议使用此接口时参考微信支付相关最新文档。
+    wx.chooseWXPay({
+      timestamp: '".time()."',
+      nonceStr: '".$result[nonce_str]."',
+      package: 'prepay_id=".$result[prepay_id]."',
+      signType: 'MD5', // 注意：新版支付接口使用 MD5 加密
+      paySign: '".$result[sign]."'
+    });
+};";
 			}
 			else{
 				$html = '<div class="wx_qrcode" style="text-align:center">';
