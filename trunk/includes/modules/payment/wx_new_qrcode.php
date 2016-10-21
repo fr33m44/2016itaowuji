@@ -135,30 +135,42 @@ class wx_new_qrcode
 		$rand = str_pad(strval(rand(0,999999)), 6, "0", STR_PAD_LEFT);
 		$out_trade_no = $order['order_sn'];
 		$notify = new NativePay();
-		$unifiedOrder = new WxPayUnifiedOrder();
+		$input = new WxPayUnifiedOrder();
 		if(empty($order['surplus_amount']))
 		{
-			$unifiedOrder->SetBody('订单号：'.$order['order_sn']); //商品描述
+			$input->SetBody('订单号：'.$order['order_sn']); //商品描述
 		}
 		else
 		{
-			$unifiedOrder->SetBody('充值：'.$order['surplus_amount'].'元'); //商品描述
+			$input->SetBody('充值：'.$order['surplus_amount'].'元'); //商品描述
 		}
 		
-		$unifiedOrder->SetOut_trade_no($out_trade_no."_".$rand); //商户订单号
-		$unifiedOrder->SetAttach(strval($order['log_id'])); //商户支付日志
-		$unifiedOrder->SetTotal_fee(strval(intval($order['order_amount'] * 100))); //总金额
-		$unifiedOrder->SetNotify_url("http://" . $_SERVER['SERVER_NAME'] . "/wx_native_callback.php");
-		$unifiedOrder->SetTrade_type("NATIVE");
-		$unifiedOrder->SetProduct_id($out_trade_no);
-		$result = $notify->GetPayUrl($unifiedOrder);
-		$this->log("GetPayUrl return:\r\n" . var_export($result, true));
-		$code_url = $result["code_url"];
+		$input->SetOut_trade_no($out_trade_no."_".$rand); //商户订单号
+		$input->SetAttach(strval($order['log_id'])); //商户支付日志
+		$input->SetTotal_fee(strval(intval($order['order_amount'] * 100))); //总金额
+		$input->SetNotify_url("http://" . $_SERVER['SERVER_NAME'] . "/wx_native_callback.php");
+		$input->SetTrade_type("NATIVE");
+		$input->SetProduct_id($out_trade_no);
+		$payUrl = $notify->GetPayUrl($input);
+		$result = WxPayApi::unifiedOrder($input);
+		$this->log("WxPayApi::unifiedOrder return:\r\n" . var_export($result, true));
+		$code_url = $payUrl["code_url"];
 		if ($code_url != NULL)
-		{
-			$html = '<div class="wx_qrcode" style="text-align:center">';
-			$html.= $this->img_qr($code_url);
-			$html.= "</div>";
+		{	
+			if(checkmobile()){
+				$html = '<a id="getBrandWCPayRequest" href="';
+				$url = str_replace('=','%3D','weixin://wap/pay?appid='.WXAPPID.'&noncestr='.$result['nonce_str'].'&package=WAP&prepayid='.$result['prepay_id'].'&timestamp='.time().'&sign='.$result['sign']);
+				$url = str_replace('&','%26',$url);
+				$html .= $url;
+				$html .= '">微信支付1</a>';
+				
+				//$html = '<div class="operation"><a class="btn-blue" id="getBrandWCPayRequest" href="weixin://wap/pay?appid%3Dwx2421b1c4370ec43b%26noncestr%3DMIEtImbHy2XLveW5%26package%3DWAP%26prepayid%3Dwx20161020162409c6f19642e50470057945%26timestamp%3D1476951849%26sign%3D07A215A869A4D1F176AF2C9559AE964D">立即购买</a></div>';
+			}
+			else{
+				$html = '<div class="wx_qrcode" style="text-align:center">';
+				$html.= $this->img_qr($code_url);
+				$html.= "</div>";
+			}
 		}
 		return $html;
 	}
@@ -243,7 +255,6 @@ class wx_new_qrcode
 	}
 	function log($txt)
 	{
-		return;
 		$fp = fopen('wx_hjq.txt', 'a+');
 		fwrite($fp, '-----------' . local_date('Y-m-d H:i:s') . '-----------------');
 		fwrite($fp, $txt);

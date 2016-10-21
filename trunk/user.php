@@ -114,7 +114,6 @@ elseif ($action == 'act_register') {
 		include ('includes/cls_json.php');
 		$json = new JSON;
 		$res = array('err' => 0, 'msg' => '');
-		
 		include_once (ROOT_PATH . 'includes/lib_passport.php');
 		$qrm = isset($_POST['qrm']) ? trim($_POST['qrm']) : '';
 		$username = isset($_POST['username']) ? trim($_POST['username']) : '';
@@ -150,7 +149,7 @@ elseif ($action == 'act_register') {
 			die($json->encode($res));
 		}
 		if (mb_strlen($username) < 3) //支持中文
-		{	
+		{
 			$res = array('err' => 3, 'msg' => $_LANG['passport_js']['username_shorter']);
 			die($json->encode($res));
 		}
@@ -197,7 +196,6 @@ elseif ($action == 'act_register') {
 			$res = array('err' => 10, 'msg' => '该用户名已经被注册。');
 			die($json->encode($res));
 		}
-		
 		if (register($username, $password, $email, $other) !== false) {
 			include_once (ROOT_PATH . 'includes/lib_transaction.php');
 			include_once (ROOT_PATH . 'languages/' . $_CFG['lang'] . '/shopping_flow.php');
@@ -243,7 +241,6 @@ elseif ($action == 'act_register') {
 			}
 			$ucdata = empty($user->ucdata) ? "" : $user->ucdata;
 			//show_message(sprintf($_LANG['register_success'], $username . $ucdata), array($_LANG['profile_lnk']), array('user.php'), 'info');
-			
 			$res = array('err' => 0, 'msg' => '恭喜您，注册成功！');
 			die($json->encode($res));
 		} else {
@@ -763,6 +760,55 @@ elseif ($action == 'order_list') {
 	$smarty->assign('merge', $merge);
 	$smarty->assign('pager', $pager);
 	$smarty->assign('orders', $orders);
+	$smarty->display('user_transaction.dwt');
+}
+/* 异步显示订单列表 by wang */
+elseif ($action == 'async_order_list') {
+	include_once (ROOT_PATH . 'includes/lib_transaction.php');
+	$start = $_POST['last'];
+	$limit = $_POST['amount'];
+	$orders = get_user_orders($user_id, $limit, $start);
+	if (is_array($orders)) {
+		foreach ($orders as $vo) {
+			//获取订单第一个商品的图片
+			$img = $db->getOne("SELECT g.goods_thumb FROM " . $ecs->table('order_goods') . " as og left join " . $ecs->table('goods') . " g on og.goods_id = g.goods_id WHERE og.order_id = " . $vo['order_id'] . " limit 1");
+			$tracking = ($vo['shipping_id'] > 0) ? '<a href="user.php?act=order_tracking&order_id=' . $vo['order_id'] . '" class="c-btn3">订单跟踪</a>' : '';
+			$asyList[] = array('order_status' => '订单状态：' . $vo['order_status'], 'order_handler' => $vo['handler'], 'order_content' => '<a href="user.php?act=order_detail&order_id=' . $vo['order_id'] . '"><table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table_no_border">
+            <tr>
+                <td><img src="' . $config['site_url'] . $img . '" width="50" height="50" /></td>
+                <td>订单编号：' . $vo['order_sn'] . '<br>
+                订单金额：' . $vo['total_fee'] . '<br>
+                下单时间：' . $vo['order_time'] . '</td>
+                <td style="position:relative"><span class="new-arr"></span></td>
+            </tr>
+          </table></a>', 'order_tracking' => $tracking);
+		}
+	}
+	echo json_encode($asyList);
+}
+/* 包裹跟踪 by wang */
+elseif ($action == 'order_tracking') {
+	$order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+	$ajax = isset($_GET['ajax']) ? intval($_GET['ajax']) : 0;
+	include_once (ROOT_PATH . 'include/lib_transaction.php');
+	include_once (ROOT_PATH . 'include/lib_order.php');
+	$sql = "SELECT order_id,order_sn,invoice_no,shipping_name,shipping_id FROM " . $ecs->table('order_info') . " WHERE user_id = '$user_id' AND order_id = " . $order_id;
+	$orders = $db->getRow($sql);
+	//生成快递100查询接口链接
+	$shipping = get_shipping_object($orders['shipping_id']);
+	$query_link = $shipping->kuaidi100($orders['invoice_no']);
+	//优先使用curl模式发送数据
+	if (function_exists('curl_init') == 1) {
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $query_link);
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 5);
+		$get_content = curl_exec($curl);
+		curl_close($curl);
+	}
+	$smarty->assign('trackinfo', $get_content);
 	$smarty->display('user_transaction.dwt');
 }
 /* 查看订单详情 */
