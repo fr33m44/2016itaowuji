@@ -15,8 +15,6 @@ require_once ROOT_PATH . "/includes/modules/payment/wxpay/example/WxPay.NativePa
 require_once ROOT_PATH . '/includes/modules/payment/wxpay/example/log.php';
 
 // 初始化日志
-$logHandler = new CLogFileHandler("../logs/wx_hjq_" . date('Y-m-d') . '.log');
-$log = Log::Init($logHandler, 15);
 class PayNotifyCallBack extends WxPayNotify
 
 {
@@ -27,7 +25,6 @@ class PayNotifyCallBack extends WxPayNotify
 		$input = new WxPayOrderQuery();
 		$input->SetTransaction_id($transaction_id);
 		$result = WxPayApi::orderQuery($input);
-		Log::DEBUG("query:" . json_encode($result));
 		if (array_key_exists("return_code", $result) && array_key_exists("result_code", $result) && $result["return_code"] == "SUCCESS" && $result["result_code"] == "SUCCESS")
 		{
 			return true;
@@ -38,7 +35,6 @@ class PayNotifyCallBack extends WxPayNotify
 	public function NotifyProcess($data, &$msg)
 
 	{
-		Log::DEBUG("call back:" . json_encode($data));
 		$notfiyOutput = array();
 		if (!array_key_exists("transaction_id", $data))
 		{
@@ -189,7 +185,6 @@ document.querySelector('#chooseWXPay').onclick = function () {
 	{
 		$this->log("respond()\r\n" . var_export('respond', true));
 		$payment = get_payment('wx_new_qrcode');
-		Log::DEBUG("begin notify");
 		$notify = new PayNotifyCallBack();
 		$notify->Handle(false);
 		$xmlpost = $GLOBALS['HTTP_RAW_POST_DATA'];

@@ -1940,7 +1940,6 @@ elseif ($_REQUEST['step'] == 'add_package_to_cart') {
 	$parent_list = $GLOBALS['db']->getCol($sql);
 	$fittings_list = get_goods_fittings($parent_list);
 	$smarty->assign('fittings_list', $fittings_list);
-	//新增购物来路链接，用于返回跳转 by carson 20140425
 	$smarty->assign('jump_http_referer', $_SERVER["HTTP_REFERER"]);
 }
 $smarty->assign('currency_format', $_CFG['currency_format']);

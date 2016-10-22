@@ -107,7 +107,7 @@ function changenum(diff) {
 <body>
 <header id="header">
 <div class="header_l header_return">
-	<a class="ico_10" href="javascript:history.back(-1)"> 返回 </a>
+	<a class="ico_10" href="{$smarty.server.HTTP_REFERER}"> 返回 </a>
 </div>
 <h1> 商品详情 </h1>
 </header>
@@ -505,7 +505,10 @@ function changePriceResponse(res)
 <div class="countdown">
 	<span class="label"></span><span class="time"></span>
 </div>
-<a href="flow.php?step=cart" class="cart-link" title="购物车"></a>
+<a href="flow.php?step=cart" class="cart-link" title="进货单"></a><span style="position: absolute;
+    right: 8px;
+    top: 76%;
+    margin-top: -10px;">进货单</span>
 </section>
 {insert_scripts files='transport.js,utils.js'}
 </body>

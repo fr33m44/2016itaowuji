@@ -61,17 +61,17 @@ $filter_attr_str = trim(urldecode($filter_attr_str));
 $filter_attr_str = preg_match('/^[\d\.]+$/',$filter_attr_str) ? $filter_attr_str : '';
 $filter_attr = empty($filter_attr_str) ? '' : explode('.', $filter_attr_str);
 
-
 /* 排序、显示方式以及类型 */
-$default_display_type = $_CFG['show_order_type'] == '0' ? 'list' : ($_CFG['show_order_type'] == '1' ? 'grid' : 'text');
+$default_display_type = $_CFG['show_order_type'] == '0' ? 'list' : ($_CFG['show_order_type'] == '1' ? 'grid' : 'album');
 $default_sort_order_method = $_CFG['sort_order_method'] == '0' ? 'DESC' : 'ASC';
 $default_sort_order_type   = $_CFG['sort_order_type'] == '0' ? 'goods_id' : ($_CFG['sort_order_type'] == '1' ? 'shop_price' : 'last_update');
 
-$sort  = (isset($_REQUEST['sort'])  && in_array(trim(strtolower($_REQUEST['sort'])), array('goods_id', 'shop_price', 'last_update','sales_volume'))) ? trim($_REQUEST['sort'])  : $default_sort_order_type;
-$order = (isset($_REQUEST['order']) && in_array(trim(strtoupper($_REQUEST['order'])), array('ASC', 'DESC')))                              ? trim($_REQUEST['order']) : $default_sort_order_method;
-$display  = (isset($_REQUEST['display']) && in_array(trim(strtolower($_REQUEST['display'])), array('list', 'grid', 'text'))) ? trim($_REQUEST['display'])  : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
-$display  = in_array($display, array('list', 'grid', 'text')) ? $display : 'text';
+$sort  = (isset($_REQUEST['sort'])  && in_array(trim(strtolower($_REQUEST['sort'])), array('goods_id', 'shop_price', 'last_update', 'click_count', 'sales_count'))) ? trim($_REQUEST['sort'])  : $default_sort_order_type; // 增加按人气、按销量排序 by wang
+$order = (isset($_REQUEST['order']) && in_array(trim(strtoupper($_REQUEST['order'])), array('ASC', 'DESC'))) ? trim($_REQUEST['order']) : $default_sort_order_method;
+$display  = (isset($_REQUEST['display']) && in_array(trim(strtolower($_REQUEST['display'])), array('list', 'grid', 'album'))) ? trim($_REQUEST['display'])  : (isset($_COOKIE['ECS']['display']) ? $_COOKIE['ECS']['display'] : $default_display_type);
+$display  = in_array($display, array('list', 'grid', 'album')) ? $display : 'album'; // by wang
 setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
+
 /*------------------------------------------------------ */
 //-- PROCESSOR
 /*------------------------------------------------------ */
@@ -79,17 +79,23 @@ setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
 /* 页面的缓存ID */
 $cache_id = sprintf('%X', crc32($cat_id . '-' . $display . '-' . $sort  .'-' . $order  .'-' . $page . '-' . $size . '-' . $_SESSION['user_rank'] . '-' .
     $_CFG['lang'] .'-'. $brand. '-' . $price_max . '-' .$price_min . '-' . $filter_attr_str));
-	
-//判断是否顶级分类调用不同模板   by zhouhuan
-$sql = 'SELECT parent_id,is_top_style FROM '.$ecs->table("category")." WHERE cat_id=$cat_id";
-$cat_row = $db->getRow($sql);
-if($cat_row['parent_id'] == 0 && $cat_row['is_top_style'] != 0)
-{
-	$dwt_name = 'category_top';
-}
-else
+if(checkmobile())
 {
 	$dwt_name = 'category';
+}
+else
+{	
+	//判断是否顶级分类调用不同模板   by zhouhuan
+	$sql = 'SELECT parent_id,is_top_style FROM '.$ecs->table("category")." WHERE cat_id=$cat_id";
+	$cat_row = $db->getRow($sql);
+	if($cat_row['parent_id'] == 0 && $cat_row['is_top_style'] != 0)
+	{
+		$dwt_name = 'category_top';
+	}
+	else
+	{
+		$dwt_name = 'category';
+	}
 }
 
 if (!$smarty->is_cached($dwt_name.'.dwt', $cache_id))
@@ -245,11 +251,12 @@ if (!$smarty->is_cached($dwt_name.'.dwt', $cache_id))
     foreach ($brands AS $key => $val)
     {
         $temp_key = $key + 1;
+        $brands[$temp_key]['brand_id'] = $val['brand_id']; //同步绑定品牌名称和品牌ID by wang
         $brands[$temp_key]['brand_name'] = $val['brand_name'];
         $brands[$temp_key]['url'] = build_uri('category', array('cid' => $cat_id, 'bid' => $val['brand_id'], 'price_min'=>$price_min, 'price_max'=> $price_max, 'filter_attr'=>$filter_attr_str), $cat['cat_name']);
 
         /* 判断品牌是否被选中 */
-        if ($brand == $brands[$key]['brand_id'])
+        if ($brand == $val['brand_id']) //修正当前品牌的ID by wang
         {
             $brands[$temp_key]['selected'] = 1;
         }
@@ -259,10 +266,13 @@ if (!$smarty->is_cached($dwt_name.'.dwt', $cache_id))
         }
     }
 
+    unset($brands[0]); //清空索引为0的项目 by wang
+    $brands[0]['brand_id'] = 0; //新增默认值 by wang
     $brands[0]['brand_name'] = $_LANG['all_attribute'];
     $brands[0]['url'] = build_uri('category', array('cid' => $cat_id, 'bid' => 0, 'price_min'=>$price_min, 'price_max'=> $price_max, 'filter_attr'=>$filter_attr_str), $cat['cat_name']);
     $brands[0]['selected'] = empty($brand) ? 1 : 0;
 
+    ksort($brands); //增加再排序 by wang
     $smarty->assign('brands', $brands);
 
 
@@ -278,6 +288,7 @@ if (!$smarty->is_cached($dwt_name.'.dwt', $cache_id))
             $sql = "SELECT a.attr_name FROM " . $ecs->table('attribute') . " AS a, " . $ecs->table('goods_attr') . " AS ga, " . $ecs->table('goods') . " AS g WHERE ($children OR " . get_extension_goods($children) . ") AND a.attr_id = ga.attr_id AND g.goods_id = ga.goods_id AND g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_alone_sale = 1 AND a.attr_id='$value'";
             if($temp_name = $db->getOne($sql))
             {
+                $all_attr_list[$key]['filter_attr_id'] = $value; //新增属性标识 by wang
                 $all_attr_list[$key]['filter_attr_name'] = $temp_name;
 
                 $sql = "SELECT a.attr_id, MIN(a.goods_attr_id ) AS goods_id, a.attr_value AS attr_value FROM " . $ecs->table('goods_attr') . " AS a, " . $ecs->table('goods') .
@@ -297,6 +308,7 @@ if (!$smarty->is_cached($dwt_name.'.dwt', $cache_id))
 
                 $temp_arrt_url_arr[$key] = 0;                           //“全部”的信息生成
                 $temp_arrt_url = implode('.', $temp_arrt_url_arr);
+                $all_attr_list[$key]['attr_list'][0]['attr_id'] = 0; //默认数值 by wang
                 $all_attr_list[$key]['attr_list'][0]['attr_value'] = $_LANG['all_attribute'];
                 $all_attr_list[$key]['attr_list'][0]['url'] = build_uri('category', array('cid'=>$cat_id, 'bid'=>$brand, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$temp_arrt_url), $cat['cat_name']);
                 $all_attr_list[$key]['attr_list'][0]['selected'] = empty($filter_attr[$key]) ? 1 : 0;
@@ -307,6 +319,7 @@ if (!$smarty->is_cached($dwt_name.'.dwt', $cache_id))
                     $temp_arrt_url_arr[$key] = $v['goods_id'];       //为url中代表当前筛选属性的位置变量赋值,并生成以‘.’分隔的筛选属性字符串
                     $temp_arrt_url = implode('.', $temp_arrt_url_arr);
 
+                    $all_attr_list[$key]['attr_list'][$temp_key]['attr_id'] = $v['goods_id']; //新增属性参数 by wang
                     $all_attr_list[$key]['attr_list'][$temp_key]['attr_value'] = $v['attr_value'];
                     $all_attr_list[$key]['attr_list'][$temp_key]['url'] = build_uri('category', array('cid'=>$cat_id, 'bid'=>$brand, 'price_min'=>$price_min, 'price_max'=>$price_max, 'filter_attr'=>$temp_arrt_url), $cat['cat_name']);
 
@@ -422,7 +435,13 @@ if (!$smarty->is_cached($dwt_name.'.dwt', $cache_id))
     {
         $page = $max_page;
     }
+	$page       = !empty($_REQUEST['page'])  && intval($_REQUEST['page'])  > 0 ? intval($_REQUEST['page'])  : 1;
+    $size       = !empty($_CFG['page_size']) && intval($_CFG['page_size']) > 0 ? intval($_CFG['page_size']) : 10;
     $goodslist = category_get_goods($children, $brand, $price_min, $price_max, $ext, $size, $page, $sort, $order);
+	$pager['search'] = array(
+	 "id"=>$cat_id
+	 );
+	$pager = get_pager('category.php', $pager['search'], $count, $page, $size);
     if($display == 'grid')
     {
         if(count($goodslist) % 2 != 0)
@@ -430,6 +449,7 @@ if (!$smarty->is_cached($dwt_name.'.dwt', $cache_id))
             $goodslist[] = array();
         }
     }
+	$smarty->assign('pager', $pager);
     $smarty->assign('goods_list',       $goodslist);
     $smarty->assign('category',         $cat_id);
     $smarty->assign('script_name', $dwt_name);
@@ -561,6 +581,7 @@ function category_get_goods($children, $brand, $min, $max, $ext, $size, $page, $
         $arr[$row['goods_id']]['goods_thumb']      = get_image_path($row['goods_id'], $row['goods_thumb'], true);
         $arr[$row['goods_id']]['goods_img']        = get_image_path($row['goods_id'], $row['goods_img']);
         $arr[$row['goods_id']]['url']              = build_uri('goods', array('gid'=>$row['goods_id']), $row['goods_name']);
+        $arr[$row['goods_id']]['sales_count']      = get_sales_volume($row['goods_id'])+$row['sales_volume_base']; //显示月销量 by wang
     }
 
     return $arr;
@@ -647,5 +668,19 @@ function get_parent_grade($cat_id)
 
 }
 
+function get_sales_volume($goods_id)
+{
+	/* 查询该商品的实际销量 */
+    $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
+        'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
+            $GLOBALS['ecs']->table('order_goods') . ' AS g ' .
+        "WHERE o.order_id = g.order_id " .
+       
+        "AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
+        " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
+        " AND g.goods_id = '$goods_id'" ;
+		
+    return intval($GLOBALS['db']->getOne($sql));
+}
 
 ?>
