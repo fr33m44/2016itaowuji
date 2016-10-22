@@ -72,6 +72,7 @@ if ($action == 'default') {
 		}
 	}
 	$smarty->assign('info', get_user_default($user_id));
+	print_r(get_user_default($user_id));
 	$smarty->assign('user_notice', $_CFG['user_notice']);
 	$smarty->assign('prompt', get_user_prompt($user_id));
 	$smarty->display('user_clips.dwt');
