@@ -30,9 +30,7 @@
 <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 
-<script type="text/javascript" src="{$ectouch_themes}/js/jquery.min.js"></script>
-<script type="text/javascript" src="{$ectouch_themes}/js/jquery.more.js"></script>
-<script type="text/javascript" src="{$ectouch_themes}/js/ectouch.js"></script>
+ {insert_scripts files='jquery.min.js,jquery.more.js,ectouch.js'}
 
 </body>
 </html>

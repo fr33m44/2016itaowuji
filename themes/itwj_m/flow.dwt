@@ -18,7 +18,7 @@
 <!-- {if $step eq "cart"} -->
 <div id="page">
   <header id="header">
-    <div class="header_l"> <a class="ico_10" href="{$jump_http_referer}"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="{$smarty.server.HTTP_REFERER}"> 返回 </a> </div>
     <h1>进货单</h1>
     <div class="header_r"></div>
   </header>
@@ -27,8 +27,21 @@
 {* 包含脚本文件 *}
   {insert_scripts files='showdiv.js'} 
       {insert_scripts files='transport.js'} 
-			<script>
-        function changenum(rec_id,diff){
+	<script>
+	function del_cart_one(rec_id)
+	{
+		Ajax.call('flow.php?step=drop_goods', 'id=' + rec_id, delete_cart_response, 'GET', 'JSON', true, true);
+	}  
+	function delete_cart_response(res)
+	{
+	  rec_arr = res.msg.split(',');
+	  for(var i=0;i<rec_arr.length && rec_arr[i].length != 0;i++)
+	  {
+		  document.getElementById("rec_"+rec_arr[i]).parentElement.removeChild(document.getElementById("rec_"+rec_arr[i]));
+	  }
+	}
+        function changenum(rec_id,diff)
+	  {
 					var num = parseInt(document.getElementById('goods_number_'+rec_id).value);
 					var goods_number = num + Number(diff);
 					if( goods_number >= 1){
@@ -38,9 +51,9 @@
         }
         
         function change_goods_number(rec_id, goods_number)
-        {   
-        Ajax.call('flow.php?step=ajax_update_cart', 'rec_id=' + rec_id +'&goods_number=' + goods_number, change_goods_number_response, 'POST','JSON');  
-        } 
+        {
+		Ajax.call('flow.php?step=ajax_update_cart', 'rec_id=' + rec_id +'&goods_number=' + goods_number, change_goods_number_response, 'POST','JSON');  
+        }
         
         function change_goods_number_response(result)
         {    
@@ -74,10 +87,10 @@
   <form id="formCart" name="formCart" method="post" action="flow.php">
     <ul class="radius10 itemlist">
       <!-- {foreach from=$goods_list item=goods} -->
-      <li class="new-tbl-type">
+      <li class="new-tbl-type" id="rec_{$goods.rec_id}">
         <div class="itemlist_l new-tbl-cell"> 
           <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 商品 --> 
-          <a  href="goods.php?id={$goods.goods_id}" target="_blank"> <img class="lazy" src="{$site_url}{$goods.goods_thumb}" border="0" title="{$goods.goods_name|escape:html}" /> </a> 
+          <a  href="goods.php?id={$goods.goods_id}"> <img class="lazy" src="{$site_url}{$goods.goods_thumb}" border="0" title="{$goods.goods_name|escape:html}" /> </a> 
           <!-- {if $goods.parent_id gt 0} 配件 --> 
           <span style="color:#FF0000">（{$lang.accessories}）</span> 
           <!-- {/if} --> 
@@ -88,14 +101,14 @@
           <a href="javascript:void(0)" onClick="setSuitShow({$goods.goods_id})" class="f6">{$goods.goods_name}<span style="color:#FF0000;">（{$lang.remark_package}）</span></a>
           <div id="suit_{$goods.goods_id}" style="display:none"> 
             <!-- {foreach from=$goods.package_goods_list item=package_goods_list} --> 
-            <a href="goods.php?id={$package_goods_list.goods_id}" target="_blank" class="f6">{$package_goods_list.goods_name}</a><br />
+            <a href="goods.php?id={$package_goods_list.goods_id}" class="f6">{$package_goods_list.goods_name}</a><br />
             <!-- {/foreach} --> 
           </div>
           <!-- {else} 优惠活动 --> 
           {$goods.goods_name} 
           <!-- {/if} --> 
         </div>
-        <div class="desc new-tbl-cell"> <a style="color:#333" href="goods.php?id={$goods.goods_id}" target="_blank" class="fragment">
+        <div class="desc new-tbl-cell"> <a style="color:#333" href="goods.php?id={$goods.goods_id}" class="fragment">
           <h4>{$goods.goods_name}</h4>
           </a>
           <div style="clear:both"> </div>
@@ -110,7 +123,7 @@
             <!-- {else} --> 
             {$goods.goods_number} 
             <!-- {/if} --> 
-            </span> <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='flow.php?step=drop_goods&amp;id={$goods.rec_id}'; "   class="ico_08 cha"> </a> </div>
+            </span> <a href="javascript:;" onclick="del_cart_one({$goods.rec_id})" class="ico_08 cha"> </a> </div>
         </div>
       </li>
       <!-- {/foreach} -->
@@ -146,7 +159,7 @@
                 <!-- {if $favourable.act_type eq 0} -->
                 <!-- {foreach from=$favourable.gift item=gift} --><br />
                   <input type="checkbox" value="{$gift.id}" name="gift[]" />
-                  <a href="goods.php?id={$gift.id}" target="_blank" class="f6">{$gift.name}</a> [{$gift.formated_price}]
+                  <a href="goods.php?id={$gift.id}"  class="f6">{$gift.name}</a> [{$gift.formated_price}]
                 <!-- {/foreach} -->
               <!-- {/if} -->  
           </td>
@@ -291,7 +304,7 @@
                     oRadioValue = sp[i];
                    }
             }
-             selectShipping(oRadioValue );   
+             //selectShipping(oRadioValue );   
 
    var py = document.getElementsByName('payment');
    for (i=0;i<py.length;i++){
@@ -458,27 +471,26 @@ var card = document.getElementsByName('card');
         </dl>
         <!-- {foreach from=$goods_list item=goods} -->
         <dl>
-          <dd class="dd1 w60"> 
+          <dd style="display:inline" class="dd1 w60"> 
             <!-- {if $goods.goods_id gt 0 && $goods.extension_code eq 'package_buy'} --> 
             <a href="javascript:void(0)" onClick="setSuitShow({$goods.goods_id})" >{$goods.goods_name}<span style="color:#FF0000;">（{$lang.remark_package}）</span></a> 
             <!-- { else } --> 
-            <a href="goods.php?id={$goods.goods_id}" target="_blank" >{$goods.goods_name}</a> 
+            <a href="goods.php?id={$goods.goods_id}">{$goods.goods_name}</a> 
             <!-- {if $goods.parent_id > 0} --> 
             <span style="color:#FF0000">（{$lang.accessories}）</span> 
             <!-- {elseif $goods.is_gift} --> 
             <span style="color:#FF0000">（{$lang.largess}）</span> 
             <!-- {/if} --> 
             <!-- {/if} --> 
-            <!-- {if $goods.is_shipping} -->(<span style="color:#FF0000">{$lang.free_goods}</span>)<!-- {/if} --> 
           </dd>
-          <dd class="dd2 w10 c999"> x {$goods.goods_number} </dd>
-          <dd class="dd3 w30"> {$goods.formated_subtotal} </dd>
+          <dd  style="display:inline" class="dd2 w10 c999"> x {$goods.goods_number} </dd>
+          <dd  style="display:inline" class="dd3 w30"> {$goods.formated_subtotal} </dd>
         </dl>
         <!-- {/foreach} --> 
         <!-- #BeginLibraryItem "/Library/order_total.lbi" --><!-- #EndLibraryItem --> </div>
     </section>
     <div class="blank3"></div>
-    <input type="submit" name="submit" value="提交订单" class="c-btn3" />
+    <input type="submit" name="submit" value="提交订单" class="c-btn4" />
     <input type="hidden" name="step" value="done" />
   </form>
 </section>
@@ -660,7 +672,7 @@ var card = document.getElementsByName('card');
 <!-- {if $step eq "login"} -->
 <div id="page">
   <header id="header">
-    <div class="header_l"> <a class="ico_10" onClick="javascript:history.go(-1)"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="{$smarty.server.HTTP_REFERER}"> 返回 </a> </div>
     <h1> 登录/注册 </h1>
   </header>
 </div>

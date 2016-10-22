@@ -18,7 +18,7 @@
 <!-- *用户中心默认显示页面 start--> 
 <!-- {if $action eq 'default'} -->
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="{$jump_http_referer}"> 返回 </a> </div>
   <h1> 分销中心 </h1>
 </header>
 <dl class="user_top">
@@ -105,7 +105,7 @@
 <!-- /一级分销 S--> 
 <!-- {if $action eq 'fenxiao1'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="{$jump_http_referer}"> 返回 </a> </div>
   <h1> 我的分销一级会员{$count}人</h1>
 </header>
 <!--详细下线记录by  tianxin100-->

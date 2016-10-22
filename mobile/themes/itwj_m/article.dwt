@@ -14,7 +14,7 @@
 
 <body>
 <header id="header" >
-  <div class="header_l header_return"> <a class="ico_10"  href="javascript:history.back(-1)"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="{$jump_http_referer}"> 返回 </a> </div>
   <h1> 文章详情 </h1>
   <div class="header_r"> <a class="ico_15" href="ectouch.php?act=share&content={$article.title}"> 分享 </a> </div>
 </header>

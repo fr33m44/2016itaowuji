@@ -15,7 +15,7 @@
 <body>
 <div id="page" style="right: 0px; left: 0px; display: block;">
   <header id="header" style="z-index:1">
-    <div class="header_l"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="{$jump_http_referer}"> 返回 </a> </div>
     <h1> <!--{$lang.all_brand}--></h1>
   </header>
   <div class="waterfallCon">

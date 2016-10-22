@@ -107,17 +107,7 @@
     </div>
   </form>
 </div>
-<script type="text/javascript" src="{$ectouch_themes}/js/jquery.min.js"></script>
-<script type="text/javascript" src="{$ectouch_themes}/js/ectouch.js"></script>
-<script type="text/javascript">
-jQuery(function($){
-	$('#J_ItemList').more({'address': 'category.php?act=asynclist&category={$category}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort={$pager.sort}&order={$pager.order}', 'spinner_code':'<div style="text-align:center; margin:10px;"><img src="{$ectouch_themes}/images/loader.gif" /></div>'})
-	$(window).scroll(function () {
-		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-			$('.get_more').click();
-		}
-	});
-});
-</script>
+{insert_scripts files='jquery.min.js,jquery.more.js,ectouch.js'}
+
 </body>
 </html>

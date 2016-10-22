@@ -33,7 +33,7 @@
         <option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
         <!-- {/foreach} -->
       </select>
-      <select name="district" id="selDistricts_{$sn}" {if !$district_list.$sn}style="display:none;padding:5px 4px;border:1px solid #abadb3;"{/if} >
+      <select name="district" id="selDistricts_{$sn}" {if !$district_list.$sn}style="display:none;padding:5px 4px;border:1px solid #abadb3;"{else}style="padding:5px 4px;border:1px solid #abadb3;"{/if} >
         <option value="0">{$lang.please_select}{$name_of_region[3]}</option>
         <!-- {foreach from=$district_list.$sn item=district} -->
         <option value="{$district.region_id}" {if $consignee.district eq $district.region_id}selected{/if}>{$district.region_name}</option>

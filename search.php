@@ -248,7 +248,7 @@ else
     $default_sort_order_method = $_CFG['sort_order_method'] == '0' ? 'DESC' : 'ASC';
     $default_sort_order_type   = $_CFG['sort_order_type'] == '0' ? 'goods_id' : ($_CFG['sort_order_type'] == '1' ? 'shop_price' : 'last_update');
 
-    $sort = (isset($_REQUEST['sort'])  && in_array(trim(strtolower($_REQUEST['sort'])), array('goods_id', 'shop_price', 'last_update'))) ? trim($_REQUEST['sort'])  : $default_sort_order_type;
+    $sort = (isset($_REQUEST['sort'])  && in_array(trim(strtolower($_REQUEST['sort'])), array('goods_id', 'shop_price', 'last_update', 'click_count', 'sales_count'))) ? trim($_REQUEST['sort'])  : $default_sort_order_type;
     $order = (isset($_REQUEST['order']) && in_array(trim(strtoupper($_REQUEST['order'])), array('ASC', 'DESC'))) ? trim($_REQUEST['order']) : $default_sort_order_method;
     $display  = (isset($_REQUEST['display']) && in_array(trim(strtolower($_REQUEST['display'])), array('list', 'grid', 'text'))) ? trim($_REQUEST['display'])  : (isset($_SESSION['display_search']) ? $_SESSION['display_search'] : $default_display_type);
 
@@ -389,13 +389,13 @@ else
     /* 查询商品 */
     $sql = "SELECT g.goods_id, g.goods_name, g.market_price, g.is_new, g.comments_number, g.sales_volume, g.is_best, g.is_hot, g.shop_price AS org_price, ".
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-                "g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_thumb, g.goods_img, g.goods_brief, g.goods_type ".
+                "g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_thumb, g.goods_img, g.goods_brief, g.goods_type,g.sales_volume_base ".
             "FROM " .$ecs->table('goods'). " AS g ".
             "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
                     "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
             "WHERE g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_alone_sale = 1 $attr_in ".
                 "AND (( 1 " . $categories . $keywords . $brand . $min_price . $max_price . $intro . $outstock . " ) ".$tag_where." ) " .
-            "ORDER BY $sort $order";
+            "ORDER BY g.$sort $order"; 
     $res = $db->SelectLimit($sql, $size, ($page - 1) * $size);
 
     $arr = array();
@@ -464,6 +464,7 @@ else
         $arr[$row['goods_id']]['goods_thumb']   = get_image_path($row['goods_id'], $row['goods_thumb'], true);
         $arr[$row['goods_id']]['goods_img']     = get_image_path($row['goods_id'], $row['goods_img']);
         $arr[$row['goods_id']]['url']           = build_uri('goods', array('gid' => $row['goods_id']), $row['goods_name']);
+	  $arr[$row['goods_id']]['sales_count']      = get_sales_volume($row['goods_id'])+$row['sales_volume_base']; //显示月销量 by wang
     }
 
     if($display == 'grid')
@@ -476,7 +477,7 @@ else
     $smarty->assign('goods_list', $arr);
     $smarty->assign('category',   $category);
     $smarty->assign('keywords',   htmlspecialchars(stripslashes($_REQUEST['keywords'])));
-    $smarty->assign('search_keywords',   stripslashes(htmlspecialchars_decode($_REQUEST['keywords'])));
+    $smarty->assign('search_keywords',   trim(stripslashes(htmlspecialchars_decode($_REQUEST['keywords']))));
     $smarty->assign('brand',      $_REQUEST['brand']);
     $smarty->assign('min_price',  $min_price);
     $smarty->assign('max_price',  $max_price);
@@ -514,7 +515,8 @@ else
 
     $pager = get_pager('search.php', $pager['search'], $count, $page, $size);
     $pager['display'] = $display;
-
+    $pager['sort'] = $sort;
+    $pager['order'] = $order;
     $smarty->assign('url_format', $url_format);
     $smarty->assign('pager', $pager);
 
@@ -530,6 +532,7 @@ else
     $smarty->assign('top_goods',  get_top10());           // 销售排行
     $smarty->assign('promotion_info', get_promotion_info());
 
+    $smarty->assign('script_name', 'search');
     $smarty->display('search.dwt');
 }
 
@@ -622,5 +625,19 @@ function get_seachable_attributes($cat_id = 0)
     }
 
     return $attributes;
+}
+function get_sales_volume($goods_id)
+{
+	/* 查询该商品的实际销量 */
+    $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
+        'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
+            $GLOBALS['ecs']->table('order_goods') . ' AS g ' .
+        "WHERE o.order_id = g.order_id " .
+       
+        "AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
+        " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
+        " AND g.goods_id = '$goods_id'" ;
+		
+    return intval($GLOBALS['db']->getOne($sql));
 }
 ?>
