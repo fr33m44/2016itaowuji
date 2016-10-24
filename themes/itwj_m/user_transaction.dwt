@@ -19,7 +19,7 @@
   <div class="login"> 
     <!-- 用户信息界面 start--> 
     <!--{if $action eq 'profile'}--> 
-    {insert_scripts files='utils.js'} 
+    {insert_scripts files='utils.js,jquery.json.js,region.js,shopping_flow.js'} 
     <script type="text/javascript">
           {foreach from=$lang.profile_js item=item key=key}
             var {$key} = "{$item}";
@@ -34,10 +34,7 @@
       <form name="formEdit" action="user.php" method="post" onSubmit="return userEdit()">
         <section class="order_box padd1 radius10" style="padding-top:0;padding-bottom:0;">
           <div class="table_box table_box2">
-            <dl>
-              <dd class="dd1">电子邮箱 </dd>
-              <input name="email" type="text" placeholder="输入电子邮箱"  value="{$profile.email}" class="dd2" />
-            </dl>
+            
             {foreach from=$extend_info_list item=field}
             <!-- {if $field.id eq 6} -->
             <dl>
@@ -61,7 +58,8 @@
 			<dl>
               <dd class="dd1">性别</dd>
 			  <dd>
-			<input  style="width: 3%;" type="radio" name="sex" value="1" {if $profile.sex==1}checked{/if} > 男<input       type="radio" style="width: 3%;" name="sex" value="0" {if $profile.sex==0}checked{/if}> 女 
+			<input style="width: 3%;"  type="radio" name="sex" value="1" {if $profile.sex==1}checked{/if} > 男
+			<input style="width: 3%;"  type="radio" name="sex" value="2" {if $profile.sex==2}checked{/if}> 女 
 			</dd>			
             </dl>
 			<dl>
@@ -76,7 +74,7 @@
         </section>
         <div class="blank3"></div>
         <input name="act" type="hidden" value="act_edit_profile" />
-        <input name="submit" type="submit" value="{$lang.confirm_edit}" class="c-btn3"   />
+        <input name="submit" type="submit" value="{$lang.confirm_edit}" class="c-btn4"   />
       </form>
       <div class="blank3"></div>
       <form name="formPassword" action="user.php" method="post" onSubmit="return editPassword()" >
@@ -98,70 +96,73 @@
         </section>
         <div class="blank3"></div>
         <input name="act" type="hidden" value="act_edit_password" />
-        <input name="submit" type="submit" class="c-btn3"     value="{$lang.confirm_edit}" />
+        <input name="submit" type="submit" class="c-btn4"     value="{$lang.confirm_edit}" />
       </form>
+      <div class="blank3"></div>
+	  
+	<!-- {foreach from=$consignee_list item=consignee key=sn} -->
+      <form name="formShop" action="user.php" method="post" onSubmit="return checkConsignee(this)" >
+        <section class="order_box padd1 radius10" style="padding-top:0;padding-bottom:0;">
+          <div class="table_box table_box2">
+            <dl>
+              <dd class="dd1">店铺名称</dd>
+			<input name="consignee" type="text" class="dd2" id="consignee_{$sn}" value="{$consignee.consignee|escape}"  />
+            </dl>
+            <dl>
+              <dd class="dd1">店铺类型</dd>
+                <select name="shop_type">
+							<option value="1" {if $consignee.shop_type eq '1'}selected="selected"{/if}>内衣店</option>
+							<option value="2" {if $consignee.shop_type eq '2'}selected="selected"{/if}>超市</option>
+							<option value="3" {if $consignee.shop_type eq '3'}selected="selected"{/if}>化妆品店</option>
+							<option value="4" {if $consignee.shop_type eq '4'}selected="selected"{/if}>童装店</option>
+							<option value="5" {if $consignee.shop_type eq '5'}selected="selected"{/if}>文具店</option>
+							<option value="6" {if $consignee.shop_type eq '6'}selected="selected"{/if}>鞋店</option>				
+						</select>
+            </dl>
+            <dl>
+              <dd class="dd1">店铺所在区域</dd>
+              		<input type="hidden" name="country" value="1" />
+                      <select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
+                        <option value="0">{$lang.please_select}{$name_of_region[1]}</option>
+                        <!-- {foreach from=$province_list.$sn item=province} -->
+                        <option value="{$province.region_id}" {if $consignee.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
+                        <!-- {/foreach} -->
+                      </select>
+                      <select name="city" id="selCities_{$sn}" onchange="region.changed(this, 3, 'selDistricts_{$sn}')">
+                        <option value="0">{$lang.please_select}{$name_of_region[2]}</option>
+                        <!-- {foreach from=$city_list.$sn item=city} -->
+                        <option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
+                        <!-- {/foreach} -->
+                      </select>
+                      <select name="district" id="selDistricts_{$sn}" {if !$district_list.$sn}style="display:none"{/if}>
+                        <option value="0">{$lang.please_select}{$name_of_region[3]}</option>
+                        <!-- {foreach from=$district_list.$sn item=district} -->
+                        <option value="{$district.region_id}" {if $consignee.district eq $district.region_id}selected{/if}>{$district.region_name}</option>
+                        <!-- {/foreach} -->
+                      </select>
+            </dl>
+            <dl>
+              <dd class="dd1">店铺详细地址</dd>
+              <input name="address" type="text" class="dd2" id="address_{$sn}" value="{$consignee.address|escape}" />
+            </dl>
+            <dl>
+              <dd class="dd1">手机</dd>
+              <input name="mobile" type="text" class="dd2" id="mobile_{$sn}" value="{$consignee.mobile|escape}" />
+            </dl>
+          </div>
+        </section>
+        <div class="blank3"></div>
+	  <input type="hidden" name="act" value="act_edit_address" />
+	  <input name="address_id" type="hidden" value="{$consignee.address_id}" /></td>
+        <input name="submit" type="submit" class="c-btn4"     value="{$lang.confirm_edit}" />
+      </form>
+	  <!-- {/foreach} -->
+      <div class="blank3"></div>
+	  
     </section>
     <!--{/if}--> 
     <!--#用户信息界面 end--> 
-	 <!-- 修改店铺名字 start--> 
-    <!--{if $action eq 'dianpu'}--> 
-    <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
-      <h1> 修改我的店铺名称</h1>
-    </header>
-    <div class="blank3"></div>
-    <section class="wrap">
-      <form name="formEdit" action="user.php" method="post" onSubmit="return userEdit()">
-        <section class="order_box padd1 radius10" style="padding-top:0;padding-bottom:0;">
-          <div class="table_box table_box2">
-            <dl>
-              <dd class="dd1">微店名称 </dd>
-              <input name="nicheng" type="text" placeholder="请给你的微店取个名字"  value="{$dianpu}" class="dd2" />
-            </dl>
 
-			</div>
-        </section>
-        <div class="blank3"></div>
-		<input type="hidden" name="act" value="act_dianpu" />
-        <input type="hidden" name="back_act" value="{$back_act}" />
-        <input name="submit" type="submit" value="{$lang.confirm_edit}" class="c-btn3"   />
-      </form>
-    </section>
-    <!--{/if}--> 
-    <!--#修改店铺名字结束 end--> 
-	
-		 <!-- 修改店铺名字 start--> 
-    <!--{if $action eq 'act_dianpu'}--> 
-    <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
-      <h1> 修改我的店铺名称</h1>
-    </header>
-    <div class="blank3"></div>
-    <section class="wrap">
-      <form name="formEdit" action="user.php" method="post" onSubmit="return userEdit()">
-        <section class="order_box padd1 radius10" style="padding-top:0;padding-bottom:0;">
-          <div class="table_box table_box2">
-            <dl>
-              <dd class="dd1">微店名称 </dd>
-              <input name="nicheng" type="text" placeholder="请给你的微店取个名字"  value="{$dianpu}" class="dd2" />
-            </dl>
-
-			</div>
-        </section>
-        <div class="blank3"></div>
-		<input type="hidden" name="act" value="act_dianpu" />
-        <input type="hidden" name="back_act" value="{$back_act}" />
-        <input name="submit" type="submit" value="{$lang.confirm_edit}" class="c-btn3"   />
-      </form>
-    </section>
-    <!--{/if}--> 
-    <!--#修改店铺名字结束 end--> 
-	
-	
-	
-	
-	
-	
     <!-- {if $action eq 'bonus'} 用户的红包列表 start--> 
     <script type="text/javascript">
         {foreach from=$lang.profile_js item=item key=key}
@@ -413,13 +414,9 @@ jQuery(function($){
           <td width="32%" align="right">{$lang.consignee_name}：</td>
           <td width="68%" align="left">{$order.consignee}</td>
         </tr>
-        <tr>
-          <td align="right">{$lang.email_address}：</td>
-          <td align="left">{$order.email}</td>
-        </tr>
         <!-- {if $order.exist_real_goods} -->
         <tr>
-          <td align="right">{$lang.detailed_address}：</td>
+          <td align="right">收货地址：</td>
           <td align="left">{$order.address} 
             <!-- {if $order.zipcode} --> 
             [{$lang.postalcode}: {$order.zipcode}] 
@@ -428,14 +425,8 @@ jQuery(function($){
         <!-- {/if}-->
         <tr>
           <td align="right">{$lang.phone}：</td>
-          <td align="left">{$order.tel} </td>
+          <td align="left">{$order.mobile} </td>
         </tr>
-        <!-- {if $order.exist_real_goods} -->
-        <tr>
-          <td align="right">{$lang.deliver_goods_time}：</td>
-          <td align="left">{$order.best_time}</td>
-        </tr>
-        <!--{/if}-->
       </table>
       </section>
       
@@ -444,7 +435,7 @@ jQuery(function($){
       	  <!-- {foreach from=$goods_list item=goods} -->
           <tr>
             <td rowspan="2" width="60" align="center" valign="middle" style="border-bottom:1px #CCCCCC dashed">
-            <a href="goods.php?id={$goods.goods_id}" target="_blank"><img src="{$site_url}{$goods.goods_thumb}" width="60" height="60" /></a></td>
+            <a href="goods.php?id={$goods.goods_id}" target="_blank"><img src="{$goods.goods_thumb}" width="60" height="60" /></a></td>
             <td>{$goods.goods_name}</td>
           </tr>
           <tr>

@@ -3196,7 +3196,7 @@ border-radius: 24px 0 0 24px;}
 
 .table_box dl {
 	padding: 0.5rem 0;
-	width: 100%
+	width: 90%
 }
 .table_box .first {
 	float: left;
@@ -3340,10 +3340,15 @@ border-radius: 24px 0 0 24px;}
 /* 订单确认页表格_中间模块 */
 
 .order_box .table_box2 dl {
+	margin:1rem;
 	padding: 0;
 	position: relative
 }
 .table_box2 .dd1 {
+	font-weight:bold;
+	margin-top:3px;
+	padding:5px;
+	margin-bottom:3px;
 	width: 28%;
 	vertical-align: middle;
 }
@@ -3352,7 +3357,7 @@ border-radius: 24px 0 0 24px;}
 	font-size: 0.8rem;
 	text-align: left;
 	width: 90%;
-	height: 2.5rem;
+	height: 1.5rem;
 	line-height: normal;
 	vertical-align: middle;
 	border: none
@@ -3367,22 +3372,20 @@ border-radius: 24px 0 0 24px;}
 	border: 1px solid #ddd;
 	background: #fff;
 	padding: 0;
-	height: 24px;
+	margin:10px;
 }
 .table_box2 input.radio {
 	width: auto;
-}
-display: inline-block;
-height: 24px;
-width: 24px;
-position: relative;
-margin: 0 5px 0 3px;
-padding: 0;
-background-color: #cfcfcf;
-border-radius: 100%;
-vertical-align: top;
-cursor: pointer;
-width:auto;
+	display: inline-block;
+	height: 24px;
+	width: 24px;
+	position: relative;
+	margin: 0 5px 0 3px;
+	padding: 0;
+	background-color: #cfcfcf;
+	border-radius: 100%;
+	vertical-align: top;
+	cursor: pointer;
 }
 .table_box2 input.radio.on {
 	background-color: #05abe0;
@@ -3863,7 +3866,7 @@ width:auto;
 	display: block;
 	-webkit-user-select: none;
 	font-size: 0.9rem;
-	background: #46776f;
+	background: #ee6a6a;
 	text-align: center
 }
 .order_handler span {

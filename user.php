@@ -72,7 +72,6 @@ if ($action == 'default') {
 		}
 	}
 	$smarty->assign('info', get_user_default($user_id));
-	print_r(get_user_default($user_id));
 	$smarty->assign('user_notice', $_CFG['user_notice']);
 	$smarty->assign('prompt', get_user_prompt($user_id));
 	$smarty->display('user_clips.dwt');
@@ -513,8 +512,14 @@ elseif ($action == 'profile') {
 }
 /* 修改个人资料的处理 */
 elseif ($action == 'act_edit_profile') {
+	$ismobile = checkmobile();
 	include_once (ROOT_PATH . 'includes/lib_transaction.php');
-	$birthday = trim($_POST['birthdayYear']) . '-' . trim($_POST['birthdayMonth']) . '-' . trim($_POST['birthdayDay']);
+	if($ismobile){
+		$birthday = $_POST['birthday'];
+	}
+	else{
+		$birthday = trim($_POST['birthdayYear']) . '-' . trim($_POST['birthdayMonth']) . '-' . trim($_POST['birthdayDay']);
+	}
 	$email = trim($_POST['email']);
 	$other['msn'] = $msn = isset($_POST['extend_field1']) ? trim($_POST['extend_field1']) : '';
 	$other['qq'] = $qq = isset($_POST['extend_field2']) ? trim($_POST['extend_field2']) : '';
@@ -864,6 +869,7 @@ elseif ($action == 'order_detail') {
 	$order['pay_status'] = $_LANG['ps'][$order['pay_status']];
 	$order['shipping_status'] = $_LANG['ss'][$order['shipping_status']];
 	$smarty->assign('order', $order);
+	
 	$smarty->assign('goods_list', $goods_list);
 	$smarty->display('user_transaction.dwt');
 }
