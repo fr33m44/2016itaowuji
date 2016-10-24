@@ -35,7 +35,7 @@
             <div class="userCenterBox boxCenterList clearfix" style="_height:1%;"> 
               <!-- profile start--> 
               <!--{if $action eq 'profile'}--> 
-              {insert_scripts files='utils.js'} 
+              {insert_scripts files='utils.js,shopping_flow.js'} 
               <script type="text/javascript">
           {foreach from=$lang.profile_js item=item key=key}
             var {$key} = "{$item}";
@@ -121,7 +121,8 @@
                 <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                   <tr>
                     <td align="right" bgcolor="#ffffff">店铺地址（区域）：</td>
-                    <td colspan="3" align="left" bgcolor="#ffffff"><select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
+                    <td colspan="3" align="left" bgcolor="#ffffff">
+				<select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
                         <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
                         <!-- {foreach from=$country_list item=country} -->
                         <option value="{$country.region_id}" {if $consignee.country eq $country.region_id}selected{/if}>{$country.region_name}</option>

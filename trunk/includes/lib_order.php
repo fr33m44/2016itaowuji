@@ -443,7 +443,14 @@ function order_info($order_id, $order_sn = '')
         $order['formated_order_amount']   = price_format(abs($order['order_amount']), false);
         $order['formated_add_time']       = local_date($GLOBALS['_CFG']['time_format'], $order['add_time']);
     }
-
+	// 增加地区 by wang
+	$sql = "select region_name from ".$GLOBALS['ecs']->table('region') . " where region_id in(".$order['province'].",". $order['city'].",".$order['district'].")";
+	$address = $GLOBALS['db']->getAll($sql);
+	foreach($address as $vo){
+		$region .= $vo['region_name'];
+	}
+	$order['address'] = $region.$order['address'];
+	// 增加地区 by wang end
     return $order;
 }
 
@@ -466,11 +473,11 @@ function order_finished($order)
  */
 function order_goods($order_id)
 {
-    $sql = "SELECT rec_id, goods_id, goods_name, goods_sn, market_price, goods_number, " .
-            "goods_price, goods_attr, is_real, parent_id, is_gift, " .
-            "goods_price * goods_number AS subtotal, extension_code " .
-            "FROM " . $GLOBALS['ecs']->table('order_goods') .
-            " WHERE order_id = '$order_id'";
+    $sql = "SELECT og.rec_id, og.goods_id, og.goods_name, og.goods_sn, og.market_price, og.goods_number, " .
+            "og.goods_price, og.goods_attr, og.is_real, og.parent_id, og.is_gift, " .
+            "og.goods_price * og.goods_number AS subtotal, og.extension_code, g.goods_thumb " .
+            "FROM " . $GLOBALS['ecs']->table('order_goods') . " as og left join " .$GLOBALS['ecs']->table('goods'). " g on og.goods_id = g.goods_id" .
+            " WHERE og.order_id = '$order_id'";
 
     $res = $GLOBALS['db']->query($sql);
 

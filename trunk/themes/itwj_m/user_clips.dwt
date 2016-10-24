@@ -23,13 +23,14 @@
 <dl class="user_top">
   <dt> {if $info.avatar neq ''}<img src="{$info.avatar}">{else}<img src="{$ectouch_themes}/images/get_avatar.png">{/if} </dt>
   <dd>
-    <p>{$info.username}</p>
+    <p><strong>{$info.username}</strong></p>
+    <p>最近登录时间：{$info.last_time}</p>
   </dd>
   <div class="user_top_list">
     <ul>
       <li> <a href="user.php?act=order_list"> <strong>{$info.order_count}</strong> <img  src="{$ectouch_themes}/images/ico_user_01.png"> <span>30天订单</span> </a> </li>
       <li> <a href="distribute.php?act=account_detail"> <strong>{$info.surplus}</strong> <img  src="{$ectouch_themes}/images/ico_user_03.png"> <span>余额</span> </a> </li>
-      <li> <a class="fragment" href="user.php?act=bonus"> <strong>{$info.bonus}</strong> <img  src="{$ectouch_themes}/images/ico_user_04.png"> <span>红包</span> </a> </li>
+      <li> <a class="fragment" href="user.php?act=bonus"> <strong>{$info.bonus_count}</strong> <img  src="{$ectouch_themes}/images/ico_user_04.png"> <span>红包</span> </a> </li>
     </ul>
   </div>
   <div class="quan1"></div>
@@ -39,14 +40,14 @@
 <div class="blank3"></div>
 <section class="wrap">
   <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
-  <a  href="tel:{$service_phone}" class="clearfix"> <span>呼叫客服</span><i></i> </a><a href="user.php?act=profile" class="clearfix"> <span>{$lang.label_profile}</span><i></i> </a> <a href="user.php?act=order_list" class="clearfix"> <span>{$lang.label_order}</span><i></i> </a> <a href="user.php?act=address_list"  class="clearfix"> <span>{$lang.label_address}</span><i></i> </a> <a href="user.php?act=collection_list"  class="clearfix"> <span>{$lang.label_collection}</span><i></i> </a> </div>
+  <a href="user.php?act=profile" class="clearfix"> <span>{$lang.label_profile}</span><i></i> </a> <a href="user.php?act=order_list" class="clearfix"> <span>{$lang.label_order}</span><i></i> </a> <a href="user.php?act=address_list"  class="clearfix"> <span>{$lang.label_address}</span><i></i> </a> <a href="user.php?act=collection_list"  class="clearfix"> <span>{$lang.label_collection}</span><i></i> </a> </div>
   <div class="blank3"></div>
   <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> <a href="user.php?act=message_list" class="clearfix"> <span>{$lang.label_message}</span><i></i> </a>  <a href="user.php?act=comment_list"  class="clearfix"> <span>{$lang.label_comment}</span><i></i> </a>
-	<a href="user.php?act=user_card"  class="clearfix"> <span>会员卡</span><i></i> </a>
+	<a href="user.php?act=account_log"  class="clearfix"> <span>资金管理</span><i></i> </a>
   </div>
   <div class="blank3"></div>
   <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
-    <a href="user.php?act=logout" class="clearfix"> <span>退出登录</span><i></i> </a> </div>
+    <a href="user.php?act=logout" class="clearfix"> <span>退出</span><i></i> </a> </div>
 </section>
 
 <!-- {/if} --> 
