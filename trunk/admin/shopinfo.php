@@ -50,7 +50,7 @@ elseif ($_REQUEST['act'] == 'query')
 if ($_REQUEST['act'] =='add')
 {
     /* 权限判断 */
-    admin_priv('shopinfo_manage');
+     admin_priv('shopinfo_manage'); $_REQUEST['id'] = intval($_REQUEST['id']); 
 
     /* 创建 html editor */
     create_html_editor('FCKeditor1');
@@ -68,7 +68,7 @@ if ($_REQUEST['act'] =='add')
 if ($_REQUEST['act'] == 'insert')
 {
     /* 权限判断 */
-    admin_priv('shopinfo_manage');
+     admin_priv('shopinfo_manage'); $_REQUEST['id'] = intval($_REQUEST['id']); 
 
     /* 判断是否重名 */
     $is_only = $exc->is_only('title', $_POST['title']);
@@ -102,7 +102,7 @@ if ($_REQUEST['act'] == 'insert')
 if ($_REQUEST['act'] == 'edit')
 {
     /* 权限判断 */
-    admin_priv('shopinfo_manage');
+     admin_priv('shopinfo_manage'); $_REQUEST['id'] = intval($_REQUEST['id']); 
 
     /* 取得文章数据 */
     $sql = "SELECT article_id, title, content FROM ".$ecs->table('article')."WHERE article_id =".$_REQUEST['id'];
@@ -120,7 +120,7 @@ if ($_REQUEST['act'] == 'edit')
 if ($_REQUEST['act'] == 'update')
 {
     /* 权限判断 */
-    admin_priv('shopinfo_manage');
+     admin_priv('shopinfo_manage'); $_REQUEST['id'] = intval($_REQUEST['id']); 
 
     /* 检查重名 */
     if ($_POST['title'] != $_POST['old_title'])
