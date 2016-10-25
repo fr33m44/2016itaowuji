@@ -193,7 +193,7 @@
   <div class="empty-cart">
     <div class="ico_13 cart-logo"></div>
     <p class="message">没有宝贝哦，不如去添加宝贝</p>
-    <div class="flex"> <a class="c-btn2  flex_in radius5" href="index.php" style=" background:#6bd0a2"> <i class="ico_04_b"></i> 去购物 </a> <a class="c-btn2  flex_in radius5" href="user.php?act=collection_list" style=" margin-left:0.5rem"> 查看收藏夹</a> </div>
+    <div class="flex"> <a class="c-btn2  flex_in radius5" href="index.php" style=" background:#6bd0a2"> <i class="ico_04_b"></i> 去进货 </a> <a class="c-btn2  flex_in radius5" href="user.php?act=collection_list" style=" margin-left:0.5rem"> 查看收藏夹</a> </div>
   </div>
 </section>
 <!-- {/if} --> 

@@ -12,9 +12,6 @@
   </div>
   <p class="link region"> <a href="{$site_url}?computer=1"> 电脑版 </a> <a href="./"> 触屏版 </a></p>
   <p class="region"> 
-    <!-- ICP 证书{if $icp_number} --> 
-    {$lang.icp_number}: <a href="http://www.miibeian.gov.cn/" target="_blank"> {$icp_number} </a> 
-    <!-- 结束ICP 证书{/if} --> 
     {$copyright} </p>
 </div>
 
