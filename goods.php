@@ -6,7 +6,6 @@
  * $Author: liubo $
  * $Id: goods.php 17217 2011-01-19 06:29:08Z liubo $
 */
-
 define('IN_ECS', true);
 
 require(dirname(__FILE__) . '/includes/init.php');
@@ -20,7 +19,6 @@ if ((DEBUG_MODE & 2) != 2)
 {
     $smarty->caching = true;
 }
-
 $affiliate = unserialize($GLOBALS['_CFG']['affiliate']);
 $smarty->assign('affiliate', $affiliate);
 $factor = intval($_CFG['comment_factor']);
