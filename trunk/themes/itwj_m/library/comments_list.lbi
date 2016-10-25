@@ -43,47 +43,7 @@
       </div>
       <!--翻页 END-->
       <div class="blank2"></div>
-      <!--评论表单 start-->
-      <div class="commentsList radius5">
-      <form action="javascript:;" onsubmit="submitComment(this)" method="post" name="commentForm" id="commentForm">
-   
- <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="" >
-           <tr>
-          <td>
-        {$lang.username}：<!--{if $smarty.session.user_name}-->{$smarty.session.user_name}<!--{else}-->{$lang.anonymous}<!--{/if}-->
-          </td>
-        </tr>
-     <tr>
-         
-          <td>
-          <input name="comment_rank" type="radio" value="5" checked="checked" id="comment_rank5" /> 非常好
-          <input name="comment_rank" type="radio" value="4" id="comment_rank4" /> 很好
-          <input name="comment_rank" type="radio" value="3" id="comment_rank3" /> 一般
-          <input name="comment_rank" type="radio" value="2" id="comment_rank2" /> 不行
-          <input name="comment_rank" type="radio" value="1" id="comment_rank1" /> 很差
-          </td>
-        </tr>
-          <td>
-          <input placeholder="E-mail"  type="text" name="email" id="email"  maxlength="100" value="{$smarty.session.email|escape}" class="inputBg"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-          <textarea placeholder="{$lang.comment_content}" name="content" class="inputBg2" style="height:4rem"  ></textarea>
-          <input type="hidden" name="cmt_type" value="{$comment_type}" />
-          <input type="hidden" name="id" value="{$id}" />
-          </td>
-        </tr>
-
-        <tr>
-          <td><input type="submit" name="submit" value="提交评论" class="c-btn3" /></td>
-        </tr>
-      </table>
-      </form>
-      </div>
-      <!--评论表单 end-->
-    <div class="blank2"></div>
-  <!--用户评论 END-->
+    
 <script type="text/javascript">
 //<![CDATA[
 {foreach from=$lang.cmt_lang item=item key=key}
@@ -146,7 +106,7 @@ function submitComment(frm)
       return false;
    }
 
-   Ajax.call('comment.php', 'cmt=' + cmt.toJSONString(), commentResponse, 'POST', 'JSON');
+   Ajax.call('comment.php', 'cmt=' + $.toJSON(cmt), commentResponse, 'POST', 'JSON');
    return false;
 }
 

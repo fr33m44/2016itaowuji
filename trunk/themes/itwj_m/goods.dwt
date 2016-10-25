@@ -355,9 +355,7 @@ function showPic(){
 		</div>
 	</form>
 	</section>
-	<div class="guarantee">
-		微信支付商家,正品保证,假一罚三,七天无条件退换货。
-	</div>
+	
 </div>
 <script type="text/javascript">
 //介绍 评价 咨询切换

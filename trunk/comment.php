@@ -152,7 +152,7 @@ if (empty($_REQUEST['act']))
             }
 
             $cur_time = gmtime();
-            if (($cur_time - $_SESSION['send_time']) < 30) // 小于30秒禁止发评论
+            if (($cur_time - $_SESSION['send_time']) < 1) // 小于30秒禁止发评论
             {
                 $result['error']   = 1;
                 $result['message'] = $_LANG['cmt_spam_warning'];

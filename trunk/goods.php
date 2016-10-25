@@ -209,6 +209,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $linked_goods = get_linked_goods($goods_id);
 
         $goods['goods_style_name'] = add_style($goods['goods_name'], $goods['goods_name_style']);
+        $goods['comment_count'] = get_comment_count($goods['goods_id']);
 
         /* 购买该商品可以得到多少钱的红包 */
         if ($goods['bonus_type_id'] > 0)
@@ -231,6 +232,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
 		$smarty->assign('goods_name',              $goods['goods_name']);
         $smarty->assign('goods_id',           $goods['goods_id']);
         $smarty->assign('promote_end_time',   $goods['gmt_end_time']);
+        $smarty->assign('sales_count',        get_goods_sales_count($goods['goods_id'])); // by wang
         $smarty->assign('categories',         get_categories_tree($goods['cat_id']));  // 分类树
 		$smarty->assign('categories_pro',  get_categories_tree_pro()); // 分类树加强版/* 周改 *
 
@@ -686,4 +688,42 @@ function get_package_goods_list($goods_id)
     return $res;
 }
 
+// 获取商品的销量 by wang
+function get_goods_sales_count($goods_id)
+{
+    /* 统计时间段 */
+    //$period = intval($GLOBALS['_CFG']['top10_time']);
+    $period = 4; //近一个月（30天）
+    if ($period == 1) { // 一年
+        $ext = " AND o.add_time > '" . local_strtotime('-1 years') . "'";
+    } elseif ($period == 2) { // 半年
+        $ext = " AND o.add_time > '" . local_strtotime('-6 months') . "'";
+    } elseif ($period == 3) { // 三个月
+        $ext = " AND o.add_time > '" . local_strtotime('-3 months') . "'";
+    } elseif ($period == 4) { // 一个月
+        $ext = " AND o.add_time > '" . local_strtotime('-1 months') . "'";
+    } else {
+        $ext = '';
+    }
+
+    /* 查询该商品销量 */
+    $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
+        'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
+            $GLOBALS['ecs']->table('order_goods') . ' AS g ' .
+        "WHERE o.order_id = g.order_id " .
+        "AND o.order_status " . db_create_in(array(OS_CONFIRMED, OS_SPLITED)) .
+        "AND o.shipping_status " . db_create_in(array(SS_SHIPPED, SS_RECEIVED)) .
+        " AND o.pay_status " . db_create_in(array(PS_PAYED, PS_PAYING)) .
+        " AND g.goods_id = '$goods_id'" . $ext;
+    $sales_count = $GLOBALS['db']->getOne($sql);
+
+    return intval($sales_count);
+}
+
+// 统计商品的评论数
+function get_comment_count($goods_id){
+    $sql = 'SELECT count(*) FROM '.$GLOBALS['ecs']->table('comment').' where status=1 and id_value='.$goods_id;
+    $res = $GLOBALS['db']->getOne($sql);
+    return intval($res);
+}
 ?>
