@@ -46,7 +46,7 @@
      
      
          <div class="help_right_title " >
-         <p>{$article.title|escape:html}</p> <b>{$article.author|escape:html} / {$article.add_time}</b>
+         <p>{$article.title|escape:html}</p> <b>{$article.author|escape:html}</b>
          </div>
          <div class="blank"></div>
          <div class="content_right">
