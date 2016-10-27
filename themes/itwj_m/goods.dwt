@@ -277,12 +277,12 @@ function showPic(){
 						<!-- {if $cfg.goodsattr_style eq 1} -->
 							<!-- {if $spec.name eq '颜色'}-->
 								<!-- {foreach from=$spec.values item=value key=key} -->
-								<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()"/>
+								<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked="checked"{/if} onclick="changePrice()"/>
 								<label for="spec_value_{$value.id}">{$value.label}</label>
 								<!-- {/foreach} -->
 							<!--{else}-->
 								<!--{foreach from=$spec.values item=value key=key}-->
-								<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()"/>
+								<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked="checked"{/if} onclick="changePrice()"/>
 								<label for="spec_value_{$value.id}">{$value.label}</label>
 								<!-- {/foreach} -->
 							<!--{/if}-->
@@ -305,7 +305,7 @@ function showPic(){
 				<div class="items">
 					<span class="ui-number radius5">
 					<!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
-					<button type="button" class="decrease radius5" onclick="changenum(- 1)">-</button>
+					<button type="button" class="decrease radius5" onclick="changenum(-1)">-</button>
 					<input class="num" name="number" id="goods_number" autocomplete="off" value="1" min="1" max="{$goods.goods_number}" type="number"/>
 					<button type="button" class="increase radius5" onclick="changenum(1)">+</button>
 					<!-- {else} -->
@@ -322,6 +322,23 @@ function showPic(){
 				document.getElementById('hidDiv').style.display = 'block';
 				document.getElementById('cartNum').innerHTML = document.getElementById('goods_number').value;
 				document.getElementById('cartPrice').innerHTML = document.getElementById('ECS_GOODS_AMOUNT').innerHTML;
+				//hjq get spec
+				var spec_elems = document.forms['ECS_FORMBUY'].elements;
+				var spec_str = '';
+				var spec_arr = [];
+				for(var i =0;i<spec_elems.length;i++)
+				{
+					if(spec_elems[i].type == "radio"  && spec_elems[i].checked == true)
+					{
+						spec_arr.push(spec_elems[i].nextElementSibling.innerHTML);
+					}
+				}
+				spec_arr.reverse();
+				for(var j=0;j<spec_arr.length;j++)
+				{
+					spec_str += spec_arr[j];
+				}
+				document.getElementById('cartSpec').innerHTML = spec_str;
             }
             function closeDiv(){
                 document.getElementById('popDiv').style.display = 'none';
@@ -344,7 +361,9 @@ function showPic(){
 						<p>
 							{$goods.goods_name}
 						</p>
-						<span> 加入数量： <b id="cartNum"></b></span><span> 总计金额： <b id="cartPrice"></b></span>
+						<span> 规格： <b id="cartSpec"></b></span>
+						<span> 加入数量： <b id="cartNum"></b></span>
+						<span> 总计金额： <b id="cartPrice"></b></span>
 					</div>
 				</div>
 				<div class="popbtn">
