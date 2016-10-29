@@ -40,13 +40,16 @@ function addToCartShowDiv(goodsId, script_name, goods_recommend, parentId)
 	goods.script_name = (typeof(script_name) == "undefined") ? 0 : parseInt(script_name);
 	goods.goods_recommend = (typeof(goods_recommend) == "undefined") ? '' : goods_recommend;
 	goods.parent = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
-	
+	goods.items = new Array();
+	var item = new Object();
 	for (i = 0; i < spec_arr.length; i++)
 	{
-		goods.spec = spec_arr[i].specs;
-		goods.number = spec_arr[i].number;
-		Ajax.call('flow.php?step=add_to_cart_showDiv', 'goods=' + $.toJSON(goods), addToCartShowDivResponse, 'POST', 'JSON');
+		item['spec'] = spec_arr[i].specs;
+		item['number'] = spec_arr[i].number;
+		goods.items.push(item);
 	}
+	Ajax.call('flow.php?step=add_to_cart_showDiv', 'goods=' + $.toJSON(goods), addToCartShowDivResponse, 'POST', 'JSON');
+	
 }
 /* *
  * 处理添加商品到购物车并且停留当前页显示出DIV反馈信息
@@ -55,13 +58,10 @@ function addToCartShowDivResponse(result)
 {
 	if (result.error > 0)
 	{
-		// 如果需要缺货登记，跳转
+		// 缺货
 		if (result.error == 2)
 		{
-			if (confirm(result.message))
-			{
-				location.href = 'user.php?act=add_booking&id=' + result.goods_id + '&spec=' + result.product_spec;
-			}
+			alert(result.message);
 		}
 		// 没选规格，弹出属性选择框
 		else if (result.error == 6)
