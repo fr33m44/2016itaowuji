@@ -1553,6 +1553,7 @@ elseif ($_REQUEST['step'] == 'ajax_update_cart') {
 			if (!empty($goods['product_id'])) {
 				$sql = "SELECT product_number FROM " . $GLOBALS['ecs']->table('products') . " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";
 				$product_number = $GLOBALS['db']->getOne($sql);
+				
 				if ($product_number < $val) {
 					$result['error'] = 2;
 					$result['message'] = sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'], $product_number, $product_number);
@@ -1640,35 +1641,6 @@ elseif ($_REQUEST['step'] == 'ajax_update_cart') {
 	}
 	show_message($_LANG['update_cart_notice'], $_LANG['back_to_cart'], 'flow.php');
 	exit;
-}
-//hjq 获取库存
-elseif ($_REQUEST['step'] == 'get_stock') {
-	include ('includes/cls_json.php');
-	$json = new JSON;
-	$res = array('err_msg' => '', 'result' => '');
-	$rec_id = intval($_REQUEST['rec_id']);
-	$sql = "select goods_id from " . $ecs->table("cart") . " where rec_id=$rec_id";
-	$goods_id = $db->getOne($sql);
-	$spec_str = $_REQUEST["spec_str"];
-	$spec_arr = explode("_", $spec_str);
-	$size = $spec_arr[0];
-	$color = $spec_arr[1];
-	$cup = $spec_arr[2];
-	$sql = "select goods_type from " . $ecs->table("goods") . " where goods_id=$goods_id";
-	$goods_type = $db->getOne($sql);
-	if (!empty($goods_id) && !empty($spec_str)) {
-		if ($goods_type == 13) //文胸
-		{
-			$sql = "SELECT stock_number FROM " . $ecs->table('goods_stock') . "WHERE goods_id=$goods_id and cup=$cup and size=$size and color=$color";
-			$stock = $db->getOne($sql);
-			$res = array('err_msg' => 0, 'result' => array('name' => 'goods_number_' . $rec_id, 'value' => $stock));
-		} else {
-			$sql = "SELECT stock_number FROM " . $ecs->table('goods_stock') . "WHERE goods_id=$goods_id and size=$size and color=$color";
-			$stock = $db->getOne($sql);
-			$res = array('err_msg' => 0, 'result' => array('name' => 'goods_number_' . $rec_id, 'value' => $stock));
-		}
-	}
-	die($json->encode($res));
 }
 //hjq ajax获取订单支付状态
 elseif ($_REQUEST['step'] == 'check_order_status') {
@@ -1910,6 +1882,37 @@ elseif ($_REQUEST['step'] == 'add_package_to_cart') {
 	}
 	/* 取得商品列表，计算合计 */
 	$cart_goods = get_cart_goods();
+	foreach ($cart_goods['goods_list'] as $key => $goods) {
+		$properties = get_goods_properties($goods['goods_id']);
+		foreach ($properties['pro'] as $key1 => $prop) {
+			foreach ($prop as $key2 => $prop2) {
+				if ($prop2['name'] == '规格') {
+					$pkg_num = substr($prop2['value'], 2);
+					break;
+				}
+			}
+		}
+		$spec = explode(',', $cart_goods['goods_list'][$key]['goods_attr_id']);
+		$rec_id = intval($goods['rec_id']);
+		$sql = "select goods_id from " . $ecs->table("cart") . " where rec_id=$rec_id";
+		$goods_id = $db->getOne($sql);
+		$spec_str = $_REQUEST["spec_str"];
+		$spec_arr = explode("_", $spec_str);
+		$size = $spec_arr[0];
+		$color = $spec_arr[1];
+		$cup = $spec_arr[2];
+		$sql = "select goods_type from " . $ecs->table("goods") . " where goods_id=$goods_id";
+		$goods_type = $db->getOne($sql);
+		if ($goods_type == 13) {
+			$sql = "SELECT stock_number FROM " . $ecs->table('goods_stock') . "WHERE goods_id=" . $goods['goods_id'] . " and cup=$spec[2] and size=$spec[0] and color=$spec[1]";
+		} else {
+			$sql = "SELECT stock_number FROM " . $ecs->table('goods_stock') . "WHERE goods_id=" . $goods['goods_id'] . " and size=$spec[0] and color=$spec[1]";
+		}
+		$stock = $db->getOne($sql);
+		$cart_goods['goods_list'][$key]['pkg_num'] = $pkg_num;
+		$cart_goods['goods_list'][$key]['stock'] = $stock;
+		$cart_goods['goods_list'][$key]['attr'] = str_replace(',', '_', $cart_goods['goods_list'][$key]['goods_attr_id']);
+	}
 	$smarty->assign('goods_list', $cart_goods['goods_list']);
 	$smarty->assign('total', $cart_goods['total']);
 	//购物车的描述的格式化

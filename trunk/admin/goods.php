@@ -1522,41 +1522,6 @@ elseif ($_REQUEST['act'] == 'check_goods_sn')
     }
     make_json_result('');
 }
-elseif ($_REQUEST['act'] == 'get_stock')
-{
-    $goods_id = intval($_REQUEST['goods_id']);
-	$spec_str = $_REQUEST["spec_str"];
-	$spec_str = substr($spec_str, 5);
-	$spec_arr = explode("_", $spec_str);
-	$size = $spec_arr[0];
-	$color = $spec_arr[1];
-	$cup = $spec_arr[2];
-	
-	$sql = "select goods_type from ".$ecs->table("goods")." where goods_id=$goods_id";
-	$goods_type = $db->getOne($sql);
-	
-	
-    if(!empty($goods_id) && !empty($spec_str))
-    {	if($goods_type == 13)
-		{
-			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and cup=$cup and size=$size and color=$color";
-			$stock = $db->getOne($sql);
-			make_json_result(array(
-				'name'=>"spec_".$size."_".$color."_".$cup,
-				'value'=>$stock
-			));
-		}
-		else
-		{
-			$sql="SELECT stock_number FROM ". $ecs->table('goods_stock')."WHERE goods_id=$goods_id and  size=$size and color=$color";
-			$stock = $db->getOne($sql);
-			make_json_result(array(
-				'name'=>"spec_".$size."_".$color,
-				'value'=>$stock
-			));
-		}
-    }
-}
 elseif ($_REQUEST['act'] == 'check_products_goods_sn')
 {
     check_authz_json('goods_manage');

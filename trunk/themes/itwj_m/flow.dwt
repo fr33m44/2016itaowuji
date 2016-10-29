@@ -42,31 +42,43 @@
 	}
         function changenum(rec_id,diff)
 	  {
-					var num = parseInt(document.getElementById('goods_number_'+rec_id).value);
-					var goods_number = num + Number(diff);
-					if( goods_number >= 1){
-						document.getElementById('goods_number_'+rec_id).value = goods_number;//更新数量
-						change_goods_number(rec_id,goods_number);
-					}
+		var num = parseInt(document.getElementById('goods_number_'+rec_id).value);
+		var goods_number = num + Number(diff);
+		if( goods_number > 0){
+			document.getElementById('goods_number_'+rec_id).value = goods_number;//更新数量
+			change_goods_number(rec_id,goods_number);
+		}
         }
         
         function change_goods_number(rec_id, goods_number)
         {
+		//检查规格
+		var ele = document.getElementById("goods_number_"+rec_id);
+		ele.value=ele.value.replace(/[^\d]/g,'');
+		var pkg = ele.getAttribute('pkg');
+		if(goods_number % pkg != 0)
+		{
+			alert("订购数量必须是" + pkg + "的整数倍!");
+			return;
+		}
+		//获取库存
 		Ajax.call('flow.php?step=ajax_update_cart', 'rec_id=' + rec_id +'&goods_number=' + goods_number, change_goods_number_response, 'POST','JSON');  
         }
         
         function change_goods_number_response(result)
         {    
-          if (result.error == 0)
-          {
-          var rec_id = result.rec_id;
-            document.getElementById('goods_subtotal').innerHTML = result.goods_subtotal;//更新小计
-            
-        }
-        else if (result.message != '')
-          {
-          alert(result.message);
-          }                
+                if (result.error == 0)
+                {
+			   $('#total_desc').html(result.flow_info);//更新合计
+                    if ($('#ECS_CARTINFO'))
+                    {//更新购物车数量
+                       $('#ECS_CARTINFO').html(result.cart_info);
+                    }
+                }
+                else if (result.message != '')
+                {
+                    alert(result.message);
+                }
         }
       </script>
 <script type="text/javascript">
@@ -116,10 +128,10 @@
           <p> {$goods.goods_attr|nl2br} </p>
           <!-- {/if} -->
           <div class="b"> <em class="price">{$goods.goods_price}</em> <span style="jianju">x </span> <span class="txt"> 
-		  <button type="button" class="decrease" onclick="changenum({$goods.rec_id},-1)">-</button>
+		  <button type="button" class="decrease" onclick="changenum({$goods.rec_id},-{$goods.pkg_num})">-</button>
             <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
-            <input class="num" type="text" min="1" max="1000" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="4"   onkeyup="changenum({$goods.rec_id},0)"/>
-			<button type="button" class="increase" onclick="changenum({$goods.rec_id},1)">+</button>
+            <input class="num" type="text" min="1" max="1000" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="4"   onkeyup="changenum({$goods.rec_id},0)"  pkg="{$goods.pkg_num}" />
+			<button type="button" class="increase" onclick="changenum({$goods.rec_id},{$goods.pkg_num})">+</button>
             <!-- {else} --> 
             {$goods.goods_number} 
             <!-- {/if} --> 
@@ -186,8 +198,8 @@
 <!-- {/if} -->
 </section>
 <footer class="toolbar">
-  <p>合计: <em class="price" id="goods_subtotal">{$total.goods_price}</em></p>
-  <a href="flow.php?step=checkout">结算(<em class="num" id="total_number">{$total.real_goods_count}</em>)</a> </footer>
+  <p id="total_desc">合计: <em class="price" id="goods_subtotal">{$total.goods_price}</em></p>
+  <a id="ECS_CARTINFO" href="flow.php?step=checkout">{insert name='cart_info'} </footer>
 <!-- {else} -->
 <section class="wrap"  >
   <div class="empty-cart">

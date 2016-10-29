@@ -27,11 +27,6 @@ function addToCartShowDiv(goodsId, script_name, goods_recommend, parentId)
 		}
 		quick = 1;
 	}
-	goods.quick = quick;
-	goods.goods_id = goodsId;
-	goods.script_name = (typeof(script_name) == "undefined") ? 0 : parseInt(script_name);
-	goods.goods_recommend = (typeof(goods_recommend) == "undefined") ? '' : goods_recommend;
-	goods.parent = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
 	for (i = 0; i < spec_arr.length; i++)
 	{
 		if (spec_arr[i].number % volume != 0)
@@ -40,6 +35,12 @@ function addToCartShowDiv(goodsId, script_name, goods_recommend, parentId)
 			return;
 		}
 	}
+	goods.quick = quick;
+	goods.goods_id = goodsId;
+	goods.script_name = (typeof(script_name) == "undefined") ? 0 : parseInt(script_name);
+	goods.goods_recommend = (typeof(goods_recommend) == "undefined") ? '' : goods_recommend;
+	goods.parent = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
+	
 	for (i = 0; i < spec_arr.length; i++)
 	{
 		goods.spec = spec_arr[i].specs;
@@ -325,21 +326,23 @@ function addToCartResponse_quick(result)
 function getSelectedAttributes(formBuy)
 {
 	var spec_arr = new Array();
+	
 	var j = 0;
-	for (i = 0; i < formBuy.elements.length; i++)
+	var spec_elems = document.getElementsByClassName('spec_ele');
+	for (i = 0; i < spec_elems.length; i++)
 	{
-		var prefix = formBuy.elements[i].name.substr(0, 5);
 		//mobile
-		if (prefix == 'spec_' && (((formBuy.elements[i].type == 'radio' || formBuy.elements[i].type == 'checkbox') && formBuy.elements[i].checked) || formBuy.elements[i].tagName == 'SELECT'))
+		if ( spec_elems[i].type == 'radio' && spec_elems[i].checked == 'checked' )
 		{
-			spec_arr[j] = formBuy.elements[i].value;
+			spec_arr[j] = spec_elems[i].value;
 			j++;
 		}
 		//pc
-		if (prefix == 'spec_' && formBuy.elements[i].type == 'text' && formBuy.elements[i].value > 0 )
+		if (spec_elems[i].type == 'text' && spec_elems[i].value > 0 )
 		{
-		  idarr = formBuy.elements[i].name.substr(5).split("_");
-		  spec_arr.push({number:formBuy.elements[i].value, specs:idarr});
+		  idarr = spec_elems[i].name.split(",");
+		  idarr.sort();
+		  spec_arr.push({number:spec_elems[i].value, specs:idarr});
 		 
 		}
 	}
