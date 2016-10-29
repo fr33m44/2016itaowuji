@@ -85,7 +85,6 @@ font-size: 0.9rem;
     width: 100%;
 }
 </style>
-<!--甜心新增  --->
  {insert_scripts files='common.js,jquery-1.4.4.min.js,jquery.json.js'}
 <script type="text/javascript">
 // 筛选商品属性
@@ -269,12 +268,12 @@ function showPic(){
 			<ul class="ul2">
 				<!-- {* 开始循环所有可选属性 *} -->
 				<!-- {foreach from=$specification item=spec key=spec_key} -->
-				<li>
-				<h2>{$spec.name}：</h2>
-				<div class="items">
 					<!-- {* 单选 *} -->
 					<!-- {if $spec.attr_type eq 1} -->
 						<!-- {if $cfg.goodsattr_style eq 1} -->
+				<li>
+				<h2>{$spec.name}：</h2>
+				<div class="items">
 							<!-- {if $spec.name eq '颜色'}-->
 								<!-- {foreach from=$spec.values item=value key=key} -->
 								<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked="checked"{/if} onclick="changePrice()"/>
@@ -294,10 +293,10 @@ function showPic(){
 							<!-- {/foreach} -->
 							</select>
 							<input type="hidden" name="spec_list" value="{$key}"/>
-						<!-- {/if} -->
-					<!-- {/if} -->
 				</div>
 				</li>
+						<!-- {/if} -->
+					<!-- {/if} -->
 				<!-- {/foreach} -->
 			</ul>
 			<ul class="quantity">
@@ -312,6 +311,14 @@ function showPic(){
 					 {$goods.goods_number} 
 					<!-- {/if} -->
 					</span>
+				<!-- {foreach from=$properties item=property_group key=key} -->
+				  <!-- {foreach from=$property_group item=property} -->
+				  <!-- {if $property.name eq "规格"}-->
+					每包<span id="volume" style="color:#ec5151">{$property.value|substr:2}</span>件
+					库存<span id="stock" style="color:#ec5151"></span>件
+				  <!-- {/if} -->
+				  <!-- {/foreach}-->
+				<!-- {/foreach}-->
 				</div>
 			</ul>
 		</div>
@@ -510,6 +517,7 @@ function changePriceResponse(res)
   else
   {
     document.forms['ECS_FORMBUY'].elements['number'].value = res.qty;
+	document.getElementById('stock').innerHTML = res.stock;
     if (document.getElementById('ECS_GOODS_AMOUNT'))
       document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;
   }

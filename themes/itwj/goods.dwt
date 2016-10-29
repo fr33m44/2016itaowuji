@@ -56,26 +56,40 @@ function reg(str){
 <body>
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <script>
+
+function getStockCallback(res)
+{
+	if (res.err_msg.length > 0)
+	{
+		alert(res.err_msg);
+	}
+	else if(res.stock == 0)//无库存
+	{
+		document.getElementsByName(res.name)[0].parentNode.innerHTML = '无库存'
+	}
+	else
+	{
+		//如果输入的数量大于库存量，修改数量为库存量
+		if(parseInt(document.forms['ECS_FORMBUY'].elements[res.name].value) > parseInt(res.stock))
+			document.forms['ECS_FORMBUY'].elements[res.name].value = res.stock;
+	}
+}
+	
 $(function(){
 	
 	var $easyzoom = $('.easyzoom').easyZoom();
 	var api = $easyzoom.data('easyZoom');
 	
+	var goodsId = {$goods_id};
 	
 	$("#qsqm_btn").click(function(){
 		var spec_arr = [];
 		var formBuy = document.forms['ECS_FORMBUY'];
-
-		for (i = 0; i < formBuy.elements.length; i ++ )
+		var inputs = document.getElementsByClassName('spec_ele');
+		for (i = 0; i < inputs.length; i ++ )
 		{
-			var prefix = formBuy.elements[i].name.substr(0, 5);
-
-			if (prefix == 'spec_' && formBuy.elements[i].type == 'text')
-			{
-				document.forms['ECS_FORMBUY'].elements[i].value = $("#volume").html() * $("#qsqm").val();
-				Ajax.call('goods.php', 'act=get_stock&goods_id=' + goods_id + '&spec_str=' + formBuy.elements[i].name, getStockCallback, 'GET', 'JSON');
-				
-			}
+			inputs[i].value = $("#volume").html() * $("#qsqm").val();
+			Ajax.call('goods.php', 'act=price&id=' + goods_id + '&attr=' + inputs[i].name, getStockCallback, 'GET', 'JSON');
 		}
 	});
 	$("#qsqm").keyup(function(){
@@ -86,25 +100,10 @@ $(function(){
 	
 	$(".spec_ele").on('keyup', function(){
 		this.value=this.value.replace(/[^\d]/g,'');
-		Ajax.call('goods.php', 'act=get_stock&goods_id=' + goods_id + '&spec_str=' + this.name, getStockCallback, 'GET', 'JSON');
+		//检查库存
+		Ajax.call('goods.php', 'act=price&id=' + goodsId + '&attr=' + this.name + '&number=' + this.value, getStockCallback, 'GET', 'JSON');
+		
 	}); 
-	function getStockCallback(res)
-	{
-		if (res.err_msg.length > 0)
-		{
-			alert(res.err_msg);
-		}
-		else if(res.result.value == 0)//无库存
-		{
-			document.forms['ECS_FORMBUY'].elements[res.result.name].parentNode.innerHTML = '无库存'
-		}
-		else
-		{
-			//如果输入的数量大于库存量，修改数量为库存量
-			if(parseInt(document.forms['ECS_FORMBUY'].elements[res.result.name].value) > parseInt(res.result.value))
-				document.forms['ECS_FORMBUY'].elements[res.result.name].value = res.result.value;
-		}
-	}
 })
 </script>
 <!--当前位置 start-->
@@ -289,7 +288,7 @@ $(function(){
 								<!-- {if $spec_inner.name eq '尺码'} -->
 								<!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
 								 
-								<td><input class="spec_ele" type="text" value="0" name="spec_{$spec5.id}_{$spec3.id}_{$spec_zb.id}" onfocus="if (value =='0'){value =''}"  /></td>
+								<td><input class="spec_ele" type="text" value="0" name="{$spec_zb.id},{$spec5.id},{$spec3.id}" onfocus="if (value =='0'){value =''}"  /></td>
 								 
 								<!-- {/foreach} -->
 								<!-- {/if} -->
@@ -330,7 +329,7 @@ $(function(){
 							<!-- {if $spec_inner.name eq '尺码'} -->
 							<!-- {foreach from=$spec_inner.values item=spec5 key=spec_key5 name="spec5name"} -->
 							 
-							<td><input class="spec_ele" type="text" value="0" id="spec_{$spec5.id}_{$spec3.id}" name="spec_{$spec5.id}_{$spec3.id}" onfocus="if (value =='0'){value =''}"  /></td>
+							<td><input class="spec_ele" type="text" value="0" id="spec_{$spec5.id}_{$spec3.id}" name="{$spec5.id},{$spec3.id}" onfocus="if (value =='0'){value =''}"  /></td>
 							 
 							<!-- {/foreach} -->
 							<!-- {/if} -->
@@ -397,8 +396,6 @@ $(function(){
                                 }
                             </script>
                 <div class="center_btn">
-					
-                  
 					<div class="qsqm_num">
 					<!-- {foreach from=$properties item=property_group key=key} -->
 						  <!-- {foreach from=$property_group item=property} -->
@@ -692,7 +689,7 @@ var now_time = {$now_time};
 
 <!-- {literal} -->
 onload = function(){
-  //changePrice();
+  changePrice();
   fixpng();
   try { onload_leftTime(); }
   catch (e) {}
