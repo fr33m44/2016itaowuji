@@ -17,7 +17,7 @@
 <!-- *用户中心默认显示页面 start--> 
 <!-- {if $action eq 'default'} -->
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="index.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> 会员中心 </h1>
 </header>
 <dl class="user_top">
@@ -29,7 +29,7 @@
   <div class="user_top_list">
     <ul>
       <li> <a href="user.php?act=order_list"> <strong>{$info.order_count}</strong> <img  src="{$ectouch_themes}/images/ico_user_01.png"> <span>30天订单</span> </a> </li>
-      <li> <a href="distribute.php?act=account_detail"> <strong>{$info.surplus}</strong> <img  src="{$ectouch_themes}/images/ico_user_03.png"> <span>余额</span> </a> </li>
+      <li> <a href="user.php?act=account_detail"> <strong>{$info.surplus}</strong> <img  src="{$ectouch_themes}/images/ico_user_03.png"> <span>余额</span> </a> </li>
       <li> <a class="fragment" href="user.php?act=bonus"> <strong>{$info.bonus_count}</strong> <img  src="{$ectouch_themes}/images/ico_user_04.png"> <span>红包</span> </a> </li>
     </ul>
   </div>
@@ -55,7 +55,7 @@
 <!-- *我的留言 start--> 
 <!-- {if $action eq 'message_list'} -->
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> {$lang.label_message} </h1>
 </header>
 <section class="wrap message_list">
@@ -120,7 +120,7 @@ jQuery(function($){
 <!-- *我的评论 start--> 
 <!-- {if $action eq 'comment_list'} -->
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> {$lang.label_comment} </h1>
 </header>
 <section class="wrap comment_list">
@@ -151,7 +151,7 @@ jQuery(function($){
 <!--{if $action eq 'collection_list'} --> 
 {insert_scripts files='transport.js,utils.js'}
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> {$lang.label_collection} </h1>
 </header>
 <section class="wrap collection_list">
@@ -276,7 +276,7 @@ jQuery(function($){
 <!-- *积分记录 --> 
     <!--{if $action eq 'point'} -->
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="javascript:history.go(-1)"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> 积分记录</h1>
     </header>
     <section class="wrap">
@@ -317,7 +317,7 @@ jQuery(function($){
 <!-- {if $action eq 'affiliate'} --> 
 <!-- {if !$goodsid || $goodsid eq 0} -->
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> {$lang.label_affiliate} </h1>
 </header>
   <!--会员上下级关系  by  tianxin100-->
@@ -409,7 +409,7 @@ jQuery(function($){
 <!-- /我的会员下线开发 S--> 
 <!-- {if $action eq 'fenxiao1'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> 我的一级会员</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
@@ -443,7 +443,7 @@ jQuery(function($){
 <!-- /我的会员下线开发 S--> 
 <!-- {if $action eq 'fenxiao2'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> 我的二级会员</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
@@ -475,7 +475,7 @@ jQuery(function($){
 <!-- /我的会员下线开发 S--> 
 <!-- {if $action eq 'fenxiao3'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> 我的三级会员</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
@@ -507,7 +507,7 @@ jQuery(function($){
 <!-- /我的会员下线开发 S--> 
 <!-- {if $action eq 'fenxiao4'} --> 
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> 我的四级会员</h1>
 </header>
 <!--详细下线记录by  tianxin100-->
@@ -554,7 +554,7 @@ jQuery(function($){
 </tr>
 <!-- {foreach from=$logdb item=val} -->
 <tr>
-  <td align="center"><a href="distribute.php?act=myorder_detail&order_id={$val.order_id}&level={$level}">{$val.order_sn}</a></td>
+  <td align="center"><a href="user.php?act=myorder_detail&order_id={$val.order_id}&level={$level}">{$val.order_sn}</a></td>
   <td align="center">{$val.order_amount}</td>
   <td align="center">{$val.level_money}</td>
   <td align="center">{$val.set_money}</td>

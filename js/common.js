@@ -40,16 +40,12 @@ function addToCartShowDiv(goodsId, script_name, goods_recommend, parentId)
 	goods.script_name = (typeof(script_name) == "undefined") ? 0 : parseInt(script_name);
 	goods.goods_recommend = (typeof(goods_recommend) == "undefined") ? '' : goods_recommend;
 	goods.parent = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
-	goods.items = new Array();
-	var item = new Object();
 	for (i = 0; i < spec_arr.length; i++)
 	{
-		item['spec'] = spec_arr[i].specs;
-		item['number'] = spec_arr[i].number;
-		goods.items.push(item);
+		goods.spec = spec_arr[i].specs;
+		goods.number = spec_arr[i].number;
+		Ajax.call('flow.php?step=add_to_cart_showDiv', 'goods=' + $.toJSON(goods), addToCartShowDivResponse, 'POST', 'JSON');
 	}
-	Ajax.call('flow.php?step=add_to_cart_showDiv', 'goods=' + $.toJSON(goods), addToCartShowDivResponse, 'POST', 'JSON');
-	
 }
 /* *
  * 处理添加商品到购物车并且停留当前页显示出DIV反馈信息
@@ -332,7 +328,7 @@ function getSelectedAttributes(formBuy)
 	for (i = 0; i < spec_elems.length; i++)
 	{
 		//mobile
-		if ( spec_elems[i].type == 'radio' && spec_elems[i].checked == 'checked' )
+		if ( spec_elems[i].type == 'radio' && spec_elems[i].checked )
 		{
 			spec_arr[j] = spec_elems[i].value;
 			j++;

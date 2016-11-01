@@ -92,12 +92,19 @@ $(function(){
 			Ajax.call('goods.php', 'act=price&id=' + goods_id + '&attr=' + inputs[i].name, getStockCallback, 'GET', 'JSON');
 		}
 	});
+	$("#qsqm").keypress(function(){
+		if(this.value.length > 3)
+			return false;
+	});
 	$("#qsqm").keyup(function(){
 		this.value=this.value.replace(/[^\d]/g,'');
 		this.clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''));
 		 
 	});
-	
+	$(".spec_ele").on('keypress', function(){
+		if(this.value.length > 3)
+			return false;
+	});
 	$(".spec_ele").on('keyup', function(){
 		this.value=this.value.replace(/[^\d]/g,'');
 		//检查库存

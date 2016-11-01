@@ -44,6 +44,8 @@
 	  for(var i=0;i<rec_arr.length && rec_arr[i].length != 0;i++)
 	  {
 		  document.getElementById("tr_goods_"+rec_arr[i]).parentElement.removeChild(document.getElementById("tr_goods_"+rec_arr[i]));
+		  document.getElementById("cart_rec_"+rec_arr[i]).parentElement.removeChild(document.getElementById("cart_rec_"+rec_arr[i]));
+
 	  }
   }
   $("document").ready(function(){
@@ -150,7 +152,7 @@
               
                 <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
       <a href="javascript:void(0)" onclick="changenum({$goods.rec_id},-{$goods.pkg_num})" class="sub"><img src="images/sub.png" style="vertical-align:middle;margin-bottom: 7px;" /></a>
-                 <input type="text" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="1"class="shuliang" style="text-align:center "    onkeyup="change_goods_number({$goods.rec_id},this.value)" pkg="{$goods.pkg_num}" spec="{$goods.attr}" />
+                 <input type="text" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="1"class="shuliang" style="text-align:center " onkeydown="if(this.value.length>3) return false;" onkeyup="change_goods_number({$goods.rec_id},this.value)" pkg="{$goods.pkg_num}" spec="{$goods.attr}" />
 				 
       <a  href="javascript:void(0)" onclick="changenum({$goods.rec_id},{$goods.pkg_num})" class="add"><img src="images/add.png" style="vertical-align:middle;margin-bottom: 7px;"/></a>
                 <!-- {else} -->

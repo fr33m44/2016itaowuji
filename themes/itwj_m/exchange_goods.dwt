@@ -34,7 +34,7 @@ function changenum(diff) {
 
 <body>
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" onClick="javascript:history.go(-1);"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> ecTouch积分购 </h1>
   <div class="header_r header_search"> <a class="ico_15" href="ectouch.php?act=share&content={$goods.goods_name}&pic={$goods.original_img}"> 分享 </a> </div>
 </header>

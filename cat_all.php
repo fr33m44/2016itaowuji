@@ -28,6 +28,7 @@ foreach ($pcat_array as $key => $pcat_data) {
     }
 }
 
+$smarty->assign('page_title', '全部品类 淘五季');    // 页面标题
 $smarty->assign('pcat_array', $pcat_array);
 
 $smarty->display("category_all.dwt");

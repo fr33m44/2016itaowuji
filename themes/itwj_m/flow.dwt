@@ -18,7 +18,7 @@
 <!-- {if $step eq "cart"} -->
 <div id="page">
   <header id="header">
-    <div class="header_l"> <a class="ico_10" href="{$smarty.server.HTTP_REFERER}"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
     <h1>进货单</h1>
     <div class="header_r"></div>
   </header>
@@ -275,7 +275,7 @@
         </script>
 <div id="page">
   <header id="header">
-    <div class="header_l"> <a class="ico_10" href="flow.php?step=cart"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
     <h1> 收货人信息 </h1>
   </header>
 </div>
@@ -355,7 +355,7 @@ var card = document.getElementsByName('card');
 </script>
 <div id="page">
   <header id="header">
-    <div class="header_l"> <a class="ico_10" href="flow.php"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
     <h1> 确认订单 </h1>
   </header>
 </div>
@@ -533,7 +533,7 @@ var card = document.getElementsByName('card');
 }	
 </style>
 <header id="header">
-    <div class="header_l"> <a class="ico_10" href="index.php"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
     <h1> 订单提交成功 </h1>
 </header>
 <div class="cart-step" id="J_cartTab">
@@ -621,7 +621,7 @@ var card = document.getElementsByName('card');
 } 
 </style>
 <header id="header">
-    <div class="header_l"> <a class="ico_10" href="index.php"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
     <h1> </h1>
 </header>
 <div class="cart-step" id="J_cartTab">
@@ -684,7 +684,7 @@ var card = document.getElementsByName('card');
 <!-- {if $step eq "login"} -->
 <div id="page">
   <header id="header">
-    <div class="header_l"> <a class="ico_10" href="{$smarty.server.HTTP_REFERER}"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
     <h1> 登录/注册 </h1>
   </header>
 </div>

@@ -19,7 +19,7 @@
 <!-- 购物车中存在实体商品显示国家和地区 -->
 <dl>
   <dd class="dd1">{$lang.country_province}</dd>
-  <dd class="dd2"> 
+  <dd class="dd2" style="width:100%"> 
 	<input type="hidden" name="country" value="1" />
       <select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')" style="padding:5px 4px;border:1px solid #abadb3;">
         <option value="0">{$lang.please_select}{$name_of_region[1]}</option>
@@ -54,7 +54,7 @@
 
 <!-- {/if} --> 
 
-<dl style="border:none; padding-bottom:0">
+<dl style="border:none; padding-bottom:0;padding-top:1rem">
 <!-- {if $smarty.session.user_id gt 0 and $consignee.address_id gt 0} --> 
 <!-- 如果登录了，显示删除按钮 -->
   <dd class="w40" style="display:inline">

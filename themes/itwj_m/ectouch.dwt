@@ -17,7 +17,7 @@
 <!-- *关于我们 start--> 
 <!-- {if $action eq 'contact'} -->
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> 联系我们 </h1>
 </header>
 <section class="wrap">
@@ -56,7 +56,7 @@
 <!-- *分享 start--> 
 <!-- {if $action eq 'share'} -->
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="javascript:history.back(-1)"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> 分享给朋友 </h1>
 </header>
 <div class="blank3"></div>
