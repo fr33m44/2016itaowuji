@@ -63,6 +63,24 @@ catch (e) {
       <div class="logo"><a href="../index.php" name="top"><img src="../images/logo.gif" /></a>
 	  </div>
       <!--search start-->
+    <script type="text/javascript">
+    {literal}
+    <!--
+    function checkSearchForm()
+    {
+        if(document.getElementById('keyword').value)
+        {
+            return true;
+        }
+        else
+        {
+            alert("{$lang.no_keywords}");
+            return false;
+        }
+    }
+    -->
+    {/literal}
+    </script>
       <div id="search"  class="headSearch">
         <form id="searchForm" name="searchForm" method="get" action="search.php" onSubmit="return checkSearchForm()"  >
           <div class="headSearch_input">
