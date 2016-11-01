@@ -82,7 +82,7 @@ function get_categories_tree_pro($cat_id = 0)
 		
 			foreach ($brands AS $key => $val)
 			{
-				$temp_key = $key + 1;
+				$temp_key = $key;
 				$brands[$temp_key]['brand_name'] = $val['brand_name'];
 				$brands[$temp_key]['url'] = build_uri('category', array('cid' => $cat_id, 'bid' => $val['brand_id'], 'price_min'=>$price_min, 'price_max'=> $price_max, 'filter_attr'=>$filter_attr_str), $cat['cat_name']);
 		
@@ -96,7 +96,6 @@ function get_categories_tree_pro($cat_id = 0)
 					$brands[$temp_key]['selected'] = 0;
 				}
 			}
-			unset($brands[0]);
 			$cat_arr[$row['cat_id']]['brands'] = $brands;
 			$cat_arr[$row['cat_id']]['articles'] = $articles;
 
