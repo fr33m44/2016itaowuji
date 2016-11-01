@@ -26,7 +26,7 @@
           {/foreach}
         </script>
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.profile} </h1>
     </header>
     <div class="blank3"></div>
@@ -170,7 +170,7 @@
         {/foreach}
       </script>
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.label_bonus} </h1>
     </header>
     <section class="wrap bonus_list">
@@ -216,7 +216,7 @@
     <!--#订单列表界面 start--> 
     <!-- {if $action eq 'order_list'} -->
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.label_order} </h1>
     </header>
     <section class="wrap order_list">
@@ -299,7 +299,7 @@
     <!--#包裹追踪查询界面 start--> 
     <!-- {if $action eq 'order_tracking'} -->
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="javascript:history.go(-1)"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.label_track_packages} </h1>
     </header>
     <div class="fullscreen">
@@ -364,7 +364,7 @@ jQuery(function($){
     <!-- ==========订单详情页面,包括：订单状态，商品列表，费用总计，收货人信息，支付方式，其它信息========== --> 
     <!--{if $action eq order_detail} -->
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="javascript:history.go(-1)"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.order_status} </h1>
     </header>
     <section class="wrap">
@@ -435,11 +435,11 @@ jQuery(function($){
       	  <!-- {foreach from=$goods_list item=goods} -->
           <tr>
             <td rowspan="2" width="60" align="center" valign="middle" style="border-bottom:1px #CCCCCC dashed">
-            <a href="goods.php?id={$goods.goods_id}" target="_blank"><img src="{$goods.goods_thumb}" width="60" height="60" /></a></td>
+            <a href="goods.php?id={$goods.goods_id}"><img src="{$goods.goods_thumb}" width="60" height="60" /></a></td>
             <td>{$goods.goods_name}</td>
           </tr>
           <tr>
-            <td style="border-bottom:1px #CCCCCC dashed">售价：{$goods.goods_price} 数量：{$goods.goods_number}<br>小计：{$goods.subtotal}</td>
+            <td style="border-bottom:1px #CCCCCC dashed">规格：{$goods.goods_attr} <br />单价：{$goods.goods_price} 数量：{$goods.goods_number} 小计：{$goods.subtotal}</td>
           </tr>
           <!-- {/foreach} -->
       </table>
@@ -606,7 +606,7 @@ jQuery(function($){
 		    <!-- ==========推荐订单详情  新增========== --> 
     <!--{if $action eq myorder_detail} -->
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="javascript:history.go(-1)"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.order_status} </h1>
     </header>
     <section class="wrap">
@@ -738,7 +738,7 @@ jQuery(function($){
     <!--#会员余额 start--> 
     <!--{if $action eq "account_raply" || $action eq "account_log" || $action eq "account_deposit" || $action eq "account_detail"} -->
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.user_balance} </h1>
     </header>
     <section class="wrap bonus_list">
@@ -895,7 +895,7 @@ jQuery(function($){
     <!--#收货地址页面 --> 
     <!--{if $action eq 'address_list'} -->
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.consignee_info} </h1>
     </header>
     <section class="wrap">
@@ -934,7 +934,7 @@ jQuery(function($){
     <!--#收货地址页面 --> 
     <!--{if $action eq 'act_edit_address'} -->
     <header id="header">
-      <div class="header_l header_return"> <a class="ico_10" href="javascript:history.go(-1)"> 返回 </a> </div>
+      <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
       <h1> {$lang.consignee_info} </h1>
     </header>
       {* 包含脚本文件 *}
@@ -1218,7 +1218,7 @@ jQuery(function($){
 	 .dataForm .inputBg{width:200px;}
 	 </style>
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <div class="header_l header_return"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
   <h1> 绑定会员卡/修改卡密 </h1>
 </header>
 

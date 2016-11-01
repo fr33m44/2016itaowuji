@@ -4,7 +4,7 @@
     <div class="layout_wrap">
       <div class="prodimg easyzoom easyzoom--overlay"  title="{$goods.goods_name|escape:html}">
 	  <a href="{$pictures.0.img_url}" id="Zoomer">
-			<img width="450" height="630" id="J_prodImg" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}" />
+			<img width="322" height="450" id="J_prodImg" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}" />
 	  </a>
 	  </div>
     </div>

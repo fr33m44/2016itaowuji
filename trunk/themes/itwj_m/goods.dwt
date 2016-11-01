@@ -106,7 +106,7 @@ function changenum(diff) {
 <body>
 <header id="header">
 <div class="header_l header_return">
-	<a class="ico_10" href="{$smarty.server.HTTP_REFERER}"> 返回 </a>
+	<a class="ico_10" href="javascript:window.history.back()"> 返回 </a>
 </div>
 <h1> 商品详情 </h1>
 </header>
@@ -276,12 +276,12 @@ function showPic(){
 				<div class="items">
 							<!-- {if $spec.name eq '颜色'}-->
 								<!-- {foreach from=$spec.values item=value key=key} -->
-								<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked="checked"{/if} onclick="changePrice()"/>
+								<input type="radio" name="spec_{$spec_key}" class="spec_ele" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked="checked"{/if} onclick="changePrice()"/>
 								<label for="spec_value_{$value.id}">{$value.label}</label>
 								<!-- {/foreach} -->
 							<!--{else}-->
 								<!--{foreach from=$spec.values item=value key=key}-->
-								<input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked="checked"{/if} onclick="changePrice()"/>
+								<input type="radio" name="spec_{$spec_key}" class="spec_ele" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked="checked"{/if} onclick="changePrice()"/>
 								<label for="spec_value_{$value.id}">{$value.label}</label>
 								<!-- {/foreach} -->
 							<!--{/if}-->
@@ -304,9 +304,9 @@ function showPic(){
 				<div class="items">
 					<span class="ui-number radius5">
 					<!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
-					<button type="button" class="decrease radius5" onclick="changenum(-1)">-</button>
-					<input class="num" name="number" id="goods_number" autocomplete="off" value="1" min="1" max="{$goods.goods_number}" type="number"/>
-					<button type="button" class="increase radius5" onclick="changenum(1)">+</button>
+					<button type="button" class="decrease radius5" onclick="changenum(-{$pkg_num})">-</button>
+					<input class="num" name="number" id="goods_number" autocomplete="off" value="{$pkg_num}" min="1" max="{$goods.goods_number}" onkeyup="return (if(this.value.length>3) return false;)" type="number"/>
+					<button type="button" class="increase radius5" onclick="changenum({$pkg_num})">+</button>
 					<!-- {else} -->
 					 {$goods.goods_number} 
 					<!-- {/if} -->

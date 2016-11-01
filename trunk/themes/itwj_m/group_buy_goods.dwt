@@ -40,7 +40,7 @@ function changenum(diff) {
 <body>
 <div id="page" style="right: 0px; left: 0px; display: block;">
   <header id="header" style="z-index:1">
-    <div class="header_l"> <a class="ico_10" href="cat_all.php"> 返回 </a> </div>
+    <div class="header_l"> <a class="ico_10" href="javascript:window.history.back()"> 返回 </a> </div>
     <h1> {$lang.groupbuy_goods_info} </h1>
   </header>
   <!--商品图 s--->

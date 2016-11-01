@@ -80,7 +80,7 @@ input[type="search"] {
 	outline: 0
 }
 .inputBg {
-	height: 2.4rem;
+	height: 1.4rem;
 	width: 60%;
 	border: solid 1px #ddd;
 	padding: 0 3%;
@@ -173,9 +173,8 @@ a {
 	border: 0;
 	height: 2.5rem;
 	line-height: 2.5rem;
-	width: 50%;
-	-webkit-box-flex: 1;
-	display: block;
+	width: 40%;
+	-webkit-box-flex: 1; 
 	-webkit-user-select: none;
 	font-size: 0.9rem;
 	background: #ee6a6a;
@@ -2169,10 +2168,11 @@ border-radius: 24px 0 0 24px;}
 	-webkit-transition: all .5s linear
 }
 .srp.grid .proImg-wrap {
+	text-align:center;
 	width: 100%
 }
 .srp.grid .proImg-wrap img {
-	width: 100%;
+	width: 80%;
 	border-radius: 5px 5px 0 0
 }
 .srp.grid .proTitle {
@@ -3340,14 +3340,13 @@ border-radius: 24px 0 0 24px;}
 /* 订单确认页表格_中间模块 */
 
 .order_box .table_box2 dl {
-	margin:1rem;
 	padding: 0;
-	position: relative
+	position: relative;
+	height:4rem;
 }
 .table_box2 .dd1 {
 	font-weight:bold;
 	margin-top:3px;
-	padding:5px;
 	margin-bottom:3px;
 	width: 28%;
 	vertical-align: middle;
@@ -3368,11 +3367,10 @@ border-radius: 24px 0 0 24px;}
 .table_box2 input {
 	color: #999;
 	text-align: left;
-	width: 60%;
+	width: 80%;
 	border: 1px solid #ddd;
 	background: #fff;
 	padding: 0;
-	margin:10px;
 }
 .table_box2 input.radio {
 	width: auto;

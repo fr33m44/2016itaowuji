@@ -7,7 +7,7 @@
 <div class="shopBody" id="shopBody">
 <ul>
  {foreach from=$goods item=goods name=goods}
- <li class="shopWhite">
+ <li class="shopWhite" id="cart_rec_{$goods.rec_id}">
 
  <div class="shopLi_img">
  <a href="{$goods.url}"><img src="{$goods.goods_thumb}" style="width:43px; height:43px;" alt="{$goods.goods_name}"></a>
@@ -18,7 +18,7 @@
  
 <p class="shopLi_pink"><span>{$goods.goods_price}</span><span style=" color:#999">×{$goods.goods_number}</span></p> 
  </div>
-<div class="shopLi_del"><a  href="javascript:" onClick="deleteCartGoods({$goods.rec_id})">删除</a></div>
+<div class="shopLi_del"><a  href="javascript:" onClick="delcart({$goods.rec_id})">删除</a></div>
 
 
 </li>
