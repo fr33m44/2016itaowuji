@@ -377,13 +377,13 @@ var card = document.getElementsByName('card');
       <div class="in">
         <div class="table_box table_box1">
           <dl>
-            <dd class="w50">{$lang.consignee_name} <span class="f1">{$consignee.consignee|escape}</span></dd>
-            <dd class="w50 c999">
+            <dd class="w100">{$lang.consignee_name} <span class="f1">{$consignee.consignee|escape}</span></dd>
+            <dd class="w100 c999">
               <div class="ico_14"></div>
               {$consignee.mobile} <a href="flow.php?step=consignee" class="modify radius5">{$lang.modify}</a></dd>
           </dl>
           <dl>
-            <dd class="w50 b_no" >{$lang.detailed_address} {$consignee.address|escape} </dd>
+            <dd class="w100 b_no" >{$lang.detailed_address} {$consignee.address|escape} </dd>
           </dl>
         </div>
       </div>
@@ -450,7 +450,7 @@ var card = document.getElementsByName('card');
 				留言备注
 				</dd>
 				<dd>	
-				<input placeholder="请输入订单备注" name="inv_payee" type="text"   size="20"  />
+				<input placeholder="请输入订单备注" name="inv_payee" type="text" size="20" class="inputBg" />
 				 </dd>
 		 </dl>
 		  
@@ -482,8 +482,8 @@ var card = document.getElementsByName('card');
           <dd >{$lang.goods_list}<!--{if $allow_edit_cart} --><a href="flow.php" class="modify radius5">{$lang.modify}</a><!--{/if} --></dd>
         </dl>
         <!-- {foreach from=$goods_list item=goods} -->
-        <dl>
-          <dd style="display:inline" class="dd1 w60"> 
+        <dl style="height:1rem">
+          <dd style="float:left" class="dd1 w60"> 
             <!-- {if $goods.goods_id gt 0 && $goods.extension_code eq 'package_buy'} --> 
             <a href="javascript:void(0)" onClick="setSuitShow({$goods.goods_id})" >{$goods.goods_name}<span style="color:#FF0000;">（{$lang.remark_package}）</span></a> 
             <!-- { else } --> 
@@ -495,9 +495,10 @@ var card = document.getElementsByName('card');
             <!-- {/if} --> 
             <!-- {/if} --> 
           </dd>
-          <dd  style="display:inline" class="dd2 w10 c999"> x {$goods.goods_number} </dd>
-          <dd  style="display:inline" class="dd3 w30"> {$goods.formated_subtotal} </dd>
+          <dd style="float:left" class="dd2 w10 c999"> x {$goods.goods_number} </dd>
+          <dd style="float:left" class="dd3 w30"> {$goods.formated_subtotal} </dd>
         </dl>
+	 <dl><dd><span class="c999">{$goods.goods_attr}</span></dd></dl>
         <!-- {/foreach} --> 
         <!-- #BeginLibraryItem "/Library/order_total.lbi" --><!-- #EndLibraryItem --> </div>
     </section>
@@ -878,7 +879,7 @@ jQuery(function($){
 <!-- {/if} -->
 
 <div class="blank3"></div>
-<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+
 </body>
 <script type="text/javascript">
 var process_request = "{$lang.process_request}";

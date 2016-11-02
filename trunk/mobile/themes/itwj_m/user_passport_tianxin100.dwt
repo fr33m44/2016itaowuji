@@ -242,7 +242,7 @@ jQuery(function($){
 <!--#找回密码界面 end-->
 <script type="text/javascript" src="{$ectouch_themes}/js/sms.js"></script>
 
-<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+
 <script type="text/javascript">
 var process_request = "{$lang.process_request}";
 {foreach from=$lang.passport_js item=item key=key}

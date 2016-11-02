@@ -105,7 +105,7 @@
     {$lang.icp_number}:<a href="http://www.miibeian.gov.cn/" target="_blank">{$icp_number}</a><br />
     <!-- 结束ICP 证书{/if} --> 
     {insert name='query_info'}<br />
-    {foreach from=$lang.p_y item=pv}{$pv}{/foreach}{$licensed}<br />
+    
     {if $stats_code}
     <div align="left">{$stats_code}</div>
     {/if}
