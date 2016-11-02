@@ -596,7 +596,7 @@ jQuery(function($){
 <!-- /分销订单E --> 
 
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
-<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+
 </body>
 <script type="text/javascript">
 {foreach from=$lang.clips_js item=item key=key}

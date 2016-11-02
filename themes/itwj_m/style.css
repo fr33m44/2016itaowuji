@@ -117,6 +117,9 @@ input[type="search"] {
 .padd2 {
 	padding: 1rem
 }
+.w100 {
+	width: 100%
+}
 .w60 {
 	width: 60%
 }

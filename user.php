@@ -17,7 +17,7 @@ $back_act = '';
 // 不需要登录的操作或自己验证是否登录（如ajax处理）的act
 $not_login_arr = array('login', 'act_login', 'getqrm', 'check_mobile', 'register', 'act_register', 'act_edit_password', 'get_password', 'send_pwd_mobile', 'password', 'signin', 'add_tag', 'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email', 'clear_history', 'qpassword_name', 'get_passwd_question', 'check_answer', 'oath', 'oath_login', 'other_login');
 /* 显示页面的action列表 */
-$ui_arr = array('register', 'login', 'profile', 'order_list', 'order_detail', 'address_list', 'collection_list', 'message_list', 'tag_list', 'get_password', 'reset_password', 'booking_list', 'add_booking', 'account_raply', 'account_deposit', 'account_log', 'account_detail', 'act_account', 'pay', 'default', 'bonus', 'group_buy', 'group_buy_detail', 'affiliate', 'comment_list', 'validate_email', 'track_packages', 'transform_points', 'qpassword_name', 'get_passwd_question', 'check_answer', 'face');
+$ui_arr = array('register', 'login', 'profile', 'order_list', 'order_detail', 'address_list', 'collection_list', 'message_list', 'tag_list', 'get_password', 'reset_password', 'booking_list', 'add_booking', 'account_raply', 'account_deposit', 'account_log', 'account_detail', 'act_account', 'pay', 'default', 'bonus', 'group_buy', 'group_buy_detail', 'affiliate', 'comment_list', 'validate_email', 'track_packages', 'transform_points', 'qpassword_name', 'get_passwd_question', 'check_answer', 'face', 'act_edit_address');
 /* 未登录处理 */
 if (empty($_SESSION['user_id'])) {
 	if (!in_array($action, $not_login_arr)) {
@@ -914,12 +914,12 @@ elseif ($action == 'address_list') {
 	$address_id = $db->getOne("SELECT address_id FROM " . $ecs->table('users') . " WHERE user_id='$user_id'");
 	//赋值于模板
 	$smarty->assign('real_goods_count', 1);
-	$smarty->assign('shop_country', $_CFG['shop_country']);
 	$smarty->assign('shop_province', get_regions(1, $_CFG['shop_country']));
 	$smarty->assign('province_list', $province_list);
-	$smarty->assign('address', $address_id);
+	print_r($province_list);
 	$smarty->assign('city_list', $city_list);
 	$smarty->assign('district_list', $district_list);
+	$smarty->assign('address', $address_id);
 	$smarty->assign('currency_format', $_CFG['currency_format']);
 	$smarty->assign('integral_scale', $_CFG['integral_scale']);
 	$smarty->assign('name_of_region', array($_CFG['name_of_region_1'], $_CFG['name_of_region_2'], $_CFG['name_of_region_3'], $_CFG['name_of_region_4']));
@@ -930,12 +930,71 @@ elseif ($action == 'act_edit_address') {
 	include_once (ROOT_PATH . 'includes/lib_transaction.php');
 	include_once (ROOT_PATH . 'languages/' . $_CFG['lang'] . '/shopping_flow.php');
 	$smarty->assign('lang', $_LANG);
+	
+	if($_GET['flag'] == 'display'){
+		$id = intval($_GET['id']);
+		/* 取得国家列表、商店所在国家、商店所在国家的省列表 */
+		$smarty->assign('country_list',       get_regions());
+		$smarty->assign('shop_province_list', get_regions(1, $_CFG['shop_country']));
+
+		/* 获得用户所有的收货人信息 */
+		$consignee_list = get_consignee_list($_SESSION['user_id']);
+
+		foreach ($consignee_list AS $region_id => $vo)
+		{
+			if($vo['address_id'] == $id){
+				$consignee = $vo;
+				$smarty->assign('consignee', $vo);                
+			}
+		}
+		$province_list = get_regions(1, 1);
+		$city_list     = get_regions(2, $consignee['province']);
+		$district_list = get_regions(3, $consignee['city']);
+
+		$smarty->assign('province_list',    $province_list);
+		$smarty->assign('city_list',        $city_list);
+		$smarty->assign('district_list',    $district_list);
+
+		$smarty->display('user_transaction.dwt');
+		return false;
+    }
+
+    $address = array(
+        'user_id'    => $user_id,
+        'address_id' => intval($_POST['address_id']),
+        'country'    => isset($_POST['country'])   ? intval($_POST['country'])  : 0,
+        'province'   => isset($_POST['province'])  ? intval($_POST['province']) : 0,
+        'city'       => isset($_POST['city'])      ? intval($_POST['city'])     : 0,
+        'district'   => isset($_POST['district'])  ? intval($_POST['district']) : 0,
+        'address'    => isset($_POST['address'])   ? compile_str(trim($_POST['address']))    : '',
+        'consignee'  => isset($_POST['consignee']) ? compile_str(trim($_POST['consignee']))  : '',
+        'email'      => isset($_POST['email'])     ? compile_str(trim($_POST['email']))      : '',
+        'tel'        => isset($_POST['tel'])       ? compile_str(make_semiangle(trim($_POST['tel']))) : '',
+        'mobile'     => isset($_POST['mobile'])    ? compile_str(make_semiangle(trim($_POST['mobile']))) : '',
+        'best_time'  => isset($_POST['best_time']) ? compile_str(trim($_POST['best_time']))  : '',
+        'sign_building' => isset($_POST['sign_building']) ? compile_str(trim($_POST['sign_building'])) : '',
+        'zipcode'       => isset($_POST['zipcode'])       ? compile_str(make_semiangle(trim($_POST['zipcode']))) : '',
+        );
+	
 	$from = $_POST['from'];
-	$address = array('user_id' => $user_id, 'shop_type' => intval($_POST['shop_type']), 'address_id' => intval($_POST['address_id']), 'country' => isset($_POST['country']) ? intval($_POST['country']) : 0, 'province' => isset($_POST['province']) ? intval($_POST['province']) : 0, 'city' => isset($_POST['city']) ? intval($_POST['city']) : 0, 'district' => isset($_POST['district']) ? intval($_POST['district']) : 0, 'address' => isset($_POST['address']) ? compile_str(trim($_POST['address'])) : '', 'consignee' => isset($_POST['consignee']) ? compile_str(trim($_POST['consignee'])) : '',
-	//'email'      => isset($_POST['email'])     ? compile_str(trim($_POST['email']))      : '',
-	'tel' => isset($_POST['tel']) ? compile_str(make_semiangle(trim($_POST['tel']))) : '', 'mobile' => isset($_POST['mobile']) ? compile_str(make_semiangle(trim($_POST['mobile']))) : '', 'best_time' => isset($_POST['best_time']) ? compile_str(trim($_POST['best_time'])) : '', 'sign_building' => isset($_POST['sign_building']) ? compile_str(trim($_POST['sign_building'])) : '', 'zipcode' => isset($_POST['zipcode']) ? compile_str(make_semiangle(trim($_POST['zipcode']))) : '',);
+	$address = array('user_id' => $user_id, 
+		'shop_type' => intval($_POST['shop_type']),
+		'address_id' => intval($_POST['address_id']),
+		'country' => isset($_POST['country']) ? intval($_POST['country']) : 0,
+		'province' => isset($_POST['province']) ? intval($_POST['province']) : 0,
+		'city' => isset($_POST['city']) ? intval($_POST['city']) : 0,
+		'district' => isset($_POST['district']) ? intval($_POST['district']) : 0,
+		'address' => isset($_POST['address']) ? compile_str(trim($_POST['address'])) : '',
+		'consignee' => isset($_POST['consignee']) ? compile_str(trim($_POST['consignee'])) : '',
+		'tel' => isset($_POST['tel']) ? compile_str(make_semiangle(trim($_POST['tel']))) : '',
+		'mobile' => isset($_POST['mobile']) ? compile_str(make_semiangle(trim($_POST['mobile']))) : '',
+		'best_time' => isset($_POST['best_time']) ? compile_str(trim($_POST['best_time'])) : '',
+		'sign_building' => isset($_POST['sign_building']) ? compile_str(trim($_POST['sign_building'])) : '',
+		'zipcode' => isset($_POST['zipcode']) ? compile_str(make_semiangle(trim($_POST['zipcode']))) : '',
+	);
+	
 	if (update_address($address)) {
-		if ($from = 'profile') //如果是从个人信息profile页面登陆
+		if ($from == 'profile') //如果是从个人信息profile页面登陆
 		{
 			show_message($_LANG['edit_profile_success'], $_LANG['profile_lnk'], 'user.php?act=profile');
 		} else {

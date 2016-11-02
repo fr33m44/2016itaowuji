@@ -62,7 +62,7 @@
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
 </div>
 </div>
-<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+
 <script type="text/javascript">
 var process_request = "{$lang.process_request}";
 {foreach from=$lang.passport_js item=item key=key}

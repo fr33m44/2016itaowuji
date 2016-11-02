@@ -35,6 +35,6 @@
     </div>
   </ul>
 </section>
-<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+
 </body>
 </html>
