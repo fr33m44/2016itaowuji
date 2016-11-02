@@ -916,7 +916,6 @@ elseif ($action == 'address_list') {
 	$smarty->assign('real_goods_count', 1);
 	$smarty->assign('shop_province', get_regions(1, $_CFG['shop_country']));
 	$smarty->assign('province_list', $province_list);
-	print_r($province_list);
 	$smarty->assign('city_list', $city_list);
 	$smarty->assign('district_list', $district_list);
 	$smarty->assign('address', $address_id);
@@ -998,7 +997,7 @@ elseif ($action == 'act_edit_address') {
 		{
 			show_message($_LANG['edit_profile_success'], $_LANG['profile_lnk'], 'user.php?act=profile');
 		} else {
-			show_message($_LANG['edit_profile_success'], $_LANG['address_list_lnk'], 'user.php?act=address_list');
+			show_message($_LANG['edit_address_success'], $_LANG['address_list_lnk'], 'user.php?act=address_list');
 		}
 	}
 }
@@ -1026,6 +1025,32 @@ elseif ($action == 'collection_list') {
 	$smarty->assign('lang_list', $lang_list);
 	$smarty->assign('user_id', $user_id);
 	$smarty->display('user_clips.dwt');
+}
+/* 异步获取收藏 by wang */
+elseif ($action == 'async_collection_list'){
+    include_once(ROOT_PATH . 'includes/lib_clips.php');
+
+    $start = $_POST['last'];
+    $limit = $_POST['amount'];
+    
+    $collections = get_collection_goods($user_id, $limit, $start);
+    if(is_array($collections)){
+        foreach($collections as $vo){
+            $img = $db->getOne("SELECT goods_thumb FROM " .$ecs->table('goods'). " WHERE goods_id = ".$vo['goods_id']);
+            $t_price = (empty($vo['promote_price']))? $_LANG['shop_price'].$vo['shop_price']:$_LANG['promote_price'].$vo['promote_price'];
+            
+            $asyList[] = array(
+                'collection' => '<a href="'.$vo['url'].'"><table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table_no_border">
+            <tr>
+                <td><img src="'.$config['site_url'].$img.'" width="50" height="50" /></td>
+                <td>'.$vo['goods_name'].'<br>'.$t_price.'</td>
+                <td align="right"><a href="'.$vo['url'].'" style="color:#1CA2E1">'.$_LANG['add_to_cart'].'</a><br><a href="javascript:if (confirm(\''.$_LANG['remove_collection_confirm'].'\')) location.href=\'user.php?act=delete_collection&collection_id='.$vo['rec_id'].'\'" style="color:#1CA2E1">'.$_LANG['drop'].'</a></td>
+            </tr>
+          </table></a>'
+            );
+        }
+    }
+    echo json_encode($asyList);
 }
 /* 删除收藏的商品 */
 elseif ($action == 'delete_collection') {

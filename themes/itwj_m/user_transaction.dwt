@@ -145,16 +145,13 @@
               <dd class="dd1">店铺详细地址</dd>
               <input name="address" type="text" class="inputBg" id="address_{$sn}" value="{$consignee.address|escape}" />
             </dl>
-            <dl>
-              <dd class="dd1">手机</dd>
-              <input name="mobile" type="text" class="inputBg" id="mobile_{$sn}" value="{$consignee.mobile|escape}" />
-            </dl>
           </div>
         </section>
         <div class="blank3"></div>
 	  <input type="hidden" name="act" value="act_edit_address" />
+	  <input type="hidden" name="from" value="profile" />
 	  <input name="address_id" type="hidden" value="{$consignee.address_id}" /></td>
-        <input name="submit" type="submit" class="c-btn4"     value="{$lang.confirm_edit}" />
+        <input name="submit" type="submit" class="c-btn4" value="{$lang.confirm_edit}" />
       </form>
 	  <!-- {/foreach} -->
       <div class="blank3"></div>
@@ -929,22 +926,22 @@ jQuery(function($){
         </tr>
 	  <tr>
 		<td align="right">所在地区：</td>
-		<td align="left" >
-		  <select name="province" id="selProvinces" onchange="region.changed(this, 2, 'selCities')">
+		<td align="left" ><input type="hidden" name="country" value="1" />
+		  <select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
 			<option value="0">{$lang.please_select}{$name_of_region[1]}</option>
-			<!-- {foreach from=$province_list item=province} -->
+			<!-- {foreach from=$province_list.$sn item=province} -->
 			<option value="{$province.region_id}" {if $consignee.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
 			<!-- {/foreach} -->
 		  </select>
-		  <select name="city" id="selCities" onchange="region.changed(this, 3, 'selDistricts')">
+		  <select name="city" id="selCities_{$sn}" onchange="region.changed(this, 3, 'selDistricts_{$sn}')">
 			<option value="0">{$lang.please_select}{$name_of_region[2]}</option>
-			<!-- {foreach from=$city_list item=city} -->
+			<!-- {foreach from=$city_list.$sn item=city} -->
 			<option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{/if}>{$city.region_name}</option>
 			<!-- {/foreach} -->
 		  </select>
-		  <select name="district" id="selDistricts" {if !$district_list}style="display:none"{/if}>
+		  <select name="district" id="selDistricts_{$sn}" {if !$district_list.$sn}style="display:none"{/if}>
 			<option value="0">{$lang.please_select}{$name_of_region[3]}</option>
-			<!-- {foreach from=$district_list item=district} -->
+			<!-- {foreach from=$district_list.$sn item=district} -->
 			<option value="{$district.region_id}" {if $consignee.district eq $district.region_id}selected{/if}>{$district.region_name}</option>
 			<!-- {/foreach} -->
 		  </select></td>
