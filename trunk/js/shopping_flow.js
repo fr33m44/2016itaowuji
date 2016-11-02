@@ -582,13 +582,14 @@ function checkConsignee(frm)
 		err = true;
 		msg.push(address_not_null);
 	}
-
-	if (!Utils.isMobile(frm.elements['mobile'].value))
+	if(frm.elements['mobile'] != undefined)
 	{
-		err = true;
-		msg.push(mobile_invaild);
+		if (!Utils.isMobile(frm.elements['mobile'].value))
+		{
+			err = true;
+			msg.push(mobile_invaild);
+		}
 	}
-
 	if (err)
 	{
 		message = msg.join("\n");

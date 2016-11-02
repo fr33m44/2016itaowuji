@@ -120,15 +120,30 @@
 				<form action="user.php" method="post" name="formShop" onsubmit="return checkConsignee(this)">
                 <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                   <tr>
-                    <td align="right" bgcolor="#ffffff">店铺地址（区域）：</td>
+                    <td align="right" bgcolor="#ffffff">店铺名称：</td>
+                    <td align="left" bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_{$sn}" value="{$consignee.consignee|escape}" /></td>
+                    
+                  </tr>
+                  <tr>
+                   <td align="right" bgcolor="#ffffff">店铺类型：</td>
                     <td colspan="3" align="left" bgcolor="#ffffff">
-				<select name="country" id="selCountries_{$sn}" onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
-                        <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
-                        <!-- {foreach from=$country_list item=country} -->
-                        <option value="{$country.region_id}" {if $consignee.country eq $country.region_id}selected{/if}>{$country.region_name}</option>
-                        <!-- {/foreach} -->
-                      </select>
-                      <select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
+				<select name="shop_type">
+					<option value="1" {if $consignee.shop_type eq '1'}selected="selected"{/if}>内衣店</option>
+					<option value="2" {if $consignee.shop_type eq '2'}selected="selected"{/if}>超市</option>
+					<option value="3" {if $consignee.shop_type eq '3'}selected="selected"{/if}>化妆品店</option>
+					<option value="4" {if $consignee.shop_type eq '4'}selected="selected"{/if}>童装店</option>
+					<option value="5" {if $consignee.shop_type eq '5'}selected="selected"{/if}>文具店</option>
+					<option value="6" {if $consignee.shop_type eq '6'}selected="selected"{/if}>鞋店</option>				
+				</select>
+			   </td>
+                   
+                   </tr>
+                   </tr>
+                  <tr>
+                    <td align="right" bgcolor="#ffffff">店铺所在地区：</td>
+                    <td colspan="3" align="left" bgcolor="#ffffff">
+				<input type="hidden" name="country" value="1" />
+				<select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
                         <option value="0">{$lang.please_select}{$name_of_region[1]}</option>
                         <!-- {foreach from=$province_list.$sn item=province} -->
                         <option value="{$province.region_id}" {if $consignee.province eq $province.region_id}selected{/if}>{$province.region_name}</option>
@@ -147,31 +162,12 @@
                         <!-- {/foreach} -->
                       </select>
                       </td>
-                  </tr>
-                  <tr>
-                    <td align="right" bgcolor="#ffffff">店铺名称：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_{$sn}" value="{$consignee.consignee|escape}" />
-                      </td>
-                    <td align="right" bgcolor="#ffffff">{$lang.detailed_address}：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="address" type="text" class="inputBg" id="address_{$sn}" value="{$consignee.address|escape}" />
-                      </td>
-                  </tr>
-                  <tr>
-                   <td align="right" bgcolor="#ffffff">店铺类型：</td>
-                    <td align="left" bgcolor="#ffffff">
-						<select name="shop_type">
-							<option value="1" {if $consignee.shop_type eq '1'}selected="selected"{/if}>内衣店</option>
-							<option value="2" {if $consignee.shop_type eq '2'}selected="selected"{/if}>超市</option>
-							<option value="3" {if $consignee.shop_type eq '3'}selected="selected"{/if}>化妆品店</option>
-							<option value="4" {if $consignee.shop_type eq '4'}selected="selected"{/if}>童装店</option>
-							<option value="5" {if $consignee.shop_type eq '5'}selected="selected"{/if}>文具店</option>
-							<option value="6" {if $consignee.shop_type eq '6'}selected="selected"{/if}>鞋店</option>				
-						</select>
-					</td>
-                   
-                    <td align="right" bgcolor="#ffffff">{$lang.backup_phone}：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg" id="mobile_{$sn}" value="{$consignee.mobile|escape}" /></td>
-                  </tr>
+			 </tr>
+			 <tr>
+			 <td align="right" bgcolor="#ffffff">店铺详细地址：</td>
+				<td colspan="3" align="left" bgcolor="#ffffff"><input size="81" name="address" type="text" class="inputBg" id="address_{$sn}" value="{$consignee.address|escape}" /></td>
+               
+			 </tr>
                   <tr>
                     <td align="right" bgcolor="#ffffff">&nbsp;</td>
                     <td colspan="3" align="center" bgcolor="#ffffff">
@@ -187,6 +183,7 @@
                       <!-- {/if} -->
                       
                       <input type="hidden" name="act" value="act_edit_address" />
+                      <input type="hidden" name="from" value="profile" />
                       <input name="address_id" type="hidden" value="{$consignee.address_id}" /></td>
                   </tr>
                 </table>
@@ -837,8 +834,17 @@
               <form action="user.php" method="post" name="theForm" onsubmit="return checkConsignee(this)">
                 <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                   <tr>
-                    <td align="right" bgcolor="#ffffff">{$lang.country_province}：</td>
+                    <td align="right" bgcolor="#ffffff">{$lang.consignee_name}：</td>
+                    <td align="left" bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_{$sn}" value="{$consignee.consignee|escape}" />
+                    </td>
+			   <td align="right" bgcolor="#ffffff">手机号码：</td>
+                    <td align="left" bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg" id="mobile_{$sn}" value="{$consignee.mobile|escape}" /></td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="right" bgcolor="#ffffff">所在地区：</td>
                     <td colspan="3" align="left" bgcolor="#ffffff">
+					<input type="hidden" name="country" value="1" />
 				<select name="province" id="selProvinces_{$sn}" onchange="region.changed(this, 2, 'selCities_{$sn}')">
                         <option value="0">{$lang.please_select}{$name_of_region[1]}</option>
                         <!-- {foreach from=$province_list.$sn item=province} -->
@@ -857,22 +863,12 @@
                         <option value="{$district.region_id}" {if $consignee.district eq $district.region_id}selected{/if}>{$district.region_name}</option>
                         <!-- {/foreach} -->
                       </select>
-                      {$lang.require_field} </td>
+				</td>
                   </tr>
                   <tr>
-                    <td align="right" bgcolor="#ffffff">{$lang.consignee_name}：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="consignee" type="text" class="inputBg" id="consignee_{$sn}" value="{$consignee.consignee|escape}" />
-                      {$lang.require_field} </td>
-                    <td align="right" bgcolor="#ffffff">{$lang.detailed_address}：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="address" type="text" class="inputBg" id="address_{$sn}" value="{$consignee.address|escape}" />
-                      {$lang.require_field}</td>
-                  </tr>
-                  <tr>
-                    <td align="right" bgcolor="#ffffff">{$lang.backup_phone}：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="mobile" type="text" class="inputBg" id="mobile_{$sn}" value="{$consignee.mobile|escape}" /></td>
-                    <td align="right" bgcolor="#ffffff">{$lang.sign_building}：</td>
-                    <td align="left" bgcolor="#ffffff"><input name="sign_building" type="text" class="inputBg" id="sign_building_{$sn}" value="{$consignee.sign_building|escape}" /></td>
-                  </tr> 
+				<td align="right" bgcolor="#ffffff">{$lang.detailed_address}：</td>
+                    <td colspan="3" align="left" bgcolor="#ffffff"><input name="address" type="text" class="inputBg" id="address_{$sn}" value="{$consignee.address|escape}" size="81" /></td>
+                    </tr> 
                   <tr>
                     <td align="right" bgcolor="#ffffff">&nbsp;</td>
                     <td colspan="3" align="center" bgcolor="#ffffff">
@@ -888,7 +884,7 @@
                       <!-- {/if} -->
                       
                       <input type="hidden" name="act" value="act_edit_address" />
-					  <input type="hidden" name="from" value="profile" />
+					  <input type="hidden" name="from" value="address" />
                       <input name="address_id" type="hidden" value="{$consignee.address_id}" /></td>
                   </tr>
                 </table>

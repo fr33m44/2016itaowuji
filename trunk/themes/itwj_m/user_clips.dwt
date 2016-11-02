@@ -157,24 +157,33 @@ jQuery(function($){
 <section class="wrap collection_list">
   <section class="order_box padd1 radius10 single_item">
   <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
-    <tr>
-        <td class="collection"></td>
-    </tr>
+    <tr align="center">
+        <th width="35%" bgcolor="#ffffff">{$lang.goods_name}</th>
+        <th width="30%" bgcolor="#ffffff">{$lang.price}</th>
+        <th width="35%" bgcolor="#ffffff">{$lang.handle}</th>
+      </tr>
+      <!--{foreach from=$goods_list item=goods}-->
+      <tr>
+        <td bgcolor="#ffffff"><a href="{$goods.url}">{$goods.goods_name|escape:html}</a></td>
+        <td bgcolor="#ffffff"><!-- {if $goods.promote_price neq ""} -->
+          {$lang.promote_price}<span class="goods-price">{$goods.promote_price}</span>
+          <!-- {else}-->
+          {$lang.shop_price}<span class="goods-price">{$goods.shop_price}</span>
+          <!--{/if}-->        </td>
+        <td align="center" bgcolor="#ffffff">
+          <!-- {if $goods.is_attention} -->
+          <a href="javascript:if (confirm('{$lang.del_attention}')) location.href='user.php?act=del_attention&rec_id={$goods.rec_id}'">{$lang.no_attention}</a>
+          <!-- {else} -->
+          <a href="javascript:if (confirm('{$lang.add_to_attention}')) location.href='user.php?act=add_to_attention&rec_id={$goods.rec_id}'" >{$lang.attention}</a>
+          <!-- {/if} -->
+            <a href="javascript:if (confirm('{$lang.remove_collection_confirm}')) location.href='user.php?act=delete_collection&collection_id={$goods.rec_id}'">{$lang.drop}</a>
+        </td>
+      </tr>
+      <!--{/foreach} -->
   </table>
 </section>
 <a href="javascript:;" style="text-align:center" class="get_more"></a>
 </section>
-<script type="text/javascript" src="{$ectouch_themes}/js/jquery.more.js"></script>
-<script type="text/javascript">
-jQuery(function($){
-    $('.collection_list').more({'address': 'user.php?act=async_collection_list', amount: 5, 'spinner_code':'<div style="text-align:center; margin:10px;"><img src="{$ectouch_themes}/images/loader.gif" /></div>'})
-	$(window).scroll(function () {
-		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-			$('.get_more').click();
-		}
-	});
-});
-</script>
 <!--{/if} --> 
 <!--#收藏商品列表页面 end--> 
 <!--*缺货登记列表页面 start--> 

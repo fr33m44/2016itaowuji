@@ -6,7 +6,6 @@
     <ul>
       <li> <a href="user.php?act=order_list"{if $action eq 'order_list'|| $action eq 'order_detail'}class="curs"{/if}> {$lang.label_order}</a></li>
       <li> <a href="user.php?act=address_list"{if $action eq 'address_list'}class="curs"{/if}>{$lang.label_address}</a></li>
-      <li> <a href="user.php?act=booking_list"{if $action eq 'booking_list'}class="curs"{/if}> {$lang.label_booking}</a></li>
     </ul>
   </dd>
 </dl>
