@@ -28,7 +28,7 @@
     <div class="bd"<!--{if $action eq 'register'}--> style="display:none"<!--{/if}-->>
       <ul>
         <div class="table_box">
-        <form action="user.php" method="post" name="formUser" onsubmit="return register2();">
+        <form action="user.php" method="post" name="formUser" onsubmit="return register_m();">
            
                <dl>
                   <dd>

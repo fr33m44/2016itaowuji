@@ -46,7 +46,7 @@ window.onload = function() {
     </div>
     <div class="bd">
       <ul style="height:45rem">
-        <form style="width:100%" action="user.php" method="post" name="formUser" id="formUser" onsubmit="return register2();">
+        <form style="width:100%" action="user.php" method="post" name="formUser" id="formUser" onsubmit="return register_m();">
           <input type="hidden" name="flag" id="flag" value="register" />
           <div class="table_box">
             <dl>
@@ -67,11 +67,11 @@ window.onload = function() {
 			  
             </dl>						
             <dl>
-              <dd class="first"><label for="shop_type">店铺类型</label></dd>
+              <dd class="first" style="height:2rem"><label for="shop_type">店铺类型</label></dd>
 			  <dd class="second">
 				<input name="shop_type" id="st_ny" value="1" type="radio"><label for="st_ny">内衣店</label>
 				<input name="shop_type" id="st_cs" value="2" type="radio"><label for="st_cs">超&nbsp;市</label>
-				<input name="shop_type" id="st_hzp" value="3" type="radio"><label for="st_hzp">化妆品店</label><br /><br />
+				<input name="shop_type" id="st_hzp" value="3" type="radio"><label for="st_hzp">化妆品店</label><br />
 				<input name="shop_type" id="st_tz" value="4" type="radio"><label for="st_tz">童装店</label>
 				<input name="shop_type" id="st_wj" value="5" type="radio"><label for="st_wj">文具店</label>
 				<input name="shop_type" id="st_xd" value="6" type="radio"><label for="st_xd">鞋&nbsp;店</label>
@@ -106,7 +106,7 @@ window.onload = function() {
 			  <dd class="second"><input placeholder="请输入市镇名街道门牌号" class="inputBg" name="shop_addr" id="shop_addr" type="text" /></dd>
             </dl>
 		  <dl>
-              <dd class="first"><label for="mobile">手机</label></dd>
+              <dd class="first"><label for="mobile">手机号码</label></dd>
 			  <dd class="second"><input placeholder="请输入手机号码" class="inputBg" name="mobile" id="mobile" type="text" /></dd>
             </dl>
 		  <dl>
@@ -287,8 +287,6 @@ window.onload = function() {
 </section>
 <!--{/if}--> 
 <!--#找回密码界面 end-->
-{insert_scripts files='sms.js'}
-
 <script type="text/javascript">
 var process_request = "{$lang.process_request}";
 {foreach from=$lang.passport_js item=item key=key}

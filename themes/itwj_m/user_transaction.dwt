@@ -753,7 +753,10 @@ jQuery(function($){
       <div class="blank"></div>
       <table width="100%" border="0" cellpadding="5" cellspacing="1">
         <tr>
-          <td align="right" bgcolor=""><a href="user.php?act=account_deposit" class="f6">{$lang.surplus_type_0}</a> | <a href="user.php?act=account_raply" class="f6">{$lang.surplus_type_1}</a> | <a href="user.php?act=account_detail" class="f6">{$lang.add_surplus_log}</a> | <a href="user.php?act=account_log" class="f6">{$lang.view_application}</a></td>
+          <td align="right" bgcolor=""><a href="user.php?act=account_deposit" class="">{$lang.surplus_type_0}</a> | 
+		  <a href="user.php?act=account_raply" class="">{$lang.surplus_type_1}</a> | 
+		  <a href="user.php?act=account_detail" class="">{$lang.add_surplus_log}</a> | 
+		  <a href="user.php?act=account_log" class="">{$lang.view_application}</a></td>
         </tr>
       </table>
       <!-- {/if} --> 
@@ -951,8 +954,10 @@ jQuery(function($){
           <td align="left"> <input name="address" placeholder="详细地址(必填)" type="text" class="inputBg_touch" value="{$consignee.address|escape}"></td>
         </tr>
         <tr>
-          <td colspan="2"  >
+          <td colspan="2">
+	{if not $smarty.foreach.consig.last}
 		<a class="modify radius5" href="user.php?act=drop_consignee&id={$consignee.address_id}" onClick="return confirm('您真的要删除该地址吗？');">删除</a>
+	{/if}
    {if $smarty.foreach.consig.last}
 		<input type="submit" style="margin-right:0.2rem" class="modify radius5" href="user.php?act=act_edit_address&flag=display" value="新增" />
    {else}

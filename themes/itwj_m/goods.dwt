@@ -11,81 +11,7 @@
 <link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed"/>
 <link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="{$ectouch_themes}/style.css" rel="stylesheet" type="text/css"/>
-<!--甜心新增--->
-<style>
-.user_top_goods {
-height: 5rem;
-overflow: hidden; 
-background:#ffbf6b;
-position:relative
-}
-.user_top_goods dt {
-float: left;
-margin: 0.8rem 0.8rem 0;
-text-align: center;
-position: relative;
-width: 3.7rem;
-height: 3.7rem;
-border-radius: 3.7rem;
-padding:0.15rem; background:#FFFFFF
-}
-.user_top_goods dt img {
-width: 3.7rem;
-height:3.7rem;
-border-radius: 3.7rem;
-}
-.guanzhu {
-background-color: #ffbf6b;
-}
-.guanzhu {
-color: #fff;
-border: 0;
-height: 2.5rem;
-line-height: 2.5rem;
-width: 100%;
--webkit-box-flex: 1;
-display: block;
--webkit-user-select: none;
-font-size: 0.9rem;
-}
-#cover2 {
-    background-color: #333333;
-    display: none;
-    left: 0;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    z-index: 1000;
-}
-#share_weixin, #share_qq {
-    right: 10px;
-    top: 2px;
-    width: 260px;
-}
-#share_weixin, #share_qq, #share_qr {
-    display: none;
-    position: fixed;
-    z-index: 3000;
-}
-#share_weixin img, #share_qq img {
-    height: 165px;
-    width: 260px;
-}
-		.button_3 {
-    background-color: #EEEEEE;
-    border: 1px solid #666666;
-    color: #666666;
-    font-size: 16px;
-    line-height: 20px;
-    padding: 10px 0;
-    text-align: center;
-}
-#share_weixin button, #share_qq button {
-    margin-top: 25px;
-    width: 100%;
-}
-</style>
- {insert_scripts files='common.js,jquery-1.4.4.min.js,jquery.json.js'}
+{insert_scripts files='common.js,jquery-1.4.4.min.js,jquery.json.js'}
 <script type="text/javascript">
 // 筛选商品属性
 jQuery(function($) {
@@ -111,18 +37,12 @@ function changenum(diff) {
 <h1> 商品详情 </h1>
 </header>
 <!--商品图 s--->
- {insert_scripts files='TouchSlide.js'} <section class="goods_slider">
+{insert_scripts files='TouchSlide.js'}
+<section class="goods_slider">
 <div id="slideBox" class="slideBox">
 	<div class="scroller">
-		<!--<div><a href="javascript:showPic()"><img src="{$goods.goods_thumb}"  alt="{$goods.goods_name}" /></a></div>-->
-		<ul>
-			<li><a href="javascript:showPic()"><img alt="" src="{$site_url}{$goods.original_img}"/></a></li>
-			<!--{if $pictures}-->
-			<!-- {foreach from=$pictures item=picture name=no}-->
-			<li><a href="javascript:showPic()"><img alt="" src="{if $picture.img_url}{$picture.img_url}{else}{$site_url}{$picture.thumb_url}{/if}"/></a></li>
-			<!--{/foreach}-->
-			<!--{/if}-->
-		</ul>
+		 <div><a href="javascript:showPic()"><img src="{$goods.goods_img}"  alt="{$goods.goods_name}" /></a></div> 
+		 
 	</div>
 	<div class="icons">
 		<ul>
