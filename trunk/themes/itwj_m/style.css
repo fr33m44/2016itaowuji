@@ -3204,11 +3204,12 @@ border-radius: 24px 0 0 24px;}
 .table_box .first {
 	float: left;
 	width: 20%;
-	line-height: 40px;
+	line-height: 24px;
 	text-align: right;
 	padding-right: 1rem
 }
 .table_box .second {
+	line-height: 24px;
 	margin-left: 20%;
 	width: 80%
 }

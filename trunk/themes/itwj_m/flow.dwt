@@ -771,7 +771,7 @@ var card = document.getElementsByName('card');
         <div class="bd"{if $action eq 'login'} style="display:none"{/if}>
           <ul style="height:25rem">
       	<!--{if $enabled_sms_signin eq 1} 支持手机短信功能-->
-        <form action="user.php" method="post" name="formUser" onsubmit="return register2();">
+        <form action="user.php" method="post" name="formUser" onsubmit="return register_m();">
           <input type="hidden" name="flag" id="flag" value="register" />
           <div class="table_box">
             <dl>
@@ -863,7 +863,6 @@ var card = document.getElementsByName('card');
       </ul>
     </div>
   </div>
-  <script type="text/javascript" src="{$ectouch_themes}/js/sms.js"></script>
 </section>
 
 <script type="text/javascript">

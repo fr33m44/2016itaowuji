@@ -179,7 +179,7 @@ elseif ($action == 'act_register') {
 		$sql = "select qrm from " . $ecs->table('sms') . " where mobile = '$mobile' and action = 1";
 		$qrm_db = $db->getOne($sql);
 		if ($qrm != $qrm_db) {
-			$res = array('err' => 8, 'msg' => '确认码不正确');
+			$res = array('err' => 8, 'msg' => '您输入的手机确认码不正确');
 			die($json->encode($res));
 		}
 		/*判断手机号是否已经存在*/
@@ -262,7 +262,6 @@ elseif ($action == 'is_registered') {
 }
 /* 验证用户手机号是否可以注册 */
 elseif ($action == 'check_mobile') {
-	include_once (ROOT_PATH . 'includes/lib_passport.php');
 	$mobile = trim($_GET['mobile']);
 	$sql = "select count(1) from " . $ecs->table("users") . " where mobile_phone='$mobile'";
 	$count = $db->getOne($sql);
@@ -347,6 +346,13 @@ elseif ($action == 'getqrm') {
 		/*检查手机号格式*/
 		if (0 == preg_match("/^1[34578]\d{9}$/", $mobile)) {
 			$result = array('error' => 1, 'content' => '手机号格式不正确');
+			break;
+		}
+		//检测手机号是否已经注册过
+		$sql = "select count(1) from " . $ecs->table("users") . " where mobile_phone='$mobile'";
+		$count = $db->getOne($sql);
+		if (!empty($count)) {
+			$result = array('error' => 1, 'content' => '该手机号码已经注册过，请直接登录。');
 			break;
 		}
 		//查询该手机号5分钟内是否已经获取过

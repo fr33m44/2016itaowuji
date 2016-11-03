@@ -390,12 +390,12 @@ function get_qrm(mobile, action) {
 	var regex_captcha = /\w{4}$/;
 	var captcha = Utils.trim(document.forms['formUser'].elements['captcha'].value);
 	var mobile = Utils.trim(document.forms['formUser'].elements['mobile'].value);
-	if (captcha == "") {
-		alert('验证码不能为空');
-		return;
-	}
 	if (Utils.trim(mobile) == '') {
 		alert('手机号不能为空');
+		return;
+	}
+	if (captcha == "") {
+		alert('验证码不能为空');
 		return;
 	}
 	if (!regex_captcha.test(captcha)) {
@@ -413,7 +413,10 @@ function get_qrm(mobile, action) {
 function qrm_callback(result) {
 
 	if (parseInt(result.error) > 0) {
-		document.getElementById('captcha_notice').innerHTML = result.content;
+		if(document.getElementById('captcha_notice') != undefined)
+			document.getElementById('captcha_notice').innerHTML = result.content;//pc
+		else
+			alert(result.content);//mobile
 		document.getElementById("get_qrm_btn").disabled = "";
 	}
 	else {
@@ -572,14 +575,120 @@ function register() {
 	{
 		msg += qrm_notice + '\n';
 	}
+	if(msg != ''){
+		alert(msg);
+	}
+	else{
+		Ajax.call( 'user.php?act=act_register', $('#formUser').serialize(), act_reg_callback , 'POST', 'JSON', true, true );		
+	}
+	return false;
+}
+function register_m(){
+	var frm = document.forms['formUser'];
+	var username = Utils.trim(frm.elements['username'].value);
+	var password = Utils.trim(frm.elements['password'].value);
+	var confirm_password = Utils.trim(frm.elements['confirm_password'].value);
+	var checked_agreement = frm.elements['agreement'].checked;
+
+	var shop_type = Utils.trim(frm.elements['shop_type'].value);
+	var shop_name = Utils.trim(frm.elements['shop_name'].value);
+	var province = Utils.trim(frm.elements['province'].value);
+	var city = Utils.trim(frm.elements['city'].value);
+	var district = Utils.trim(frm.elements['district'].value);
+
+	var shop_addr = Utils.trim(frm.elements['shop_addr'].value);
+	var mobile = Utils.trim(frm.elements['mobile'].value);
+	var qrm = Utils.trim(frm.elements['qrm'].value);
+	var captcha = Utils.trim(frm.elements['captcha'].value);
 	
+	if (username.length == 0)
+	{
+		alert(username_empty);
+		return false;
+	}
+	else if (username[0]>='0' && username[0]<='9')
+	{
+		alert('用户名不能以数字开头');
+		return false;
+	}
+	else if (username.match(/^\s*$|^c:\\con\\con$|[%,\'\*\"\s\t\<\>\&\\]/))
+	{
+		alert(username_invalid);
+		return false;
+	}
+	else if (username.replace(/[^\x00-\xff]/g, "**").length < 3)
+	{
+		alert(username_shorter);
+		return false;
+	}
+	else if (username.replace(/[^\x00-\xff]/g, "**").length > 14)
+	{
+		alert(msg_un_length);
+		return false;
+	}
+	if (password.length == 0) {
+		alert('密码不能为空');
+		return false;
+	}
+	else if (password.length < 6) {
+		alert(password_shorter);
+		return false;
+	}
+	if (/ /.test(password) == true) {
+		alert(passwd_balnk);
+		return false;
+	}
+	if (confirm_password != password) {
+		alert(confirm_password_invalid);
+		return false;
+	}
+	if (shop_name.length == 0) {
+		alert('店铺名称不能为空');
+		return false;
+	}
+	if (shop_type == 0) {
+		alert('请选择店铺类型');
+		return false;
+	}
+	if (province == "0" || city == "0" || district == "0" || province=='' || city==''|| district=='') {
+		alert('请选择店铺区域');
+		return false;
+	}
+	if (shop_addr.length == 0) {
+		alert('店铺地址不能为空');
+		return false;
+	}
+	if (mobile.length == 0) {
+		alert('手机号不能为空');
+		return false;
+	}
+	if (mobile.length > 0) {
+		if (!(Utils.isMobile(mobile))) {
+			alert(mobile_phone_invalid);
+			return false;
+		}
+	}
+	if(captcha.length == 0)
+	{
+		alert('验证码不能为空');
+		return false;
+	}
+	if (qrm.length == 0) {
+		alert('手机确认码号不能为空');
+		return false;
+	}
+	
+	if (checked_agreement != true) {
+		alert(agreement);
+		return false;
+	}
 	Ajax.call( 'user.php?act=act_register', $('#formUser').serialize(), act_reg_callback , 'POST', 'JSON', true, true );
 	return false;
 }
 function act_reg_callback(res){
 	alert(res.msg);
-	if(res.err == 0)
-	{
+	document.getElementById("captchaimg").src = 'captcha.php?' + Math.random();
+	if(res.err == 0){
 		window.location = 'user.php';
 	}
 }
