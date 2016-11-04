@@ -17,9 +17,9 @@
             </a>
             <div style="text-align:center">
             <!-- {if $goods.promote_price neq ""} --> 
-            <span class="price_s"> {$goods.promote_price} </span> 
+            <span class="price_s"> {$lang.promote_price}{$goods.promote_price} </span> 
             <!-- {else}--> 
-            <span class="price_s"> {$goods.shop_price} </span> 
+            <span class="price_s"> {$lang.shop_price}{$goods.shop_price} </span> 
             <!--{/if}-->
             <br>{$goods.name|escape:html|truncate:12}
             </div>
