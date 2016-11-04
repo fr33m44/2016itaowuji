@@ -31,12 +31,12 @@
             <div class="proSKU"></div>
             <div class="proPrice"> 
               <!--{if $goods.promote_price neq "" } --> 
-              <em>{$goods.promote_price}</em> 
+              <em>{$lang.promote_price}{$goods.promote_price}</em> 
               <!--{else}--> 
-              <em>{$goods.shop_price}</em> 
+              <em>{$lang.shop_price}{$goods.shop_price}</em> 
               <!--{/if}--> 
             </div>
-            <div class="proService"> <del>{$goods.market_price}</del></div>
+            <div class="proService">{$lang.market_price}{$goods.market_price}</div>
             <div class="proSales">月销:<em>{$goods.sales_count}</em></div>
             <div class="proIcons"> 
 			 <!-- {if $goods.watermark_img} --> 
