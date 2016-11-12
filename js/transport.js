@@ -1,7 +1,7 @@
 /**
  * @file            transport.js
  * @description     用于支持AJAX的传输类。
- * @author          ECShop R&D Team ( http://www.ecshop.com/ )
+ * @author          fr33m4n ( http://tunps.com/ )
  * @date            2007-03-08 Wednesday
  * @license         Licensed under the Academic Free License 2.1 http://www.opensource.org/licenses/afl-2.1.php
  * @version         1.0.20070308

@@ -366,7 +366,7 @@ $(function(){
                 
                 <script>
                        
-                                // add by liuguichun 2011-7-19
+                                // add by liuguichun 2016-7-19
                                 var buyNumber = {
                                     maxNumber : 100,
                                     minNumber : 1,

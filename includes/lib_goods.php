@@ -1,16 +1,10 @@
 <?php
 
 /**
- * ECSHOP 商品相关函数库
- * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * iTaoWuJi 商品相关函数库
+ * 开发者：fr33m4n(微信)
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
- * $Author: liubo $
- * $Id: lib_goods.php 17217 2011-01-19 06:29:08Z liubo $
+ * $Id: lib_goods.php 17217 2016-11-19 06:29:08Z $
 */
 
 if (!defined('IN_ECS'))
@@ -1136,7 +1130,7 @@ function group_buy_info($group_buy_id, $current_num = 0)
 {
     /* 取得团购活动信息 */
 	
-	//dqy add start 2011-8-24
+	//dqy add start 2016-8-24
     $group_buy_id = intval($group_buy_id);
     $sql = "SELECT b.*,g.*, b.act_id AS group_buy_id, b.act_desc AS group_buy_desc, b.start_time AS start_date, b.end_time AS end_date " .
             "FROM " . $GLOBALS['ecs']->table('goods_activity') . " AS b " .
@@ -1144,7 +1138,7 @@ function group_buy_info($group_buy_id, $current_num = 0)
             "WHERE act_id = '$group_buy_id' " .
             "AND act_type = '" . GAT_GROUP_BUY . "'";
 			
-			//dqy add end 2011-8-24
+			//dqy add end 2016-8-24
     $group_buy = $GLOBALS['db']->getRow($sql);
 
     /* 如果为空，返回空数组 */

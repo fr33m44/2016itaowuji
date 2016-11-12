@@ -1,9 +1,7 @@
 <?php
 /**
- * ECSHOP 用户交易相关函数库
- * ============================================================================
- * $Author: liubo $
- * $Id: lib_transaction.php 17217 2011-01-19 06:29:08Z liubo $
+ * iTaoWuJi 用户交易相关函数库
+ * $Id: lib_transaction.php 17217 2016-11-19 06:29:08Z $
  */
 if (!defined('IN_ECS')) {
 	die('Hacking attempt');

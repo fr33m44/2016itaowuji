@@ -1,15 +1,9 @@
 <?php
 /**
- * ECSHOP 控制台首页
+ * iTaoWuJi 控制台首页
  * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
- * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
- * $Author: liubo $
- * $Id: index.php 17217 2011-01-19 06:29:08Z liubo $
+ * 开发者：fr33m4n(微信)；
+ * $Id: index.php 17217 2016-11-19 06:29:08Z $
 */
 
 define('IN_ECS', true);
@@ -486,59 +480,6 @@ elseif ($_REQUEST['act'] == 'main')
     $smarty->assign('install_date', local_date($_CFG['date_format'], $_CFG['install_date']));
     $smarty->display('start.htm');
 }
-elseif ($_REQUEST['act'] == 'main_api')
-{
-    require_once(ROOT_PATH . '/includes/lib_base.php');
-    $data = read_static_cache('api_str');
-
-    if($data === false || API_TIME < date('Y-m-d H:i:s',time()-43200))
-    {
-        include_once(ROOT_PATH . 'includes/cls_transport.php');
-        $ecs_version = VERSION;
-        $ecs_lang = $_CFG['lang'];
-        $ecs_release = RELEASE;
-        $php_ver = PHP_VERSION;
-        $mysql_ver = $db->version();
-        $order['stats'] = $db->getRow('SELECT COUNT(*) AS oCount, IFNULL(SUM(order_amount), 0) AS oAmount' .
-    ' FROM ' .$ecs->table('order_info'));
-        $ocount = $order['stats']['oCount'];
-        $oamount = $order['stats']['oAmount'];
-        $goods['total']   = $db->GetOne('SELECT COUNT(*) FROM ' .$ecs->table('goods').
-    ' WHERE is_delete = 0 AND is_alone_sale = 1 AND is_real = 1');
-        $gcount = $goods['total'];
-        $ecs_charset = strtoupper(EC_CHARSET);
-        $ecs_user = $db->getOne('SELECT COUNT(*) FROM ' . $ecs->table('users'));
-        $ecs_template = $db->getOne('SELECT value FROM ' . $ecs->table('shop_config') . ' WHERE code = \'template\'');
-        $style = $db->getOne('SELECT value FROM ' . $ecs->table('shop_config') . ' WHERE code = \'stylename\'');
-        if($style == '')
-        {
-            $style = '0';
-        }
-        $ecs_style = $style;
-        $shop_url = urlencode($ecs->url());
-
-        $patch_file = file_get_contents(ROOT_PATH.ADMIN_PATH."/patch_num");
-
-        $apiget = "ver= $ecs_version &lang= $ecs_lang &release= $ecs_release &php_ver= $php_ver &mysql_ver= $mysql_ver &ocount= $ocount &oamount= $oamount &gcount= $gcount &charset= $ecs_charset &usecount= $ecs_user &template= $ecs_template &style= $ecs_style &url= $shop_url &patch= $patch_file ";
-
-        $t = new transport;
-        $api_comment = $t->request('http://api.ecshop.com/checkver.php', $apiget);
-        $api_str = $api_comment["body"];
-        echo $api_str;
-        
-        $f=ROOT_PATH . 'data/config.php'; 
-        file_put_contents($f,str_replace("'API_TIME', '".API_TIME."'","'API_TIME', '".date('Y-m-d H:i:s',time())."'",file_get_contents($f)));
-        
-        write_static_cache('api_str', $api_str);
-    }
-    else 
-    {
-        echo $data;
-    }
-
-}
-
-
 /*------------------------------------------------------ */
 //-- 开店向导第一步
 /*------------------------------------------------------ */

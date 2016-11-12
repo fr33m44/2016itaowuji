@@ -1,10 +1,8 @@
 <?php
 
 /**
- * ECSHOP 会员数据处理类
- * ============================================================================
- * $Author: liubo $
- * $Id: ecshop.php 17217 2011-01-19 06:29:08Z liubo $
+ * iTaoWuJi 会员数据处理类
+ * $Id: ecshop.php 17217 2016-11-19 06:29:08Z $
  */
 
 if (!defined('IN_ECS'))
@@ -27,10 +25,10 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['version'] = '2.0';
 
     /* 插件的作者 */
-    $modules[$i]['author']  = 'ECSHOP R&D TEAM';
+    $modules[$i]['author']  = 'fr33m4n';
 
     /* 插件作者的官方网站 */
-    $modules[$i]['website'] = 'http://www.ecshop.com';
+    $modules[$i]['website'] = 'http://tunps.com';
 
     return;
 }

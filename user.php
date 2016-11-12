@@ -1,9 +1,7 @@
 <?php
 /**
- * ECSHOP 会员中心
- * ============================================================================
- * $Author: liubo $
- * $Id: user.php 17217 2011-01-19 06:29:08Z liubo $
+ * iTaoWuJi 会员中心
+ * $Id: user.php 17217 2016-11-19 06:29:08Z $
  */
 define('IN_ECS', true);
 require (dirname(__FILE__) . '/includes/init.php');

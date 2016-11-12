@@ -32,7 +32,7 @@ if (defined('WEBSITE'))
 	$web[$i]['qq'] = '2880175561';
 	
 	// 作者邮箱
-	$web[$i]['email'] = 'shiqin@ecmoban.com';
+	$web[$i]['email'] = 'tunps.com';
 	
 	// 申请网址
 	$web[$i]['website'] = 'http://open.weibo.com';

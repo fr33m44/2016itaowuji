@@ -1,10 +1,8 @@
 <?php
 
 /**
- * ECSHOP SESSION 鍏?敤绫诲簱
- * ============================================================================
- * $Author: liubo $
- * $Id: cls_session.php 17217 2011-01-19 06:29:08Z liubo $
+ * iTaoWuJi SESSION 鍏?敤绫诲簱
+ * $Id: cls_session.php 17217 2016-11-19 06:29:08Z $
 */
 
 if (!defined('IN_ECS'))

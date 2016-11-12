@@ -1,16 +1,10 @@
 <?php
 
 /**
- * ECSHOP 会员数据处理类
- * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com
+ * iTaoWuJi 会员数据处理类
+   * 开发者：fr33m4n(微信)
  * ----------------------------------------------------------------------------
- * 这是一个免费开源的软件；这意味着您可以在不用于商业目的的前提下对程序代码
- * 进行修改、使用和再发布。
- * ============================================================================
- * $Author: liubo $
- * $Id: discuz55.php 17217 2011-01-19 06:29:08Z liubo $
+ * $Id: discuz55.php 17217 2016-11-19 06:29:08Z $
  */
 
 if (!defined('IN_ECS'))
@@ -33,10 +27,10 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['version'] = '5.5/6.0';
 
     /* 插件的作者 */
-    $modules[$i]['author']  = 'ECSHOP R&D TEAM';
+    $modules[$i]['author']  = 'fr33m4n';
 
     /* 插件作者的官方网站 */
-    $modules[$i]['website'] = 'http://www.ecshop.com';
+    $modules[$i]['website'] = 'http://tunps.com';
 
     /* 插件的初始的默认值 */
     $modules[$i]['default']['db_host'] = 'localhost';

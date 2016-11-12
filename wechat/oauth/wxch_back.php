@@ -30,7 +30,7 @@ $cfg_murl = $db->getOne("SELECT cfg_value FROM wxch_cfg WHERE cfg_name = 'murl'"
 $back_url = $db->getOne("SELECT `contents` FROM `wxch_oauth` WHERE `oid` = '$oid'");
 $affiliate_id = $db->getOne("SELECT `affiliate` FROM `wxch_user` WHERE `wxid` = '$openid'");
 
-//甜心100修复完善
+//fr33m4n修复完善
 if($affiliate_id>=1) 
 {
 	$affiliate = '?u='.$affiliate_id;
@@ -45,7 +45,7 @@ if($affiliate_id>=1)
 		$back_url = $back_url.$affiliate;
 	}
 }
-//甜心100修复完善
+//fr33m4n修复完善
 $update_sql = "UPDATE `wxch_oauth` SET `count` = `count` + 1 WHERE `oid` = $oid; ";
 $db->query($update_sql);
 if(!empty($openid) && strlen($openid) == 28)

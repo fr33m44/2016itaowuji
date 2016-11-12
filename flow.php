@@ -1,9 +1,7 @@
 <?php
 /**
- * ECSHOP 购物流程
- * ============================================================================
- * $Author: douqinghua $
- * $Id: flow.php 17218 2011-01-24 04:10:41Z douqinghua $
+ * iTaoWuJi 购物流程
+ * $Id: flow.php 17218 2016-11-24 04:10:41Z $
  */
 define('IN_ECS', true);
 require (dirname(__FILE__) . '/includes/init.php');
