@@ -140,6 +140,8 @@ $_LANG['13_backup'] = '数据库管理';
 $_LANG['14_sms'] = '短信管理';
 $_LANG['15_rec'] = '推荐管理';
 $_LANG['16_email_manage'] = '邮件群发管理';
+$_LANG['17_wechat'] = '商创微信通';
+$_LANG['18_shouce'] = '使用手册';
 
 /* 商品管理 */
 $_LANG['01_goods_list'] = '商品列表';
@@ -267,6 +269,9 @@ $_LANG['fckfile_manage'] = 'Fck上传文件管理';
 $_LANG['ucenter_setup'] = 'UCenter设置';
 $_LANG['file_check'] = '文件校验';
 $_LANG['021_reg_fields'] = '会员注册项设置';
+$_LANG['website'] = '授权登录';
+$_LANG['user_card'] = '会员卡管理';
+$_LANG['category_icon'] = '分类图标';
 
 /* 模板管理 */
 $_LANG['02_template_select'] = '模板选择';
@@ -291,6 +296,8 @@ $_LANG['06_sms_charge_history'] = '充值记录';
 
 $_LANG['affiliate'] = '推荐设置';
 $_LANG['affiliate_ck'] = '分成管理';
+$_LANG['danpin_tuiguang'] = '单品推广设置';
+$_LANG['zdy_parent'] = '查看|编辑推荐关系';
 $_LANG['flashplay'] = '首页主广告管理';
 $_LANG['search_log'] = '搜索关键字';
 $_LANG['email_list'] = '邮件订阅管理';
@@ -302,6 +309,34 @@ $_LANG['view_sendlist'] = '邮件队列管理';
 $_LANG['15_exchange_goods'] = '积分商城商品';
 $_LANG['15_exchange_goods_list'] = '积分商城商品列表';
 $_LANG['exchange_goods_add'] = '添加新商品';
+//商创微信通
+$_LANG['wx_1api']         = '微信接口';
+$_LANG['wx_3menu']        = '微信菜单设置';
+$_LANG['wx_2config']         = '微信通设置';
+$_LANG['wx_4autoreg']         = '自动注册设置';
+$_LANG['wx_bonus']         = '关注送红包';
+$_LANG['wx_regmsg']         = '关注回复内容';
+$_LANG['wx_lang']         = '语言设置';
+$_LANG['wx_keywords']         = '关键词自动回复';
+$_LANG['wx_point']         = '积分增加';
+$_LANG['wx_fun']         = '功能变量';
+$_LANG['wx_prize']         = '抽奖规则';
+$_LANG['wx_zjd']         = '砸金蛋';
+$_LANG['wx_dzp']         = '大转盘';
+$_LANG['wx_qr']         = '多功能二维码';
+$_LANG['wx_order']         = '发货提醒';
+$_LANG['wx_pay']         = '付款提醒';
+$_LANG['wx_reorder']         = '订单提醒';
+$_LANG['wx_fans']         = '粉丝管理';
+$_LANG['wx_oauth']         = '微信OAuth';
+$_LANG['wx_tuijian']         = '扫码引荐';
+$_LANG['wx_list']         = '推荐人列表';
+$_LANG['wx_tuijian_reply']   = '发展会员关注提醒';
+
+
+//手册
+$_LANG['ectouch']         = '商城设置手册';
+$_LANG['weixintong']         = '微信通使用手册';
 
 /* cls_image类的语言项 */
 $_LANG['directory_readonly'] = '目录 % 不存在或不可写';

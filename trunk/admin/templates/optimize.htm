@@ -1,5 +1,7 @@
 <!-- $Id: optimize.htm 14216 2008-03-10 02:27:21Z testyang $ -->
 {include file="pageheader.htm"}
+ 
+{if $act == optimize}
 <!-- start form -->
 <div class="form-div">
 <form method="post" action="database.php" name="theForm">
@@ -36,6 +38,32 @@
 </table>
 </div>
 <!-- end  list -->
+{/if}
+{if $act == show_tables}
+<div class="list-div" id="listDiv">
+<table cellspacing='1' cellpadding='3' id='listTable'>
+  <tr>
+    <th>字段</th>
+    <th>类型</th>
+    <th>是否非空</th>
+    <th>键值</th>
+    <th>默认</th>
+    <th>额外</th>
+  </tr>
+  {foreach from=$list  item=item}
+    <tr>
+      <td class="first-cell">{$item.Field}</td>
+      <td align ="left">{$item.Type}</td>
+      <td align ="right">{$item.Null}</td>
+      <td align ="right">{$item.Key}</td>
+      <td align ="right">{$item.Default}</td>
+      <td align ="left">{$item.Extra}</td>
+    </tr>
+  {/foreach}
+</table>
+</div>
+{/if}
+ 
 {literal}
 <script type="Text/Javascript" language="JavaScript">
 <!--

@@ -73,6 +73,7 @@ else
     define('PHP_SELF', $_SERVER['SCRIPT_NAME']);
 }
 
+define('WEB_PATH',substr(ROOT_PATH,0,-7));
 require(ROOT_PATH . 'includes/inc_constant.php');
 require(ROOT_PATH . 'includes/cls_ecshop.php');
 require(ROOT_PATH . 'includes/cls_error.php');

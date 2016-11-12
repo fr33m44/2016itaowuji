@@ -21,7 +21,9 @@ if (!defined('IN_ECS'))
 //商品管理权限
     $purview['01_goods_list']        = array('goods_manage', 'remove_back');
     $purview['02_goods_add']         = 'goods_manage';
-    $purview['03_category_list']     = array('cat_manage', 'cat_drop');   //分类添加、分类转移和删除
+    $purview['03_category_list']     = array('cat_manage', 'cat_drop'); 
+	$purview['04_comment_manage']    = 'comment_manage';//  tianxin  100   添加  
+	//分类添加、分类转移和删除
     $purview['05_comment_manage']    = 'comment_priv';
     $purview['06_goods_brand_list']  = 'brand_manage';
     $purview['08_goods_type']        = 'attr_manage';   //商品属性
@@ -92,6 +94,9 @@ if (!defined('IN_ECS'))
     $purview['flashplay']            = 'flash_manage';
     $purview['ucenter_setup']        = 'integrate_users';
     $purview['021_reg_fields']       = 'reg_fields';
+    $purview['website']       = 'website';
+    $purview['user_card']       = 'user_card';
+    $purview['category_icon']       = 'category_icon';
 
 //广告管理
     $purview['z_clicks_stats']       = 'ad_manage';
@@ -151,4 +156,34 @@ if (!defined('IN_ECS'))
     $purview['magazine_list']        = 'magazine_list';
     $purview['view_sendlist']        = 'view_sendlist';
 
+//商创微信通
+    $purview['wx_api']           = 'wx_api';
+    $purview['wx_menu']         = 'wx_menu';
+    $purview['wx_config']         = 'wx_config';
+    $purview['wx_bonus']        = 'wx_bonus';
+    $purview['wx_regmsg']   = 'wx_regmsg';
+    $purview['wx_lang']         = 'wx_lang';
+    $purview['wx_keywords']          = 'wx_keywords';
+    $purview['wx_point']            = 'wx_point';
+    $purview['wx_fun']           = 'wx_fun';
+    $purview['wx_prize']           = 'wx_prize';
+    $purview['wx_zjd']           = 'wx_zjd';
+    $purview['wx_dzp']           = 'wx_dzp';
+    $purview['wx_qr']           = 'wx_qr';
+    $purview['wx_order']           = 'wx_order';
+    $purview['wx_pay']           = 'wx_pay';
+    $purview['wx_reorder']           = 'wx_reorder';
+    $purview['wx_fans']           = 'wx_fans';
+    $purview['wx_oauth']           = 'wx_oauth';
+    $purview['wx_tuijian']           = 'wx_tuijian';
+    $purview['wx_list']           = 'wx_list';
+    $purview['wx_tuijian_reply']           = 'wx_tuijian_reply';
+	$purview['wx_autoreg']           = 'wx_autoreg';
+	$purview['danpin_tuiguang']           = 'danpin_tuiguang';
+	$purview['ectouch']           = 'ectouch';
+	$purview['weixintong']           = 'weixintong';
+	$purview['zdy_parent']           = 'zdy_parent';
+
+	
+	
 ?>

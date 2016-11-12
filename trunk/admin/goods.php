@@ -1775,7 +1775,19 @@ elseif ($_REQUEST['act'] == 'remove')
         exit;
     }
 }
-
+elseif ($_REQUEST['act'] == 'edit_sales_volume_base')
+{
+    check_authz_json('goods_manage');
+ 
+    $goods_id = intval($_POST['id']);
+    $sales_volume_base = json_str_iconv(trim($_POST['val']));
+ 
+    if ($exc->edit("sales_volume_base = '$sales_volume_base', last_update=" .gmtime(), $goods_id))
+    {
+        clear_cache_files();
+        make_json_result(stripslashes($sales_volume_base));
+    }
+}
 /*------------------------------------------------------ */
 //-- 还原回收站中的商品
 /*------------------------------------------------------ */

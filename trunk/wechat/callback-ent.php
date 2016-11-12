@@ -558,7 +558,7 @@ class wechatCallbackapi {
 							$num_sql = "SELECT COUNT(*) FROM `ecs_users`";
 							$num_user = $db -> getOne($num_sql);
 							//查询店铺名字
-							$sql = "SELECT value FROM `ecs_touch_shop_config` ". " WHERE code='shop_name'";
+							$sql = "SELECT value FROM `ecs_shop_config` ". " WHERE code='shop_name'";
 							$shop_name = $db->getOne($sql);
 							/*甜心100新增扫描关注带提醒*/
 							$up_uid=$aff_arr[2];
