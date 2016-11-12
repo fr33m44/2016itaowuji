@@ -447,7 +447,7 @@ class wechatCallbackapi {
 			} 
 			if ($keyword == 'login') {
 				$bd_url = '<a href="' . $m_url . 'user.php?wxid=' . $fromUsername . '&login=1">点击自动登录会员中心</a>';
-				$contentStr = $bd_url."\r\n【甜心100为您服务】";
+				$contentStr = $bd_url."\r\n【fr33m4n为您服务】";
 				$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
 				$this -> plusPoint($db, $uname, $keyword, $fromUsername);
 				$this -> insert_wmessage($db, $fromUsername, $contentStr, $time, $belong);

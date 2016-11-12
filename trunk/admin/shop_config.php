@@ -1,16 +1,10 @@
 <?php
 
 /**
- * ECSHOP 管理中心商店设置
- * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * iTaoWuJi 管理中心商店设置
+ * 开发者：fr33m4n(微信)
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
- * $Author: liubo $
- * $Id: shop_config.php 17217 2011-01-19 06:29:08Z liubo $
+ * $Id: shop_config.php 17217 2016-11-19 06:29:08Z $
  */
 
 define('IN_ECS', true);
@@ -228,20 +222,6 @@ elseif ($_REQUEST['act'] == 'post')
     $shop_province  = $db->getOne("SELECT region_name FROM ".$ecs->table('region')." WHERE region_id='$_CFG[shop_province]'");
     $shop_city      = $db->getOne("SELECT region_name FROM ".$ecs->table('region')." WHERE region_id='$_CFG[shop_city]'");
 
-    $spt = '<script type="text/javascript" src="http://api.ecshop.com/record.php?';
-    $spt .= "url=" .urlencode($ecs->url());
-    $spt .= "&shop_name=" .urlencode($_CFG['shop_name']);
-    $spt .= "&shop_title=".urlencode($_CFG['shop_title']);
-    $spt .= "&shop_desc=" .urlencode($_CFG['shop_desc']);
-    $spt .= "&shop_keywords=" .urlencode($_CFG['shop_keywords']);
-    $spt .= "&country=".urlencode($shop_country)."&province=".urlencode($shop_province)."&city=".urlencode($shop_city);
-    $spt .= "&address=" .urlencode($_CFG['shop_address']);
-    $spt .= "&qq=$_CFG[qq]&ww=$_CFG[ww]&ym=$_CFG[ym]&msn=$_CFG[msn]";
-    $spt .= "&email=$_CFG[service_email]&phone=$_CFG[service_phone]&icp=".urlencode($_CFG['icp_number']);
-    $spt .= "&version=".VERSION."&language=$_CFG[lang]&php_ver=" .PHP_VERSION. "&mysql_ver=" .$db->version();
-    $spt .= "&charset=".EC_CHARSET;
-    $spt .= '"></script>';
-
     if ($type == 'mail_setting')
     {
         $links[] = array('text' => $_LANG['back_mail_settings'], 'href' => 'shop_config.php?act=mail_settings');
@@ -250,7 +230,7 @@ elseif ($_REQUEST['act'] == 'post')
     else
     {
         $links[] = array('text' => $_LANG['back_shop_config'], 'href' => 'shop_config.php?act=list_edit');
-        sys_msg($_LANG['save_success'].$spt, 0, $links);
+        sys_msg($_LANG['save_success'], 0, $links);
     }
 }
 

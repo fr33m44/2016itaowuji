@@ -1,14 +1,14 @@
 <?php
 
 /**
- * ECSHOP 管理中心共用语言文件
+ * iTaoWuJi 管理中心共用语言文件
  * ===========================================================================
- * $Author: liubo $
- * $Id: common.php 17217 2011-01-19 06:29:08Z liubo $
+ * $Author: $
+ * $Id: common.php 17217 2016-11-19 06:29:08Z $
 */
 
-$_LANG['app_name'] = 'ECSHOP';
-$_LANG['cp_home'] = 'ECSHOP 管理中心';
+$_LANG['app_name'] = '淘五季';
+$_LANG['cp_home'] = '淘五季 管理中心';
 $_LANG['copyright'] = '版权所有 &copy; 2005-2012 淘五季B2B实体店采购平台 ，并保留所有权利。';
 $_LANG['query_info'] = '共执行 %d 个查询，用时 %s 秒';
 $_LANG['memory_info'] = '，内存占用 %0.3f MB';

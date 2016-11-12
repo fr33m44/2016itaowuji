@@ -1,10 +1,8 @@
 <?php
 
 /**
- * ECSHOP 搜索引擎关键字统计
- * ============================================================================
- * $Author: liubo $
- * $Id: searchengine_stats.php 17217 2011-01-19 06:29:08Z liubo $
+ * iTaoWuJi 搜索引擎关键字统计
+ * $Id: searchengine_stats.php 17217 2016-11-19 06:29:08Z $
 */
 
 define('IN_ECS', true);

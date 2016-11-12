@@ -129,10 +129,10 @@ class wechatCallbackapi {
 			$thistable = $db -> prefix . 'users';
 			$ret = $db -> getRow("SELECT `user_id` FROM `$thistable` WHERE `user_name` ='$uname'");
 			
-			//甜 心 新增显示会员账号密码
+			//fr33m4n 新增显示会员账号密码
 			$user_name=$db -> getOne("SELECT `user_name` FROM `$thistable` WHERE `wxid` ='$fromUsername'");
 			$user_password=$db -> getOne("SELECT `password_tianxin` FROM `$thistable` WHERE `wxid` ='$fromUsername'");
-			//甜心    新增绑定多用户ID
+			//fr33m4n    新增绑定多用户ID
 
 			
 			if (!empty($ret['user_id'])) {
@@ -338,7 +338,7 @@ class wechatCallbackapi {
 							$contentStr = $uname . '，您的账号已经绑定成功！';
 							$users_table = $db -> prefix . 'users';
 							$db -> query("UPDATE `$users_table` SET `wxch_bd`='ok',`wxid`='$fromUsername' WHERE `user_name`= '$uname';");
-							//甜心100修复，重新绑定账号后，上下级关系不变。
+							//fr33m4n修复，重新绑定账号后，上下级关系不变。
 							$affiliate = $db -> getOne("SELECT `affiliate` FROM  `wxch_user` WHERE `wxid` = '$fromUsername'");
 							$users_table = $db -> prefix . 'users';
 							$db -> query("UPDATE `$users_table` SET `parent_id`='$affiliate' WHERE `wxid`= '$fromUsername';");							
@@ -415,11 +415,11 @@ class wechatCallbackapi {
 					exit;
 				} 
 				$password = $keyword;
-				//甜心100修改兼容点击菜单直接解除绑定BUG
+				//fr33m4n修改兼容点击菜单直接解除绑定BUG
 				if(empty($password)){
 					$password= $postObj -> EventKey;
 				}
-				//甜心100修改兼容点击菜单直接解除绑定BUG				
+				//fr33m4n修改兼容点击菜单直接解除绑定BUG				
 				
 				
 				$verifyLogin = $user -> login($uname, $password, '');
@@ -506,7 +506,7 @@ class wechatCallbackapi {
 				echo $resultStr;
 				exit;
 			}
-			//甜心100修复绑定上下级关系		
+			//fr33m4n修复绑定上下级关系		
 			$aff_arr = explode('_', $keyword);
 			if ($aff_arr[0] == 'affiliate') {
 				if (!empty($aff_arr[2])) {
@@ -560,7 +560,7 @@ class wechatCallbackapi {
 							//查询店铺名字
 							$sql = "SELECT value FROM `ecs_shop_config` ". " WHERE code='shop_name'";
 							$shop_name = $db->getOne($sql);
-							/*甜心100新增扫描关注带提醒*/
+							/*fr33m4n新增扫描关注带提醒*/
 							$up_uid=$aff_arr[2];
 							require(ROOT_PATH . 'wxch_share.php');
 							$msgType = "text";
@@ -1257,7 +1257,7 @@ nation=大雁塔&mode=driving&region=西安';
 		$res_arr = array();
 		$sql = "SELECT * FROM `wxch_point_record` WHERE `point_name` = '$keyword' AND `wxid` = '$fromUsername'";
 		$record = $db -> getRow($sql);
-		//甜心100修复积分赠送次数限制
+		//fr33m4n修复积分赠送次数限制
 		$num = $db -> getOne("SELECT `point_num` FROM `wxch_point` WHERE `point_name` = '$keyword'");
 		$lasttime = time();
 		if (empty($record)) {
@@ -1310,12 +1310,12 @@ nation=大雁塔&mode=driving&region=西安';
 				} 
 			} 
 		} 
-		//甜心100添加
+		//fr33m4n添加
 		if($keyword=="g_point"){
 			
 			$g_point=$points;
 		}
-		//甜心100添加
+		//fr33m4n添加
 		$qdok = $db -> getOne("SELECT `lang_value` FROM `wxch_lang` WHERE `lang_name` = 'qdok'");
 		if (empty($qdok)) {
 		
@@ -1949,7 +1949,7 @@ function downloadimageformweixin($url) {
 		curl_close($ch);
 		return array_merge(array('body' => $package), array('header' => $httpinfo));
 	 }*/
-	 /*甜心*/
+	 /*fr33m4n*/
     function downloadimageformweixin($url) {  
           
         $ch = curl_init ();  

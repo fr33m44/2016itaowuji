@@ -83,7 +83,7 @@ if($wxch_user_id > 0)
 		}
 		$shopinfo = substr($shopinfo, 0, strlen($shopinfo)-1);
 	}
-	/*店   铺   地  址：         http://           we10.taobao.     com*/
+	
 	$sql = "SELECT * FROM wxch_order WHERE order_name = '$wxch_order_name'";
 	$cfg_order = $GLOBALS['db']->getRow($sql);
 	$cfg_baseurl = $GLOBALS['db']->getOne("SELECT cfg_value FROM wxch_cfg WHERE cfg_name = 'baseurl'");

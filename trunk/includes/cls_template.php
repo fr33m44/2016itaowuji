@@ -1,10 +1,8 @@
 <?php
 
 /**
- * ECSHOP 模版类
- * ============================================================================
- * $Author: liubo $
- * $Id: cls_template.php 17217 2011-01-19 06:29:08Z liubo $
+ * iTaoWuJi 模版类
+ * $Id: cls_template.php 17217 2016-11-19 06:29:08Z $
  */
 
 class cls_template

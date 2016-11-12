@@ -34,7 +34,7 @@
     ]
   });
  wx.ready(function () {
-	//甜心100监听“分享给朋友”
+	//fr33m4n监听“分享给朋友”
     wx.onMenuShareAppMessage({
       title: '{$page_title}',
       desc: '{$page_title}',
@@ -62,7 +62,7 @@
       }
     });
 
-	//分享到朋友圈甜心100
+	//分享到朋友圈fr33m4n
     wx.onMenuShareTimeline({
       title: '{$page_title}',
       link: '{$url}',

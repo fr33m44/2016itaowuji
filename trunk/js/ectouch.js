@@ -431,9 +431,6 @@ function tEnd(c) {
 /*
 * 分类页
 */
-/**
-** ec模板堂  by Leah
-*/
 //切换浏览模式: 列表  详情  详情列表
 function changeCl( cls ){
 	var vl = cls.getAttribute('class') ;

@@ -5,7 +5,7 @@ require(ROOT_PATH . 'mobile/include/lib_weixintong.php');
 	$access_token = access_token($db);
 	$url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='.$access_token;
 	
-	//添加提醒图片功能 甜心100  Mr.lu
+	//添加提醒图片功能 fr33m4n  Mr.lu
 	$sql = "SELECT * FROM wxch_order WHERE id = 4";
 	$cfg_order = $db->getRow($sql);
 	$cfg_baseurl = $db->getOne("SELECT cfg_value FROM wxch_cfg WHERE cfg_name = 'baseurl'");
@@ -24,7 +24,7 @@ require(ROOT_PATH . 'mobile/include/lib_weixintong.php');
 	
 	$sql_two="SELECT wxid FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '$up_uid'";	
 	$wxid=$GLOBALS['db']->GetOne($sql_two);
-	$w_title="您有新朋友加入了，赶紧看看吧甜心100";
+	$w_title="您有新朋友加入了，赶紧看看吧fr33m4n";
 	$w_description="新朋友的消费您都将有提成哦";
 	$config['site_url']="http://".$_SERVER['HTTP_HOST']."/"; 
 	$site_url=$config['site_url'];

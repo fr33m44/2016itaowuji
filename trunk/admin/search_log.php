@@ -1,10 +1,10 @@
 <?php
 
 /**
- * ECSHOP 程序说明
+ * iTaoWuJi 程序说明
  * ===========================================================
- * $Author: liubo $
- * $Id: search_log.php 17217 2011-01-19 06:29:08Z liubo $
+ * $Author: $
+ * $Id: search_log.php 17217 2016-11-19 06:29:08Z $
  */
 
 define('IN_ECS', true);

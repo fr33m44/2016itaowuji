@@ -1,10 +1,8 @@
 <?php
 
 /**
- * ECSHOP 管理中心公用文件
- * ============================================================================
- * $Author: liubo $
- * $Id: init.php 17217 2011-01-19 06:29:08Z liubo $
+ * iTaoWuJi 管理中心公用文件
+ * $Id: init.php 17217 2016-11-19 06:29:08Z $
 */
 
 if (!defined('IN_ECS'))
@@ -213,32 +211,6 @@ if(isset($_CFG['enable_order_check']))  // 为了从旧版本顺利升级到2.5.
 else
 {
     $smarty->assign('enable_order_check', 0);
-}
-
-/* 验证通行证信息 */
-if(isset($_GET['ent_id']) && isset($_GET['ent_ac']) &&  isset($_GET['ent_sign']) && isset($_GET['ent_email']))
-{
-    $ent_id = trim($_GET['ent_id']);
-    $ent_ac = trim($_GET['ent_ac']);
-    $ent_sign = trim($_GET['ent_sign']);
-    $ent_email = trim($_GET['ent_email']);
-    $certificate_id = trim($_CFG['certificate_id']);
-    $domain_url = $ecs->url();
-    $token=$_GET['token'];
-    if($token==md5(md5($_CFG['token']).$domain_url.ADMIN_PATH))
-    {
-        require(ROOT_PATH . 'includes/cls_transport.php');
-        $t = new transport('-1',5);
-        $apiget = "act=ent_sign&ent_id= $ent_id & certificate_id=$certificate_id";
-
-        $t->request('http://cloud.ecshop.com/api.php', $apiget);
-        $db->query('UPDATE '.$ecs->table('shop_config') . ' SET value = "'. $ent_id .'" WHERE code = "ent_id"');
-        $db->query('UPDATE '.$ecs->table('shop_config') . ' SET value = "'. $ent_ac .'" WHERE code = "ent_ac"');
-        $db->query('UPDATE '.$ecs->table('shop_config') . ' SET value = "'. $ent_sign .'" WHERE code = "ent_sign"');
-        $db->query('UPDATE '.$ecs->table('shop_config') . ' SET value = "'. $ent_email .'" WHERE code = "ent_email"');
-        clear_cache_files();
-        ecs_header("Location: ./index.php\n");
-    }
 }
 
 /* 验证管理员身份 */

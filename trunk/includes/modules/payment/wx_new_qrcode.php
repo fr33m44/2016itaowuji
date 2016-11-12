@@ -1,6 +1,6 @@
 ﻿<?php
 /**
- * ECSHOP微信新版JSAPI支付插件  甜心  10 0 开发  修复
+ * iTaoWuJi微信新版JSAPI支付插件  fr33m4n 开发  修复
  */
 if (!defined('IN_ECS'))
 {

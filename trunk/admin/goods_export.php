@@ -1,17 +1,12 @@
 <?php
 
 /**
- * ECSHOP
- * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * iTaoWuJi
+ * 开发者：fr33m4n(微信)
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
- *
- * $Author: liubo $
- * $Id: goods_export.php 17217 2011-01-19 06:29:08Z liubo $
+    *
+ * $Author: $
+ * $Id: goods_export.php 17217 2016-11-19 06:29:08Z $
 */
 
 define('IN_ECS', true);
@@ -751,7 +746,7 @@ elseif ($_REQUEST['act'] == 'act_export_taobao V4.6')
     $res = $db->query($sql);
 
     /* csv文件数组 */
-    $goods_value = array('goods_name'=>'', 'goods_class'=>$goods_class, 'shop_class'=>0, 'new_level'=>0, 'province'=>$shop_province, 'city'=>$shop_city, 'sell_type'=>'"b"', 'shop_price'=>0, 'add_price'=>0, 'goods_number'=>0, 'die_day'=>14, 'load_type'=>1, 'post_express'=>$post_express, 'ems'=>$ems, 'express'=>$express, 'pay_type'=>'', 'allow_alipay'=>'', 'invoice'=>0, 'repair'=>0, 'resend'=>1, 'is_store'=>0, 'window'=>0, 'add_time'=>'"1980-1-1  0:00:00"', 'story'=>'', 'goods_desc'=>'', 'goods_img'=>'', 'goods_attr'=>'', 'group_buy'=>'', 'group_buy_num'=>'', 'template'=>0, 'discount'=>0, 'modify_time'=>'"2011-5-1  0:00:00"', 'upload_status'=>100, 'img_status'=>1,'img_status'=>'','rebate_proportion'=>0,'new_goods_img'=>'','video'=>'','marketing_property_mix'=>'','user_input_ID_numbers'=>'','input_user_name_value'=>'','sellers_code'=>'','another_of_marketing_property'=>'','charge_type'=>'0','treasure_number'=>'','ID_number'=>'',);
+    $goods_value = array('goods_name'=>'', 'goods_class'=>$goods_class, 'shop_class'=>0, 'new_level'=>0, 'province'=>$shop_province, 'city'=>$shop_city, 'sell_type'=>'"b"', 'shop_price'=>0, 'add_price'=>0, 'goods_number'=>0, 'die_day'=>14, 'load_type'=>1, 'post_express'=>$post_express, 'ems'=>$ems, 'express'=>$express, 'pay_type'=>'', 'allow_alipay'=>'', 'invoice'=>0, 'repair'=>0, 'resend'=>1, 'is_store'=>0, 'window'=>0, 'add_time'=>'"1980-1-1  0:00:00"', 'story'=>'', 'goods_desc'=>'', 'goods_img'=>'', 'goods_attr'=>'', 'group_buy'=>'', 'group_buy_num'=>'', 'template'=>0, 'discount'=>0, 'modify_time'=>'"2016-5-1  0:00:00"', 'upload_status'=>100, 'img_status'=>1,'img_status'=>'','rebate_proportion'=>0,'new_goods_img'=>'','video'=>'','marketing_property_mix'=>'','user_input_ID_numbers'=>'','input_user_name_value'=>'','sellers_code'=>'','another_of_marketing_property'=>'','charge_type'=>'0','treasure_number'=>'','ID_number'=>'',);
 
     $content = implode("\t", $_LANG['taobao46']) . "\n";
 
