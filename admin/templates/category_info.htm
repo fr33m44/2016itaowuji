@@ -147,12 +147,16 @@
           <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeGoodsSN">{$lang.notice_style}</span>
         </td>
       </tr>
+      </tbody>
+      <tr>
+        <td class="label">分类小图标:</td>
+        <td><input type="file" name="cat_ico" id="cat_ico" size="50"><br />{if $cat_info.cat_ico}<img src="../data/cat_ico/{$cat_info.cat_ico}" height="80" width="80" /> <input type="button" value="删除图标" onclick="if (confirm('确认删除分类图标吗?'))location.href='category.php?act=drop_cat_ico&id={$cat_info.cat_id}'">{/if}</td>
+      </tr>
       <tr>
         <td class="label">{$lang.keywords}:</td>
         <td><input type="text" name="keywords" value='{$cat_info.keywords}' size="50">
         </td>
       </tr>
-
       <tr>
         <td class="label">{$lang.cat_desc}:</td>
         <td>

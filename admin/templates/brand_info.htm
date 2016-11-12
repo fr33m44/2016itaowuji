@@ -24,6 +24,21 @@
     </span>
     </td>
   </tr>
+  <!--品牌广告 S-->
+  <tr>
+    <td class="label"><a href="javascript:showNotice('warn_brandlogo');" title="{$lang.form_notice}">
+    <img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>品牌广告</td>
+    <td><input type="file" name="brand_banner" id="banner" size="45">{if $brand.brand_banner neq ""}<input type="button" value="删除图标" onclick="if (confirm('{$lang.confirm_drop_logo}'))location.href='brand.php?act=drop_logo&id={$brand.brand_id}'">{/if}
+    <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="warn_brandlogo">
+    {if $brand.brand_banner eq ''}
+    请上传图片，做为品牌的Banner！
+    {else}
+    {$lang.warn_brandlogo}
+    {/if}
+    </span>
+    </td>
+  </tr>
+<!--品牌广告 E-->
   <tr>
     <td class="label">{$lang.brand_desc}</td>
     <td><textarea  name="brand_desc" cols="60" rows="4"  >{$brand.brand_desc}</textarea></td>

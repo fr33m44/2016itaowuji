@@ -590,6 +590,7 @@ if ($_REQUEST['act'] == 'optimize')
         }
         $type = $db_ver >= '4.1' ? $row['Engine'] : $row['Type'];
         $charset = $db_ver >= '4.1' ? $row['Collation'] : 'N/A';
+        $name = '<a href="database.php?act=show_tables&table='.$row['Name'].'" title="点击查看数据表结构">'.$row['Name'].'</a>';
         $list[] = array('table' => $row['Name'], 'type' => $type, 'rec_num' => $row['Rows'], 'rec_size' => sprintf(" %.2f KB", $row['Data_length'] / 1024), 'rec_index' => $row['Index_length'],  'rec_chip' => $row['Data_free'], 'status' => $res['Msg_text'], 'charset' => $charset);
     }
     unset($ret);
@@ -598,6 +599,28 @@ if ($_REQUEST['act'] == 'optimize')
     $smarty->assign('list',    $list);
     $smarty->assign('num',     $num);
     $smarty->assign('ur_here', $_LANG['03_db_optimize']);
+    $smarty->assign('act',    'optimize');
+    $smarty->assign('action_link', array('text' => "sql查询", 'href'=>'sql.php?act=main'));
+    $smarty->display('optimize.htm');
+}
+/**
+ * 查看数据表结构信息 add by yang 2014-5-28
+ */
+if($_REQUEST['act'] == 'show_tables'){
+ 
+    admin_priv('db_backup');
+ 
+    $table = !empty($_GET['table']) ? $_GET['table'] : '';
+ 
+    $ret = $db->query("show columns from $table");
+ 
+    $list = array();
+    while ($row = $db->fetchRow($ret) ) {
+        $list[] = $row;
+    }
+    $smarty->assign('list',    $list);
+    $smarty->assign('ur_here', '显示'.$table.'数据表结构');
+    $smarty->assign('act',    'show_tables');
     $smarty->display('optimize.htm');
 }
 

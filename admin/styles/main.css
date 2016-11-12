@@ -847,3 +847,40 @@ em, cite, th {
 .cloud_close a{}
 .cloud_close img{ position:absolute; right:10px; top:8px; border:none}
 .Start315{border: 1px solid #CC0000; background: #ffffcc; padding: 10px; margin-bottom: 5px;}
+
+.alipay_get_pidkey_box {
+    background-color: #FFFFFF;
+    border: 3px solid #CCCCCC;
+    display: none;
+    left: 132px;
+    padding: 1px;
+    position: absolute;
+    top: 22px;
+    min-width: 180px;
+}
+.alipay_get_pidkey_box .close_acp_info {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.alipay_get_pidkey_box h2 {
+    background-color: #FFFCF7;
+    border: 1px solid #FFF1D9;
+    color: #000000;
+    font-size: 12px;
+    line-height: 28px;
+    margin: 0;
+    padding: 0 0 0 10px;
+    text-align: left;
+}
+.alipay_get_pidkey_box table td {
+    padding: 2px;
+}
+.alipay_get_pidkey_box table td a {
+    background: none repeat scroll 0 0 #0187D0;
+    color: #FFFFFF;
+    padding: 2px 5px;
+}
+.cWhite {
+    color: #FFFFFF;
+}

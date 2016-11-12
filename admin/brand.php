@@ -83,10 +83,12 @@ elseif ($_REQUEST['act'] == 'insert')
      /*处理URL*/
     $site_url = sanitize_url( $_POST['site_url'] );
 
+     /*处理图片品牌banner  by ecmoban S*/
+    $banner_name = basename($image->upload_image($_FILES['brand_banner'],'brandlogo'));
     /*插入数据*/
 
-    $sql = "INSERT INTO ".$ecs->table('brand')."(brand_name, site_url, brand_desc, brand_logo, is_show, sort_order) ".
-           "VALUES ('$_POST[brand_name]', '$site_url', '$_POST[brand_desc]', '$img_name', '$is_show', '$_POST[sort_order]')";
+    $sql = "INSERT INTO ".$ecs->table('brand')."(brand_name, site_url, brand_desc, brand_logo, brand_banner, is_show, sort_order) ".
+           "VALUES ('$_POST[brand_name]', '$site_url', '$_POST[brand_desc]', '$img_name', '$_POST[banner_name]', '$is_show', '$_POST[sort_order]')";
     $db->query($sql);
 
     admin_log($_POST['brand_name'],'add','brand');
@@ -148,11 +150,13 @@ elseif ($_REQUEST['act'] == 'updata')
 
     /* 处理图片 */
     $img_name = basename($image->upload_image($_FILES['brand_logo'],'brandlogo'));
+    $banner_name = basename($image->upload_image($_FILES['brand_banner'],'brandlogo')); //by ecmoban
     $param = "brand_name = '$_POST[brand_name]',  site_url='$site_url', brand_desc='$_POST[brand_desc]', is_show='$is_show', sort_order='$_POST[sort_order]' ";
     if (!empty($img_name))
     {
         //有图片上传
         $param .= " ,brand_logo = '$img_name' ";
+        $param .= " ,brand_banner = '$banner_name' ";
     }
 
     if ($exc->edit($param,  $_POST['id']))

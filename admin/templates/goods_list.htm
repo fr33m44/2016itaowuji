@@ -28,6 +28,7 @@
     {if $use_storage}
     <th><a href="javascript:listTable.sort('goods_number'); ">{$lang.goods_number}</a>{$sort_goods_number}</th>
     {/if}
+	<th><a href="javascript:listTable.sort('sales_volume_base'); ">销量基数</a>{$sort_sales_volume_base}</th>
     <th>{$lang.handler}</th>
   <tr>
   {foreach from=$goods_list item=goods}
@@ -46,6 +47,7 @@
     {if $use_storage}
     <td align="right"><span onclick="listTable.edit(this, 'edit_goods_number', {$goods.goods_id})">{$goods.goods_number}</span></td>
     {/if}
+	<td align="center"><span onclick="listTable.edit(this, 'edit_sales_volume_base', {$goods.goods_id})">{$goods.sales_volume_base}</span></td>
     <td align="center">
       <a href="../goods.php?id={$goods.goods_id}" target="_blank" title="{$lang.view}"><img src="images/icon_view.gif" width="16" height="16" border="0" /></a>
       <a href="goods.php?act=edit&goods_id={$goods.goods_id}{if $code neq 'real_goods'}&extension_code={$code}{/if}" title="{$lang.edit}"><img src="images/icon_edit.gif" width="16" height="16" border="0" /></a>

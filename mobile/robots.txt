@@ -1,9 +1,0 @@
-User-agent: *
-Disallow: /
-Disallow: /admin/
-Disallow: /data/
-Disallow: /include/
-Disallow: /install/
-Disallow: /lang/
-Disallow: /plugins/
-Disallow: /themes/

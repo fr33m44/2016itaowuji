@@ -446,4 +446,9 @@ $_LANG['back_mail_settings'] = '返回邮件服务器设置';
 $_LANG['mail_settings'] = '邮件服务器设置';
 
 $_LANG['sms_url'] = '<a href="'.$url.'" target="_blank">点此注册手机短信服务</a>';
+$_LANG['cfg_name']['sms_signin'] = '客户注册时是否发送短信验证码';
+$_LANG['cfg_range']['sms_signin']['1'] = '发短信';
+$_LANG['cfg_range']['sms_signin']['0'] = '不发短信';
+$_LANG['cfg_name']['sms_ecmoban_user'] = '短信接口用户名';
+$_LANG['cfg_name']['sms_ecmoban_password'] = '短信接口密码';
 ?>

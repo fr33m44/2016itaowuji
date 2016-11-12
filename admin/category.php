@@ -589,6 +589,19 @@ if ($_REQUEST['act'] == 'remove')
 
     ecs_header("Location: $url\n");
     exit;
+} elseif ($_REQUEST['act'] == 'drop_cat_ico') {
+	admin_priv('cat_manage');
+	$cat_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+	$sql = "SELECT cat_ico FROM " . $ecs->table('category') . " WHERE cat_id = '$cat_id'";
+	$thumb_name = $db->getOne($sql);
+	if (!empty($thumb_name)) {
+		@unlink(ROOT_PATH . DATA_DIR . '/cat_ico/' . $thumb_name);
+		$sql = "UPDATE " . $ecs->table('category') . " SET cat_ico = '' WHERE cat_id = '$cat_id'";
+		$db->query($sql);
+	}
+	$link = array(array('text' => '编辑商品分类', 'href' => 'category.php?act=edit&cat_id=' . $cat_id), array('text' => '商品分类列表', 'href' => 'category.php?act=list'));
+	sys_msg('删除商品分类小图成功', 0, $link);
+
 }
 
 /*------------------------------------------------------ */

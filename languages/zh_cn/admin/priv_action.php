@@ -24,6 +24,7 @@ $_LANG['email'] = '邮件管理';
 $_LANG['templates_manage'] = '模板管理';
 $_LANG['db_manage'] = '数据库管理';
 $_LANG['sms_manage'] = '短信管理';
+$_LANG['wechat'] = '商创微信通';
 
 //商品管理部分的权限
 $_LANG['goods_manage'] = '商品添加/编辑';
@@ -151,4 +152,31 @@ $_LANG['sms_charge']      = '短信充值';
 $_LANG['send_history']    = '发送记录';
 $_LANG['charge_history']  = '充值记录 ';
 
+//商创微信通
+$_LANG['wx_api']         = '微信接口';
+$_LANG['wx_menu']        = '微信菜单设置';
+$_LANG['wx_config']         = 'Ecshop微信通设置';
+$_LANG['wx_bonus']         = '关注送红包';
+$_LANG['wx_regmsg']         = '关注回复内容';
+$_LANG['wx_lang']         = '语言设置';
+$_LANG['wx_keywords']         = '关键词自动回复';
+$_LANG['wx_point']         = '积分增加';
+$_LANG['wx_fun']         = '功能变量';
+$_LANG['wx_prize']         = '抽奖规则';
+$_LANG['wx_zjd']         = '砸金蛋';
+$_LANG['wx_dzp']         = '大转盘';
+$_LANG['wx_qr']         = '多功能二维码';
+$_LANG['wx_order']         = '发货提醒';
+$_LANG['wx_pay']         = '付款提醒';
+$_LANG['wx_reorder']         = '订单提醒';
+$_LANG['wx_fans']         = '粉丝管理';
+$_LANG['wx_oauth']         = '微信OAuth';
+$_LANG['wx_tuijian']         = '扫码引荐';
+$_LANG['wx_list']         = '推荐人列表';
+
+//分销设置
+$_LANG['fenxiao']         = '分销设置';
+$_LANG['ectouch']         = '商城设置手册';
+$_LANG['weixintong']         = '微信通使用手册';
+$_LANG['zdy_parent']         = '查看|编辑推荐关系';
 ?>

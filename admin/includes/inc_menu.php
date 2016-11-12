@@ -97,10 +97,15 @@ $modules['10_priv_admin']['agency_list']            = 'agency.php?act=list';
 $modules['10_priv_admin']['suppliers_list']         = 'suppliers.php?act=list'; // 供货商
 
 $modules['11_system']['01_shop_config']             = 'shop_config.php?act=list_edit';
+$modules['11_system']['06_goods_brand_list'] 		= 'brand.php?act=list';
+$modules['11_system']['ad_position']                = 'ad_position.php?act=list';
 $modules['11_system']['shop_authorized']             = 'license.php?act=list_edit';
 $modules['11_system']['02_payment_list']            = 'payment.php?act=list';
 $modules['11_system']['03_shipping_list']           = 'shipping.php?act=list';
 $modules['11_system']['04_mail_settings']           = 'shop_config.php?act=mail_settings';
+$modules['11_system']['website']           = 'website.php?act=list';
+$modules['11_system']['user_card']           = 'user_card.php?act=ctlist';
+$modules['11_system']['category_icon']           = 'category.php?act=list';
 $modules['11_system']['05_area_list']               = 'area_manage.php?act=list';
 //$modules['11_system']['06_plugins']                 = 'plugins.php?act=list';
 $modules['11_system']['07_cron_schcron']            = 'cron.php?act=list';
@@ -140,11 +145,38 @@ $modules['14_sms']['03_sms_send']                   = 'sms.php?act=display_send_
 
 $modules['15_rec']['affiliate']                     = 'affiliate.php?act=list';
 $modules['15_rec']['affiliate_ck']                  = 'affiliate_ck.php?act=list';
-
+$modules['15_rec']['danpin_tuiguang']                  ='article_tianxin100.php?act=list';
+$modules['15_rec']['zdy_parent']                  ='users_parent.php?act=list';
 $modules['16_email_manage']['email_list']           = 'email_list.php?act=list';
 $modules['16_email_manage']['magazine_list']        = 'magazine_list.php?act=list';
 $modules['16_email_manage']['attention_list']       = 'attention_list.php?act=list';
 $modules['16_email_manage']['view_sendlist']        = 'view_sendlist.php?act=list';
+//微信通管理
+$modules['17_wechat']['wx_1api']           = 'wxch-ent.php?act=wxconfig';
+$modules['17_wechat']['wx_3menu']        = 'wxch-ent.php?act=menu';
+$modules['17_wechat']['wx_2config']       = 'wxch-ent.php?act=config';
+$modules['17_wechat']['wx_4autoreg']       = 'wxch-ent.php?act=autoreg';
+$modules['17_wechat']['wx_bonus']        = 'wxch-ent.php?act=bonus';
+$modules['17_wechat']['wx_regmsg']        = 'wxch-ent.php?act=regmsg';
+$modules['17_wechat']['wx_lang']        = 'wxch-ent.php?act=lang';
+$modules['17_wechat']['wx_keywords']        = 'wxch-ent.php?act=keywords';
+$modules['17_wechat']['wx_point']        = 'wxch-ent.php?act=point';
+$modules['17_wechat']['wx_fun']        = 'wxch-ent.php?act=fun';
+$modules['17_wechat']['wx_prize']        = 'wxch-ent.php?act=prize';
+$modules['17_wechat']['wx_zjd']        = 'wxch-ent.php?act=zjd';
+$modules['17_wechat']['wx_dzp']        = 'wxch-ent.php?act=dzp';
+$modules['17_wechat']['wx_qr']        = 'wxch-ent.php?act=qr';
+$modules['17_wechat']['wx_order']        = 'wxch-ent.php?act=order';
+$modules['17_wechat']['wx_pay']        = 'wxch-ent.php?act=pay';
+$modules['17_wechat']['wx_reorder']        = 'wxch-ent.php?act=reorder';
+$modules['17_wechat']['wx_fans']        = 'wxch_users.php?act=list';
+$modules['17_wechat']['wx_oauth']        = 'wxch-ent.php?act=oauth';
+$modules['17_wechat']['wx_tuijian']        = 'wxch-ent.php?act=tuijian';
+$modules['17_wechat']['wx_tuijian_reply']        = 'wxch-ent.php?act=tuijian_reply';
+$modules['17_wechat']['wx_list']        = 'users_invite.php?act=list';
+//教程
+$modules['18_shouce']['ectouch']        = 'help_wei.php?act=ectouch';
+$modules['18_shouce']['weixintong']        = 'help_wei.php?act=weixintong';
 
 
 $modules['12_2_template']['02_template_select']       = 'template_mobile.php?act=list';
