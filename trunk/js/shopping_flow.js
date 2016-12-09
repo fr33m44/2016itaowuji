@@ -474,7 +474,7 @@ function changeOOS(obj)
  */
 function checkOrderForm(frm)
 {
-	var paymentSelected = false;
+	var paymentSelected = true;
 	var shippingSelected = false;
 
 	// 检查是否选择了支付配送方式
@@ -484,11 +484,13 @@ function checkOrderForm(frm)
 		{
 			shippingSelected = true;
 		}
-
+		/*
 		if (frm.elements[i].name == 'payment' && frm.elements[i].checked)
 		{
 			paymentSelected = true;
 		}
+		*/
+		paymentSelected = true;
 	}
 
 	if (!shippingSelected)
@@ -496,13 +498,13 @@ function checkOrderForm(frm)
 		alert(flow_no_shipping);
 		return false;
 	}
-
+	/*
 	if (!paymentSelected)
 	{
 		alert(flow_no_payment);
 		return false;
 	}
-
+	*/
 	// 检查用户输入的余额
 	if (document.getElementById("ECS_SURPLUS"))
 	{

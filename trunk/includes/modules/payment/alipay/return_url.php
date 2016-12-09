@@ -13,6 +13,15 @@
  * 该页面可以使用PHP开发工具调试，也可以使用写文本函数logResult，该函数已被默认关闭，见alipay_notify_class.php中的函数verifyReturn
  */
 
+function jqlog($word)
+{
+	$fp = fopen("hjq.txt","a+");
+	fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time()) .$word."\n");
+	fclose($fp);
+}
+
+jqlog("old return");
+
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
 

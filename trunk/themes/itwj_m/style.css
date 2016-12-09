@@ -3453,6 +3453,54 @@ border-radius: 24px 0 0 24px;}
 .fr {
 	float: right;
 }
+.pay{
+	width:90%;
+}
+.pay li{
+	border-bottom: 1px solid #f6f6f6;
+}
+.pay .item {
+    padding-right: .6rem;
+    background: url(images/check_normal.png) 100% 50% no-repeat;
+    -webkit-background-size: 1.5rem 1.5rem;
+    -moz-background-size: 1.5rem 1.5rem;
+    -ms-background-size: 1.5rem 1.5rem;
+    -o-background-size: 1.5rem 1.5rem;
+    background-size: 1.5rem 1.5rem;
+}
+
+.pay .item.on {
+    background: url(images/check_press.png) 100% 50% no-repeat;
+    -webkit-background-size: 1.5rem 1.5rem;
+    -moz-background-size: 1.5rem 1.5rem;
+    -ms-background-size: 1.5rem 1.5rem;
+    -o-background-size: 1.5rem 1.5rem;
+    background-size: 1.5rem 1.5rem;
+}
+.pay .item a {
+	display: block;
+    font-size: 1rem;
+    line-height: 1rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.pay .item  a.weixinwap{
+	background: url(images/pay_wx.png) 0 50% no-repeat;
+    -webkit-background-size: 1.5rem 1.5rem;
+    -moz-background-size: 1.5rem 1.5rem;
+    -ms-background-size: 1.5rem 1.5rem;
+    -o-background-size: 1.5rem 1.5rem;
+    background-size: 1.5rem 1.5rem;
+}
+.pay .item  a.alipaywap{
+	background: url(images/pay_zfb2.png) 0 50% no-repeat;
+    -webkit-background-size: 1.5rem 1.5rem;
+    -moz-background-size: 1.5rem 1.5rem;
+    -ms-background-size: 1.5rem 1.5rem;
+    -o-background-size: 1.5rem 1.5rem;
+    background-size: 1.5rem 1.5rem;
+}
 /* 订单确认页表格_底部模块 */
 
 .table_box3 .dd1 {

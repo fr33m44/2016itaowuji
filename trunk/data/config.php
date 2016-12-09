@@ -6,10 +6,10 @@ $db_host   = "localhost:3306";
 $db_name   = "itwj";
 
 // database username
-$db_user   = "root";
+$db_user   = "itwj";
 
 // database password
-$db_pass   = "1111";
+$db_pass   = "fs6SvolF9eQJzToH";
 
 // table prefix
 $prefix    = "ecs_";

@@ -1514,6 +1514,41 @@ elseif ($_REQUEST['step'] == 'done') {
 	unset($_SESSION['flow_consignee']); // 清除session中保存的收货人信息
 	unset($_SESSION['flow_order']);
 	unset($_SESSION['direct_shopping']);
+	
+	//hjq 20161207 如果是支付宝移动支付，POST跳转到支付宝页面
+	if(checkmobile())
+	{
+		require_once dirname ( __FILE__ ).DIRECTORY_SEPARATOR.'alipaywap/wappay/service/AlipayTradeService.php';
+		require_once dirname ( __FILE__ ).DIRECTORY_SEPARATOR.'alipaywap/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
+		require dirname ( __FILE__ ).DIRECTORY_SEPARATOR.'./alipaywap/config.php';
+		
+		//商户订单号，商户网站订单系统中唯一订单号，必填
+		$out_trade_no = $order['order_sn'];
+
+		//订单名称，必填
+		$subject ='order'.$order['order_sn'];
+
+		//付款金额，必填
+		$total_amount = $order['order_amount'];
+
+		//商品描述，可空
+		$body = '';
+
+		//超时时间
+		$timeout_express="1m";
+
+		$payRequestBuilder = new AlipayTradeWapPayContentBuilder();
+		$payRequestBuilder->setBody($body);
+		$payRequestBuilder->setSubject($subject);
+		$payRequestBuilder->setOutTradeNo($out_trade_no);
+		$payRequestBuilder->setTotalAmount($total_amount);
+		$payRequestBuilder->setTimeExpress($timeout_express);
+
+		$payResponse = new AlipayTradeService($config);
+		$result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+		print_r($result);
+		return ;
+	}
 }
 /*------------------------------------------------------ */
 //-- 更新购物车
