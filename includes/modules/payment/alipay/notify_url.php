@@ -20,7 +20,9 @@ function jqlog($word)
 	fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time()) .$word."\n");
 	fclose($fp);
 }
-	
+
+jqlog("old notify");
+
 require_once("alipay.config.php");
 require_once("lib/alipay_notify.class.php");
 
@@ -28,7 +30,7 @@ jqlog("result1");
 
 define('IN_ECS', true);
 
-require_once(dirname(__FILE__) . '/../../../../includes/init.php');
+require_once(ROOT_PATH . 'includes/init.php');
 require_once(ROOT_PATH . 'includes/lib_order.php');
 require_once(ROOT_PATH . 'includes/lib_payment.php');
 

@@ -25,7 +25,7 @@
 <div class="block_s clearfix"> 
   <script>
 $(function(){
-	$("#group_box1").slide({mainCell:".group_l ul",titCell:".deal_brief_trigger .trigger",titOnClassName:"current",trigger:"click"});
+	$("#group_box1").slide({interTime:5000, mainCell:".group_l ul",titCell:".deal_brief_trigger .trigger",titOnClassName:"current",trigger:"click"});
 
 
 	setInterval(function(){

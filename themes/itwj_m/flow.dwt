@@ -307,51 +307,59 @@
 
 <!-- {if $step eq "checkout"} 开始订单确认界面 -->
 <script>
- onload = function() {
- var oRadioValue;
- var sp = document.getElementsByName('shipping');
-         
-             for (i=0;i<sp.length;i++){
-                 if (sp[i].checked){
-                    oRadioValue = sp[i];
-                   }
-            }
-             //selectShipping(oRadioValue );   
+onload = function() {
+    var oRadioValue;
+    var sp = document.getElementsByName('shipping');
 
-   var py = document.getElementsByName('payment');
-   for (i=0;i<py.length;i++){
-             if (py[i].checked){
-                oRadioValue = py[i];
-               }
+    for (i = 0; i < sp.length; i++) {
+        if (sp[i].checked) {
+            oRadioValue = sp[i];
         }
-         selectPayment(oRadioValue );   
-
-var pack = document.getElementsByName('pack');
- for (i=0;i<pack.length;i++){
-             if (pack[i].checked){
-                oRadioValue = pack[i];
-               }
+    }
+    //selectShipping(oRadioValue );   
+    var py = document.getElementsByName('payment');
+    for (i = 0; i < py.length; i++) {
+        if (py[i].checked) {
+            oRadioValue = py[i];
         }
-         selectPack(oRadioValue );   
-var bonus = document.getElementsByName('bonus');
- for (i=0;i<bonus.length;i++){
-             if (bonus[i].checked){
-                oRadioValue = bonus[i];
-               }
+    }
+    selectPayment(oRadioValue);
+
+    var pack = document.getElementsByName('pack');
+    for (i = 0; i < pack.length; i++) {
+        if (pack[i].checked) {
+            oRadioValue = pack[i];
         }
-         changeBonus(oRadioValue ); 
-
-
-
-var card = document.getElementsByName('card');
- for (i=0;i<card.length;i++){
-             if (card[i].checked){
-                oRadioValue = card[i];
-               }
+    }
+    selectPack(oRadioValue);
+    var bonus = document.getElementsByName('bonus');
+    for (i = 0; i < bonus.length; i++) {
+        if (bonus[i].checked) {
+            oRadioValue = bonus[i];
         }
-         selectCard(oRadioValue ); 
- 
-          }
+    }
+    changeBonus(oRadioValue);
+
+    var card = document.getElementsByName('card');
+    for (i = 0; i < card.length; i++) {
+        if (card[i].checked) {
+            oRadioValue = card[i];
+        }
+    }
+    selectCard(oRadioValue);
+	$("#payment").val("4");
+	//支付方式选择
+	$(".alipaywapdiv").click(function(){
+		$(".weixinwapdiv").removeClass("on");
+		$(".alipaywapdiv").addClass("on");
+		$("#payment").val("4");
+	});
+	$(".weixinwapdiv").click(function(){
+		$(".alipaywapdiv").removeClass("on");
+		$(".weixinwapdiv").addClass("on");
+		$("#payment").val("5");
+	});
+}
 </script>
 <div id="page">
   <header id="header">
@@ -399,13 +407,23 @@ var card = document.getElementsByName('card');
           <dd class="dd2 selectPayment" id="selected2">请选择支付方式</dd>
           <i></i>
         </dl>
-		<div class="dl_box" id="payment" style="display:none">
-		  <!-- {foreach from=$payment_list item=payment} -->
-		  <p>
-           <input type="radio" class="radio" name="payment" id="payment_{$payment.pay_id}" value="{$payment.pay_id}" {if $order.pay_id eq $payment.pay_id}checked{/if} isCod="{$payment.is_cod}" onclick="selectPayment(this)" {if $cod_disabled and $payment.is_cod eq "1"}disabled="true"{/if} style="vertical-align:middle" /><label for="payment_{$payment.pay_id}">{$payment.pay_name} [{$payment.format_pay_fee}]</label>
-           </p>
-            <!-- {/foreach} -->
+		<div class="pay">
+		  <ul>
+			<li>
+			  <div class="item alipaywapdiv on">
+				<a href="javascript:;" class="alipaywap">支付宝</a>
+			  </div>
+			</li>
+			<li>
+			  <div class="item weixinwapdiv">
+				<a href="javascript:;" class="weixinwap">微信支付</a>
+			  </div>
+			 </li>
+		  </ul>
 		</div>
+		
+		<input type="hidden" name="payment" id="payment"   />
+           
         <!--{else}-->
         <input name = "payment" type="radio" value = "-1" checked="checked"  style="display:none"/>
         <!--{/if}-->  
