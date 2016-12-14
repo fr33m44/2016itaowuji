@@ -1,0 +1,533 @@
+执行日期：20161213175707待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 17:57:05&gmt_payment=2016-12-13 17:57:06&invoice_amount=0.01&notify_id=287bdbf403669576ff3c7e234705ad8huq&notify_time=2016-12-13 17:57:06&notify_type=trade_status_sync&out_trade_no=2016121378235&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121378235&total_amount=0.01&trade_no=2016121321001004240203765251&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213175707签名:wOrh7XTMbT3U6rzjfxXvL9Oy7nkyULAkB+NONrBgEJW7N9utNSakZ+eLgN9vqHr2KFqeVFK/UNgoV2KT23y58GNsWlI91MAWx/a/j9TD4iDrIUvO3PXL4yJtYKShyC87sWuCyL5ZTMRCApWABZVzPB8AxzrcxC+LezIUQkNn6Ng=
+执行日期：201612131757071
+执行日期：20161213175707notify data:
+执行日期：20161213175707check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203765251
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 17:57:06
+    [subject] => order2016121378235
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121378235
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 17:57:06
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => wOrh7XTMbT3U6rzjfxXvL9Oy7nkyULAkB+NONrBgEJW7N9utNSakZ+eLgN9vqHr2KFqeVFK/UNgoV2KT23y58GNsWlI91MAWx/a/j9TD4iDrIUvO3PXL4yJtYKShyC87sWuCyL5ZTMRCApWABZVzPB8AxzrcxC+LezIUQkNn6Ng=
+    [gmt_create] => 2016-12-13 17:57:05
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 287bdbf403669576ff3c7e234705ad8huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213175707notify ok
+执行日期：20161213175707pay_log_id:378
+执行日期：20161213175707check_money fail of notify
+执行日期：20161213175708待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&charset=UTF-8&method=alipay.trade.wap.pay.return&out_trade_no=2016121378235&seller_id=2088412610646251&timestamp=2016-12-13 17:57:07&total_amount=0.01&trade_no=2016121321001004240203765251&version=1.0
+执行日期：20161213175708签名:nJygTj4nkW56WrN8Spbh4lmpdSnNiWx6tow8pSy+qHAKGR7pu0oorDsp57s+NTffnpyrNtYVsnpld0BKopKPlTR+wrB4l17H12lo/PrkY10yErmQdP3/10cEH599+nMGZ/DV0u3KQ6rfzH9fLV5+o6UVFaweToFAnnXgEMSdBDo=
+执行日期：201612131757081
+执行日期：20161213175708return_url返回的GET数据:
+执行日期：20161213175708Array
+(
+    [total_amount] => 0.01
+    [timestamp] => 2016-12-13 17:57:07
+    [sign] => nJygTj4nkW56WrN8Spbh4lmpdSnNiWx6tow8pSy+qHAKGR7pu0oorDsp57s+NTffnpyrNtYVsnpld0BKopKPlTR+wrB4l17H12lo/PrkY10yErmQdP3/10cEH599+nMGZ/DV0u3KQ6rfzH9fLV5+o6UVFaweToFAnnXgEMSdBDo=
+    [trade_no] => 2016121321001004240203765251
+    [sign_type] => RSA
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [seller_id] => 2088412610646251
+    [method] => alipay.trade.wap.pay.return
+    [app_id] => 2016090101835493
+    [out_trade_no] => 2016121378235
+    [version] => 1.0
+)
+
+执行日期：20161213175708check_money fail of return url
+执行日期：20161213175722待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-12 17:29:44&gmt_payment=2016-12-12 17:29:45&invoice_amount=0.01&notify_id=6ba9d8961100a56e2f2211040b3329dhuq&notify_time=2016-12-13 17:57:21&notify_type=trade_status_sync&out_trade_no=2016121266247&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121266247&total_amount=0.01&trade_no=2016121221001004240201554467&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213175722签名:Jcw5ClVAn/QZlw0RyNHQ9FJeYSax63FTYY/8eZ4rYNoOwZ1eQKdjHbcgHgSqIikh6uMtdd4RVC5aaR6qPsb3jdl9SYDzS/tKuCK1qi8gzL/1L3rTkpsXvabejPlBwBGJJARJfDKr2SSP0qntu6n2swBJsV58CaO8dfGbBXhiS5s=
+执行日期：201612131757221
+执行日期：20161213175722notify data:
+执行日期：20161213175722check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121221001004240201554467
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 17:57:21
+    [subject] => order2016121266247
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121266247
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-12 17:29:45
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => Jcw5ClVAn/QZlw0RyNHQ9FJeYSax63FTYY/8eZ4rYNoOwZ1eQKdjHbcgHgSqIikh6uMtdd4RVC5aaR6qPsb3jdl9SYDzS/tKuCK1qi8gzL/1L3rTkpsXvabejPlBwBGJJARJfDKr2SSP0qntu6n2swBJsV58CaO8dfGbBXhiS5s=
+    [gmt_create] => 2016-12-12 17:29:44
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 6ba9d8961100a56e2f2211040b3329dhuq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213175722notify ok
+执行日期：20161213175722pay_log_id:366
+执行日期：20161213175722check_money fail of notify
+执行日期：20161213175912待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 17:59:11&gmt_payment=2016-12-13 17:59:12&invoice_amount=0.01&notify_id=6d8f2aa3791cf8e8b26b6ba4d5cb819huq&notify_time=2016-12-13 17:59:12&notify_type=trade_status_sync&out_trade_no=2016121340087&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121340087&total_amount=0.01&trade_no=2016121321001004240203769845&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213175912签名:caBxbfKvzcOsmNcQ4+rim6qbLEEtGtqErQNamAd0yWo/+gj3bN8sfkeB7xAxTZLhiBxyZ0xbQAIoSpBr2cOjvmvAls/v054xZOhddYib8LmSDJRRFGZQB7yF+JEwhLPFfLX4WNQfIjUEUP5vhyQJW49bZibDCpyahX40cfxVB2k=
+执行日期：201612131759121
+执行日期：20161213175912notify data:
+执行日期：20161213175912check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203769845
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 17:59:12
+    [subject] => order2016121340087
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121340087
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 17:59:12
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => caBxbfKvzcOsmNcQ4+rim6qbLEEtGtqErQNamAd0yWo/+gj3bN8sfkeB7xAxTZLhiBxyZ0xbQAIoSpBr2cOjvmvAls/v054xZOhddYib8LmSDJRRFGZQB7yF+JEwhLPFfLX4WNQfIjUEUP5vhyQJW49bZibDCpyahX40cfxVB2k=
+    [gmt_create] => 2016-12-13 17:59:11
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 6d8f2aa3791cf8e8b26b6ba4d5cb819huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213175912notify ok
+执行日期：20161213175912pay_log_id:379
+执行日期：20161213175915待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&charset=UTF-8&method=alipay.trade.wap.pay.return&out_trade_no=2016121340087&seller_id=2088412610646251&timestamp=2016-12-13 17:59:12&total_amount=0.01&trade_no=2016121321001004240203769845&version=1.0
+执行日期：20161213175915签名:vxWDHpYRfs44/me/2oaw0JrPWnBh2LN7dVVHTG7Kt8clz9mc3gNPw+Out8/m9251WzjxvJU3vv5GmaH9/qgJo0N9ZsLzqAup/hKW68zAvUWupsM84eNsf6p0z30B8CrAtJ/2Bk9g413xAiVfMRCdbCcMBVBEh/MCZ9TEZbBhTc8=
+执行日期：201612131759151
+执行日期：20161213175915return_url返回的GET数据:
+执行日期：20161213175915Array
+(
+    [total_amount] => 0.01
+    [timestamp] => 2016-12-13 17:59:12
+    [sign] => vxWDHpYRfs44/me/2oaw0JrPWnBh2LN7dVVHTG7Kt8clz9mc3gNPw+Out8/m9251WzjxvJU3vv5GmaH9/qgJo0N9ZsLzqAup/hKW68zAvUWupsM84eNsf6p0z30B8CrAtJ/2Bk9g413xAiVfMRCdbCcMBVBEh/MCZ9TEZbBhTc8=
+    [trade_no] => 2016121321001004240203769845
+    [sign_type] => RSA
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [seller_id] => 2088412610646251
+    [method] => alipay.trade.wap.pay.return
+    [app_id] => 2016090101835493
+    [out_trade_no] => 2016121340087
+    [version] => 1.0
+)
+
+执行日期：20161213175915pay_log_id:379
+执行日期：20161213175920待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&charset=UTF-8&method=alipay.trade.wap.pay.return&out_trade_no=2016121340087&seller_id=2088412610646251&timestamp=2016-12-13 17:59:19&total_amount=0.01&trade_no=2016121321001004240203769845&version=1.0
+执行日期：20161213175920签名:aVORmJpgJUn3l8wROxXzU0Sn7agRa+kafkpIYMo+UJ1zDg/UVykVqQUQjVBQoujfucPe0s6u/9Ngn1chprFrADjYbDKvnJSC03F0y9krYDW8AyG6QtTih6dFuCt5cccNBF7OHVk6fDWgIF/23KUJdSbBtUbv03x+oXDuQW05bfw=
+执行日期：201612131759201
+执行日期：20161213175920return_url返回的GET数据:
+执行日期：20161213175920Array
+(
+    [total_amount] => 0.01
+    [timestamp] => 2016-12-13 17:59:19
+    [sign] => aVORmJpgJUn3l8wROxXzU0Sn7agRa+kafkpIYMo+UJ1zDg/UVykVqQUQjVBQoujfucPe0s6u/9Ngn1chprFrADjYbDKvnJSC03F0y9krYDW8AyG6QtTih6dFuCt5cccNBF7OHVk6fDWgIF/23KUJdSbBtUbv03x+oXDuQW05bfw=
+    [trade_no] => 2016121321001004240203769845
+    [sign_type] => RSA
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [seller_id] => 2088412610646251
+    [method] => alipay.trade.wap.pay.return
+    [app_id] => 2016090101835493
+    [out_trade_no] => 2016121340087
+    [version] => 1.0
+)
+
+执行日期：20161213175920pay_log_id:379
+执行日期：20161213180649待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 17:59:11&gmt_payment=2016-12-13 17:59:12&invoice_amount=0.01&notify_id=6d8f2aa3791cf8e8b26b6ba4d5cb819huq&notify_time=2016-12-13 18:06:49&notify_type=trade_status_sync&out_trade_no=2016121340087&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121340087&total_amount=0.01&trade_no=2016121321001004240203769845&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213180649签名:XEMARsAbzToKroOoNGChoo2Kp9N6wwxweb0x8BdQn8fAJzh/jf+Gou6rkKq+0/K1HH5JozeKXRfvery53cGQQM8SU4H5EiT5Zp4QDpJJFhrC6ZOtyHAD9DKtitDKG342BlLblh+4+DZ/gbOnUI72WUwdc2WvhXJJYbN9p7VND3A=
+执行日期：201612131806491
+执行日期：20161213180649notify data:
+执行日期：20161213180649check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203769845
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 18:06:49
+    [subject] => order2016121340087
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121340087
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 17:59:12
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => XEMARsAbzToKroOoNGChoo2Kp9N6wwxweb0x8BdQn8fAJzh/jf+Gou6rkKq+0/K1HH5JozeKXRfvery53cGQQM8SU4H5EiT5Zp4QDpJJFhrC6ZOtyHAD9DKtitDKG342BlLblh+4+DZ/gbOnUI72WUwdc2WvhXJJYbN9p7VND3A=
+    [gmt_create] => 2016-12-13 17:59:11
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 6d8f2aa3791cf8e8b26b6ba4d5cb819huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213180649notify ok
+执行日期：20161213180649pay_log_id:379
+执行日期：20161213180740待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-12 17:39:07&gmt_payment=2016-12-12 17:39:07&invoice_amount=0.01&notify_id=e24cee255a86213fc5177f4a7317f1ehuq&notify_time=2016-12-13 18:07:40&notify_type=trade_status_sync&out_trade_no=2016121224570&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121224570&total_amount=0.01&trade_no=2016121221001004240201604524&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213180740签名:OTqZ7g4ArfWsIKq4mkegdyRPck3Iyww8wI9lnyoD0Aw6yh4ckuWnxVY8lLkxSkggVsYS3V5VZfP1r1frZKUrf0Nmy7b1f0vZs9OG1/5zf13bC/gLq0icp3SOn9dsq0YoFVYukbgJed6poZfHoXYfcJrzSJ3Mw8lNGIpnlVeYvoM=
+执行日期：201612131807401
+执行日期：20161213180740notify data:
+执行日期：20161213180740check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121221001004240201604524
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 18:07:40
+    [subject] => order2016121224570
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121224570
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-12 17:39:07
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => OTqZ7g4ArfWsIKq4mkegdyRPck3Iyww8wI9lnyoD0Aw6yh4ckuWnxVY8lLkxSkggVsYS3V5VZfP1r1frZKUrf0Nmy7b1f0vZs9OG1/5zf13bC/gLq0icp3SOn9dsq0YoFVYukbgJed6poZfHoXYfcJrzSJ3Mw8lNGIpnlVeYvoM=
+    [gmt_create] => 2016-12-12 17:39:07
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => e24cee255a86213fc5177f4a7317f1ehuq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213180740notify ok
+执行日期：20161213180740pay_log_id:367
+执行日期：20161213181750待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-12 17:52:34&gmt_payment=2016-12-12 17:52:35&invoice_amount=0.01&notify_id=009670d4d9cc0ccafe8b6337879eac0huq&notify_time=2016-12-13 18:17:50&notify_type=trade_status_sync&out_trade_no=2016121204073&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121204073&total_amount=0.01&trade_no=2016121221001004240201613211&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213181750签名:QLpanyu4d/3J6lTh3fwetW+vjuy7NijEuVIRi9mGOtxuVfI9UC2kyzG0duMmFJTCDGotifh8ipqIOJoJLOp6TVpWTwEg1v527b2POl94+i0ErjQUlT1si0EhwX/NUlCT9BrIm10/dDggeIUZQ1cGFsIl5cA0vZq0/afuWkGhWgQ=
+执行日期：201612131817501
+执行日期：20161213181750notify data:
+执行日期：20161213181750check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121221001004240201613211
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 18:17:50
+    [subject] => order2016121204073
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121204073
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-12 17:52:35
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => QLpanyu4d/3J6lTh3fwetW+vjuy7NijEuVIRi9mGOtxuVfI9UC2kyzG0duMmFJTCDGotifh8ipqIOJoJLOp6TVpWTwEg1v527b2POl94+i0ErjQUlT1si0EhwX/NUlCT9BrIm10/dDggeIUZQ1cGFsIl5cA0vZq0/afuWkGhWgQ=
+    [gmt_create] => 2016-12-12 17:52:34
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 009670d4d9cc0ccafe8b6337879eac0huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213181750notify ok
+执行日期：20161213181750pay_log_id:368
+执行日期：20161213181808待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-12 17:53:26&gmt_payment=2016-12-12 17:53:27&invoice_amount=0.01&notify_id=6ec8bb9b7a8a8d693ab3ba952d417dfhuq&notify_time=2016-12-13 18:18:08&notify_type=trade_status_sync&out_trade_no=2016121235205&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121235205&total_amount=0.01&trade_no=2016121221001004240201631618&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213181808签名:sAgLf23KFnYcgblf+6TpqIYiShYijc+sRT37CFlGetICCREu4/S52+EoBJti/vc9BnTEzxbjYWXdQtSwfsGcKSpvsfK0fURTcEEtUfm+gXvsSxvGfg2zF++1blEQKo+vU7Lq9v6gJc0wEgBVraKtRF8TCs90+WNtXN84LAJXXT4=
+执行日期：201612131818081
+执行日期：20161213181808notify data:
+执行日期：20161213181808check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121221001004240201631618
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 18:18:08
+    [subject] => order2016121235205
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121235205
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-12 17:53:27
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => sAgLf23KFnYcgblf+6TpqIYiShYijc+sRT37CFlGetICCREu4/S52+EoBJti/vc9BnTEzxbjYWXdQtSwfsGcKSpvsfK0fURTcEEtUfm+gXvsSxvGfg2zF++1blEQKo+vU7Lq9v6gJc0wEgBVraKtRF8TCs90+WNtXN84LAJXXT4=
+    [gmt_create] => 2016-12-12 17:53:26
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 6ec8bb9b7a8a8d693ab3ba952d417dfhuq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213181808notify ok
+执行日期：20161213181808pay_log_id:369
+执行日期：20161213182720待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 17:02:37&gmt_payment=2016-12-13 17:02:37&invoice_amount=0.01&notify_id=525917580b2b2569f14c4a7cb7a60c7huq&notify_time=2016-12-13 18:27:20&notify_type=trade_status_sync&out_trade_no=2016121382121&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121382121&total_amount=0.01&trade_no=2016121321001004240203715711&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213182720签名:bP2Rx0N9JQY29sm7PcefhwxKKQn5Q+2fkAsk7uROb0qUWXBQgxlr+/sehZdFZgMPc31FPZ02dsFjFDkBly7EROocGvQz322IHSe3zdUlASF8m/iPg6ukDFZ+QH0JlyfMH0Aqcz1a2WRG6hJeP0mfr/9M+QzXLjtm+JobAW+0130=
+执行日期：201612131827201
+执行日期：20161213182720notify data:
+执行日期：20161213182720check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203715711
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 18:27:20
+    [subject] => order2016121382121
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121382121
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 17:02:37
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => bP2Rx0N9JQY29sm7PcefhwxKKQn5Q+2fkAsk7uROb0qUWXBQgxlr+/sehZdFZgMPc31FPZ02dsFjFDkBly7EROocGvQz322IHSe3zdUlASF8m/iPg6ukDFZ+QH0JlyfMH0Aqcz1a2WRG6hJeP0mfr/9M+QzXLjtm+JobAW+0130=
+    [gmt_create] => 2016-12-13 17:02:37
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 525917580b2b2569f14c4a7cb7a60c7huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213182720notify ok
+执行日期：20161213182720pay_log_id:372
+执行日期：20161213202850待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 17:02:37&gmt_payment=2016-12-13 17:02:37&invoice_amount=0.01&notify_id=525917580b2b2569f14c4a7cb7a60c7huq&notify_time=2016-12-13 20:28:50&notify_type=trade_status_sync&out_trade_no=2016121382121&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121382121&total_amount=0.01&trade_no=2016121321001004240203715711&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213202850签名:DEqJiEU0Zm0a9lNBsqGL5AiaILsZfJeYrk4SUAHr1IFSQrQPIR0yN2z8DIy8RvbcumHAscAPEsaN9gFbBTyTgeWv+yr1UooM1ABCVbsjTqRKkmUDMoQWu4za02NkZtRJY6iMeG5Xw3VFvdJdDJ3HGCi3BQu1HUcJWb/nmNvrUcM=
+执行日期：201612132028501
+执行日期：20161213202850notify data:
+执行日期：20161213202850check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203715711
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 20:28:50
+    [subject] => order2016121382121
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121382121
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 17:02:37
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => DEqJiEU0Zm0a9lNBsqGL5AiaILsZfJeYrk4SUAHr1IFSQrQPIR0yN2z8DIy8RvbcumHAscAPEsaN9gFbBTyTgeWv+yr1UooM1ABCVbsjTqRKkmUDMoQWu4za02NkZtRJY6iMeG5Xw3VFvdJdDJ3HGCi3BQu1HUcJWb/nmNvrUcM=
+    [gmt_create] => 2016-12-13 17:02:37
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 525917580b2b2569f14c4a7cb7a60c7huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213202850notify ok
+执行日期：20161213202850pay_log_id:372
+执行日期：20161213211029待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 11:44:15&gmt_payment=2016-12-13 11:44:16&invoice_amount=0.01&notify_id=f5ac65e479b9a2abe594d98b5013d45huq&notify_time=2016-12-13 21:10:29&notify_type=trade_status_sync&out_trade_no=2016121346146&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121346146&total_amount=0.01&trade_no=2016121321001004240203256531&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213211029签名:U/0V4Xvo8sf0gRQRR/wnKVO/eTli1yXXEqH5hqdemm8++oyz/61+VG1RiPoM35gl8aIdJUNFpoCM+hhQorsIcTzoKzAcrocPhU3ZsVgXSP1HB9BGeytc6rQtCUvwIx1yTCq7Dj7cWXnUInXYzUcMTp6Ti6qDR8RkS3dqnn4THIM=
+执行日期：201612132110291
+执行日期：20161213211029notify data:
+执行日期：20161213211029check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203256531
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 21:10:29
+    [subject] => order2016121346146
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121346146
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 11:44:16
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => U/0V4Xvo8sf0gRQRR/wnKVO/eTli1yXXEqH5hqdemm8++oyz/61+VG1RiPoM35gl8aIdJUNFpoCM+hhQorsIcTzoKzAcrocPhU3ZsVgXSP1HB9BGeytc6rQtCUvwIx1yTCq7Dj7cWXnUInXYzUcMTp6Ti6qDR8RkS3dqnn4THIM=
+    [gmt_create] => 2016-12-13 11:44:15
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => f5ac65e479b9a2abe594d98b5013d45huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213211029notify ok
+执行日期：20161213211029pay_log_id:370
+执行日期：20161213212223待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 11:54:12&gmt_payment=2016-12-13 11:54:12&invoice_amount=0.01&notify_id=37c1c0012ac897cb1eca2a7de9929f0huq&notify_time=2016-12-13 21:22:24&notify_type=trade_status_sync&out_trade_no=2016121340042&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121340042&total_amount=0.01&trade_no=2016121321001004240203282156&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161213212223签名:ptyHd2ipV1Dr/yrB8nskMoM3j09z1jRXuOO8tWGwVN8U3JwmlFlJoBRiqqYseAB5q8MhiU8HseRKP4WBUomhFNOfvVFFfYaJ+v1Vrms8uHPOA0PsO+XWAPtraOkY5mIyDJIdEI/aZrmIcGnH+F8G5kcXKHgY8+MSPghH5mi6ELc=
+执行日期：201612132122231
+执行日期：20161213212223notify data:
+执行日期：20161213212223check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203282156
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-13 21:22:24
+    [subject] => order2016121340042
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121340042
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 11:54:12
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => ptyHd2ipV1Dr/yrB8nskMoM3j09z1jRXuOO8tWGwVN8U3JwmlFlJoBRiqqYseAB5q8MhiU8HseRKP4WBUomhFNOfvVFFfYaJ+v1Vrms8uHPOA0PsO+XWAPtraOkY5mIyDJIdEI/aZrmIcGnH+F8G5kcXKHgY8+MSPghH5mi6ELc=
+    [gmt_create] => 2016-12-13 11:54:12
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 37c1c0012ac897cb1eca2a7de9929f0huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161213212223notify ok
+执行日期：20161213212223pay_log_id:371
+执行日期：20161214120936待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 11:44:15&gmt_payment=2016-12-13 11:44:16&invoice_amount=0.01&notify_id=f5ac65e479b9a2abe594d98b5013d45huq&notify_time=2016-12-14 12:09:36&notify_type=trade_status_sync&out_trade_no=2016121346146&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121346146&total_amount=0.01&trade_no=2016121321001004240203256531&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161214120936签名:FR+3sOWKq0p8qTA55sFWQzUH30TTvY46ODoWtDwsTu2DNX7xBYN3J8sIokOWQoOkbNYo65E3XylM93uZJ4+KhmBo2diS/8qmGE8GJMPuq70ZWgmFXymUiZ3LjaawvlP8vAYVrZBKMZZzzItyYjGYTLlkBnscw2G6M32MFhqS6Jo=
+执行日期：201612141209361
+执行日期：20161214120936notify data:
+执行日期：20161214120936check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203256531
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-14 12:09:36
+    [subject] => order2016121346146
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121346146
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 11:44:16
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => FR+3sOWKq0p8qTA55sFWQzUH30TTvY46ODoWtDwsTu2DNX7xBYN3J8sIokOWQoOkbNYo65E3XylM93uZJ4+KhmBo2diS/8qmGE8GJMPuq70ZWgmFXymUiZ3LjaawvlP8vAYVrZBKMZZzzItyYjGYTLlkBnscw2G6M32MFhqS6Jo=
+    [gmt_create] => 2016-12-13 11:44:15
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => f5ac65e479b9a2abe594d98b5013d45huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161214120936notify ok
+执行日期：20161214120936pay_log_id:370
+执行日期：20161214122341待签名数据:app_id=2016090101835493&auth_app_id=2016090101835493&body=购买测试商品0.01元&buyer_id=2088002228430249&buyer_logon_id=tun***@gmail.com&buyer_pay_amount=0.01&charset=UTF-8&fund_bill_list=[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]&gmt_create=2016-12-13 11:54:12&gmt_payment=2016-12-13 11:54:12&invoice_amount=0.01&notify_id=37c1c0012ac897cb1eca2a7de9929f0huq&notify_time=2016-12-14 12:23:42&notify_type=trade_status_sync&out_trade_no=2016121340042&point_amount=0.00&receipt_amount=0.01&seller_email=15320464400&seller_id=2088412610646251&subject=order2016121340042&total_amount=0.01&trade_no=2016121321001004240203282156&trade_status=TRADE_SUCCESS&version=1.0
+执行日期：20161214122341签名:ZG/jNJ0I03uqtA3MoWOvL1nyjEBdiOAQoQ0IpVQqeP5GWzL1TPUGMTPSgw95s3e/kEYJJublX5V+QLvFEZNWtRSbSu7QJi9UCkroC/kldcP4P8K7ZjJJ45PzrAFmPgLcXFHvuu5PhxLGplb4xK53Pf+nFqgg2FHJHzpxnN32UcY=
+执行日期：201612141223411
+执行日期：20161214122341notify data:
+执行日期：20161214122341check return:Array
+(
+    [buyer_id] => 2088002228430249
+    [total_amount] => 0.01
+    [trade_no] => 2016121321001004240203282156
+    [body] => 购买测试商品0.01元
+    [notify_time] => 2016-12-14 12:23:42
+    [subject] => order2016121340042
+    [sign_type] => RSA
+    [buyer_logon_id] => tun***@gmail.com
+    [auth_app_id] => 2016090101835493
+    [charset] => UTF-8
+    [notify_type] => trade_status_sync
+    [invoice_amount] => 0.01
+    [out_trade_no] => 2016121340042
+    [trade_status] => TRADE_SUCCESS
+    [gmt_payment] => 2016-12-13 11:54:12
+    [version] => 1.0
+    [point_amount] => 0.00
+    [sign] => ZG/jNJ0I03uqtA3MoWOvL1nyjEBdiOAQoQ0IpVQqeP5GWzL1TPUGMTPSgw95s3e/kEYJJublX5V+QLvFEZNWtRSbSu7QJi9UCkroC/kldcP4P8K7ZjJJ45PzrAFmPgLcXFHvuu5PhxLGplb4xK53Pf+nFqgg2FHJHzpxnN32UcY=
+    [gmt_create] => 2016-12-13 11:54:12
+    [buyer_pay_amount] => 0.01
+    [receipt_amount] => 0.01
+    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
+    [app_id] => 2016090101835493
+    [seller_id] => 2088412610646251
+    [notify_id] => 37c1c0012ac897cb1eca2a7de9929f0huq
+    [seller_email] => 15320464400
+)
+
+执行日期：20161214122341notify ok
+执行日期：20161214122341pay_log_id:371
