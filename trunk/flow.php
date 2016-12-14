@@ -1532,7 +1532,7 @@ elseif ($_REQUEST['step'] == 'done') {
 		$total_amount = $order['order_amount'];
 
 		//商品描述，可空
-		$body = '';
+		$body = '购买测试商品0.01元';
 
 		//超时时间
 		$timeout_express="1m";
