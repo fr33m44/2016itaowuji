@@ -12,7 +12,7 @@
   </div>
 </div>
 <div class="title_body">
-<div id="slideBox1" class="slideBox1"> {* ECSHOP 提醒您：动态载入position_get_adv_small.lbi，显示首页分类小广告 *}{insert name='get_adv_child' ad_arr=$adarr id=$cat_goods.id } 
+<div id="slideBox1" class="slideBox1"> {* ECSHOP 提醒您：动态载入position_get_adv_small.lbi，显示首页分类小广告 *}{insert name='get_adv_child' ad_arr=$adarr id=$goods_cat.id } 
   <script type="text/javascript">
 		jQuery(".slideBox1").slide({mainCell:".bd ul",autoPlay:true});
 		</script>
