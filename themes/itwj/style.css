@@ -244,9 +244,9 @@ box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.05);}
 /*商品分类树*/
 .classNav .left_nav{ display:none;}
 .left_nav{width:220px;height:527px;float:left;}
-.leftNav{width:220px;height:527px;background:url(images/leftNav_bg.gif) 0 0 repeat #ff5e75;position:relative;z-index:10;-webkit-box-shadow:2px 2px 2px rgba(0, 0, 0, 0.05);-moz-box-shadow:2px 2px 2px rgba(0, 0, 0, 0.05);box-shadow:2px 2px 2px rgba(0, 0, 0, 0.05);}
-.leftNav ul{width:220px;overflow:hidden;z-index:10;}
-.leftNav ul li{width:184px;height:77px;background:none;border-top:1px #ff7489 solid;border-bottom:1px #ff4e68 solid;border-left:2px #ff5971 solid;;padding:9px 17px 0px 17px;overflow:hidden;float:left;-moz-animation:indexcata .6s ease backwards;-webkit-animation:indexcata .6s ease backwards;-o-animation:indexcata .6s ease backwards;-ms-animation:indexcata .6s ease backwards;animation:indexcata .6s ease backwards;z-index:10;-webkit-transition: background-color .2s;-moz-transition: background-color 0.4s ease 0s;-o-transition: background-color .2s;transition: background-color .2s;}
+.leftNav{width:220px;height:527px;background:url(images/leftNav_bg.gif) 0 0 repeat #ff5e75;position:relative;z-index:12;-webkit-box-shadow:2px 2px 2px rgba(0, 0, 0, 0.05);-moz-box-shadow:2px 2px 2px rgba(0, 0, 0, 0.05);box-shadow:2px 2px 2px rgba(0, 0, 0, 0.05);}
+.leftNav ul{width:220px;overflow:hidden;z-index:12;}
+.leftNav ul li{width:184px;height:77px;background:none;border-top:1px #ff7489 solid;border-bottom:1px #ff4e68 solid;border-left:2px #ff5971 solid;;padding:9px 17px 0px 17px;overflow:hidden;float:left;-moz-animation:indexcata .6s ease backwards;-webkit-animation:indexcata .6s ease backwards;-o-animation:indexcata .6s ease backwards;-ms-animation:indexcata .6s ease backwards;animation:indexcata .6s ease backwards;z-index:12;-webkit-transition: background-color .2s;-moz-transition: background-color 0.4s ease 0s;-o-transition: background-color .2s;transition: background-color .2s;}
 .leftNav ul li p{line-height:31px;padding:0 0 0 22px;background:url(images/leftNav_li_ico.gif) 0 0 no-repeat;}
 .leftNav ul li p a.a1{font-size:15px;font-weight:bold;color:#fff;}
 .leftNav ul li .childer_hide{ height:36px; line-height:18px; overflow:hidden;}
